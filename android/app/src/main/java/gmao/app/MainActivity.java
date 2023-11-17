@@ -1,4 +1,4 @@
-package gmao.app;
+package achats.app;
 
 import com.getcapacitor.BridgeActivity;
 

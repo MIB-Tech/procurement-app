@@ -15,10 +15,7 @@ export const CREATED_AT_COLUMN: ColumnMapping<any> = {
   nullable: true
 };
 
-export const ASSET_MULTIPLE_COLUMN: ColumnMapping<any> = {
-  type: ModelEnum.Asset,
-  multiple: true
-};
+
 export const ABSTRACT_FILE_LISTING_VIEW: ListingViewType<any> = {
   type: ViewEnum.Listing,
   sortColumns: {

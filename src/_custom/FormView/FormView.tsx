@@ -22,12 +22,12 @@ export const FormView = <M extends ModelEnum>({ modelName, view }: FormViewProps
   const mutation = useCustomMutation<M>({ modelName, mode });
   const isCreateMode = mode === MutationMode.Post;
   const query = useCustomQuery({ modelName, enabled: !isCreateMode });
-  const { isGrantedOneOf, location } = useAuth();
+  const { isGrantedOneOf/*, location*/ } = useAuth();
   const _fields = view?.fields || getDefaultFields(columnDef);
   const fields = (Object.keys(_fields) as Array<keyof Model<M> | string>)
-  .filter(columnName=>{
-    return !location || !isLocationColumn({ modelName, columnName });
-  })
+  // .filter(columnName=>{
+  //   return !location || !isLocationColumn({ modelName, columnName });
+  // })
   .reduce(
     (obj, columnName) => {
       const field = _fields[columnName];

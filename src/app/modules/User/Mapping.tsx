@@ -54,14 +54,6 @@ const mapping: ModelMapping<ModelEnum.User> = {
       type: ModelEnum.Role,
       nullable: true
     },
-    location: {
-      type: ModelEnum.Location,
-      nullable: true
-    },
-    teams: {
-      type: ModelEnum.Team,
-      multiple: true
-    }
   },
   views: [
     {
@@ -71,8 +63,6 @@ const mapping: ModelMapping<ModelEnum.User> = {
         username: true,
         phoneNumber: true,
         email: true,
-        // role: true,
-        location: true
       }
     },
     {
@@ -94,9 +84,7 @@ const mapping: ModelMapping<ModelEnum.User> = {
         email: true,
         password: true,
         passwordConfirm: true,
-        role: true,
-        location: true,
-        teams: true
+        role: true
       }
     },
     {
@@ -108,9 +96,7 @@ const mapping: ModelMapping<ModelEnum.User> = {
         lastName: true,
         phoneNumber: true,
         email: true,
-        role: true,
-        location: true,
-        teams: true
+        role: true
       }
     }
   ]

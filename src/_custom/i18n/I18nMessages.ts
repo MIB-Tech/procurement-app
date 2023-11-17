@@ -2,17 +2,13 @@ import { en } from './messages/en';
 import { ar } from './messages/ar';
 import { fr } from './messages/fr';
 import { CompoundFilterOperator, PropertyFilterOperator } from '../ListingView/Filter/Filter.types';
-import { NatureEnum, WorkOrderStatusEnum } from '../../app/modules/WorkOrder/Model';
-import { ContractTypeEnum } from '../../app/modules/Contract';
-import { ServiceTypeEnum } from '../../app/modules/ServiceType';
+import { PriorityEnum, DraftOrderStatusEnum } from '../../app/modules/DraftOrder/Model';
 
 
 type Lang = 'en' | 'ar' | 'fr'
 type I18nMessageKey =
-  | NatureEnum
-  | WorkOrderStatusEnum
-  | ContractTypeEnum
-  | ServiceTypeEnum
+  | PriorityEnum
+  | DraftOrderStatusEnum
   | PropertyFilterOperator
   | CompoundFilterOperator
   | 'AUTH.LOGIN.TITLE'
@@ -311,6 +307,17 @@ type I18nMessageKey =
   | 'EVENT'
   | 'EVENTS'
   | 'IMPORT'
+  | 'ORDER_NUMBER'
+  | 'DESIRED_DELIVERY_DATE'
+  | 'ORDERED_FOR'
+  | 'BUYER_FULL_NAME'
+  | 'IS_REGULARIZED'
+  | 'PRIORITY'
+  | 'PROJECT'
+  | 'APPLICANT_SERVICE'
+  | 'COMPANY'
+  | 'RECEPTION_MANAGER'
+  | 'DRAFT_ORDER'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 

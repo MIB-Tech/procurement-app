@@ -4,9 +4,9 @@ import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
 
-const mapping: ModelMapping<ModelEnum.Category> = {
-  modelName: ModelEnum.Category,
-  icon: '/abstract/abs029.svg',
+const mapping: ModelMapping<ModelEnum.ApplicantService> = {
+  modelName: ModelEnum.ApplicantService,
+  icon: '/finance/fin001.svg',
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
@@ -18,24 +18,24 @@ const mapping: ModelMapping<ModelEnum.Category> = {
   views: [
     {
       type: ViewEnum.Listing,
-      routeKey: RouteKeyEnum.CategoryListing
+      routeKey: RouteKeyEnum.ApplicantServiceListing
     },
     {
       type: ViewEnum.Detail,
-      routeKey: RouteKeyEnum.CategoryDetail
+      routeKey: RouteKeyEnum.ApplicantServiceDetail
     },
     {
       type: ViewEnum.Delete,
-      routeKey: RouteKeyEnum.CategoryDelete
+      routeKey: RouteKeyEnum.ApplicantServiceDelete
     },
     {
       type: ViewEnum.Form,
-      routeKey: RouteKeyEnum.CategoryCreate
+      routeKey: RouteKeyEnum.ApplicantServiceCreate
     },
     {
       type: ViewEnum.Form,
       mode: MutationMode.Put,
-      routeKey: RouteKeyEnum.CategoryUpdate,
+      routeKey: RouteKeyEnum.ApplicantServiceUpdate,
     }
   ]
 };

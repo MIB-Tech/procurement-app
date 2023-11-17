@@ -22,13 +22,13 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
   className?: string
 }) => {
   const { columnDef } = useMapping<M>({ modelName });
-  const { isGrantedOneOf, location } = useAuth();
+  const { isGrantedOneOf/*, location*/ } = useAuth();
   const fields = view.fields || getDefaultFields(columnDef);
 
   const columnNames = (Object.keys(fields) as Array<keyof Model<M> | string>).filter(columnName => {
-    if (location && isLocationColumn({ modelName, columnName })) {
-      return false;
-    }
+    // if (location && isLocationColumn({ modelName, columnName })) {
+    //   return false;
+    // }
 
     const field = fields[columnName];
     if (typeof field === 'boolean') {

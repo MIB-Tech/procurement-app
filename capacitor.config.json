@@ -1,6 +1,6 @@
 {
-  "appId": "gmao.app",
-  "appName": "GMAO",
+  "appId": "achats.app",
+  "appName": "Achats",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",

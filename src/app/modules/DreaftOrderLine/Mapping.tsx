@@ -4,8 +4,8 @@ import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
 
-const mapping: ModelMapping<ModelEnum.Category> = {
-  modelName: ModelEnum.Category,
+const mapping: ModelMapping<ModelEnum.DraftOrderLine> = {
+  modelName: ModelEnum.DraftOrderLine,
   icon: '/abstract/abs029.svg',
   columnDef: {
     id: {
@@ -18,24 +18,24 @@ const mapping: ModelMapping<ModelEnum.Category> = {
   views: [
     {
       type: ViewEnum.Listing,
-      routeKey: RouteKeyEnum.CategoryListing
+      routeKey: RouteKeyEnum.DraftOrderLineListing
     },
     {
       type: ViewEnum.Detail,
-      routeKey: RouteKeyEnum.CategoryDetail
+      routeKey: RouteKeyEnum.DraftOrderLineDetail
     },
     {
       type: ViewEnum.Delete,
-      routeKey: RouteKeyEnum.CategoryDelete
+      routeKey: RouteKeyEnum.DraftOrderLineDelete
     },
     {
       type: ViewEnum.Form,
-      routeKey: RouteKeyEnum.CategoryCreate
+      routeKey: RouteKeyEnum.DraftOrderLineCreate
     },
     {
       type: ViewEnum.Form,
       mode: MutationMode.Put,
-      routeKey: RouteKeyEnum.CategoryUpdate,
+      routeKey: RouteKeyEnum.DraftOrderLineUpdate,
     }
   ]
 };

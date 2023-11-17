@@ -1,51 +1,49 @@
 import React from 'react';
-import { TableView } from './TableView/TableView';
-import { useRecoilState } from 'recoil';
-import { Pagination } from './Pagination';
-import { useMapping } from '../hooks/UseMapping';
-import { SearchToolbar } from './Search/SearchToolbar';
-import { FilterToolbar } from './Filter/FilterToolbar';
-import { SortToolbar } from './Sort/SortToolbar';
-import { LISTING_FAMILY } from '../../app/modules';
-import { ColumnDef, FilterColumns, ListingColumns, Model } from '../types/ModelMapping';
-import { RouteModel } from '../../app/modules/Route';
-import { ListingViewProps } from './ListingView.types';
-import { ToolbarWrapper } from './ToolbarWrapper';
-import { StringFormat } from '../Column/String/StringColumn';
-import { useAuth } from '../hooks/UseAuth';
-import { RouteLinks } from '../components/RouteAction/RouteLinks';
-import { RouteActionDropdown } from '../components/RouteAction/RouteActionDropdown';
-import { useCollectionQuery } from '../hooks/UseCollectionQuery';
-import { useOperation } from '../hooks/UseOperation';
-import { ColumnTypeEnum } from '../types/types';
-import { ModelEnum } from '../../app/modules/types';
-import { getColumnMapping } from './Filter/Filter.utils';
+import {TableView} from './TableView/TableView';
+import {useRecoilState} from 'recoil';
+import {Pagination} from './Pagination';
+import {useMapping} from '../hooks/UseMapping';
+import {SearchToolbar} from './Search/SearchToolbar';
+import {FilterToolbar} from './Filter/FilterToolbar';
+import {SortToolbar} from './Sort/SortToolbar';
+import {LISTING_FAMILY} from '../../app/modules';
+import {ColumnDef, FilterColumns, ListingColumns, Model} from '../types/ModelMapping';
+import {RouteModel} from '../../app/modules/Route';
+import {ListingViewProps} from './ListingView.types';
+import {ToolbarWrapper} from './ToolbarWrapper';
+import {StringFormat} from '../Column/String/StringColumn';
+import {useAuth} from '../hooks/UseAuth';
+import {RouteLinks} from '../components/RouteAction/RouteLinks';
+import {RouteActionDropdown} from '../components/RouteAction/RouteActionDropdown';
+import {useCollectionQuery} from '../hooks/UseCollectionQuery';
+import {useOperation} from '../hooks/UseOperation';
+import {ColumnTypeEnum} from '../types/types';
+import {ModelEnum} from '../../app/modules/types';
 
 const RELATED_MODELS = [
   ModelEnum.User,
-  ModelEnum.Service,
-  ModelEnum.Asset,
-  ModelEnum.WorkOrder
+  ModelEnum.DraftOrder
 ];
 
-export const isLocationColumn = <M extends ModelEnum>({ modelName, columnName }: {
+export const isLocationColumn = <M extends ModelEnum>({modelName, columnName}: {
   modelName: M,
   columnName: keyof Model<M> | string
 }) => {
-  const columnMapping = getColumnMapping({ modelName, columnName });
-
-  return columnMapping?.type === ModelEnum.Location;
+  return false;
+  // const columnMapping = getColumnMapping({ modelName, columnName });
+  //
+  // return columnMapping?.type === ModelEnum.Location;
 };
 
 export const ListingView = <M extends ModelEnum>({ modelName, view, path, embedded }: ListingViewProps<M>) => {
-  const { user, location } = useAuth();
+  const { user/*, location*/ } = useAuth();
   const { searchable, columnDef } = useMapping({ modelName });
   const { filterColumns, sortColumns, columns, routeKey, itemOperationRoutes } = view;
   // TODO: embedded state
   const [params, setParams] = useRecoilState(LISTING_FAMILY({ modelName, embedded }));
   const { collection, totalCount, isLoading } = useCollectionQuery<M>({
     modelName,
-    queryKey: RELATED_MODELS.includes(modelName) && location,
+    // queryKey: RELATED_MODELS.includes(modelName) && location,
     params,
     path
   });
@@ -84,9 +82,9 @@ export const ListingView = <M extends ModelEnum>({ modelName, view, path, embedd
 
   const filterColumNames = filterColumns ?
     (Object.keys(filterColumns) as Array<string | keyof Model<M>>).filter(columnName => {
-      if (location && isLocationColumn({ modelName, columnName })) {
-        return false;
-      }
+      // if (location && isLocationColumn({ modelName, columnName })) {
+      //   return false;
+      // }
       const columnFilterValue = filterColumns[columnName];
       if (typeof columnFilterValue === 'boolean') {
         return columnFilterValue;
@@ -98,9 +96,9 @@ export const ListingView = <M extends ModelEnum>({ modelName, view, path, embedd
       if (columnName === 'id') {
         return false;
       }
-      if (location && isLocationColumn({ modelName, columnName })) {
-        return false;
-      }
+      // if (location && isLocationColumn({ modelName, columnName })) {
+      //   return false;
+      // }
       const def = columnDef[columnName];
       switch (def.type) {
         case ColumnTypeEnum.String:
@@ -192,9 +190,9 @@ export const ListingView = <M extends ModelEnum>({ modelName, view, path, embedd
         <div className='card-body py-0 pe-2'>
           <TableView
             modelName={modelName}
-            columns={(Object.keys(listingColumns) as Array<keyof Model<M>>).filter(columnName => {
+            columns={(Object.keys(listingColumns) as Array<keyof Model<M>>)/*.filter(columnName => {
               return !(location && isLocationColumn({ modelName, columnName }));
-            }).reduce(
+            })*/.reduce(
               (obj, columnName) => ({ ...obj, [columnName]: true }),
               {} as ListingColumns<M>
             )}

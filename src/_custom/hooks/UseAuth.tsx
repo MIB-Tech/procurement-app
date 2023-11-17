@@ -10,9 +10,9 @@ import { AuthState } from '../../app/pages/auth';
 
 export const useAuth = () => {
   const navigate = useNavigate();
-  const { user, location } = useSelector<RootState>(({ auth }) => {
+  const { user/*, location*/ } = useSelector<RootState>(({ auth }) => {
     return auth
-  }, shallowEqual) as Required<Pick<AuthState, 'user'>> & Pick<AuthState, 'location'>;
+  }, shallowEqual) as Required<Pick<AuthState, 'user'>> /*& Pick<AuthState, 'location'>*/;
   const { role } = user;
   const routes = role?.routes || [];
 
@@ -28,7 +28,7 @@ export const useAuth = () => {
 
   return {
     user,
-    location,
+    // location,
     routes,
     isGranted,
     isGrantedOneOf,

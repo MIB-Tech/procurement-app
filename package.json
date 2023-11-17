@@ -2,7 +2,7 @@
   "name": "demo1",
   "version": "8.0.31",
   "private": true,
-  "homepage": "http://app.gmao",
+  "homepage": "http://app.achat",
   "dependencies": {
     "@capacitor/android": "^5.2.3",
     "@capacitor/app": "^5.0.6",

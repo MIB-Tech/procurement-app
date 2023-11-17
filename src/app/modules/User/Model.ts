@@ -1,6 +1,4 @@
 import { RoleModel } from '../Role';
-import { LocationModel } from '../Location';
-import { TeamModel } from '../Team';
 import { AbstractModel, Timestamp } from '../../../_custom/types/types';
 
 
@@ -13,8 +11,6 @@ type Model = {
   passwordConfirm: string
   phoneNumber: string
   role?: RoleModel
-  location?: LocationModel
-  teams: Array<TeamModel>
 } & Timestamp & AbstractModel
 
 export default Model;

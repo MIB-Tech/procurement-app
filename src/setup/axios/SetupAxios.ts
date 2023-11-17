@@ -23,14 +23,14 @@ export default function setupAxios(axios: AxiosInstance, store: Store<{ auth: Au
   axios.defaults.baseURL = API_URL;
   axios.interceptors.request.use(
     config => {
-      const { token, location } = store.getState().auth;
+      const { token/*, location*/ } = store.getState().auth;
       if (!config.url?.startsWith(PRINTER_API_URL)) {
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
-        if (location) {
-          config.headers['Tenant-Location'] = location.id;
-        }
+        // if (location) {
+        //   config.headers['Tenant-Location'] = location.id;
+        // }
       }
 
       return config;

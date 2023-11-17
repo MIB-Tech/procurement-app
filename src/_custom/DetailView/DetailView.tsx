@@ -36,7 +36,7 @@ import { ModelEnum } from '../../app/modules/types';
 
 export const DetailView = <M extends ModelEnum>({ modelName, view }: { view: DetailViewType<M>, modelName: M }) => {
   const { columnDef } = useMapping<M>({ modelName });
-  const { isGrantedOneOf, user, location } = useAuth();
+  const { isGrantedOneOf, user/*, location*/ } = useAuth();
   const { routeKey, itemOperationRoutes } = view;
   const { dynamicRoutes } = useOperation(routeKey);
   const { property, pathname } = useProperty<M>();
@@ -70,9 +70,9 @@ export const DetailView = <M extends ModelEnum>({ modelName, view }: { view: Det
   const columnNames = (Object.keys(columns) as Array<keyof typeof columns>).filter(columnName => {
     const column = property && columns[columnName];
 
-    if (location && isLocationColumn({ modelName, columnName })) {
-      return false;
-    }
+    // if (location && isLocationColumn({ modelName, columnName })) {
+    //   return false;
+    // }
 
     if (typeof column === 'boolean') {
       return column;
