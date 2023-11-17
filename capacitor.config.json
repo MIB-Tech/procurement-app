@@ -1,0 +1,12 @@
+{
+  "appId": "gmao.app",
+  "appName": "GMAO",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {},
+  "server": {
+    "url": "http://192.168.240.52:83",
+    "cleartext": true
+  }
+}

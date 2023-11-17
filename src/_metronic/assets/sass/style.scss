@@ -1,0 +1,37 @@
+//
+// Theme style
+//
+
+// Mode
+$mode: default;
+
+// Initialize
+@import 'init';
+
+// Components
+@import './core/components/components';
+@import 'components/components';
+
+// Layout
+@import 'layout/layout';
+@import './core/layout/docs/layout';
+
+//plugin
+@import 'plugins';
+
+
+//.vis-item .vis-item-overflow {
+//  overflow: visible !important;
+//}
+//
+//.vis-timeline {
+//  border-radius: $border-radius;
+//  border-color: #d8d9de !important;
+//  box-shadow: none !important;
+//  border-width: 1px !important;
+//}
+
+.modal-90w {
+  width: 90%;
+  max-width: none;
+}

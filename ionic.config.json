@@ -1,0 +1,7 @@
+{
+  "name": "GMAO",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

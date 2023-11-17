@@ -1,0 +1,120 @@
+//
+// To make future updates easier consider overriding the global variables from _variables.bootstrap.scss and _variables.custom.scss for current demo in this file.
+// Note that this file is included first and variables defined in _variables.bootstrap.scss and _variables.custom.scss
+// are not accessible in this file but you can override any global variable as shown below:
+//
+
+// Theme colors
+// Primary
+$primary: if(isDarkMode(), #209dd5, #1599d4);
+$primary-active: if(isDarkMode(), #3e98be, #49a7d2);
+$primary-light: if(isDarkMode(), #1C2C5D, #ecf6fd);
+$primary-inverse: #ffffff;
+
+// Success
+$success: if(isDarkMode(), #0bb783, #01c88c);
+$success-active: if(isDarkMode(), #04aa77, #47be7d);
+$success-light: if(isDarkMode(), #1c3238, #e8fff3);
+$success-inverse: #ffffff;
+
+// Info
+$info: if(isDarkMode(), #8950fc, #7239ea);
+$info-active: if(isDarkMode(), #7337ee, #5014d0);
+$info-light: if(isDarkMode(), #2f264f, #f8f5ff);
+$info-inverse: #ffffff;
+
+// Danger
+$danger: if(isDarkMode(), #f64e60, #ff3835);
+$danger-active: if(isDarkMode(), #ee2d41, #d9214e);
+$danger-light: if(isDarkMode(), #3a2434, #fff5f8);
+$danger-inverse: #ffffff;
+
+// Warning
+$warning: if(isDarkMode(), #ffa800, #ffaa2b);
+$warning-active: if(isDarkMode(), #ee9d01, #f1bc00);
+$warning-light: if(isDarkMode(), #392f28, #fff8dd);
+$warning-inverse: #ffffff;
+
+
+$enable-validation-icons: false !default;
+//$form-feedback-icon-invalid: url('./media/icons/duotune/arrows/arr066.svg');
+
+$card-py: 0.75rem !default;
+$card-px: 1rem !default;
+
+//$container-max-widths: (
+//  sm: 576px,
+//  md: 768px,
+//  lg: 992px,
+//  xl: 1200px,
+//  xxl: 1400px,
+//) !default;
+
+// Header
+$header-config: (
+// Default Mode
+  default:
+  (
+    height: (
+      desktop: 65px,
+      tablet-and-mobile: 55px,
+    ),
+    bg-color: if(isDarkMode(), #1e1e2d, #ffffff),
+  ),
+  // Fixed Mode
+  fixed:
+  (
+    height: (
+      desktop: 45px,
+      tablet-and-mobile: 45px,
+    ),
+    z-index: 100,
+    bg-color: if(isDarkMode(), #1e1e2d, #ffffff),
+    box-shadow: if(isDarkMode(), none, 0px 10px 30px 0px rgba(82, 63, 105, 0.05)),
+  )
+) !default;
+
+
+// Aside
+$aside-config: (
+  z-index: 101,
+  // Aside's z-index property
+  transition-speed: 0.3s,
+  // transition speed
+  padding-x: 25px,
+  menu-indention: 0.75rem,
+  bg-color: #1e1e2d,
+  logo-bg-color: darken(#1e1e2d, 2%),
+  scrollbar-color: if(isDarkMode(), $gray-200, #3b3b64),
+  scrollbar-hover-color: if(isDarkMode(), $gray-300, lighten(#3b3b64, 3%)),
+  width: 235px,
+  // Aside width for desktop mode
+  minimized-width: 75px,
+  // Aside minimized width for desktop mode
+  box-shadow: if(isDarkMode(), none, 0 0 28px 0 rgba(82, 63, 105, 0.05)),
+  // Aside box shadow
+  minimized-hover-box-shadow: if(isDarkMode(), none, 5px 0px 10px rgba(70, 78, 95, 0.075))
+  // Monimized hover box shadow,
+) !default;
+
+$content-spacing: (
+  desktop: 10px,
+  // Padding for desktop mode
+  tablet-and-mobile: 7.5px // Padding for tablet and mobile modes,
+) !default;
+
+$code-margin: 0px !default;
+$code-box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.08) !default;
+
+$font-size-base: 0.95rem !default;
+$line-height-base: 1.4 !default;
+//$input-height: 35px !default;
+$input-height-sm: 30px !default;
+
+$input-btn-padding-y: 0.5rem !default;
+$input-btn-padding-x: $input-btn-padding-y * 1.5 !default;
+$input-btn-padding-y-sm: 0.45rem !default;
+$input-btn-padding-x-sm: $input-btn-padding-y-sm * 1.5 !default;
+$input-btn-padding-y-lg: 0.6rem !default;
+$input-btn-padding-x-lg: $input-btn-padding-y-lg * 1.5 !default;
+$btn-padding-x-sm: 0.75rem !default;
