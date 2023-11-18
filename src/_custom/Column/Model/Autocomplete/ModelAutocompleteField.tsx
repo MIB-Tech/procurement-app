@@ -46,7 +46,7 @@ export const ModelAutocompleteField = <
 
   const { collection, isLoading, totalCount } = useCollectionQuery<M>({
     modelName,
-    path: getRoutePrefix(modelName) + '/autocomplete',
+    path: getRoutePrefix(modelName) + '/base',
     options: { enabled },
     params: {
       filter: getParams({
@@ -68,7 +68,7 @@ export const ModelAutocompleteField = <
       }
       setEnabled(false);
     }
-  }, [value]);
+  }, [props.multiple, value]);
 
   useEffect(() => {
     if (autoSelect) {
@@ -77,7 +77,7 @@ export const ModelAutocompleteField = <
         setValue(item);
       }
     }
-  }, [autoSelect, collection]);
+  }, [autoSelect, collection, inputValue, setValue]);
   
   const getOptionLabel = (option: string | HydraItem<M>) => {
     if (typeof option === 'string') {
@@ -86,9 +86,12 @@ export const ModelAutocompleteField = <
     let label = option['@title'];
 
     const subTitle = option['@subTitle'];
-    if (subTitle) {
-      label += ` (${Object.keys(fr).includes(subTitle) ? trans({ id: subTitle as I18nMessageKey }) : subTitle})`;
-    }
+    // if (subTitle) {
+    //   label += ` (${Object.keys(fr).includes(subTitle) ?
+    //     trans({ id: subTitle as I18nMessageKey }) :
+    //     subTitle
+    //   })`;
+    // }
 
     return label;
   }

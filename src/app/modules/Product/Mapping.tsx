@@ -7,18 +7,31 @@ import {ModelEnum} from '../types';
 const mapping: ModelMapping<ModelEnum.Product> = {
   modelName: ModelEnum.Product,
   icon: '/general/gen017.svg',
+  // hydraTitle: (item)=>(
+  //   <div className='text-truncate mw-600px'>
+  //     {item['@title']}
+  //   </div>
+  // ),
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
     },
     name: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+    },
+    category: {
+       type: ModelEnum.Category
+    },
+    draftOrderLines: {
+      type: ModelEnum.DraftOrderLine,
+      multiple: true
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
-      routeKey: RouteKeyEnum.ProductListing
+      routeKey: RouteKeyEnum.ProductListing,
+      columns: {}
     },
     {
       type: ViewEnum.Detail,

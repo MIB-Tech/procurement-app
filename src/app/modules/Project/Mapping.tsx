@@ -13,12 +13,17 @@ const mapping: ModelMapping<ModelEnum.Project> = {
     },
     name: {
       type: ColumnTypeEnum.String
+    },
+    draftOrders: {
+      type: ModelEnum.DraftOrder,
+      multiple: true
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
-      routeKey: RouteKeyEnum.ProjectListing
+      routeKey: RouteKeyEnum.ProjectListing,
+      columns: {}
     },
     {
       type: ViewEnum.Detail,
@@ -26,7 +31,7 @@ const mapping: ModelMapping<ModelEnum.Project> = {
     },
     {
       type: ViewEnum.Delete,
-      routeKey: RouteKeyEnum.ProjectDelete
+      routeKey: RouteKeyEnum.ProjectDelete,
     },
     {
       type: ViewEnum.Form,

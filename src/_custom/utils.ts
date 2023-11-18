@@ -102,9 +102,9 @@ export const getValidationSchema = <M extends ModelEnum>({ columnDef, trans, fie
           let relationSchema: ObjectSchema<any> = relation();
           if ('embeddedForm' in columnMapping) {
             const embeddedModelMapping = MODEL_MAPPINGS[type] as ModelMapping<any>;
-            const view = embeddedModelMapping.views?.find(view => view.type === ViewEnum.Form && !view.routeKey) as FormViewType<M> | undefined;
+            const view = embeddedModelMapping.views?.find(view => view.type === ViewEnum.Form && !view.routeKey) as FormViewType<any> | undefined;
             const embeddedFields = view?.fields ||
-              (Object.keys(embeddedModelMapping.columnDef) as Array<keyof Model<M>>).filter(columnName => {
+              (Object.keys(embeddedModelMapping.columnDef) as Array<keyof Model<any>>).filter(columnName => {
                 if (columnName === 'id') {
                   return false;
                 }
@@ -119,11 +119,11 @@ export const getValidationSchema = <M extends ModelEnum>({ columnDef, trans, fie
                 }
               }).reduce(
                 (obj, columnName) => ({ ...obj, [columnName]: true }),
-                {} as FormFields<M>
+                {} as FormFields<any>
               );
 
             relationSchema = getValidationSchema({
-              columnDef: embeddedModelMapping.columnDef as ValidationSchemaDef<M>,
+              columnDef: embeddedModelMapping.columnDef as ValidationSchemaDef<any>,
               trans,
               fields: embeddedFields
             });

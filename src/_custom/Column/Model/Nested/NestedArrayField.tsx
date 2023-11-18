@@ -32,12 +32,16 @@ export const NestedArrayField = <M extends ModelEnum>({ name, modelName }: Field
       render={({ remove, push }) => (
         <div>
           {items.map((item, index) => {
-            const view = views?.find((view) => {
-              if (view.type !== ViewEnum.Form || view.routeKey) {
-                return false;
-              }
+            const view = views?.find(view => {
 
-              return item.id ? view.mode === MutationMode.Post : view.mode === MutationMode.Put;
+              return view.type === ViewEnum.Form /*&& (
+                item.id ? view.mode === MutationMode.Put : view.mode === MutationMode.Post
+              )*/
+              // if (view.type !== ViewEnum.Form || view.routeKey) {
+              //   return false;
+              // }
+              //
+              // return item.id ? view.mode === MutationMode.Put : view.mode === MutationMode.Post;
             }) as FormViewType<M> | undefined;
 
             const fields = view?.fields ?
@@ -64,6 +68,7 @@ export const NestedArrayField = <M extends ModelEnum>({ name, modelName }: Field
               (prev, curr) => ({ ...prev, [curr]: columnDef[curr as keyof Model<M>] }),
               {} as ColumnDef<M>
             );
+
 
             return (
               <div key={index} className='card card-flush card-bordered border-2 mb-5'>

@@ -13,12 +13,17 @@ const mapping: ModelMapping<ModelEnum.Category> = {
     },
     name: {
       type: ColumnTypeEnum.String
+    },
+    products: {
+      type: ModelEnum.Product,
+      multiple: true
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
-      routeKey: RouteKeyEnum.CategoryListing
+      routeKey: RouteKeyEnum.CategoryListing,
+      columns: {}
     },
     {
       type: ViewEnum.Detail,

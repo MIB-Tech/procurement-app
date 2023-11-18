@@ -11,14 +11,23 @@ const mapping: ModelMapping<ModelEnum.Company> = {
     id: {
       type: ColumnTypeEnum.Number
     },
+    code: {
+      type: ColumnTypeEnum.String,
+      uppercase: true
+    },
     name: {
       type: ColumnTypeEnum.String
+    },
+    draftOrders: {
+      type: ModelEnum.DraftOrder,
+      multiple: true
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
-      routeKey: RouteKeyEnum.CompanyListing
+      routeKey: RouteKeyEnum.CompanyListing,
+      columns: {}
     },
     {
       type: ViewEnum.Detail,

@@ -31,9 +31,10 @@ type Model = {
   company: AbstractModel
   receptionManager: UserModel
   applicantService: AbstractModel
-  orderLines: Array<AbstractModel>
+  lines: Array<AbstractModel>
   attachments: Array<DraftOrderAttachmentModel>
   readonly category: CategoryModel
+  readonly validationPath: string
 } & CreateTimestamp & AbstractModel
 
 export default Model;

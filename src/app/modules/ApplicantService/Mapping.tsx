@@ -13,12 +13,17 @@ const mapping: ModelMapping<ModelEnum.ApplicantService> = {
     },
     name: {
       type: ColumnTypeEnum.String
+    },
+    draftOrders: {
+      type: ModelEnum.DraftOrder,
+      multiple: true
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
-      routeKey: RouteKeyEnum.ApplicantServiceListing
+      routeKey: RouteKeyEnum.ApplicantServiceListing,
+      columns: {}
     },
     {
       type: ViewEnum.Detail,

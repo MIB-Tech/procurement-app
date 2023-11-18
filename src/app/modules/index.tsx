@@ -60,14 +60,14 @@ export const LISTING_FAMILY = atomFamily<Required<Params<any>>,{modelName: Model
         }
 
         break;
-      case ModelEnum.DraftOrder:
-        defaultValues = {
-          ...defaultValues,
-          sort: {
-            createdAt: 'desc'
-          }
-        };
-        break;
+      // case ModelEnum.DraftOrder:
+      //   defaultValues = {
+      //     ...defaultValues,
+      //     sort: {
+      //       createdAt: 'desc'
+      //     }
+      //   };
+      //   break;
       default:
         break;
     }

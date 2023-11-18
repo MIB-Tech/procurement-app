@@ -18,8 +18,8 @@ import { Pagination } from '../ListingView/Pagination';
 import { Bullet } from '../components/Bullet';
 
 
-const getWorkSheet = (workbook: WorkBook) => workbook.Sheets[workbook.SheetNames[0]];
-const getData = <M extends ModelEnum>({ workbook, mapping }: Required<Value<M>>) => {
+export const getWorkSheet = (workbook: WorkBook) => workbook.Sheets[workbook.SheetNames[0]];
+export const getData = <M extends ModelEnum>({ workbook, mapping }: Required<Value<M>>) => {
   const workSheet = getWorkSheet(workbook);
   const sheetData = utils.sheet_to_json<Record<string, any>>(workSheet, { raw: false });
 

@@ -11,14 +11,21 @@ const mapping: ModelMapping<ModelEnum.DraftOrderLine> = {
     id: {
       type: ColumnTypeEnum.Number
     },
-    name: {
-      type: ColumnTypeEnum.String
+    quantity: {
+      type: ColumnTypeEnum.Number,
+    },
+    product: {
+      type: ModelEnum.Product
+    },
+    order: {
+      type: ModelEnum.DraftOrder
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
-      routeKey: RouteKeyEnum.DraftOrderLineListing
+      // routeKey: RouteKeyEnum.DraftOrderLineListing,
+      columns: {}
     },
     {
       type: ViewEnum.Detail,
@@ -30,7 +37,12 @@ const mapping: ModelMapping<ModelEnum.DraftOrderLine> = {
     },
     {
       type: ViewEnum.Form,
-      routeKey: RouteKeyEnum.DraftOrderLineCreate
+      fields: {
+        quantity: {
+          defaultValue: 1
+        },
+        product: true
+      }
     },
     {
       type: ViewEnum.Form,

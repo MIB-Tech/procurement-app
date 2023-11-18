@@ -9,5 +9,5 @@ export const datetime = () => string().test(
 );
 
 export const relation = () => object({
-  '@id': string().required()
+  // '@id': string().required()
 })

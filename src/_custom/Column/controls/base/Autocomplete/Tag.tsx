@@ -72,7 +72,7 @@ type PopperProps = HTMLAttributes<HTMLUListElement>
 export const Popper = forwardRef<HTMLUListElement, PopperProps>(({ className, style, ...props }, ref) => (
   <ul
     className={clsx(
-      'position-absolute overflow-auto bg-white mh-250px rounded shadow p-0 min-w-100 -w-100',
+      'position-absolute overflow-auto bg-white mh-250px rounded shadow p-0 min-w-100 mw-300px',
       className
     )}
     style={{ ...style, zIndex: 1000 }}

@@ -5,7 +5,57 @@ import {RouteKeyEnum} from '../Route/Model';
 import {DraftOrderStatusEnum, PriorityEnum} from './Model';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
+import React, {useState} from 'react';
+import {Input} from '../../../_custom/Column/String/InputBase/Input';
+import {Button} from '../../../_custom/components/Button';
+import {read} from 'xlsx';
 
+
+const LinesField = () => {
+  const [file, setFile] = useState<File>();
+
+
+  return (
+    <>
+      <div className='d-flex gap-5 mb-3'>
+        <Input
+          type='file'
+          accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+          onChange={event => {
+            const file = event.target.files?.[0];
+            setFile(file);
+
+            // if(file) {
+            //   file.arrayBuffer().then(file => {
+            //     setFile('workbook', file);
+            //   });
+            // } else {
+            //   // setFieldValue('workbook', undefined);
+            // }
+
+          }}
+        />
+        <Button
+          variant='light-primary'
+          disabled={!file}
+          onClick={() => {
+            if (file) {
+              const workbook = read(file, { dateNF: 'yyyy-mm-dd' });
+              console.log(workbook)
+            }}
+          }
+        >
+          Importer
+        </Button>
+      </div>
+      <NestedArrayField
+        modelName={ModelEnum.DraftOrderLine}
+        name='lines'
+      />
+    </>
+  );
+};
 
 const mapping: ModelMapping<ModelEnum.DraftOrder> = {
   modelName: ModelEnum.DraftOrder,
@@ -38,12 +88,15 @@ const mapping: ModelMapping<ModelEnum.DraftOrder> = {
     isRegularized: {
       type: ColumnTypeEnum.Boolean
     },
+    validationPath: {
+      type: ColumnTypeEnum.String
+    },
     priority: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Select,
       inline: true,
       options: [
-        {id: PriorityEnum.Normal, color: 'light'},
+        {id: PriorityEnum.Normal, color: 'primary'},
         {id: PriorityEnum.Urgent, color: 'danger'},
       ]
     },
@@ -76,9 +129,10 @@ const mapping: ModelMapping<ModelEnum.DraftOrder> = {
     applicantService: {
       type: ModelEnum.ApplicantService,
     },
-    orderLines: {
+    lines: {
       type: ModelEnum.DraftOrderLine,
-      multiple: true
+      multiple: true,
+      embeddedForm: true
     },
     attachments: {
       type: ModelEnum.DraftOrderAttachment,
@@ -112,7 +166,34 @@ const mapping: ModelMapping<ModelEnum.DraftOrder> = {
     },
     {
       type: ViewEnum.Form,
-      routeKey: RouteKeyEnum.DraftOrderCreate
+      routeKey: RouteKeyEnum.DraftOrderCreate,
+      fields: {
+        priority: {
+          defaultValue: PriorityEnum.Normal
+        },
+        createdAt: true,
+        desiredDeliveryDate: true,
+        description: true,
+        company: true,
+        orderedFor: true,
+        applicantService: true,
+        buyerFullName: true,
+        // validationPath: {
+        //   render: ({item})=>(
+        //     <div>
+        //       {item.validationPath}
+        //     </div>
+        //   )
+        // },
+        project: true,
+        isRegularized: true,
+        attachments: true,
+        receptionManager: true,
+        // recommendedVendors: true,
+        lines: {
+          render: LinesField
+        },
+      }
     },
     {
       type: ViewEnum.Form,
