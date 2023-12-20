@@ -109,7 +109,7 @@ $code-box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.08) !default;
 $font-size-base: 0.95rem !default;
 $line-height-base: 1.4 !default;
 //$input-height: 35px !default;
-$input-height-sm: 30px !default;
+$input-height-sm: 32px !default;
 
 $input-btn-padding-y: 0.5rem !default;
 $input-btn-padding-x: $input-btn-padding-y * 1.5 !default;
@@ -118,3 +118,37 @@ $input-btn-padding-x-sm: $input-btn-padding-y-sm * 1.5 !default;
 $input-btn-padding-y-lg: 0.6rem !default;
 $input-btn-padding-x-lg: $input-btn-padding-y-lg * 1.5 !default;
 $btn-padding-x-sm: 0.75rem !default;
+
+$pagination-item-height: 2rem !default; // Custom variable
+
+$border-radius-sm: 0.275rem * 1.4 !default;
+$border-radius: 0.475rem * 1.4 !default;
+$border-radius-lg: 0.775rem * 1.4 !default;
+$border-radius-xl: 1rem * 1.4 !default;
+
+$border-width: 2px !default;
+
+$form-check-input-width: 1.5rem !default;
+$form-check-input-width-sm: 1.25rem !default;
+$form-check-input-width-lg: 1.75rem !default;
+
+//$enable-grid-classes: false;
+//$enable-cssgrid: true;
+
+$modal-inner-padding: 1rem !default;
+$grid-breakpoints: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1300px,
+        xxl: 1600px,
+) !default;
+$container-max-widths: (
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1300px,
+        xxl: 1600px,
+) !default;

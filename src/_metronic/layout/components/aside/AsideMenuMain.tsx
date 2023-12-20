@@ -2,54 +2,54 @@
 import React from 'react';
 import { AsideMenuItem } from './AsideMenuItem';
 import { useAuth } from '../../../../_custom/hooks/UseAuth';
-import { RouteModel } from '../../../../app/modules/Route';
+import { ViewEnum } from '../../../../_custom/types/ModelMapping';
 
-
-export const isStaticRoute = ({ treePath }: RouteModel) => !treePath?.includes(':');
-export const isAccountRoute = ({ routeKey }: RouteModel) => routeKey.startsWith('ACCOUNT.');
-export const isMenuRoute = (route: RouteModel) => isStaticRoute(route) && !isAccountRoute(route) && !route.parent;
 
 export function AsideMenuMain() {
-  const { routes } = useAuth();
-  const menuRoutes = routes.filter(isMenuRoute);
+  const { operations } = useAuth();
 
   return (
     <>
-      {
-        menuRoutes.map(route => {
-          const { id } = route;
-          // const childrenRoutes = routes
-          // .filter(({ parent }) => parent?.id === id)
-          // .filter(isStaticRoute);
+      {operations
+      .filter(({ operationType, isMenuItem }) => isMenuItem && operationType === ViewEnum.Listing)
+      .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
+      .map(operation => <AsideMenuItem key={operation.id} {...operation} />)}
+      {/*....................*/}
+      {/*{*/}
+      {/*  menuRoutes.map(route => {*/}
+      {/*    const { id } = route;*/}
+      {/*    // const childrenRoutes = routes*/}
+      {/*    // .filter(({ parent }) => parent?.id === id)*/}
+      {/*    // .filter(isStaticRoute);*/}
 
-          if (!route.parent) {
-            return (
-              <AsideMenuItem key={id} {...route}/>
-            )
-            // return (
-            //   <div key={id}>
-            //     <AsideMenuItem {...route} group/>
-            //
-            //     <AsideMenuItem {...route}/>
-            //     {childrenRoutes.map(child => (
-            //       <AsideMenuItem key={child.id} {...child}/>
-            //     ))}
-            //   </div>
-            // );
-            // return (
-            //
-            //   <AsideMenuItemWithSub key={id} {...route} >
-            //     <AsideMenuItem key={id} {...route} icon={undefined} title={route.contextualTitle || route.title}/>
-            //     {childrenRoutes.map(child => (
-            //       <AsideMenuItem key={child.id} {...child} icon={undefined} title={child.contextualTitle || child.title}/>
-            //     ))}
-            //   </AsideMenuItemWithSub>
-            // );
-          }
+      {/*    if (!route.parent) {*/}
+      {/*      return (*/}
+      {/*        <AsideMenuItem key={id} {...route} />*/}
+      {/*      )*/}
+      {/*      // return (*/}
+      {/*      //   <div key={id}>*/}
+      {/*      //     <AsideMenuItem {...route} group/>*/}
+      {/*      //*/}
+      {/*      //     <AsideMenuItem {...route}/>*/}
+      {/*      //     {childrenRoutes.map(child => (*/}
+      {/*      //       <AsideMenuItem key={child.id} {...child}/>*/}
+      {/*      //     ))}*/}
+      {/*      //   </div>*/}
+      {/*      // );*/}
+      {/*      // return (*/}
+      {/*      //*/}
+      {/*      //   <AsideMenuItemWithSub key={id} {...route} >*/}
+      {/*      //     <AsideMenuItem key={id} {...route} icon={undefined} title={route.contextualTitle || route.title}/>*/}
+      {/*      //     {childrenRoutes.map(child => (*/}
+      {/*      //       <AsideMenuItem key={child.id} {...child} icon={undefined} title={child.contextualTitle || child.title}/>*/}
+      {/*      //     ))}*/}
+      {/*      //   </AsideMenuItemWithSub>*/}
+      {/*      // );*/}
+      {/*    }*/}
 
-          return <AsideMenuItem key={id} {...route} />;
-        })
-      }
+      {/*    return <AsideMenuItem key={id} {...route} />;*/}
+      {/*  })*/}
+      {/*}*/}
 
 
       {/*<AsideMenuItem*/}

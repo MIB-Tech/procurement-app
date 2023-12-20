@@ -1,19 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { FC } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Languages } from './Languages';
 import * as auth from '../../../../app/pages/auth/redux/AuthRedux';
 import { Trans } from '../../../../_custom/components/Trans';
 import { useAuth } from '../../../../_custom/hooks/UseAuth';
-import { isAccountRoute } from '../../../layout/components/aside/AsideMenuMain';
 import clsx from 'clsx';
 
 
 const HeaderUserMenu: FC<{show?: boolean}> = ({show}) => {
-  const { user, routes } = useAuth();
-  const accountRoutes = routes.filter(isAccountRoute);
-  const dispatch = useDispatch()
+  const { user, operations } = useAuth();
+  // const _operations = operations.filter(isAccountRoute);
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -59,19 +57,18 @@ const HeaderUserMenu: FC<{show?: boolean}> = ({show}) => {
         {user.role && <span className='badge badge-light-primary fw-bolder w-100'>{user.role.name}</span>}
       </div>
 
-      {accountRoutes.length > 0 && (
-        <>
-          <div className='separator my-2'/>
-          {accountRoutes.map(route => (
-            <div key={route.id} className='menu-item px-5'>
-              <Link to={route.treePath+''} className='menu-link px-5'>
-                {route.title}
-              </Link>
-            </div>
-          ))}
-        </>
-      )}
-
+      {/*{_operations.length > 0 && (*/}
+      {/*  <>*/}
+      {/*    <div className='separator my-2'/>*/}
+      {/*    {_operations.map(route => (*/}
+      {/*      <div key={route.id} className='menu-item px-5'>*/}
+      {/*        <Link to={route.treePath+''} className='menu-link px-5'>*/}
+      {/*          {route.title}*/}
+      {/*        </Link>*/}
+      {/*      </div>*/}
+      {/*    ))}*/}
+      {/*  </>*/}
+      {/*)}*/}
 
 
       {/*<div className='menu-item px-5'>*/}

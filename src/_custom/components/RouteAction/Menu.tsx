@@ -2,12 +2,19 @@ import React, { forwardRef } from 'react';
 import { ActionDropdownProps } from './RouteAction.types';
 import { useAuth } from '../../hooks/UseAuth';
 import { Link } from 'react-router-dom';
-import { KTSVG } from '../../../_metronic/helpers';
+import { Trans } from '../Trans';
+import { SVG } from '../SVG/SVG';
 
 
 export const Menu = forwardRef<HTMLDivElement, ActionDropdownProps>((props, ref) => {
-  const { style, className, 'aria-labelledby': labeledBy, itemOperations } = props;
-  const { routes } = useAuth();
+  const {
+    style,
+    className,
+    'aria-labelledby': labeledBy,
+    operations,
+    params
+  } = props;
+  const { getPath } = useAuth();
 
   return (
     <div
@@ -17,15 +24,15 @@ export const Menu = forwardRef<HTMLDivElement, ActionDropdownProps>((props, ref)
       aria-labelledby={labeledBy}
     >
       <ul className='px-0 mb-0'>
-        {itemOperations.map(({ path, routeKey }, index) => {
-          const route = routes.find((route) => route.routeKey === routeKey);
-          if (!route) return <></>;
+        {operations.map((operation, index) => {
+          const { suffix, resource, icon, operationType } = operation;
 
           return (
-            <Link key={index} to={path || route.treePath} className='text-gray-900'>
+            <Link key={index} to={getPath({ suffix, resourceName: resource.name, params })} className='text-gray-900'>
               <li className='dropdown-item'>
-                {route.icon && <KTSVG path={route.icon} className='me-2' />}
-                {route.contextualTitle || route.title}
+                <SVG path={icon} className='me-2' />
+                <Trans id={operationType} />
+                {/*resource.contextualTitle || title*/}
               </li>
             </Link>
           );

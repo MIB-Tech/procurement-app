@@ -1,12 +1,12 @@
 import {AbstractModel} from '../../../_custom/types/types';
-import {DraftOrderLineModel} from '../DreaftOrderLine';
+import {PurchaseNeedProductModel} from '../PurchaseNeedProduct';
 import {CategoryModel} from '../Category';
 
 
 type Model = {
   name: string
   category: CategoryModel
-  draftOrderLines: Array<DraftOrderLineModel>
+  purchaseNeedProducts: Array<PurchaseNeedProductModel>
 } & AbstractModel
 
 export default Model;

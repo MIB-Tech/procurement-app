@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import clsx from 'clsx';
 import { getRoutePrefix } from '../../../../_custom/utils';
 import { Button } from '../../../../_custom/components/Button';
-import { ModelCell } from '../../../../_custom/ListingView/TableView/ModelCell';
+import { ModelCell } from '../../../../_custom/ListingView/views/Table/ModelCell';
 import { SVG } from '../../../../_custom/components/SVG/SVG';
 import { useCollectionQuery } from '../../../../_custom/hooks/UseCollectionQuery';
 import { ModelEnum } from '../../../../app/modules/types';
@@ -14,15 +14,15 @@ import * as auth from '../../../../app/pages/auth/redux/AuthRedux';
 
 const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
   const dispatch = useDispatch();
-  // const { location: activeLocation, user } = useAuth();
-  // const modelName = ModelEnum.Location;
-  // const { collection, isLoading } = useCollectionQuery<ModelEnum.Location>({
-  //   options: {
-  //     enabled: !user.location
-  //   },
-  //   modelName,
-  //   path: getRoutePrefix(modelName) + '/autocomplete'
-  // });
+  const { location: activeLocation, user } = useAuth();
+  const modelName = ModelEnum.Location;
+  const { collection, isLoading } = useCollectionQuery<ModelEnum.Location>({
+    options: {
+      enabled: !user.location
+    },
+    modelName,
+    path: getRoutePrefix(modelName) + '/base'
+  });
 
   return (
     <div
@@ -49,32 +49,32 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
       {/*  </span>*/}
       {/*</div>*/}
 
-      {/*<div className='row g-2'>*/}
-      {/*  {collection.map(location => {*/}
-      {/*    const active = location.id === activeLocation?.id;*/}
+      <div className='row g-2'>
+        {collection.map(location => {
+          const active = location.id === activeLocation?.id;
 
-      {/*    return (*/}
-      {/*      <div*/}
-      {/*        key={location['@id']}*/}
-      {/*        className='col-4'*/}
-      {/*      >*/}
-      {/*        <a*/}
-      {/*          href="#"*/}
-      {/*          className={clsx(*/}
-      {/*            'btn bg-light btn-color-gray-600 btn-active-text-gray-800 border border-2 border-gray-100 border-active-primary btn-active-light-primary w-100 px-4',*/}
-      {/*            active && 'active'*/}
-      {/*          )}*/}
-      {/*          onClick={e => {*/}
-      {/*            e.preventDefault()*/}
-      {/*            // dispatch(auth.actions.setLocation(active ? undefined : location));*/}
-      {/*          }}*/}
-      {/*        >*/}
-      {/*          {location['@title']}*/}
-      {/*        </a>*/}
-      {/*      </div>*/}
-      {/*    )*/}
-      {/*  })}*/}
-      {/*</div>*/}
+          return (
+            <div
+              key={location['@id']}
+              className='col-4'
+            >
+              <a
+                href="#"
+                className={clsx(
+                  'btn bg-light btn-color-gray-600 btn-active-text-gray-800 border border-2 border-gray-100 border-active-primary btn-active-light-primary w-100 px-4',
+                  active && 'active'
+                )}
+                onClick={e => {
+                  e.preventDefault()
+                  dispatch(auth.actions.setLocation(active ? undefined : location));
+                }}
+              >
+                {location['@title']}
+              </a>
+            </div>
+          )
+        })}
+      </div>
     </div>
   );
 };

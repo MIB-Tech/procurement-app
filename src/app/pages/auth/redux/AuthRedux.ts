@@ -23,7 +23,7 @@ export const actionTypes = {
 
 const initialAuthState: AuthState = {
   user: undefined,
-  // location: undefined,
+  location: undefined,
   token: undefined,
   refreshToken: undefined
 };
@@ -35,7 +35,7 @@ export type Token = {
 
 export type AuthState = {
   user?: HydraItem<ModelEnum.User>
-  // location?: HydraItem<ModelEnum.Location>
+  location?: HydraItem<ModelEnum.Location>
 } & Partial<Token>
 
 
@@ -53,12 +53,12 @@ export const reducer = persistReducer(
         return initialAuthState;
       case actionTypes.UserLoaded:
         const user = action.payload?.user;
-        // const location = user?.location as HydraItem<ModelEnum.Location> | undefined;
+        const location = user?.location as HydraItem<ModelEnum.Location> | undefined;
 
-        return { ...state, user/*, location*/ };
+        return { ...state, user, location };
       case actionTypes.SetLocation:
 
-        return { ...state/*, location: action.payload?.location*/ };
+        return { ...state, location: action.payload?.location };
       default:
         return state;
     }
@@ -76,7 +76,7 @@ export const actions = {
     type: actionTypes.UserRequested
   }),
   fulfillUser: (user: UserModel) => ({ type: actionTypes.UserLoaded, payload: { user } }),
-  // setLocation: (location: HydraItem<ModelEnum.Location> | undefined) => ({ type: actionTypes.SetLocation, payload: { location } }),
+  setLocation: (location: HydraItem<ModelEnum.Location> | undefined) => ({ type: actionTypes.SetLocation, payload: { location } }),
 }
 
 // function* requestUser() {

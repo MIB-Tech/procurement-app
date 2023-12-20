@@ -1,5 +1,7 @@
-import { Model } from '../../types/ModelMapping';
+import { FilterColumns, Model } from '../../types/ModelMapping';
 import { ModelEnum } from '../../../app/modules/types';
+import { HTMLAttributes } from 'react';
+import { BasicFilter } from '../ListingView.types';
 
 
 type StringKeyOf<T extends {}> = keyof T
@@ -68,3 +70,15 @@ export type CompoundFilter<M extends ModelEnum> = {
 }
 
 export type Filter<M extends ModelEnum> = PropertyFilter<M> | CompoundFilter<M>
+export type AdvancedFilterProps<M extends ModelEnum> = {
+  modelName: M
+  value: Filter<M>
+  columns: FilterColumns<M>
+  onChange: (value: Filter<M>) => void
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>
+export type BasicFilterProps<M extends ModelEnum> = {
+  modelName: M
+  value: BasicFilter<M>
+  columns: FilterColumns<M>
+  onChange: (value: BasicFilter<M>) => void
+} & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>

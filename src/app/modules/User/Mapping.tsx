@@ -1,19 +1,20 @@
-import { ModelMapping, MutationMode, ViewEnum } from '../../../_custom/types/ModelMapping';
+import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import React from 'react';
-import { StringFormat } from '../../../_custom/Column/String/StringColumn';
-import { CREATED_AT_COLUMN } from '../columns';
-import { ref, string } from 'yup';
-import { RouteKeyEnum } from '../Route/Model';
-import { ColumnTypeEnum } from '../../../_custom/types/types';
-import { ModelEnum } from '../types';
+import {StringFormat} from '../../../_custom/Column/String/StringColumn';
+import {CREATED_AT_COLUMN} from '../columns';
+import {ref, string} from 'yup';
+import {ColumnTypeEnum} from '../../../_custom/types/types';
+import {ModelEnum} from '../types';
 
 
 const mapping: ModelMapping<ModelEnum.User> = {
   modelName: ModelEnum.User,
-  icon: '/communication/com006.svg',
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
+    },
+    uid: {
+      type: ColumnTypeEnum.String
     },
     username: {
       type: ColumnTypeEnum.String
@@ -54,28 +55,24 @@ const mapping: ModelMapping<ModelEnum.User> = {
       type: ModelEnum.Role,
       nullable: true
     },
+    location: {
+      type: ModelEnum.Location,
+      nullable: true
+    }
   },
   views: [
     {
       type: ViewEnum.Listing,
-      routeKey: RouteKeyEnum.UserListing,
       columns: {
         username: true,
         phoneNumber: true,
         email: true,
+        // role: true,
+        location: true
       }
     },
     {
-      type: ViewEnum.Detail,
-      routeKey: RouteKeyEnum.UserDetail
-    },
-    {
-      type: ViewEnum.Delete,
-      routeKey: RouteKeyEnum.UserDelete
-    },
-    {
-      type: ViewEnum.Form,
-      routeKey: RouteKeyEnum.UserCreate,
+      type: ViewEnum.Create,
       fields: {
         username: true,
         firstName: true,
@@ -84,19 +81,21 @@ const mapping: ModelMapping<ModelEnum.User> = {
         email: true,
         password: true,
         passwordConfirm: true,
-        role: true
+        role: true,
+        location: true,
+        teams: true
       }
     },
     {
-      type: ViewEnum.Form,
-      mode: MutationMode.Put,
-      routeKey: RouteKeyEnum.UserUpdate,
+      type: ViewEnum.Update,
       fields: {
         firstName: true,
         lastName: true,
         phoneNumber: true,
         email: true,
-        role: true
+        role: true,
+        location: true,
+        teams: true
       }
     }
   ]

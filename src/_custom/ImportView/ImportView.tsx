@@ -5,20 +5,18 @@ import { ImportViewProps } from './ImportView.types';
 import { GoBackButton } from '../components/Button/GoBackButton';
 import { Trans } from '../components/Trans';
 import { Button } from '../components/Button';
-import { ToolbarWrapper } from '../ListingView/ToolbarWrapper';
 import { FormikProvider, useFormik } from 'formik';
-import { FormGroup } from '../components/FormGroup';
 import { useMapping } from '../hooks/UseMapping';
 import { Input } from '../Column/String/InputBase/Input';
 import { Model } from '../types/ModelMapping';
-import { TitleContent } from '../ListingView/TableView/HeaderCell';
+import { TitleContent } from '../ListingView/views/Table/HeaderCell';
 import { SelectField } from '../Column/controls/fields/SelectField/SelectField';
 import clsx from 'clsx';
 import { Pagination } from '../ListingView/Pagination';
 import { Bullet } from '../components/Bullet';
 
 
-export const getWorkSheet = (workbook: WorkBook) => workbook.Sheets[workbook.SheetNames[0]];
+const getWorkSheet = (workbook: WorkBook) => workbook.Sheets[workbook.SheetNames[0]];
 export const getData = <M extends ModelEnum>({ workbook, mapping }: Required<Value<M>>) => {
   const workSheet = getWorkSheet(workbook);
   const sheetData = utils.sheet_to_json<Record<string, any>>(workSheet, { raw: false });
@@ -40,7 +38,7 @@ export const getData = <M extends ModelEnum>({ workbook, mapping }: Required<Val
 
 type Value<M extends ModelEnum> = {
   workbook?: WorkBook,
-  mapping: Record<keyof Model<M>, any>
+  mapping: Record<keyof Model<M>, string | null>
 }
 export const ImportView = <M extends ModelEnum>({ modelName, view }: ImportViewProps<M>) => {
   const { columnDef } = useMapping<M>({ modelName });
@@ -101,7 +99,7 @@ export const ImportView = <M extends ModelEnum>({ modelName, view }: ImportViewP
 
   return (
     <FormikProvider value={formik}>
-      <ToolbarWrapper>
+      <div className='mb-3'>
         <div className='text-end'>
           <GoBackButton size='sm' className='me-2'>
             <Trans id='CANCEL' />
@@ -119,14 +117,14 @@ export const ImportView = <M extends ModelEnum>({ modelName, view }: ImportViewP
             <Trans id='IMPORT' />
           </Button>
         </div>
-      </ToolbarWrapper>
+      </div>
       <div className='card'>
         <div className='card-body gap-y-5'>
           <Input
             type='file'
             onChange={event => {
-              const file = event.target.files?.[0]
-              if(file) {
+              const file = event.target.files?.[0];
+              if (file) {
                 file.arrayBuffer().then(file => {
                   setFieldValue('workbook', read(file, { dateNF: 'yyyy-mm-dd' }));
                 });

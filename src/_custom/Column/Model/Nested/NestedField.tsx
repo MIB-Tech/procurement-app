@@ -12,7 +12,7 @@ export const NestedField = <M extends ModelEnum>({ name, modelName }: FieldProps
   const { views } = useMapping<M>({ modelName });
 
   const view = views?.find(view => {
-    return view.type === ViewEnum.Form && !view.routeKey;
+    return view.type === ViewEnum.Create;
   }) as FormViewType<M> | undefined;
 
   if (!view) {
@@ -25,7 +25,6 @@ export const NestedField = <M extends ModelEnum>({ name, modelName }: FieldProps
 
   return (
     <FormCard
-      inlineFormGroup
       name={name}
       modelName={modelName}
       item={item}

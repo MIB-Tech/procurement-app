@@ -23,6 +23,7 @@ export enum ColumnTypeEnum {
 
 export type AbstractModel = {
   id: number
+  uid: string
 }
 export type CreateTimestamp = {
   createdAt?: string

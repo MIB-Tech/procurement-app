@@ -14,7 +14,7 @@ import { HydraItem } from '../../../types/hydra.types';
 import { Trans, useTrans } from '../../../components/Trans';
 import { fr } from '../../../i18n/messages/fr';
 import { I18nMessageKey } from '../../../i18n/I18nMessages';
-import { ModelCell } from '../../../ListingView/TableView/ModelCell';
+import { ModelCell } from '../../../ListingView/views/Table/ModelCell';
 import clsx from 'clsx';
 import { Popper } from '../../controls/base/Autocomplete/Tag';
 import { Pagination } from '../../../ListingView/Pagination';
@@ -68,7 +68,7 @@ export const ModelAutocompleteField = <
       }
       setEnabled(false);
     }
-  }, [props.multiple, value]);
+  }, [value]);
 
   useEffect(() => {
     if (autoSelect) {
@@ -77,7 +77,7 @@ export const ModelAutocompleteField = <
         setValue(item);
       }
     }
-  }, [autoSelect, collection, inputValue, setValue]);
+  }, [autoSelect, collection]);
   
   const getOptionLabel = (option: string | HydraItem<M>) => {
     if (typeof option === 'string') {
@@ -86,20 +86,17 @@ export const ModelAutocompleteField = <
     let label = option['@title'];
 
     const subTitle = option['@subTitle'];
-    // if (subTitle) {
-    //   label += ` (${Object.keys(fr).includes(subTitle) ?
-    //     trans({ id: subTitle as I18nMessageKey }) :
-    //     subTitle
-    //   })`;
-    // }
+    if (subTitle) {
+      label += ` (${Object.keys(fr).includes(subTitle) ? trans({ id: subTitle as I18nMessageKey }) : subTitle})`;
+    }
 
     return label;
   }
 
   return (
     <AutocompleteField
-      {...props}
       placeholder={trans({ id: 'SEARCH' })}
+      {...props}
       filterOptions={x => x}
       isOptionEqualToValue={(option, value1) => option['@id'] === value1['@id']}
       getOptionLabel={getOptionLabel}
@@ -150,6 +147,7 @@ export const ModelAutocompleteField = <
               <Pagination
                 boundaryCount={0}
                 siblingCount={0}
+                pageLess
                 size='sm'
                 page={pagination.page}
                 itemsPerPage={pagination.itemsPerPage}

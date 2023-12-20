@@ -7,11 +7,6 @@ export type PaginationInput = {
   page?: number
   itemsPerPage?: number | undefined
 }
-export type PaginationInfo = {
-  itemsPerPage: number
-  lastPage: number
-  totalCount: number
-}
 export const defaultVariables: PaginationInput = {
   page: 1,
   itemsPerPage: 5
@@ -19,10 +14,13 @@ export const defaultVariables: PaginationInput = {
 
 export type PaginationProps = {
   onPageChange: (page: number) => void
+  onItemsPerPageChange?: (itemsPerPage?: number) => void
   size?: InputSize,
   outline?: boolean
   circle?: boolean
   length?: number
-} & Omit<PaginationInfo, 'lastPage'>
+  pageLess?: boolean
+  totalCount: number
+} & Pick<PaginationInput, 'itemsPerPage'>
   & Omit<UsePaginationProps, 'count'>
   & HTMLAttributes<HTMLUListElement>

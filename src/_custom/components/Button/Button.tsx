@@ -31,6 +31,7 @@ export default (
       className={clsx(
         'btn',
         variant?.startsWith('outline') && 'btn-outline',
+        variant === 'outline-default' && 'bg-white',
         variant && (`btn-${variant}`),
         dashed && 'btn-outline-dashed',
         size && `btn-${size}`,

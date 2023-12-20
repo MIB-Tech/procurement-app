@@ -66,10 +66,9 @@ const RadioInner = <T extends {} | undefined>(
                 disabled={disabled || getOptionDisabled(option)}
                 dashed
                 className={clsx(
-                  'text-truncate py-1 px-1',
+                  'text-truncate py-1 px-2 rounded-1',
                   isActive && `btn-active-${variant} active`,
-                  isVertical ? (size === 'sm' ? 'min-w-60px mw-100px' : 'min-w-100px mw-120px') : 'w-100',
-                  className
+                  isVertical ? (size === 'sm' ? 'min-w-60px mw-100px' : 'min-w-100px mw-120px') : 'w-100'
                 )}
                 onClick={() => {
                   if (onChange) {

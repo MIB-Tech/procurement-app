@@ -46,7 +46,7 @@
 
   // Outline default
   &.btn-outline-default {
-    border: 1px solid $input-border-color;
+    border: $border-width solid $input-border-color;
   }
 
   // Flush

@@ -1,17 +1,18 @@
-import { ModelMapping, MutationMode, ViewEnum } from '../../../_custom/types/ModelMapping';
+import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import React from 'react';
-import { RouteKeyEnum } from '../Route/Model';
-import { string } from 'yup';
-import { ColumnTypeEnum } from '../../../_custom/types/types';
-import { ModelEnum } from '../types';
+import {string} from 'yup';
+import {ColumnTypeEnum} from '../../../_custom/types/types';
+import {ModelEnum} from '../types';
 
 
 const mapping: ModelMapping<ModelEnum.Role> = {
   modelName: ModelEnum.Role,
-  icon: '/general/gen051.svg',
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
+    },
+    uid: {
+      type: ColumnTypeEnum.String
     },
     name: {
       type: ColumnTypeEnum.String
@@ -20,15 +21,15 @@ const mapping: ModelMapping<ModelEnum.Role> = {
       type: ColumnTypeEnum.String,
       uppercase: true,
       schema: string()
-      .matches(/[A-Z.]+$/, { message: { id: 'VALIDATION.STRING.UPPERCASE' } })
-      .test(
-        'VALIDATION.STRING.STARTS_WITH',
-        { id: 'VALIDATION.STRING.STARTS_WITH', params: { value: 'ROLE_' } },
-        value => !!value?.startsWith('ROLE_')
-      )
+        .matches(/[A-Z.]+$/, {message: {id: 'VALIDATION.STRING.UPPERCASE'}})
+        .test(
+          'VALIDATION.STRING.STARTS_WITH',
+          {id: 'VALIDATION.STRING.STARTS_WITH', params: {value: 'ROLE_'}},
+          value => !!value?.startsWith('ROLE_')
+        )
     },
-    routes: {
-      type: ModelEnum.Route,
+    operations: {
+      type: ModelEnum.Operation,
       multiple: true
     },
     users: {
@@ -39,20 +40,10 @@ const mapping: ModelMapping<ModelEnum.Role> = {
   views: [
     {
       type: ViewEnum.Listing,
-      routeKey: RouteKeyEnum.RoleListing,
       columns: {}
     },
     {
-      type: ViewEnum.Detail,
-      routeKey: RouteKeyEnum.RoleDetail
-    },
-    {
-      type: ViewEnum.Delete,
-      routeKey: RouteKeyEnum.RoleDelete
-    },
-    {
-      type: ViewEnum.Form,
-      routeKey: RouteKeyEnum.RoleCreate,
+      type: ViewEnum.Create,
       fields: {
         name: true,
         roleKey: true,
@@ -60,9 +51,7 @@ const mapping: ModelMapping<ModelEnum.Role> = {
       }
     },
     {
-      type: ViewEnum.Form,
-      mode: MutationMode.Put,
-      routeKey: RouteKeyEnum.RoleUpdate,
+      type: ViewEnum.Update,
       fields: {
         name: true,
         roleKey: true,

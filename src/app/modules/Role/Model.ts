@@ -1,6 +1,6 @@
-import { UserModel } from '../User';
-import { RouteModel } from '../Route';
-import { AbstractModel } from '../../../_custom/types/types';
+import {UserModel} from '../User';
+import {AbstractModel} from '../../../_custom/types/types';
+import {OperationModel} from '../Operation';
 
 
 export enum RoleKeyEnum {
@@ -15,7 +15,7 @@ export enum RoleKeyEnum {
 type Model = {
   roleKey: RoleKeyEnum
   name: string
-  routes: Array<RouteModel>
+  operations: Array<OperationModel>
   users: Array<UserModel>
 } & AbstractModel
 

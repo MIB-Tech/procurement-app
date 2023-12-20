@@ -16,7 +16,6 @@ import { ColumnTypeEnum, ValidationSchemaDef, ValidationSchemaProps } from './ty
 import 'yup-phone';
 import { ModelEnum } from '../app/modules/types';
 import { datetime, relation } from './yup';
-import { Input } from './FormView/FormView.types';
 
 
 export const camelCaseToDash = (str: string) => str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
@@ -28,13 +27,17 @@ export const stringToI18nMessageKey = (str: string) => {
   return _string.toUpperCase() as I18nMessageKey;
 };
 export const camelCaseToPascalCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
+export const pascalCaseToCamelCase = (str: string) => str.charAt(0).toLowerCase() + str.slice(1);
 export const getValidationSchema = <M extends ModelEnum>({ columnDef, trans, fields }: ValidationSchemaProps<M>) => {
   let objectSchema: Record<any, any> = {};
 
   (Object.keys(fields) as Array<keyof Model<M> | string>)
   .filter(columnName => {
-
-    return columnName !== 'id' || columnDef[columnName]
+    if (!(columnName in columnDef)) {
+      return false
+    }
+    // @ts-ignore
+    return columnName !== 'id' || columnDef[columnName];
   })
   .forEach(columnName => {
     const columnMapping = columnDef[columnName] as ColumnMapping<M>;
@@ -102,9 +105,9 @@ export const getValidationSchema = <M extends ModelEnum>({ columnDef, trans, fie
           let relationSchema: ObjectSchema<any> = relation();
           if ('embeddedForm' in columnMapping) {
             const embeddedModelMapping = MODEL_MAPPINGS[type] as ModelMapping<any>;
-            const view = embeddedModelMapping.views?.find(view => view.type === ViewEnum.Form && !view.routeKey) as FormViewType<any> | undefined;
+            const view = embeddedModelMapping.views?.find(view => view.type === ViewEnum.Create) as FormViewType<M> | undefined;
             const embeddedFields = view?.fields ||
-              (Object.keys(embeddedModelMapping.columnDef) as Array<keyof Model<any>>).filter(columnName => {
+              (Object.keys(embeddedModelMapping.columnDef) as Array<keyof Model<M>>).filter(columnName => {
                 if (columnName === 'id') {
                   return false;
                 }
@@ -119,11 +122,11 @@ export const getValidationSchema = <M extends ModelEnum>({ columnDef, trans, fie
                 }
               }).reduce(
                 (obj, columnName) => ({ ...obj, [columnName]: true }),
-                {} as FormFields<any>
+                {} as FormFields<M>
               );
 
             relationSchema = getValidationSchema({
-              columnDef: embeddedModelMapping.columnDef as ValidationSchemaDef<any>,
+              columnDef: embeddedModelMapping.columnDef as ValidationSchemaDef<M>,
               trans,
               fields: embeddedFields
             });
@@ -151,7 +154,7 @@ export const getValidationSchema = <M extends ModelEnum>({ columnDef, trans, fie
 export const getDetailQueryKey = (modelName: string) => `${modelName}.DETAIL`;
 export const getDefaultFields = <M extends ModelEnum>(columnDef: ColumnDef<M>) => {
   return (Object.keys(columnDef) as Array<keyof Model<M>>).filter(columnName => {
-    if (['id', 'createdAt', 'updatedAt'].includes(columnName.toString())) {
+    if (['id', 'uid', 'createdAt', 'updatedAt'].includes(columnName.toString())) {
       return false;
     }
     const def = columnDef[columnName];
@@ -211,7 +214,7 @@ export const getInitialValues = <M extends ModelEnum>({
         if ('embeddedForm' in def) {
           const embeddedMapping = MODEL_MAPPINGS[type] as ModelMapping<any>;
           const view = embeddedMapping.views?.find(view => {
-            return view.type === ViewEnum.Form && !view.routeKey;
+            return view.type === ViewEnum.Create;
           }) as FormViewType<M> | undefined;
 
           const embeddedFields = view?.fields || getDefaultFields(embeddedMapping.columnDef);

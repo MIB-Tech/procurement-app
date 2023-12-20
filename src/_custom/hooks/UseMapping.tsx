@@ -9,7 +9,7 @@ import { ModelEnum } from '../../app/modules/types';
 
 
 export const useMapping = <M extends ModelEnum>({ modelName }: { modelName: M }) => {
-  const { isRouteGranted } = useAuth();
+  const { isGranted } = useAuth();
   const modelMapping = MODEL_MAPPINGS[modelName];
   const { columnDef, views } = modelMapping;
   const columNames = Object.keys(columnDef) as Array<keyof Model<M>>;
@@ -35,8 +35,7 @@ export const useMapping = <M extends ModelEnum>({ modelName }: { modelName: M })
     }
   });
   const searchable = searchableColumnNames.length > 0;
-  const detailRouteKey = views?.find(view => view.type === ViewEnum.Detail)?.routeKey;
-  const detailable = detailRouteKey && isRouteGranted([detailRouteKey]);
+  const detailable = isGranted([{ resourceName: modelName, operationType: ViewEnum.Detail }]);
   const routePrefix = getRoutePrefix(modelName);
 
   return {

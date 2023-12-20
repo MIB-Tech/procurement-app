@@ -1,6 +1,7 @@
 import { Model } from './ModelMapping';
 import { ModelEnum } from '../../app/modules/types';
 
+
 export type JsonldCollectionResponse<M extends ModelEnum> = {
   '@context': string
   '@id': string
@@ -16,9 +17,11 @@ export type JsonldSuccessCreateResponse = {
 export type HydraItem<M extends ModelEnum = any> = {
   '@context': string
   '@id': string
+  '@uid': string
   '@type': M
   '@title': string
   '@subTitle'?: string
+  '@icon'?: string
 } & Model<M>
 
 export enum ViolationMessage {

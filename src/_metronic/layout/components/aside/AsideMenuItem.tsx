@@ -1,19 +1,20 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Link, useMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router';
-import { KTSVG } from '../../../helpers';
 import { useLayout } from '../../core';
-import { RouteModel } from '../../../../app/modules/Route';
+import { SVG } from '../../../../_custom/components/SVG/SVG';
+import { OperationModel } from '../../../../app/modules/Operation';
+import { getRoutePrefix } from '../../../../_custom/utils';
 
 
 type Props = {
   fontIcon?: string
   group?: boolean,
-} & Omit<RouteModel, 'id' | 'children'>
+} & Pick<OperationModel, 'icon' | 'title' | 'resource'>
 
-const AsideMenuItem: React.FC<Props> = ({ fontIcon, group, ...route }) => {
-  const { children, treePath = '', title, icon } = route;
+const AsideMenuItem: React.FC<Props> = ({ fontIcon, group, children, resource, title, icon }) => {
+  const treePath = getRoutePrefix(resource.name);
   const { pathname } = useLocation();
   const { config } = useLayout();
   const { aside } = config;
@@ -37,6 +38,7 @@ const AsideMenuItem: React.FC<Props> = ({ fontIcon, group, ...route }) => {
 
 
 
+
   return (
     <div className='menu-item'>
       <Link className={clsx('menu-link without-sub', { active: isActive })} to={treePath}>
@@ -47,7 +49,7 @@ const AsideMenuItem: React.FC<Props> = ({ fontIcon, group, ...route }) => {
         )}
         {icon && aside.menuIcon === 'svg' && (
           <span className='menu-icon'>
-            <KTSVG path={icon} className='svg-icon-2' />
+            <SVG path={icon} size='2' />
           </span>
         )}
         {fontIcon && aside.menuIcon === 'font' && <i className={clsx('bi fs-3', fontIcon)}/>}

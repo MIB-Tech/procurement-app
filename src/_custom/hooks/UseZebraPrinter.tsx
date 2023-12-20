@@ -2,6 +2,7 @@ import { useMutation, useQuery } from 'react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useToastr } from '../Toastr/UseToastr';
 import { useMemo } from 'react';
+import { QueryObserverOptions } from 'react-query/types/core/types';
 
 
 export interface Device {
@@ -23,51 +24,50 @@ const cleanUpString = (str: string): string => {
 
 export const PRINTER_API_URL = process.env.REACT_APP_ZEBRA_BROWSER_API_URL || 'http://localhost:9100';
 
-export const useZebraPrinter = () => {
-  const toastr = useToastr();
+export const getZebraDevice = (data: string) => {
+  const deviceRaw = data.split('\n\t');
+  const name = cleanUpString(deviceRaw[1]);
+  const deviceType = cleanUpString(deviceRaw[2]);
+  const connection = cleanUpString(deviceRaw[3]);
+  const uid = cleanUpString(deviceRaw[4]);
+  const provider = cleanUpString(deviceRaw[5]);
+  const manufacturer = cleanUpString(deviceRaw[6]);
+
+  return {
+    connection,
+    deviceType,
+    manufacturer,
+    name,
+    provider,
+    uid,
+    version: 0
+  } as Device;
+}
+
+export const useDefaultPrinter = (options?: Pick<QueryObserverOptions, 'enabled'>) => {
   const defaultPrinterQuery = useQuery(
     'DEFAULT_DEVICE',
     () => axios.get<string>(`${PRINTER_API_URL}/default`),
-    {}
+    options
   );
   const data = defaultPrinterQuery.data?.data;
   const device = useMemo<Device | null>(() => {
-    const deviceRaw = data?.split('\n\t');
-    if (deviceRaw?.length === 7) {
-      const name = cleanUpString(deviceRaw[1]);
-      const deviceType = cleanUpString(deviceRaw[2]);
-      const connection = cleanUpString(deviceRaw[3]);
-      const uid = cleanUpString(deviceRaw[4]);
-      const provider = cleanUpString(deviceRaw[5]);
-      const manufacturer = cleanUpString(deviceRaw[6]);
-
-      return {
-        connection,
-        deviceType,
-        manufacturer,
-        name,
-        provider,
-        uid,
-        version: 0
-      };
-    }
-
-    return null;
+    return data ? getZebraDevice(data) : null;
   }, [data]);
 
-  const { mutate: print } = useMutation<AxiosResponse<any>, AxiosError<string>, string>(
+  return {
+    ...defaultPrinterQuery,
+    device
+  }
+}
+export const useZebraPrinter = () => {
+  const {device} = useDefaultPrinter()
+  const mutation = useMutation<AxiosResponse<any>, AxiosError<string>, string>(
     data => axios.post(`${PRINTER_API_URL}/write`, { data, device }),
-    {
-      onError: ({ response }) => {
-        const split = response?.data.split(':');
-        const title = split?.[0] ?? 'COULD_NOT_PRINT';
-        const children = split?.[1];
-        toastr.error({ title, children });
-      }
-    }
   );
 
   return {
-    print
+    print: mutation.mutate,
+    ...mutation
   };
 };

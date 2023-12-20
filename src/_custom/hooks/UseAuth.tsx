@@ -1,56 +1,93 @@
-import React, { FC, HTMLAttributes } from 'react';
-import { generatePath, Link, useNavigate } from 'react-router-dom';
+import React, { FC } from 'react';
+import { generatePath, Link, LinkProps, useNavigate } from 'react-router-dom';
 import { shallowEqual, useSelector } from 'react-redux';
 import { RootState } from '../../setup';
-import { RouteKeyEnum } from '../../app/modules/Route/Model';
 import { RoleKeyEnum } from '../../app/modules/Role/Model';
 import { UserModel } from '../../app/modules/User';
 import { AuthState } from '../../app/pages/auth';
+import { ModelEnum } from '../../app/modules/types';
+import { getRoutePrefix } from '../utils';
+import { ViewEnum } from '../types/ModelMapping';
+import {OperationModel} from '../../app/modules/Operation';
+
+
+export type OperationPermission = {
+  resourceName: ModelEnum,
+  operationType: ViewEnum,
+}
+type Permission = OperationPermission | RoleKeyEnum
 
 
 export const useAuth = () => {
   const navigate = useNavigate();
-  const { user/*, location*/ } = useSelector<RootState>(({ auth }) => {
-    return auth
-  }, shallowEqual) as Required<Pick<AuthState, 'user'>> /*& Pick<AuthState, 'location'>*/;
+  const { user, location } = useSelector<RootState>(({ auth }) => {
+    return auth;
+  }, shallowEqual) as Required<Pick<AuthState, 'user'>> & Pick<AuthState, 'location'>;
   const { role } = user;
-  const routes = role?.routes || [];
+  const operations = role?.operations || [];
 
-  const isGranted = (roleKey: RoleKeyEnum) => role && role.roleKey === roleKey;
+  const isGranted = (permissions: Permission[]) => {
+    let granted = false;
+    permissions.forEach(permission => {
+      if (typeof permission === 'object') {
+        const operation = operations.find(operation => {
+          return operation.resource.name === permission.resourceName && operation.operationType === permission.operationType;
+        });
 
-  const isGrantedOneOf = (roleKeys: RoleKeyEnum[]) => role && roleKeys.includes(role.roleKey);
-  const isRouteGranted = (routeKeys: RouteKeyEnum[]) => {
-    return routes.findIndex(({ routeKey }) => routeKeys.includes(routeKey)) !== -1;
+        if (operation) {
+          granted = true;
+        }
+      } else {
+        if (role?.roleKey === permission) {
+          granted = true;
+        }
+      }
+    });
+
+    return granted;
   };
-  const getRouteNode = (routeKey: RouteKeyEnum) => routes.find((node) => node.routeKey === routeKey);
-  const getPath = (routeKey: RouteKeyEnum) => getRouteNode(routeKey)?.treePath || '/';
 
+  const getPath = ({ resourceName, suffix, params }: Pick<OperationPermission, 'resourceName'> & {
+    suffix: string
+    params?: Record<'id', string | number>
+  }) => {
+
+    const path = getRoutePrefix(resourceName) + `/${suffix}`;
+
+    return params ? path.replace(':id', params.id.toString()) : path;
+  };
 
   return {
     user,
-    // location,
-    routes,
+    location,
+    operations,
     isGranted,
-    isGrantedOneOf,
-    isRouteGranted,
     getPath,
-    getRouteNode,
     navigate
   };
 };
 
 
 export type GrantedProps = {
-  routeKey: RouteKeyEnum
   params?: Partial<Record<keyof UserModel, string | number>>
   to?: string
   className?: string
-}
-export const GrantedLink: FC<GrantedProps> = ({ to, params = {}, routeKey, children, ...props }) => {
-  const { isRouteGranted, getPath } = useAuth();
-  let path = isRouteGranted([routeKey]) && (to || getPath(routeKey));
+} & Pick<LinkProps, 'relative'>
+  & OperationPermission
+  & Pick<OperationModel, 'suffix'>
+export const GrantedLink: FC<GrantedProps> = ({
+  to,
+  params = {},
+  resourceName,
+  operationType,
+  suffix,
+  children,
+  ...props
+}) => {
+  const { isGranted, getPath } = useAuth();
+  let path = isGranted([{ resourceName, operationType }]) && (to || getPath({ suffix, resourceName }));
   if (!path) {
-    return <span {...props}>{children}</span>
+    return <span {...props}>{children}</span>;
   }
 
   return (
@@ -58,17 +95,4 @@ export const GrantedLink: FC<GrantedProps> = ({ to, params = {}, routeKey, child
       {children}
     </Link>
   );
-};
-
-
-export const IsGranted: FC<{ routeKeys: RouteKeyEnum[] } & HTMLAttributes<HTMLDivElement>> = ({
-  routeKeys,
-  children
-}) => {
-  const { isRouteGranted } = useAuth();
-
-  if (!isRouteGranted(routeKeys)) return <></>;
-
-
-  return <>{children}</>;
 };

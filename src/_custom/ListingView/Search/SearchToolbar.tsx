@@ -63,7 +63,7 @@ export const SearchToolbar: FC<SearchToolbarProps> = ({ value = '', delay = 0, o
         placeholder={trans({ id: 'SEARCH' })}
         size='sm'
         className='ps-10'
-        bg='solid'
+        // bg='solid'
         value={searchTerm}
         onChange={e => {
           setSearchTerm(e.target.value);

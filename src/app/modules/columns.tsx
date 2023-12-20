@@ -1,18 +1,19 @@
-import { ColumnMapping, ListingViewType, ModelMapping, ViewEnum } from '../../_custom/types/ModelMapping';
-import { StringFormat } from '../../_custom/Column/String/StringColumn';
+import {ColumnMapping, ListingViewType, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping';
+import {StringFormat} from '../../_custom/Column/String/StringColumn';
 import axios from 'axios';
 import React from 'react';
-import { NumberFormat } from '../../_custom/Column/Number/NumberColumn';
-import { ColumnTypeEnum } from '../../_custom/types/types';
-import { ModelEnum } from './types';
-import { toAbsoluteApi } from './utils';
+import {NumberFormat} from '../../_custom/Column/Number/NumberColumn';
+import {ColumnTypeEnum} from '../../_custom/types/types';
+import {toAbsoluteApi} from './utils';
+import moment from 'moment/moment';
 
 
 export const CREATED_AT_COLUMN: ColumnMapping<any> = {
   type: ColumnTypeEnum.String,
   format: StringFormat.Datetime,
   title: 'CREATE_TIME',
-  nullable: true
+  nullable: true,
+  min: moment().format()
 };
 
 
@@ -80,10 +81,12 @@ export const ABSTRACT_IMAGE_LISTING_VIEW: ListingViewType<any> = {
 }
 export const ABSTRACT_FILE_MAPPING: Omit<ModelMapping<any>, 'recoilState' | 'modelName'> = {
   uploadable: true,
-  icon: '/communication/com005.svg',
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
+    },
+    uid: {
+      type: ColumnTypeEnum.String
     },
     originalName: {
       type: ColumnTypeEnum.String

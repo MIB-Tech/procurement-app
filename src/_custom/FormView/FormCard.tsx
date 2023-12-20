@@ -2,33 +2,32 @@ import { ColumnMapping, FormViewType, Model, MutationMode } from '../types/Model
 import { useMapping } from '../hooks/UseMapping';
 import { useAuth } from '../hooks/UseAuth';
 import clsx from 'clsx';
-import { TitleContent } from '../ListingView/TableView/HeaderCell';
+import { TitleContent } from '../ListingView/views/Table/HeaderCell';
 import { ValueField } from '../Column/ValueField';
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useCustomQuery } from '../hooks/UseCustomQuery';
 import { getDefaultFields } from '../utils';
 import { ModelEnum } from '../../app/modules/types';
-import { isLocationColumn } from '../ListingView/ListingView';
+import { Grid } from '@mui/material';
+import { isLocationColumn } from '../ListingView/ListingView.utils';
 
 
-export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, view, inlineFormGroup, className }: {
+export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, view, className }: {
   name?: string
   modelName: M
   item: Model<M>
   setItem: (item: Model<M>) => void
-  view: Omit<FormViewType<M>, 'type' | 'routeKey'>,
-  inlineFormGroup?: boolean
+  view: Omit<FormViewType<M>, 'type'>,
   className?: string
 }) => {
   const { columnDef } = useMapping<M>({ modelName });
-  const { isGrantedOneOf/*, location*/ } = useAuth();
-  const fields = view.fields || getDefaultFields(columnDef);
-
+  const { isGranted, location } = useAuth();
+  const {inlineForm, fields = getDefaultFields(columnDef)} = view
   const columnNames = (Object.keys(fields) as Array<keyof Model<M> | string>).filter(columnName => {
-    // if (location && isLocationColumn({ modelName, columnName })) {
-    //   return false;
-    // }
+    if (location && isLocationColumn({ modelName, columnName })) {
+      return false;
+    }
 
     const field = fields[columnName];
     if (typeof field === 'boolean') {
@@ -42,7 +41,7 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
 
     const grantedRoles = field?.grantedRoles;
 
-    return !grantedRoles || isGrantedOneOf(grantedRoles);
+    return !grantedRoles || isGranted(grantedRoles);
   });
 
   const { pathname } = useLocation();
@@ -60,49 +59,64 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
   }, [query.item]);
 
 
+  // return (
+  //   <div className='flex-grow-1'>
+  //     <Grid container spacing={2}>
+  //       <Grid item xs={6}>
+  //         <span>xs=8</span>
+  //       </Grid>
+  //       <Grid item xs={6}>
+  //         <span>xs=4</span>
+  //       </Grid>
+  //       <Grid item xs={6}>
+  //         <span>xs=4</span>
+  //       </Grid>
+  //       <Grid item xs={6}>
+  //         <span>xs=8</span>
+  //       </Grid>
+  //     </Grid>
+  //   </div>
+  // )
   return (
     <div className={clsx('card', className)}>
       <div className='card-body'>
-        {columnNames.map((columnName, index, columnNames) => {
-          const field = fields[columnName];
-          const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
-          const render = typeof field !== 'boolean' && field?.render;
-          if (!field || !columnMapping) {
-            return <></>;
-          }
+        <Grid container spacing={1} {...view.slotProps?.root}>
+          {columnNames.map((columnName, index, columnNames) => {
+            const field = fields[columnName];
+            const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
+            const render = typeof field !== 'boolean' && field?.render;
+            const gridProps = typeof field !== 'boolean' && field?.slotProps?.root;
+            if (!field || !columnMapping) {
+              return <></>;
+            }
 
-          return (
-            <div
-              key={index}
-              className={clsx(
-                inlineFormGroup && 'row',
-                columnNames.length > index + 1 && 'mb-5'
-              )}
-            >
-              <label
-                className={clsx(
-                  'd-flex fw-semibold text-muted mt-2',
-                  inlineFormGroup && 'col-sm-3',
-                  !('multiple' in columnMapping) && !columnMapping.nullable && 'required'
-                )}
-              >
-                {/*<ColumnIcon {...columnMapping} size='2' className='me-2' />*/}
-                <div className='text-truncate text-muted'>
-                  <TitleContent columnName={columnName} {...columnMapping} />
+            return (
+              <Grid key={index} item xs={12} {...view.slotProps?.item} {...gridProps}>
+                <div className={clsx(inlineForm && 'row')}>
+                  <label
+                    className={clsx(
+                      'd-flex fw-semibold text-truncate text-muted',
+                      inlineForm && 'col-sm-3 mt-2',
+                      !('multiple' in columnMapping) && !columnMapping.nullable && 'required'
+                    )}
+                  >
+                    <TitleContent columnName={columnName} {...columnMapping} />
+                  </label>
+                  <div className={clsx(inlineForm && 'col-sm-9')}>
+                    {render ?
+                      render({ item }) :
+                      <ValueField
+                        name={`${name ? `${name}.` : ''}${columnName.toString()}`}
+                        column={columnMapping}
+                        size='sm'
+                      />
+                    }
+                  </div>
                 </div>
-              </label>
-              <div className={clsx(inlineFormGroup && 'col-sm-9')}>
-                {render ?
-                  render({ item }) :
-                  <ValueField
-                    name={`${name ? `${name}.` : ''}${columnName.toString()}`}
-                    column={columnMapping}
-                  />
-                }
-              </div>
-            </div>
-          );
-        })}
+              </Grid>
+            )
+          })}
+        </Grid>
       </div>
     </div>
   );

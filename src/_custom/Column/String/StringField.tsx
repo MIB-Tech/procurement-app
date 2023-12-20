@@ -3,7 +3,7 @@ import { useField, useFormikContext } from 'formik';
 import { Field, FieldProps } from '../controls/fields';
 import { Input } from './InputBase/Input';
 import clsx from 'clsx';
-import { ColumnIcon } from '../../ListingView/TableView/ColumnIcon';
+import { ColumnIcon } from '../../ListingView/views/Table/ColumnIcon';
 import { StringColumn, StringFormat } from './StringColumn';
 import { Textarea } from './Textarea/Textarea';
 import { InputPassword } from './Password/InputPassword';
@@ -15,7 +15,6 @@ import { Trans, useTrans } from '../../components/Trans';
 import { Radio, RadioProps } from '../controls/base/Radio/Radio';
 import { I18nMessageKey } from '../../i18n/I18nMessages';
 import { Dropdown } from 'react-bootstrap';
-import { DivToggle } from '../../ListingView/Filter/FilterToolbar';
 import { Button } from '../../components/Button';
 import { ClickAwayListener } from '@mui/material';
 import { AutocompleteBase } from '../controls/base/Autocomplete';
@@ -24,6 +23,7 @@ import { Option, Popper } from '../controls/base/Autocomplete/Tag';
 import { KTSVG } from '../../../_metronic/helpers';
 import { formatToInputType } from './StringField.utils';
 import { QRCodeInput } from './QRCodeInput';
+import { DivToggle } from '../../ListingView/Filter/DivToggle';
 
 
 type StringFieldProps = {
@@ -35,7 +35,7 @@ export const StringField: FC<StringFieldProps> = ({ column, name, feedbackLabel,
   const [field, { error }, { setValue, setTouched }] = useField({ name });
   const { value } = field;
   const [selectFieldOpen, setSelectFieldOpen] = useState<boolean>(false);
-  const { isGrantedOneOf } = useAuth();
+  const { isGranted } = useAuth();
   const { trans } = useTrans();
   let children: ReactNode;
   const { format } = column;
@@ -143,7 +143,7 @@ export const StringField: FC<StringFieldProps> = ({ column, name, feedbackLabel,
         }
         const transition = transitions.find(({ from, grant, when }) => {
 
-          return from === value && (!grant || isGrantedOneOf(grant)) && (!when || when(values));
+          return from === value && (!grant || isGranted(grant)) && (!when || when(values));
         });
         if (!transition) {
           return true;

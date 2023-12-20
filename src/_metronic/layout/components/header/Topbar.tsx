@@ -1,21 +1,22 @@
 import clsx from 'clsx';
-import React, {FC, useState} from 'react';
-import {KTSVG} from '../../../helpers';
-import {HeaderUserMenu, QuickLinks} from '../../../partials';
-import {useLayout} from '../../core';
-import {ClickAwayListener} from '@mui/material';
-import {useAuth} from '../../../../_custom/hooks/UseAuth';
-import {Button} from '../../../../_custom/components/Button';
-import {atom} from 'recoil';
-import {HydraItem} from '../../../../_custom/types/hydra.types';
-import {ModelEnum} from '../../../../app/modules/types';
-import {Trans} from '../../../../_custom/components/Trans';
+import React, { FC, useState } from 'react';
+import { KTSVG } from '../../../helpers';
+import { HeaderUserMenu, QuickLinks } from '../../../partials';
+import { useLayout } from '../../core';
+import { ClickAwayListener } from '@mui/material';
+import { useAuth } from '../../../../_custom/hooks/UseAuth';
+import { Button } from '../../../../_custom/components/Button';
+import { atom } from 'recoil';
+import { HydraItem } from '../../../../_custom/types/hydra.types';
+import { ModelEnum } from '../../../../app/modules/types';
+import { Trans } from '../../../../_custom/components/Trans';
+import * as auth from '../../../../app/pages/auth/redux/AuthRedux';
 
 
-// export const locationState = atom<HydraItem<ModelEnum.Location> | null>({
-//   key: 'LOCATION_STATE',
-//   default: null
-// });
+export const locationState = atom<HydraItem<ModelEnum.Location> | null>({
+  key: 'LOCATION_STATE',
+  default: null
+});
 
 
 const toolbarButtonMarginClass = 'ms-1 ms-lg-3',
@@ -26,7 +27,7 @@ const Topbar: FC = () => {
   const { config } = useLayout();
   const [userToolbarOpen, setUserToolbarOpen] = useState<boolean>();
   const [locationLinkOpen, setLocationLinkOpen] = useState<boolean>();
-  const { user/*, location*/ } = useAuth();
+  const { user, location } = useAuth();
 
 
   return (
@@ -68,41 +69,41 @@ const Topbar: FC = () => {
               // activeLocation && 'text-primary'
             )}
             onClick={() => {
-              // if (!user.location) {
-              //   setLocationLinkOpen(!locationLinkOpen);
-              // }
+              if (!user.location) {
+                setLocationLinkOpen(!locationLinkOpen);
+              }
             }}
           >
             {/*<SVG path='/ecommerce/ecm008.svg' size='1'/>*/}
-            {/*<div>*/}
-            {/*  {location ?*/}
-            {/*    <a*/}
-            {/*      href='#'*/}
-            {/*      className={clsx(*/}
-            {/*        'btn btn-sm bg-light-primary border border-2 border-primary fw-bolder text-primary w-100 px-4',*/}
-            {/*        // active && 'bg-light'*/}
-            {/*      )}*/}
-            {/*      onClick={e => {*/}
-            {/*        e.preventDefault();*/}
-            {/*      }}*/}
-            {/*    >*/}
-            {/*      /!*<div className='d-sm-none'>{location['@title']}</div>*!/*/}
-            {/*      /!*<div className='d-none d-sm-block'>{location['@subTitle']}</div>*!/*/}
-            {/*      /!*<div className='d-sm-none'>{location['@subTitle']}</div>*!/*/}
-            {/*    </a>*/}
-            {/*    /*<div className='text-end w-125px'>*/}
-            {/*      <div className='text-muted text-truncate fs-6'>*/}
-            {/*        {location['@subTitle']}*/}
-            {/*      </div>*/}
-            {/*      <div>*/}
-            {/*        {location['@title']}*/}
-            {/*      </div>*/}
-            {/*    </div>*/ }
-            {/*    <span className='w-100px text-truncate fw-boldest text-hover-primary'>*/}
-            {/*      <Trans id='LOCATION' />*/}
-            {/*    </span>*/}
-            {/*  }*/}
-            {/*</div>*/}
+            <div>
+              {location ?
+                <a
+                  href="#"
+                  className={clsx(
+                    'btn btn-sm bg-light-primary border border-2 border-primary fw-bolder text-primary w-100 px-4',
+                    // active && 'bg-light'
+                  )}
+                  onClick={e => {
+                    e.preventDefault()
+                  }}
+                >
+                  <div className='d-sm-none'>{location['@title']}</div>
+                  <div className='d-none d-sm-block'>{location['@subTitle']}</div>
+                  {/*<div className='d-sm-none'>{location['@subTitle']}</div>*/}
+                </a>
+                /*<div className='text-end w-125px'>
+                  <div className='text-muted text-truncate fs-6'>
+                    {location['@subTitle']}
+                  </div>
+                  <div>
+                    {location['@title']}
+                  </div>
+                </div>*/ :
+                <span className='w-100px text-truncate fw-boldest text-hover-primary'>
+                  <Trans id='LOCATION' />
+                </span>
+              }
+            </div>
           </Button>
           <QuickLinks show={locationLinkOpen} />
           {/* end::Menu wrapper */}

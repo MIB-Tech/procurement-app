@@ -1,8 +1,8 @@
 import React, { Fragment, ReactNode } from 'react';
-import { TitleContent } from '../ListingView/TableView/HeaderCell';
+import { TitleContent } from '../ListingView/views/Table/HeaderCell';
 import { ColumnDef, Model } from '../types/ModelMapping';
 import clsx, { ClassValue } from 'clsx';
-import { ColumnIcon } from '../ListingView/TableView/ColumnIcon';
+import { ColumnIcon } from '../ListingView/views/Table/ColumnIcon';
 import { ModelEnum } from '../../app/modules/types';
 import { getColumnMapping } from '../ListingView/Filter/Filter.utils';
 
@@ -13,13 +13,17 @@ export type ItemViewProps<M extends ModelEnum> = {
   renderContent: (props: { columnName: keyof Model<M> }) => ReactNode
   labelClassName?: ClassValue
   detailView?: boolean
+  rowClassName?: ClassValue
+  hideIcon?: boolean
 }
 export const ItemView = <M extends ModelEnum>({
   modelName,
   columnDef,
   renderContent,
   labelClassName,
-  detailView
+  detailView,
+  rowClassName,
+  hideIcon
 }: ItemViewProps<M>) => {
   const columnNames = Object.keys(columnDef) as Array<keyof Model<M>>;
 
@@ -31,14 +35,14 @@ export const ItemView = <M extends ModelEnum>({
 
         return (
           <Fragment key={_columnName}>
-            <div className='row '>
+            <div className={clsx(rowClassName)}>
               <label
                 className={clsx(
-                  'col-sm-4 d-flex fw-semibold text-muted align-items-center',
+                  'd-flex fw-semibold text-muted align-items-center',
                   !detailView && !('multiple' in def) && !def.nullable && 'required',
                   labelClassName
                 )}>
-                <ColumnIcon {...def} size='2' className='me-2' />
+                {!hideIcon && (<ColumnIcon {...def} size='2' className='me-2' />)}
                 <div className='text-truncate text-muted'>
                   <TitleContent
                     columnName={_columnName}
@@ -50,7 +54,7 @@ export const ItemView = <M extends ModelEnum>({
                 {renderContent({ columnName })}
               </div>
             </div>
-            {columnNames.length > index + 1 && <div className='separator my-3' />}
+            {columnNames.length > index + 1 && <div className='separator my-2' />}
           </Fragment>
         )
       })}

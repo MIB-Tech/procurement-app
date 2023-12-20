@@ -32,7 +32,7 @@ const Header: FC = () => {
       {/*      path='/media/icons/duotune/general/gen025.svg'*/}
       {/*      className={'svg-icon-1'}*/}
       {/*    />*/}
-      {/*    #Achats*/}
+      {/*    #GMAO*/}
       {/*  </div>*/}
       {/*  <QuickLinks />*/}
       {/*  /!* end::Menu wrapper *!/*/}

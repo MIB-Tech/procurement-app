@@ -9,12 +9,8 @@ export const NumberColumnField: FC<Pick<NumberColumn, 'format'> & FieldProps> = 
 
   switch (format) {
     case NumberFormat.Currency:
-      return (
-        <CurrencyField {...props} />
-      );
+      return <CurrencyField {...props} />;
     default:
-      return (
-        <NumberField {...props} />
-      );
+      return <NumberField {...props} />;
   }
 };

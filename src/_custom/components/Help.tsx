@@ -28,11 +28,12 @@ const Help: FC<HelpProps> = ({ overlay, ...props }) => {
         onEnter={() => {
           setShow(true);
         }}
+        {...props}
       >
-        {(props) => (
+        {tooltipProps => (
           <Tooltip
             id={nanoid()}
-            {...props}
+            {...tooltipProps}
           >
             {overlay}
           </Tooltip>

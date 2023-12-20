@@ -9,8 +9,9 @@ export type ErrorResponse<M extends ModelEnum> = AxiosError<JsonldErrorCreateRes
 export type Input<M extends ModelEnum> = Record<keyof Model<M>, any>
 
 export type FormViewProps<M extends ModelEnum> = {
-  view: Omit<FormViewType<M>, 'type' | 'routeKey'>,
+  view: Omit<FormViewType<M>, 'type'>,
   modelName: M
+  initialValues?: Partial<Model<M>>
 }
 export type EditQueryProps<M extends ModelEnum> = {
   modelName: M

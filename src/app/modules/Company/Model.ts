@@ -1,11 +1,11 @@
 import {AbstractModel} from '../../../_custom/types/types';
-import {DraftOrderModel} from '../DraftOrder';
+import {PurchaseNeedModel} from '../PurchaseNeed';
 
 
 type Model = {
   name: string
   code: string
-  draftOrders: Array<DraftOrderModel>
+  purchaseNeeds: Array<PurchaseNeedModel>
 } & AbstractModel
 
 export default Model;

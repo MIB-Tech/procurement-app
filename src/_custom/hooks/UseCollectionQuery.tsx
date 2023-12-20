@@ -7,7 +7,6 @@ import axios from 'axios';
 import { HydraItem, JsonldCollectionResponse } from '../types/hydra.types';
 import { useQuery } from 'react-query';
 import { ModelEnum } from '../../app/modules/types';
-import { useAuth } from './UseAuth';
 
 
 export const useCollectionQuery = <M extends ModelEnum>({
@@ -25,6 +24,7 @@ export const useCollectionQuery = <M extends ModelEnum>({
     if (sort) {
       _params = { ..._params, ...serializeSort(sort) };
     }
+
 
     let _filter: Filter<M> = {
       operator: CompoundFilterOperator.And,

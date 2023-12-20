@@ -1,7 +1,7 @@
-import { useIntl } from 'react-intl';
-import { I18nMessageKey, Lang } from '../i18n/I18nMessages';
-import { MessageDescriptor } from '@formatjs/intl/src/types';
-import { useLang } from '../../_metronic/i18n/Metronici18n';
+import {useIntl} from 'react-intl';
+import {I18nMessageKey} from '../i18n/I18nMessages';
+import {MessageDescriptor} from '@formatjs/intl/src/types';
+import {useLang} from '../../_metronic/i18n/Metronici18n';
 
 
 export type FormattedMessageProps = {

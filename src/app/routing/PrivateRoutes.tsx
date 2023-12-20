@@ -1,165 +1,201 @@
-import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import { EmptyPage } from '../pages/EmptyPage';
-import { useAuth } from '../../_custom/hooks/UseAuth';
-import {
-  ColumnMapping,
-  DetailColumns,
-  Model,
-  ModelMapping,
-  ViewEnum
-} from '../../_custom/types/ModelMapping';
-import { MasterLayout } from '../../_metronic/layout/MasterLayout';
-import { PageDataProvider } from '../../_metronic/layout/core';
-import { DeleteView } from '../../_custom/DeleteView/DeleteView';
-import { ListingView } from '../../_custom/ListingView/ListingView';
-import { MODEL_MAPPINGS } from '../modules';
-import { DetailView } from '../../_custom/DetailView/DetailView';
-import { camelCaseToDash } from '../../_custom/utils';
-import { StringFormat } from '../../_custom/Column/String/StringColumn';
-import { RouteKeyEnum } from '../modules/Route/Model';
-import { FormView } from '../../_custom/FormView/FormView';
-import { ColumnTypeEnum } from '../../_custom/types/types';
-import { ModelEnum } from '../modules/types';
-import { CalendarView } from '../../_custom/CalendarView/CalendarView';
-import { isMenuRoute } from '../../_metronic/layout/components/aside/AsideMenuMain';
-import { ImportView } from '../../_custom/ImportView/ImportView';
+import React, {ReactNode} from 'react';
+import {Navigate, Route, Routes} from 'react-router-dom';
+import {useAuth} from '../../_custom/hooks/UseAuth';
+import {DetailViewType, Model, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping';
+import {MasterLayout} from '../../_metronic/layout/MasterLayout';
+import {PageDataProvider} from '../../_metronic/layout/core';
+import {DeleteView} from '../../_custom/DeleteView/DeleteView';
+import {ListingView} from '../../_custom/ListingView/ListingView';
+import {MODEL_MAPPINGS} from '../modules';
+import {DEFAULT_DETAIL_VIEW, DetailView} from '../../_custom/DetailView/DetailView';
+import {camelCaseToDash, getRoutePrefix} from '../../_custom/utils';
+import {CreateView} from '../../_custom/CreateView/CreateView';
+import {UpdateView} from '../../_custom/UpdateView/UpdateView';
 
-
-const PRIVATE_ROUTE_COMPONENTS: Partial<Record<RouteKeyEnum, { component?: React.FC }>> = {
-  [RouteKeyEnum.AccountUpdate]: {},
-  [RouteKeyEnum.AccountOverview]: {},
-  [RouteKeyEnum.AccountUpdatePassword]: {},
-};
 
 export function PrivateRoutes() {
-  const { routes } = useAuth();
-  const defaultRoute = routes.find(isMenuRoute);
+  const {operations, getPath} = useAuth();
+  const defaultOperation = operations
+    .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
+    .find(operation => operation.isMenuItem && operation.operationType === ViewEnum.Listing);
   // FIXME route render wrong route issue
 
   return (
     <Routes>
-      <Route element={(<PageDataProvider><MasterLayout /></PageDataProvider>)}>
-        {(Object.values(ModelEnum) as ModelEnum[]).map(modelName => {
-          const { views, columnDef } = MODEL_MAPPINGS[modelName] as ModelMapping<any>;
+      <Route element={(<PageDataProvider><MasterLayout/></PageDataProvider>)}>
+        {operations.map(operation => {
+          const {resource, suffix, operationType} = operation;
+          const resourceName = resource.name;
+          const path = getRoutePrefix(resourceName) + '/' + suffix;
+          let element: ReactNode;
+          switch (operationType) {
+            case ViewEnum.Listing:
+              element = <ListingView modelName={resourceName}/>;
+              break;
+            case ViewEnum.Create:
+              element = <CreateView modelName={resourceName}/>;
+              break;
+            case ViewEnum.Detail:
+              //TODO nested
+              element = <DetailView modelName={resourceName}/>;
+              break;
+            case ViewEnum.Update:
+              element = <UpdateView modelName={resourceName}/>;
+              break;
+            case ViewEnum.Delete:
+              element = <DeleteView modelName={resourceName}/>;
+              break;
+          }
 
-          return views?.map((view, viewIndex) => {
-            const {routeKey, type} = view
-            const route = routes.find(route => route.routeKey === routeKey);
-            if (!route) {
-              return <></>;
-            }
-
-            switch (type) {
-              case ViewEnum.Listing:
-                return (
-                  <Route
-                    path={route.treePath}
-                    element={<ListingView modelName={modelName} view={view} />}
-                  />
-                );
-              case ViewEnum.Calendar:
-                return (
-                  <Route
-                    path={route.treePath}
-                    element={<CalendarView modelName={modelName} view={view} />}
-                  />
-                );
-              case ViewEnum.Detail:
-                const columns = view.columns ?
-                  view.columns :
-                  (Object.keys(columnDef) as Array<keyof Model<any>>).filter(columnName => {
-                    if (columnName === 'id') {
-                      return false
-                    }
-                    const def = columnDef[columnName]
-                    switch (def.type) {
-                      case ColumnTypeEnum.String:
-                        return def.format !== StringFormat.Password
-                      case ColumnTypeEnum.Array:
-                        return false;
-                      default:
-                        return true
-                    }
-                  }).reduce(
-                    (obj, columnName) => ({ ...obj, [columnName]: true }),
-                    {} as DetailColumns<any>
-                  )
-
-                const embeddedColumnNames = Object.keys(columns).filter(columnName => {
-                  const def = columnDef[columnName] as ColumnMapping<any>| undefined
-                  if (!def) {
-                    return <></>
-                  }
-
-                  switch (def.type) {
-                    case ColumnTypeEnum.String:
-                    case ColumnTypeEnum.Number:
-                    case ColumnTypeEnum.Boolean:
-                      return false;
-                    default:
-                      return true;
-                  }
-                });
-
-                return (
-                  <>
-                    <Route
-                      path={route.treePath}
-                      element={<DetailView modelName={modelName} view={view} />}
-                    >
-                      {embeddedColumnNames.map(embeddedColumnName => (
-                        <Route
-                          key={embeddedColumnName}
-                          path={camelCaseToDash(embeddedColumnName)}
-                          element={<>`${embeddedColumnName}`</>}
-                        />
-                      ))}
-                    </Route>
-                  </>
-                );
-              case ViewEnum.Delete:
-                return (
-                  <Route
-                    path={route.treePath}
-                    element={<DeleteView modelName={modelName} />}
-                  />
-                );
-              case ViewEnum.Form:
-                return (
-                  <Route
-                    path={route.treePath}
-                    element={<FormView modelName={modelName} view={view} />}
-                  />
-                );
-              case ViewEnum.Import:
-                return (
-                  <Route
-                    path={route.treePath}
-                    element={<ImportView modelName={modelName} view={view}/>}
-                  />
-                );
-            }
-          })
-        })}
-
-        {routes.map(route => {
-          const { routeKey, treePath } = route;
-          const { component: Element = EmptyPage } = PRIVATE_ROUTE_COMPONENTS[routeKey] || {};
+          const {views, columnDef} = MODEL_MAPPINGS[resourceName] as ModelMapping<any>;
+          const detailView = (views?.find(view => view.type === ViewEnum.Detail) || DEFAULT_DETAIL_VIEW) as DetailViewType<any>;
 
           return (
             <Route
-              key={routeKey}
-              path={treePath}
-              element={<Element />}
-            />
+              key={resource.id}
+              path={path}
+              element={element}
+            >
+              {(Object.keys(detailView.columns || columnDef) as Array<keyof Model<any> | string>).map(embeddedColumnName => {
+                const _embeddedColumnName = embeddedColumnName.toString();
+
+                return (
+                  <Route
+                    key={_embeddedColumnName}
+                    path={camelCaseToDash(_embeddedColumnName)}
+                    element={<>`${_embeddedColumnName}`</>}
+                  >
+                    <Route
+                      path={camelCaseToDash(_embeddedColumnName)}
+                      element={<>`${_embeddedColumnName}`</>}
+                    >
+                    </Route>
+                  </Route>
+                );
+              })}
+            </Route>
           );
         })}
+        {/*{(Object.values(ModelEnum) as ModelEnum[]).map(modelName => {*/}
+        {/*  const { views, columnDef } = MODEL_MAPPINGS[modelName] as ModelMapping<any>;*/}
+
+        {/*  return views?.map((view) => {*/}
+        {/*    const { type } = view;*/}
+
+        {/*    const operation = operations.find(operation => {*/}
+        {/*      if (operation.resource.name !== modelName) {*/}
+        {/*        return false;*/}
+        {/*      }*/}
+
+        {/*      return operation.operationType;*/}
+        {/*    });*/}
+        {/*    if (!operation) {*/}
+        {/*      return <></>;*/}
+        {/*    }*/}
+
+        {/*    const { suffix, resource } = operation;*/}
+        {/*    const path = getRoutePrefix(resource.name) + '/' + suffix;*/}
+
+        {/*    switch (type) {*/}
+        {/*      case ViewEnum.Listing:*/}
+        {/*        return (*/}
+        {/*          <Route*/}
+        {/*            path={path}*/}
+        {/*            element={<ListingView modelName={modelName} />}*/}
+        {/*          />*/}
+        {/*        );*/}
+        {/*      // case ViewEnum.Calendar:*/}
+        {/*      //   return (*/}
+        {/*      //     <Route*/}
+        {/*      //       path={path}*/}
+        {/*      //       element={<CalendarView modelName={modelName} view={view} />}*/}
+        {/*      //     />*/}
+        {/*      //   );*/}
+        {/*      case ViewEnum.Detail:*/}
+        {/*        const embeddedColumnNames = (Object.keys(view.columns || columnDef) as Array<keyof Model<any> | string>);*/}
+        {/*        const _embeddedColumnNames = embeddedColumnNames.filter(columnName => {*/}
+        {/*          const def = columnDef[columnName] as ColumnMapping<any> | undefined;*/}
+        {/*          if (!def) return true;*/}
+
+        {/*          switch (def.type) {*/}
+        {/*            case ColumnTypeEnum.Number:*/}
+        {/*            case ColumnTypeEnum.String:*/}
+        {/*            case ColumnTypeEnum.Boolean:*/}
+        {/*            case ColumnTypeEnum.Array:*/}
+        {/*              return false;*/}
+        {/*            default:*/}
+        {/*              return 'multiple' in def;*/}
+        {/*          }*/}
+        {/*        });*/}
+
+        {/*        return (*/}
+        {/*          <>*/}
+        {/*            <Route*/}
+        {/*              path={path}*/}
+        {/*              element={<DetailView modelName={modelName} view={view} />}*/}
+        {/*            >*/}
+        {/*              {_embeddedColumnNames.map(embeddedColumnName => {*/}
+        {/*                const _embeddedColumnName = embeddedColumnName.toString();*/}
+
+        {/*                return (*/}
+        {/*                  <Route*/}
+        {/*                    key={_embeddedColumnName}*/}
+        {/*                    path={camelCaseToDash(_embeddedColumnName)}*/}
+        {/*                    element={<>`${_embeddedColumnName}`</>}*/}
+        {/*                  >*/}
+        {/*                    /!*TODO*!/*/}
+        {/*                    <Route*/}
+        {/*                      path={camelCaseToDash(_embeddedColumnName)}*/}
+        {/*                      element={<>`${_embeddedColumnName}`</>}*/}
+        {/*                    >*/}
+        {/*                    </Route>*/}
+        {/*                  </Route>*/}
+        {/*                );*/}
+        {/*              })}*/}
+        {/*            </Route>*/}
+        {/*          </>*/}
+        {/*        );*/}
+        {/*      case ViewEnum.Delete:*/}
+        {/*        return (*/}
+        {/*          <Route*/}
+        {/*            path={path}*/}
+        {/*            element={<DeleteView modelName={modelName} />}*/}
+        {/*          />*/}
+        {/*        );*/}
+        {/*      // case ViewEnum.Form:*/}
+        {/*      //   return (*/}
+        {/*      //     <Route*/}
+        {/*      //       path={path}*/}
+        {/*      //       element={<FormView modelName={modelName} view={view} />}*/}
+        {/*      //     />*/}
+        {/*      //   );*/}
+        {/*      // case ViewEnum.Import:*/}
+        {/*      //   return (*/}
+        {/*      //     <Route*/}
+        {/*      //       path={path}*/}
+        {/*      //       element={<ImportView modelName={modelName} view={view} />}*/}
+        {/*      //     />*/}
+        {/*      //   );*/}
+        {/*    }*/}
+        {/*  })*/}
+        {/*})}*/}
       </Route>
-      {defaultRoute && defaultRoute.treePath && <Route path='/' element={<Navigate to={defaultRoute.treePath} />} />}
-      <Route path='/auth/*' element={<Navigate to='/' />} />
+      {defaultOperation && (
+        <Route
+          path='/'
+          element={(
+            <Navigate
+              to={getPath({
+                resourceName: defaultOperation.resource.name,
+                suffix: defaultOperation.suffix
+              })}
+            />
+          )}
+        />
+      )}
+      <Route path='/auth/*' element={<Navigate to='/'/>}/>
       {/*{routes.length > 0 && <Route path='/auth' element={<Navigate to={`/error/${routes.length === 0 ? 403 : 404}`} />} /> }*/}
-      <Route path='*' element={<Navigate to={`/error/${routes.length === 0 ? 403 : 404}`} />} />
+      <Route path='*' element={<Navigate to={`/error/${operations.length === 0 ? 403 : 404}`}/>}/>
     </Routes>
   )
 

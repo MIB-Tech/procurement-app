@@ -1,21 +1,27 @@
-import clsx from 'clsx'
-import React, {FC} from 'react'
+import clsx from 'clsx';
+import React, { FC } from 'react';
 import { Link, matchPath, useLocation } from 'react-router-dom';
-import {useLayout, usePageData} from '../../../core'
-import { KTSVG } from "../../../../helpers";
+import { useLayout, usePageData } from '../../../core';
 import { useAuth } from '../../../../../_custom/hooks/UseAuth';
+import { SVG } from '../../../../../_custom/components/SVG/SVG';
 
-export const useCurrentRoute = () => {
-  const { routes } = useAuth();
+
+export const useCurrentOperation = () => {
+  const { operations, getPath } = useAuth();
   const { pathname } = useLocation();
 
-  return routes.find(({ treePath }) => treePath && matchPath(treePath, pathname));
-}
+  return operations.find(({ suffix, resource }) => {
+    const path = getPath({ suffix, resourceName: resource.name });
+
+    return matchPath(path, pathname);
+  });
+};
 
 const DefaultTitle: FC = () => {
-  const {pageTitle, pageDescription, pageBreadcrumbs} = usePageData()
-  const {config, classes} = useLayout()
-  const currentRoute = useCurrentRoute()
+  const { pageTitle, pageDescription, pageBreadcrumbs } = usePageData();
+  const { config, classes } = useLayout();
+  const currentOperation = useCurrentOperation();
+  const icon = currentOperation?.icon;
 
   return (
     <div
@@ -25,12 +31,16 @@ const DefaultTitle: FC = () => {
       // data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
       className={clsx('page-title d-flex', classes.pageTitle.join(' '))}
     >
-      {currentRoute?.icon && <div><KTSVG path={currentRoute?.icon} className='svg-icon-primary svg-icon-1 me-3'/></div>}
+      {icon && (
+        <div>
+          <SVG path={icon} variant='primary' size='1' className='me-3' />
+        </div>
+      )}
       <div className='d-flex align-items-center text-dark fw-bolder fs-3'>
-        {currentRoute?.title || pageTitle}
+        {currentOperation?.title || pageTitle}
         {pageTitle && pageDescription && config.pageTitle && config.pageTitle.description && (
           <>
-            <span className='h-20px border-gray-200 border-start ms-3 mx-2'/>
+            <span className='h-20px border-gray-200 border-start ms-3 mx-2' />
             <small className='text-muted fs-7 fw-bold my-1 ms-1'>{pageDescription}</small>
           </>
         )}

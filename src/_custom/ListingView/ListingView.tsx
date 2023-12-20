@@ -1,105 +1,283 @@
-import React from 'react';
-import {TableView} from './TableView/TableView';
-import {useRecoilState} from 'recoil';
-import {Pagination} from './Pagination';
-import {useMapping} from '../hooks/UseMapping';
-import {SearchToolbar} from './Search/SearchToolbar';
-import {FilterToolbar} from './Filter/FilterToolbar';
-import {SortToolbar} from './Sort/SortToolbar';
-import {LISTING_FAMILY} from '../../app/modules';
-import {ColumnDef, FilterColumns, ListingColumns, Model} from '../types/ModelMapping';
-import {RouteModel} from '../../app/modules/Route';
-import {ListingViewProps} from './ListingView.types';
-import {ToolbarWrapper} from './ToolbarWrapper';
-import {StringFormat} from '../Column/String/StringColumn';
-import {useAuth} from '../hooks/UseAuth';
-import {RouteLinks} from '../components/RouteAction/RouteLinks';
-import {RouteActionDropdown} from '../components/RouteAction/RouteActionDropdown';
-import {useCollectionQuery} from '../hooks/UseCollectionQuery';
-import {useOperation} from '../hooks/UseOperation';
-import {ColumnTypeEnum} from '../types/types';
+import React, {Fragment, useMemo, useState} from 'react';
+import {ColumnDef, FilterColumns, ListingColumns, ListingViewType, Model, ViewEnum} from '../types/ModelMapping';
+import {DatesSet, ExtendedProps, ListingModeEnum, ListingViewProps} from './ListingView.types';
 import {ModelEnum} from '../../app/modules/types';
+import {useParams} from 'react-router-dom';
+import {useAuth} from '../hooks/UseAuth';
+import {useMapping} from '../hooks/UseMapping';
+import {useRecoilState} from 'recoil';
+import {LISTING_FAMILY} from '../../app/modules';
+import {useCollectionQuery} from '../hooks/UseCollectionQuery';
+import {CompoundFilter, CompoundFilterOperator, Filter, PropertyFilterOperator} from './Filter/Filter.types';
+import {ColumnTypeEnum} from '../types/types';
+import {StringFormat} from '../Column/String/StringColumn';
+import moment from 'moment';
+import {useTrans} from '../components/Trans';
+import {EventInput, EventSourceInput} from '@fullcalendar/core';
+import clsx from 'clsx';
+import {SearchToolbar} from './Search/SearchToolbar';
+import {AdvancedFilterToolbar} from './Filter/AdvancedFilterToolbar';
+import {SortToolbar} from './Sort/SortToolbar';
+import {Radio} from '../Column/controls/base/Radio/Radio';
+import {RouteLinks} from '../components/RouteAction/RouteLinks';
+import {TableView} from './views/Table/TableView';
+import {OPERATION_TYPE_CONFIG} from '../../app/modules/Operation/Model';
+import {RouteActionDropdown} from '../components/RouteAction/RouteActionDropdown';
+import {Pagination} from './Pagination';
+import FullCalendar from '@fullcalendar/react';
+import momentPlugin from '@fullcalendar/moment';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import {GridView} from './views/Grid/GridView';
+import {Help} from '../components/Help';
+import {DetailViewColumnContent} from '../DetailView/DetailViewColumnContent';
+import {ItemView} from '../components/ItemView';
+import {DEFAULT_VIEW, isLocationColumn, RELATED_MODELS} from './ListingView.utils';
+import {BasicFilterToolbar} from './Filter/BasicFilterToolbar';
+import {getAdvancedPropertyFilter, getColumnMapping} from './Filter/Filter.utils';
 
-const RELATED_MODELS = [
-  ModelEnum.User,
-  ModelEnum.DraftOrder
-];
 
-export const isLocationColumn = <M extends ModelEnum>({modelName, columnName}: {
-  modelName: M,
-  columnName: keyof Model<M> | string
-}) => {
-  return false;
-  // const columnMapping = getColumnMapping({ modelName, columnName });
-  //
-  // return columnMapping?.type === ModelEnum.Location;
-};
-
-export const ListingView = <M extends ModelEnum>({ modelName, view, path, embedded }: ListingViewProps<M>) => {
-  const { user/*, location*/ } = useAuth();
-  const { searchable, columnDef } = useMapping({ modelName });
-  const { filterColumns, sortColumns, columns, routeKey, itemOperationRoutes } = view;
-  // TODO: embedded state
-  const [params, setParams] = useRecoilState(LISTING_FAMILY({ modelName, embedded }));
-  const { collection, totalCount, isLoading } = useCollectionQuery<M>({
-    modelName,
-    // queryKey: RELATED_MODELS.includes(modelName) && location,
-    params,
-    path
+export const ListingView = <M extends ModelEnum>({modelName, parentModelName, parent}: ListingViewProps<M>) => {
+  const [datesSet, setDatesSet] = useState<DatesSet>({
+    start: moment().startOf('month').toDate(),
+    end: moment().endOf('month').toDate()
   });
-  const { route, staticRoutes, dynamicRoutes } = useOperation(routeKey);
-  const { search, filter, sort, page, itemsPerPage } = params;
-  if (routeKey && !route) {
-    return <>TODO ..</>;
-  }
+  const {id} = useParams<{ id?: string }>();
+  const {user, operations, location, navigate} = useAuth();
+  const {searchable, columnDef, views} = useMapping({modelName});
+  const view = (views?.find(view => view.type === ViewEnum.Listing) || DEFAULT_VIEW) as ListingViewType<M>;
+  const {
+    filterColumns,
+    sortColumns,
+    columns,
+    itemOperationRoutes,
+    bulkActions
+  } = view;
+  // TODO: embedded state
+  const [state, setState] = useRecoilState(LISTING_FAMILY({modelName, embedded: !!parentModelName}));
+  const {selectedItems, basicFilter, ...params} = state;
+  const {sort, page, itemsPerPage, mode, search} = params;
+  const parentProperty = (Object.keys(columnDef) as Array<keyof Model<M>>).find(columnName => {
+    const def = columnDef[columnName];
 
-  const sortColumNames = sortColumns ?
-    (Object.keys(sortColumns) as Array<keyof Model<M>>).filter(filterColumn => sortColumns[filterColumn]) :
-    (Object.keys(columnDef) as Array<keyof Model<M>>).filter(columnName => {
-      if (columnName === 'id') {
-        return false;
-      }
-      const def = columnDef[columnName];
-      switch (def.type) {
-        case ColumnTypeEnum.String:
-          switch (def.format) {
-            case StringFormat.Select:
-            case StringFormat.Password:
-            case StringFormat.Text:
-            case StringFormat.Icon:
-            case StringFormat.Qrcode:
-            case StringFormat.Link:
-              return false;
-            default:
-              return true;
+    return def.type === parentModelName && !('multiple' in def);
+  });
+
+  const {dateFields = []} = view;
+  const filter = useMemo<Filter<M>>(() => {
+    let filters: Array<Filter<any>> = 'filters' in state.filter ? [...state.filter.filters] : [];
+
+    const filledColumnNames = Object.keys(basicFilter);
+    if (filledColumnNames.length > 0) {
+      filledColumnNames.forEach(filledColumnName => {
+        const value = basicFilter[filledColumnName];
+        const columnMapping = getColumnMapping({modelName, columnName: filledColumnName});
+
+        const {operator} = getAdvancedPropertyFilter(columnMapping);
+        const defaultFilter = {
+          property: filledColumnName,
+          operator,
+          value
+        };
+        switch (columnMapping.type) {
+          case ColumnTypeEnum.String:
+            switch (columnMapping.format) {
+              case StringFormat.Date:
+              case StringFormat.Datetime:
+              case StringFormat.Time:
+                const [start, end] = [...value];
+                if (start) {
+                  filters.push({
+                    ...defaultFilter,
+                    operator: PropertyFilterOperator.GreaterThanOrEqual,
+                    value: start
+                  });
+                }
+                if (end) {
+                  filters.push({
+                    ...defaultFilter,
+                    operator: PropertyFilterOperator.LessThanOrEqual,
+                    value: end
+                  });
+                }
+                break;
+              default:
+                if (value) {
+                  filters.push(defaultFilter);
+                }
+            }
+            break;
+          default:
+            if (value) {
+              filters.push(defaultFilter);
+            }
+        }
+
+      });
+
+    }
+
+    if (mode === ListingModeEnum.Calendar) {
+      filters.push({
+        operator: CompoundFilterOperator.Or,
+        filters: dateFields.map(dateField => {
+          const {startProperty, endProperty} = dateField;
+          const dateFilter: CompoundFilter<M> = {
+            operator: CompoundFilterOperator.And,
+            filters: [
+              {
+                operator: CompoundFilterOperator.Or,
+                filters: [
+                  {
+                    property: startProperty,
+                    operator: PropertyFilterOperator.IsNull
+                  },
+                  {
+                    property: startProperty,
+                    operator: PropertyFilterOperator.LessThanOrEqual,
+                    value: datesSet.end
+                  }
+                ]
+              }
+            ]
+          };
+
+          if (endProperty) {
+            dateFilter.filters.push({
+              operator: CompoundFilterOperator.Or,
+              filters: [
+                {
+                  property: endProperty,
+                  operator: PropertyFilterOperator.IsNull
+                },
+                {
+                  property: endProperty,
+                  operator: PropertyFilterOperator.GreaterThanOrEqual,
+                  value: datesSet.start
+                }
+              ]
+            });
           }
-        case ColumnTypeEnum.Number:
-          return true;
-        default:
-          return false;
-      }
+
+          return dateFilter;
+        })
+      });
+    }
+
+    if (id && parentProperty) {
+      filters.push({
+        operator: CompoundFilterOperator.And,
+        filters: [
+          {
+            property: `${parentProperty.toString()}.uid`,
+            operator: PropertyFilterOperator.Equal,
+            value: id
+          },
+          state.filter
+        ]
+      });
+    }
+
+    return {
+      operator: CompoundFilterOperator.And,
+      filters
+    };
+  }, [state.filter, basicFilter, id, parentProperty, mode, dateFields]);
+
+  const {collection, totalCount, isLoading} = useCollectionQuery<M>({
+    modelName,
+    queryKey: RELATED_MODELS.includes(modelName) && location,
+    params: {
+      ...params,
+      filter,
+      page: mode === ListingModeEnum.Calendar ? undefined : page,
+      itemsPerPage: mode === ListingModeEnum.Calendar ? undefined : itemsPerPage
+    }
+  });
+
+  const isColumnHidden = (columnName: string | keyof Model<M>) => {
+    if (parentModelName === columnName) {
+      return true;
+    }
+
+    return location && isLocationColumn({modelName, columnName});
+  };
+
+  const sortColumNames = (Object.keys(sortColumns || columnDef) as Array<keyof Model<M>>).filter(columnName => {
+    if (isColumnHidden(columnName)) {
+      return false;
+    }
+    if (sortColumns) {
+      return sortColumns[columnName];
+    }
+    if (['id'].includes(columnName.toString())) {
+      return false;
+    }
+    const def = columnDef[columnName];
+    switch (def.type) {
+      case ColumnTypeEnum.String:
+        switch (def.format) {
+          case StringFormat.Select:
+          case StringFormat.Password:
+          case StringFormat.Text:
+          case StringFormat.Icon:
+          case StringFormat.Qrcode:
+          case StringFormat.Link:
+            return false;
+          default:
+            return true;
+        }
+      case ColumnTypeEnum.Number:
+        return true;
+      default:
+        return false;
+    }
+  });
+
+  //
+  const {locale, trans} = useTrans();
+  const events = useMemo<EventSourceInput>(() => {
+    let _events: EventInput[] = [];
+    collection.forEach(item => {
+      dateFields?.forEach(dateField => {
+        const {startProperty, endProperty, variant} = dateField;
+        const extendedProps: ExtendedProps<M> = {
+          hydraItem: item,
+          dateField
+        };
+
+        _events.push({
+          id: item['@id'],
+          title: item['@title'],
+          extendedProps,
+          date: item[startProperty] as string | undefined,
+          end: endProperty && item[endProperty] as string | undefined,
+          className: clsx(variant && `bg-${variant} text-inverse-${variant}`)
+        });
+      });
     });
 
-  const filterColumNames = filterColumns ?
-    (Object.keys(filterColumns) as Array<string | keyof Model<M>>).filter(columnName => {
-      // if (location && isLocationColumn({ modelName, columnName })) {
-      //   return false;
-      // }
-      const columnFilterValue = filterColumns[columnName];
-      if (typeof columnFilterValue === 'boolean') {
-        return columnFilterValue;
-      }
+    return _events;
+  }, [collection, dateFields]);
 
-      return user && columnFilterValue?.display({ user });
-    }) :
-    (Object.keys(columnDef) as Array<keyof Model<M>>).filter(columnName => {
-      if (columnName === 'id') {
+  const advancedFilterColumNames = (Object.keys(filterColumns || columnDef) as Array<string | keyof Model<M>>).filter(
+    columnName => {
+      if (isColumnHidden(columnName)) {
         return false;
       }
-      // if (location && isLocationColumn({ modelName, columnName })) {
-      //   return false;
-      // }
-      const def = columnDef[columnName];
+      if (filterColumns) {
+        const columnFilterValue = filterColumns[columnName];
+        if (typeof columnFilterValue === 'boolean') {
+          return columnFilterValue;
+        }
+
+        return !columnFilterValue?.display || (user && columnFilterValue.display({user}));
+      }
+
+      if (['id'].includes(columnName.toString())) {
+        return false;
+      }
+      const def = columnDef[columnName as keyof Model<M>];
       switch (def.type) {
         case ColumnTypeEnum.String:
           return def.format !== StringFormat.Password;
@@ -112,124 +290,301 @@ export const ListingView = <M extends ModelEnum>({ modelName, view, path, embedd
           return !('multiple' in def);
       }
     });
+  const basicFilterColumNames = advancedFilterColumNames.filter(columnName => {
+    const columnFilterValue = filterColumns?.[columnName];
 
-  const listingColumns = columns ?
-    columns :
-    (Object.keys(columnDef) as Array<keyof Model<M>>).filter(columnName => {
-      if (columnName === 'id') {
+    return typeof columnFilterValue === 'object' && columnFilterValue.quickFilter;
+  });
+
+  const listingColumns = (Object.keys(columns || columnDef) as Array<keyof Model<M>>).filter(columnName => {
+    if (isColumnHidden(columnName)) {
+      return false;
+    }
+    if (columns) {
+      return columns[columnName];
+    }
+    if (['id'].includes(columnName.toString())) {
+      return false;
+    }
+    const def = columnDef[columnName];
+    switch (def.type) {
+      case ColumnTypeEnum.String:
+        switch (def.format) {
+          case StringFormat.Password:
+          case StringFormat.Text:
+            return false;
+          default:
+            return true;
+        }
+      case ColumnTypeEnum.Number:
+      case ColumnTypeEnum.Boolean:
+        return true;
+      case ColumnTypeEnum.Array:
         return false;
-      }
-      const def = columnDef[columnName];
-      switch (def.type) {
-        case ColumnTypeEnum.String:
-          switch (def.format) {
-            case StringFormat.Password:
-            case StringFormat.Text:
-              return false;
-            default:
-              return true;
-          }
-        case ColumnTypeEnum.Number:
-        case ColumnTypeEnum.Boolean:
-          return true;
-        case ColumnTypeEnum.Array:
-          return false;
-        default:
-          return !('multiple' in def);
-      }
-    }).reduce(
-      (obj, columnName) => ({ ...obj, [columnName]: true }),
-      {} as ListingColumns<M>
-    );
+      default:
+        return !('multiple' in def);
+    }
+  }).reduce(
+    (obj, columnName) => ({...obj, [columnName]: true}),
+    {} as ListingColumns<M>
+  );
+
+  const parentDef = columnDef;
+  const inverseBy = parentDef && (Object.keys(parentDef) as Array<keyof Model<any>>).find(key => {
+    // @ts-ignore
+    return parentDef[key]?.type === parentModelName;
+  });
+  // @ts-ignore
+  const parentColumnMapping = inverseBy && parentDef[inverseBy];
+  const item = parent && {
+    id: parent.id,
+    '@id': parent['@id'],
+    '@title': parent['@title'],
+    '@subTitle': parent['@subTitle']
+  };
+
 
   return (
-    <>
-      <ToolbarWrapper className='d-flex flex-wrap gap-4'>
+    <div className='d-grid gap-3'>
+      <div className='d-flex flex-wrap gap-3'>
         {searchable && (
           <SearchToolbar
             className='min-w-100px mw-200px'
             value={search}
             delay={500}
             onChange={search => {
-              setParams({ ...params, search, page: 1 });
+              setState({...state, search, page: 1});
             }}
           />
         )}
-        {filterColumNames.length > 0 && (
-          <FilterToolbar
+
+        {basicFilterColumNames.length > 0 && (
+          <BasicFilterToolbar
             modelName={modelName}
-            columns={filterColumNames.reduce(
-              (obj, columnName) => ({ ...obj, [columnName]: true }),
+            columns={basicFilterColumNames.reduce(
+              (obj, columnName) => ({...obj, [columnName]: true}),
               {} as FilterColumns<M>
             )}
-            value={filter}
+            value={basicFilter}
             onChange={filter => {
-              setParams({ ...params, filter, page: 1 });
+              setState({...state, basicFilter: filter, page: 1});
             }}
           />
         )}
+
+        {advancedFilterColumNames.length > 0 && (
+          <AdvancedFilterToolbar
+            modelName={modelName}
+            columns={advancedFilterColumNames.reduce(
+              (obj, columnName) => ({...obj, [columnName]: true}),
+              {} as FilterColumns<M>
+            )}
+            value={state.filter}
+            onChange={filter => {
+              setState({...state, filter, page: 1});
+            }}
+          />
+        )}
+
         {sortColumNames.length > 0 && (
           <SortToolbar
             sort={sort}
             columnDef={sortColumNames.reduce(
-              (obj, columnName) => ({ ...obj, [columnName]: columnDef[columnName] }),
+              (obj, columnName) => ({...obj, [columnName]: columnDef[columnName]}),
               {} as ColumnDef<M>
             )}
             onChange={sort => {
-              setParams({ ...params, sort });
+              setState({...state, sort});
             }}
           />
         )}
 
-        <RouteLinks
-          className='ms-sm-auto'
-          itemOperations={staticRoutes.map(({ routeKey }) => ({ routeKey }))}
+        <Radio
+          scrollDisabled
+          className='bg-white'
+          size='sm'
+          options={dateFields.length ?
+            Object.values(ListingModeEnum) :
+            [ListingModeEnum.Listing, ListingModeEnum.Gallery]
+          }
+          getOptionLabel={option => trans({id: option})}
+          value={state.mode}
+          onChange={mode => setState({
+            ...state,
+            mode: mode || ListingModeEnum.Listing
+          })}
         />
-      </ToolbarWrapper>
-      <div className='card'>
-        <div className='card-body py-0 pe-2'>
-          <TableView
-            modelName={modelName}
-            columns={(Object.keys(listingColumns) as Array<keyof Model<M>>)/*.filter(columnName => {
-              return !(location && isLocationColumn({ modelName, columnName }));
-            })*/.reduce(
-              (obj, columnName) => ({ ...obj, [columnName]: true }),
-              {} as ListingColumns<M>
-            )}
-            data={collection}
-            loading={isLoading}
-            itemsPerPage={itemsPerPage}
-            renderAction={({ item }) => {
-              const routes: RouteModel[] = itemOperationRoutes?.({
-                item,
-                routes: dynamicRoutes,
-                authUser: user
-              }) || dynamicRoutes;
-              if (routes.length === 0) {
-                return <></>;
+        <div className='d-flex gap-3 ms-sm-auto'>
+          {bulkActions?.map(({render}, index) => (
+            <Fragment key={index}>
+              {render({selectedItems})}
+            </Fragment>
+          ))}
+          <RouteLinks
+            operations={operations.filter(({resource, operationType}) => {
+              return resource.name === modelName && operationType === ViewEnum.Create;
+            })}
+            linkProps={{
+              state: parentColumnMapping && item && {
+                [inverseBy]: 'multiple' in parentColumnMapping ? [item] : item
               }
-
-              return (
-                <RouteActionDropdown
-                  itemOperations={routes.map(({ treePath, routeKey }) => ({
-                    path: treePath.replace(':id', item.id.toString()),
-                    routeKey
-                  }))}
-                />
-              );
             }}
           />
         </div>
       </div>
-      <Pagination
-        page={page}
-        onPageChange={page => {
-          setParams({ ...params, page });
-        }}
-        totalCount={totalCount}
-        itemsPerPage={itemsPerPage}
-        className='pt-5 mx-2'
-      />
-    </>
+      {mode === ListingModeEnum.Listing && (
+        <div className='card card-bordered'>
+          <div className='card-body py-1 px-3'>
+            <TableView
+              modelName={modelName}
+              columns={listingColumns}
+              data={collection}
+              loading={isLoading}
+              itemsPerPage={itemsPerPage}
+              selectedItems={selectedItems}
+              setSelectedItems={bulkActions ?
+                selectedItems => setState({...state, selectedItems}) :
+                undefined
+              }
+              renderAction={({item}) => {
+                let itemOperations = operations.filter(({operationType, resource}) => {
+
+                  return resource.name === modelName && !OPERATION_TYPE_CONFIG[operationType].isStatic;
+                });
+
+                if (itemOperationRoutes) {
+                  itemOperations = itemOperationRoutes({item, operations: itemOperations});
+                }
+
+                if (itemOperations.length === 0) {
+                  return <></>;
+                }
+
+                return (
+                  <RouteActionDropdown
+                    operations={itemOperations}
+                    params={{id: item['@uid']}}
+                  />
+                );
+              }}
+            />
+          </div>
+        </div>
+      )}
+      {mode === ListingModeEnum.Gallery && (
+        <GridView
+          modelName={modelName}
+          columns={listingColumns}
+          data={collection}
+          loading={isLoading}
+          itemsPerPage={itemsPerPage}
+          renderAction={({item}) => {
+            let itemOperations = operations.filter(({operationType, resource}) => {
+
+              return resource.name === modelName && !OPERATION_TYPE_CONFIG[operationType].isStatic;
+            });
+
+            if (itemOperationRoutes) {
+              itemOperations = itemOperationRoutes({item, operations: itemOperations});
+            }
+
+            if (itemOperations.length === 0) {
+              return <></>;
+            }
+
+            return (
+              <RouteActionDropdown
+                operations={itemOperations}
+                params={{id: item['@uid']}}
+              />
+            );
+          }}
+        />
+      )}
+      {mode === ListingModeEnum.Calendar && (
+        <div className='card card-bordered'>
+          <div className='card-body'>
+            <FullCalendar
+              height='auto'
+              plugins={[momentPlugin, dayGridPlugin, timeGridPlugin]}
+              headerToolbar={{
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+              }}
+              navLinks
+              initialView='dayGridMonth'
+              buttonText={{
+                prevYear: trans({id: 'PREV_YEAR'}),
+                nextYear: trans({id: 'NEXT_YEAR'}),
+                today: trans({id: 'TODAY'}),
+                month: trans({id: 'MONTH'}),
+                week: trans({id: 'WEEK'}),
+                day: trans({id: 'DAY'})
+              }}
+              eventContent={({event}) => {
+                const {hydraItem} = event.extendedProps as ExtendedProps<M>;
+                const title = hydraItem['@title'];
+
+                return (
+                  <Help
+                    overlay={(
+                      <ItemView
+                        rowClassName='w-300px text-start'
+                        hideIcon
+                        modelName={modelName}
+                        detailView
+                        columnDef={(Object.keys(listingColumns) as Array<keyof Model<M>>).reduce(
+                          (prev, curr) => ({...prev, [curr]: columnDef[curr as keyof Model<M>]}),
+                          {} as ColumnDef<M>
+                        )}
+                        renderContent={({columnName}) => {
+                          const def = columnDef[columnName];
+                          const column = listingColumns[columnName];
+
+                          return (
+                            <DetailViewColumnContent
+                              item={hydraItem}
+                              columnName={columnName}
+                              render={typeof column !== 'boolean' ? column?.render : undefined}
+                              {...def}
+                            />
+                          );
+                        }}
+                      />
+                    )}
+                  >
+                    <div className='fw-bolder text-truncate ms-2'>
+                      {title}
+                    </div>
+                  </Help>
+                );
+              }}
+              locale={locale}
+              events={events}
+              firstDay={1}
+              datesSet={setDatesSet}
+              eventClick={arg => navigate(arg.event.id)}
+              eventMouseEnter={({el}) => el.classList.add('cursor-pointer')}
+              eventMouseLeave={({el}) => el.classList.remove('cursor-pointer')}
+            />
+          </div>
+        </div>
+      )}
+      {mode !== ListingModeEnum.Calendar && (
+        <Pagination
+          size='sm'
+          page={page}
+          onPageChange={page => {
+            setState({...state, page});
+          }}
+          onItemsPerPageChange={itemsPerPage => {
+            setState({...state, page: 1, itemsPerPage});
+          }}
+          totalCount={totalCount}
+          itemsPerPage={itemsPerPage}
+        />
+      )}
+    </div>
   );
 };

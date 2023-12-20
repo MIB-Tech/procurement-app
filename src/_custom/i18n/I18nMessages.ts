@@ -2,15 +2,21 @@ import { en } from './messages/en';
 import { ar } from './messages/ar';
 import { fr } from './messages/fr';
 import { CompoundFilterOperator, PropertyFilterOperator } from '../ListingView/Filter/Filter.types';
-import { PriorityEnum, DraftOrderStatusEnum } from '../../app/modules/DraftOrder/Model';
+import { PriorityEnum, PurchaseNeedStatusEnum } from '../../app/modules/PurchaseNeed/Model';
+import {ListingModeEnum} from '../ListingView/ListingView.types';
+import {ViewEnum} from '../types/ModelMapping';
 
 
 type Lang = 'en' | 'ar' | 'fr'
 type I18nMessageKey =
   | PriorityEnum
-  | DraftOrderStatusEnum
+  | PurchaseNeedStatusEnum
   | PropertyFilterOperator
   | CompoundFilterOperator
+  | ListingModeEnum
+  | ViewEnum
+  | 'ADVANCED_FILTER'
+  | 'PER_PAGE'
   | 'AUTH.LOGIN.TITLE'
   | 'AUTH.LOGIN.BUTTON'
   | 'EMAIL'
@@ -314,16 +320,16 @@ type I18nMessageKey =
   | 'IS_REGULARIZED'
   | 'PRIORITY'
   | 'RECEPTION_MANAGER'
-  | 'DRAFT_ORDER'
-  | 'DRAFT_ORDERS'
-  | 'DRAFT_ORDER_LINE'
-  | 'DRAFT_ORDER_LINES'
+  | 'PURCHASE_NEED'
+  | 'PURCHASE_NEEDS'
+  | 'PURCHASE_NEED_PRODUCT'
+  | 'PURCHASE_NEED_PRODUCTS'
   | 'APPLICANT_SERVICE'
   | 'APPLICANT_SERVICES'
   | 'COMPANY'
   | 'COMPANIES'
-  | 'DRAFT_ORDER_ATTACHMENT'
-  | 'DRAFT_ORDER_ATTACHMENTS'
+  | 'PURCHASE_NEED_ATTACHMENT'
+  | 'PURCHASE_NEED_ATTACHMENTS'
   | 'PRODUCT'
   | 'PRODUCTS'
   | 'PROJECT'

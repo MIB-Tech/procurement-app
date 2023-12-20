@@ -6,7 +6,8 @@ import { ClickAwayListener } from '@mui/material';
 import { Dropdown } from 'react-bootstrap';
 import { Button } from '../../../../components/Button';
 import clsx from 'clsx';
-import { DivToggle } from '../../../../ListingView/Filter/FilterToolbar';
+
+import { DivToggle } from '../../../../ListingView/Filter/DivToggle';
 
 
 type SelectFieldProps<T extends {}> = {

@@ -1,5 +1,6 @@
-import { RoleModel } from '../Role';
-import { AbstractModel, Timestamp } from '../../../_custom/types/types';
+import {RoleModel} from '../Role';
+import {LocationModel} from '../Location';
+import {AbstractModel, Timestamp} from '../../../_custom/types/types';
 
 
 type Model = {
@@ -11,6 +12,7 @@ type Model = {
   passwordConfirm: string
   phoneNumber: string
   role?: RoleModel
+  location?: LocationModel
 } & Timestamp & AbstractModel
 
 export default Model;

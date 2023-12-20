@@ -1,29 +1,30 @@
-import React from 'react'
-import clsx from 'clsx'
-import {useLocation} from 'react-router'
-import {checkIsActive, KTSVG} from '../../../helpers'
-import {useLayout} from '../../core'
-import { RouteModel } from '../../../../app/modules/Route';
+import React from 'react';
+import clsx from 'clsx';
+import { useLocation } from 'react-router';
+import { checkIsActive, KTSVG } from '../../../helpers';
+import { useLayout } from '../../core';
+import { OperationModel } from '../../../../app/modules/Operation';
+
 
 type Props = {
   fontIcon?: string
-} & Omit<RouteModel, 'children'>
+} & Pick<OperationModel, 'title' | 'icon'>
 
 const AsideMenuItemWithSub: React.FC<Props> = ({
   children,
-  treePath,
   title,
   icon,
   fontIcon,
 }) => {
-  const {pathname} = useLocation()
-  const isActive = treePath && checkIsActive(pathname, treePath)
-  const {config} = useLayout()
-  const {aside} = config
+  const { pathname } = useLocation();
+  const treePath = 'TODO';
+  const isActive = treePath && checkIsActive(pathname, treePath);
+  const { config } = useLayout();
+  const { aside } = config;
 
   return (
     <div
-      className={clsx('menu-item', {'here show': isActive}, 'menu-accordion')}
+      className={clsx('menu-item', { 'here show': isActive }, 'menu-accordion')}
       data-kt-menu-trigger='click'
     >
       <span className='menu-link'>

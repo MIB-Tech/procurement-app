@@ -7,7 +7,6 @@ import { I18nMessageKey } from '../../../i18n/I18nMessages';
 
 const FeedbackError: FC<FeedbackErrorType> = ({ error, variant = 'danger' }) => (
   <div className={`text-${variant}`}>
-    {/*TOTO*/}
     {typeof error === 'string' ?
       <Trans id={error} /> :
       <Trans id={error.id} values={error.params} />

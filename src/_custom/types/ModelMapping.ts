@@ -6,12 +6,12 @@ import { BooleanColumn } from '../Column/Boolean/BooleanColumn';
 import { ArrayColumn } from '../Column/Array/ArrayColumn';
 import { I18nMessageKey } from '../i18n/I18nMessages';
 import { UserModel } from '../../app/modules/User';
-import { RouteModel } from '../../app/modules/Route';
-import { RouteKeyEnum } from '../../app/modules/Route/Model';
 import { RoleKeyEnum } from '../../app/modules/Role/Model';
 import { HydraItem } from './hydra.types';
 import { ModelEnum, Models } from '../../app/modules/types';
 import { Variant } from 'react-bootstrap/types';
+import { OperationModel } from '../../app/modules/Operation';
+import { GridProps } from '@mui/material';
 
 
 export type Model<M extends ModelEnum> = Models[M]
@@ -28,6 +28,7 @@ export type FormViewBaseColumn<M extends ModelEnum> = {
 export type ViewColumn<M extends ModelEnum> = {
   title?: I18nMessageKey
   nullable?: boolean
+  footer?: (props: { value?: any, collection: Array<HydraItem<M>> }) => ReactNode
 }
 export type TypeColum<M extends ModelEnum = any> =
   NumberColumn
@@ -40,44 +41,44 @@ export type ColumnDef<M extends ModelEnum> = Record<keyof Model<M>, ColumnMappin
 
 export enum ViewEnum {
   Listing = 'LISTING',
-  Calendar = 'CALENDAR',
+  Create = 'CREATE',
+  Update = 'UPDATE',
   Detail = 'DETAIL',
   Delete = 'DELETE',
-  Form = 'FORM',
-  Import = 'IMPORT',
 }
 
-export type ItemOperationCallback<M extends ModelEnum> = (props: { item: Model<M>, routes: RouteModel[], authUser: UserModel }) => RouteModel[]
-type BaseViewType = {
-  routeKey?: RouteKeyEnum
-}
+// read (Listing(Listing, Calendar), Detail), write (Create, Update, Delete)
+
+/** @deprecated */
+export type ItemOperationCallback<M extends ModelEnum> = (props: {
+  item: Model<M>,
+  operations: OperationModel[]
+}) => OperationModel[]
+
 export type ListingColumns<M extends ModelEnum> = Partial<Record<keyof Model<M>, boolean | {
   render?: (props: { item: Model<M> }) => ReactNode
 }>>
 export type FilterColumns<M extends ModelEnum> = Partial<Record<string | keyof Model<M>, boolean | {
-  display: (props: { user: UserModel }) => boolean | undefined
+  quickFilter?: boolean
+  display?: (props: { user: UserModel }) => boolean | undefined
 }>>
+export type BulkAction<M extends ModelEnum> = {
+  render: (props: {selectedItems: Array<HydraItem<M>>}) => ReactNode
+}
 export type ListingViewType<M extends ModelEnum> = {
   type: ViewEnum.Listing,
+  dateFields?: Array<DateField<M>>
   itemOperationRoutes?: ItemOperationCallback<M>
   columns?: ListingColumns<M>
   filterColumns?: FilterColumns<M>
   sortColumns?: Partial<Record<keyof Model<M>, boolean>>
-} & BaseViewType
+  bulkActions?: Array<BulkAction<M>>
+}
 export type DateField<M extends ModelEnum> = {
   startProperty: keyof Model<M>,
   endProperty?: keyof Model<M>
   variant?: Variant
 }
-export type CalendarViewType<M extends ModelEnum> = {
-  type: ViewEnum.Calendar,
-  dateFields: Array<DateField<M>>
-  //
-  itemOperationRoutes?: ItemOperationCallback<M>
-  columns?: ListingColumns<M>
-  filterColumns?: FilterColumns<M>
-  sortColumns?: Partial<Record<keyof Model<M>, boolean>>
-} & BaseViewType
 export type DetailColumns<M extends ModelEnum> = Partial<Record<keyof Model<M> | string, boolean | {
   as?: 'EMPTY' | 'TAB'
   display?: DisplayCallback<M>,
@@ -88,17 +89,20 @@ export type DetailViewType<M extends ModelEnum> = {
   type: ViewEnum.Detail
   itemOperationRoutes?: ItemOperationCallback<M>
   columns?: DetailColumns<M>
-} & BaseViewType
+}
+/** @deprecated */
 export type ImportViewType<M extends ModelEnum> = {
-  type: ViewEnum.Import
   columns?: Partial<Record<keyof Model<M>, boolean>>
-} & BaseViewType
+}
 export type FormField<M extends ModelEnum> = {
   // required?: boolean,
   display?: DisplayCallback<M>,
   grantedRoles?: RoleKeyEnum[]
   render?: (props: { item: Model<M> }) => ReactNode
   defaultValue?: any
+  slotProps?: {
+    root?: Omit<GridProps, 'item'>
+  }
 }
 
 export type FormFields<M extends ModelEnum> = Partial<Record<keyof Model<M> | string, boolean | FormField<M>>>
@@ -109,25 +113,41 @@ export enum MutationMode {
 }
 
 export type FormViewType<M extends ModelEnum> = {
-  type: ViewEnum.Form
   mode?: MutationMode
+  inlineForm?: boolean
+  /** @deprecated */
+  submittable?: DisplayCallback<M>
+  className?: string
+  fields?: FormFields<M>
+  slotProps?: {
+    root?: Omit<GridProps, 'container'>
+    item?: Omit<GridProps, 'item'>
+  }
+}
+export type CreateViewType<M extends ModelEnum> = {
+  type: ViewEnum.Create
+  /** @deprecated */
   submittable?: DisplayCallback<M>
   fields?: FormFields<M>
-} & BaseViewType
+} & Omit<FormViewType<M>, 'mode'>
+export type UpdateViewType<M extends ModelEnum> = {
+  type: ViewEnum.Update
+  /** @deprecated */
+  submittable?: DisplayCallback<M>
+  fields?: FormFields<M>
+} & Omit<FormViewType<M>, 'mode'>
 export type DeleteViewType<M extends ModelEnum> = {
   type: ViewEnum.Delete
-} & BaseViewType
+}
 export type View<M extends ModelEnum> =
   ListingViewType<M> |
-  CalendarViewType<M> |
-  FormViewType<M> |
   DetailViewType<M> |
-  DeleteViewType<M> |
-  ImportViewType<M>
+  CreateViewType<M> |
+  UpdateViewType<M> |
+  DeleteViewType<M>
 
 export type ModelMapping<M extends ModelEnum> = {
   modelName: M
-  icon?: string
   uploadable?: boolean,
   hydraTitle?: (item:HydraItem<M>) => ReactNode,
   hydraSubtitle?: (item:HydraItem<M>) => ReactNode,

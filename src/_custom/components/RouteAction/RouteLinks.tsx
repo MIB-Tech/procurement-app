@@ -1,41 +1,64 @@
 import React, { FC } from 'react';
 import { ActionDropdownProps } from './RouteAction.types';
-import { GrantedLink, useAuth } from '../../hooks/UseAuth';
+import { GrantedLink } from '../../hooks/UseAuth';
 import clsx from 'clsx';
 import { Help } from '../Help';
-import { Button } from '../Button';
+import { Button, ButtonProps } from '../Button';
 import { SVG } from '../SVG/SVG';
-import { IconButton } from '../Button/IconButton';
+import { Trans } from '../Trans';
+import { LinkProps } from 'react-router-dom';
+import { ViewEnum } from '../../types/ModelMapping';
 
 
-export const RouteLinks: FC<ActionDropdownProps> = ({ itemOperations, className }) => {
-  const { routes } = useAuth();
+export const RouteLinks: FC<ActionDropdownProps & {
+  buttonProps?: ButtonProps,
+  linkProps?: Omit<LinkProps, 'to'>
+  useContextualTitle?: boolean
+}> = ({
+  operations,
+  className,
+  buttonProps,
+  linkProps,
+  params,
+  useContextualTitle
+}) => {
 
   return (
-    <div className={clsx(`d-flex flex-wrap align-items-center gap-2 gap-lg-3`, className)}>
-      {itemOperations.map(({ routeKey, path }) => {
-        const route = routes.find((route) => route.routeKey === routeKey);
-        if (!route) return;
+    <div className={clsx(`d-flex flex-wrap align-items-center gap-3`, className)}>
+      {operations.map((operation, index) => {
+        const { title, operationType, resource, icon, suffix } = operation;
+        let variant = 'primary'
+        switch (operationType) {
+          case ViewEnum.Delete:
+            variant = 'light-danger'
+            break;
+        }
 
         return (
           <GrantedLink
-            key={routeKey}
-            routeKey={routeKey}
-            to={path}
+            key={index}
+            resourceName={resource.name}
+            operationType={operationType}
+            suffix={suffix}
+            params={params}
+            {...linkProps}
           >
-            {route.icon ?
-              <Help overlay={route.title}>
-                <Button
-                  variant='light-primary'
-                  size='sm'
-                  className='d-flex gap-2'
-                >
-                  <SVG path={route.icon} size='4' />
-                  <span className='d-none d-sm-block'>{route.contextualTitle || route.title}</span>
-                </Button>
-              </Help> :
-              route.title
-            }
+            <Help overlay={title}>
+              <Button
+                variant={variant}
+                size='sm'
+                {...buttonProps}
+                className={clsx('d-flex gap-2', buttonProps?.className)}
+              >
+                {icon && <SVG path={icon} size='4' />}
+                <span className='-d-none -d-sm-block'>
+                  {useContextualTitle ?
+                    <Trans id={operationType} />:
+                    title
+                  }
+                </span>
+              </Button>
+            </Help>
           </GrantedLink>
         );
       })}

@@ -7,12 +7,12 @@ import clsx from 'clsx';
 import { ColumnDef, Model } from '../../types/ModelMapping';
 import { Trans } from '../../components/Trans';
 import { stringToI18nMessageKey } from '../../utils';
-import { DivToggle } from '../Filter/FilterToolbar';
 import { SortInput } from '../ListingView.types';
 import { DirectionField } from './DirectionField';
 import { ModelEnum } from '../../../app/modules/types';
 import { SVG } from '../../components/SVG/SVG';
 import { Help } from '../../components/Help';
+import { DivToggle } from '../Filter/DivToggle';
 
 
 type Props<M extends ModelEnum> = {
@@ -33,9 +33,7 @@ const SortToolbar = <M extends ModelEnum>({ onChange, columnDef, sort = {}, clas
     <Formik
       enableReinitialize
       initialValues={sort}
-      onSubmit={newValues => {
-        onChange(newValues);
-      }}
+      onSubmit={onChange}
     >
       {({ handleSubmit, values, setValues }) => {
         const { length } = (Object.keys(values) as Array<keyof Model<M>>).filter(key => values[key]);
@@ -57,26 +55,21 @@ const SortToolbar = <M extends ModelEnum>({ onChange, columnDef, sort = {}, clas
                   }}>
                   <Help overlay={<Trans id='SORT' />}>
                     <Button
-                      variant='light'
+                      variant='outline-default'
                       size='sm'
                       icon
-                      className={clsx('d-flex gap-1 align-items-center', length > 0 && 'position-relative')}
+                      className={clsx('d-flex gap-1 align-items-center bg-white', length > 0 && 'position-relative')}
                     >
                       <SVG path='/arrows/arr039.svg' />
                       {dirty && (
-                        <div
-                          className='position-absolute top-0 start-100 translate-middle badge badge-sm badge-circle badge-primary'
-                        >
+                        <div className='position-absolute top-0 start-100 translate-middle badge badge-sm badge-circle badge-primary'>
                           {length}
                         </div>
                       )}
                     </Button>
                   </Help>
                 </Dropdown.Toggle>
-                <Dropdown.Menu
-                  align='end'
-                  className='px-3 py-3 w-300px -mh-400px -scroll-y'
-                >
+                <Dropdown.Menu className='px-3 py-3 w-300px'>
                   <div className='d-flex flex-column gap-2'>
                     {columnNames.map((columnName) => {
                       const name = columnName.toString();

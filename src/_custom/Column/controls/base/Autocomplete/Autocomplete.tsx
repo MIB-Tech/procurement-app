@@ -115,14 +115,16 @@ const Autocomplete = <T,
                       index,
                       inputValue: inputProps.value + '',
                       selected: selected === 'false' ? false : !!selected
-                    }
+                    },
+                    // @ts-ignore
+                    {}
                   )
                 }
 
                 return <Option label={getOptionLabel(option) as string} {...liProps}/>
               })}
               {loading && <Option label={loadingText} />}
-              {(!loading && options.length === 0) && <Option label={noOptionsText || <Trans id='NO_ITEM_FOUND' />} />}
+              {(!loading && options.length === 0) && <Option label={noOptionsText || <Trans id={'NO_ITEM_FOUND'} />} />}
 
             </Popper>
         )}
