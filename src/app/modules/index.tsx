@@ -23,6 +23,7 @@ import {HydraItem} from '../../_custom/types/hydra.types';
 import {VENDOR_CONTACT_MAPPING} from './VendorContact';
 import {VENDOR_MAPPING} from './Vendor';
 import {CURRENCY_MAPPING} from './Currency';
+import {PURCHASEFILETYPE_MAPPING} from "./PurchaseFileType";
 
 
 export const MODEL_MAPPINGS: Mapping = {
@@ -43,10 +44,7 @@ export const MODEL_MAPPINGS: Mapping = {
     modelName: ModelEnum.PurchaseFileProduct,
     columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
   },
-  [ModelEnum.PurchaseFileType]: {
-    modelName: ModelEnum.PurchaseFileType,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
+  [ModelEnum.PurchaseFileType]: PURCHASEFILETYPE_MAPPING,
   [ModelEnum.PurchaseOrder]: {
     modelName: ModelEnum.PurchaseOrder,
     columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}

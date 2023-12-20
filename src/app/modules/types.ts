@@ -17,6 +17,7 @@ import {PurchaseNeedAttachmentModel} from './PurchaseNeedAttachment';
 import {VendorContactModel} from './VendorContact';
 import {VendorModel} from './Vendor';
 import {CurrencyModel} from './Currency';
+import {PurchaseFileTypeModel} from "./PurchaseFileType";
 
 
 export enum ModelEnum {
@@ -72,7 +73,7 @@ export type Models = {
   [ModelEnum.Discount]: AbstractModel,
   [ModelEnum.PurchaseFile]: AbstractModel,
   [ModelEnum.PurchaseFileProduct]: AbstractModel,
-  [ModelEnum.PurchaseFileType]: AbstractModel,
+  [ModelEnum.PurchaseFileType]: PurchaseFileTypeModel,
   [ModelEnum.PurchaseOrder]: AbstractModel,
   [ModelEnum.PurchaseOrderProduct]: AbstractModel,
   [ModelEnum.Receipt]: AbstractModel,
