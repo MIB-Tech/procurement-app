@@ -28,6 +28,10 @@ import {PURCHASEFILETYPE_MAPPING} from "./PurchaseFileType";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
+  [ModelEnum.ProductPricing]: {
+    modelName: ModelEnum.ProductPricing,
+    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
+  },
   [ModelEnum.DesiredProduct]: {
     modelName: ModelEnum.DesiredProduct,
     columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}

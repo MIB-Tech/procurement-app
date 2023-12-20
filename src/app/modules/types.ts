@@ -50,6 +50,7 @@ export enum ModelEnum {
   VendorContact = 'VendorContact',
   VendorOffer = 'VendorOffer',
   VendorOfferProduct = 'VendorOfferProduct',
+  ProductPricing = 'ProductPricing',
 }
 
 export type Models = {
@@ -82,4 +83,5 @@ export type Models = {
   [ModelEnum.VendorContact]: VendorContactModel,
   [ModelEnum.VendorOffer]: AbstractModel,
   [ModelEnum.VendorOfferProduct]: AbstractModel
+  [ModelEnum.ProductPricing]: AbstractModel
 }
