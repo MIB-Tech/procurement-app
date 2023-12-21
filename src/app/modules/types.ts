@@ -18,6 +18,17 @@ import {VendorContactModel} from './VendorContact';
 import {VendorModel} from './Vendor';
 import {CurrencyModel} from './Currency';
 import {PurchaseFileTypeModel} from "./PurchaseFileType";
+import {PurchaseFileModel} from "./PurchaseFile";
+import {VendorOfferModel} from "./VendorOffer";
+import {VendorOfferProductModel} from "./VendorOfferProduct";
+import {PurchaseFileProductModel} from "./PurchaseFileProduct";
+import {ProductPricingModel} from "./ProductPricing";
+import {PurchaseOrderProductModel} from "./PurchaseOrderProduct";
+import {PurchaseOrderModel} from "./PurchaseOrder";
+import {DiscountModel} from "./Discount";
+import {DesiredProductModel} from "./DesiredProduct";
+import {ReceiptModel} from "./Receipt";
+import {ReceiptProductModel} from "./ReceiptProduct";
 
 
 export enum ModelEnum {
@@ -70,18 +81,18 @@ export type Models = {
   [ModelEnum.Operation]: OperationModel,
   [ModelEnum.Resource]: ResourceModel,
   [ModelEnum.Currency]: CurrencyModel,
-  [ModelEnum.DesiredProduct]: AbstractModel,
-  [ModelEnum.Discount]: AbstractModel,
-  [ModelEnum.PurchaseFile]: AbstractModel,
-  [ModelEnum.PurchaseFileProduct]: AbstractModel,
+  [ModelEnum.DesiredProduct]: DesiredProductModel,
+  [ModelEnum.Discount]: DiscountModel,
+  [ModelEnum.PurchaseFile]: PurchaseFileModel,
+  [ModelEnum.PurchaseFileProduct]: PurchaseFileProductModel,
   [ModelEnum.PurchaseFileType]: PurchaseFileTypeModel,
-  [ModelEnum.PurchaseOrder]: AbstractModel,
-  [ModelEnum.PurchaseOrderProduct]: AbstractModel,
-  [ModelEnum.Receipt]: AbstractModel,
-  [ModelEnum.ReceiptProduct]: AbstractModel,
+  [ModelEnum.PurchaseOrder]: PurchaseOrderModel,
+  [ModelEnum.PurchaseOrderProduct]: PurchaseOrderProductModel,
+  [ModelEnum.Receipt]: ReceiptModel,
+  [ModelEnum.ReceiptProduct]: ReceiptProductModel,
   [ModelEnum.Vendor]: VendorModel,
   [ModelEnum.VendorContact]: VendorContactModel,
-  [ModelEnum.VendorOffer]: AbstractModel,
-  [ModelEnum.VendorOfferProduct]: AbstractModel
-  [ModelEnum.ProductPricing]: AbstractModel
+  [ModelEnum.VendorOffer]: VendorOfferModel,
+  [ModelEnum.VendorOfferProduct]: VendorOfferProductModel,
+  [ModelEnum.ProductPricing]: ProductPricingModel
 }

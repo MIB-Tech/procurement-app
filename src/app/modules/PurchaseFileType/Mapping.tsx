@@ -14,6 +14,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseFileType> = {
     },
     name: {
       type: ColumnTypeEnum.String
+    },
+    purchaseFiles: {
+      type: ModelEnum.PurchaseFile,
+      multiple: true
     }
   },
   views: [

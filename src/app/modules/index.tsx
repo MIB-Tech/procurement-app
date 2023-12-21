@@ -24,57 +24,35 @@ import {VENDOR_CONTACT_MAPPING} from './VendorContact';
 import {VENDOR_MAPPING} from './Vendor';
 import {CURRENCY_MAPPING} from './Currency';
 import {PURCHASEFILETYPE_MAPPING} from "./PurchaseFileType";
+import {PURCHASEFILE_MAPPING} from "./PurchaseFile";
+import {PURCHASEFILEPRODUCT_MAPPING} from "./PurchaseFileProduct";
+import {VENDOROFFER_MAPPING} from "./VendorOffer";
+import {VENDOR_OFFER_PRODUCT_MAPPING} from "./VendorOfferProduct";
+import {PRODUCT_PRICING_MAPPING} from "./ProductPricing";
+import {PURCHASE_ORDER_PRODUCT_MAPPING} from "./PurchaseOrderProduct";
+import {PURCHASE_ORDER_MAPPING} from "./PurchaseOrder";
+import {DISCOUNT_MAPPING} from "./Discount";
+import {DESIRED_PRODUCT_MAPPING} from "./DesiredProduct";
+import {RECEIPT_MAPPING} from "./Receipt";
+import {RECEIPT_PRODUCT_MAPPING} from "./ReceiptProduct";
 
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
-  [ModelEnum.ProductPricing]: {
-    modelName: ModelEnum.ProductPricing,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
-  [ModelEnum.DesiredProduct]: {
-    modelName: ModelEnum.DesiredProduct,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
-  [ModelEnum.Discount]: {
-    modelName: ModelEnum.Discount,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
-  [ModelEnum.PurchaseFile]: {
-    modelName: ModelEnum.PurchaseFile,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
-  [ModelEnum.PurchaseFileProduct]: {
-    modelName: ModelEnum.PurchaseFileProduct,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
+  [ModelEnum.ProductPricing]: PRODUCT_PRICING_MAPPING,
+  [ModelEnum.DesiredProduct]: DESIRED_PRODUCT_MAPPING,
+  [ModelEnum.Discount]:DISCOUNT_MAPPING,
+  [ModelEnum.PurchaseFile]: PURCHASEFILE_MAPPING,
+  [ModelEnum.PurchaseFileProduct]: PURCHASEFILEPRODUCT_MAPPING,
   [ModelEnum.PurchaseFileType]: PURCHASEFILETYPE_MAPPING,
-  [ModelEnum.PurchaseOrder]: {
-    modelName: ModelEnum.PurchaseOrder,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
-  [ModelEnum.PurchaseOrderProduct]: {
-    modelName: ModelEnum.PurchaseOrderProduct,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
-  [ModelEnum.Receipt]: {
-    modelName: ModelEnum.Receipt,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
-  [ModelEnum.ReceiptProduct]: {
-    modelName: ModelEnum.ReceiptProduct,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
+  [ModelEnum.PurchaseOrder]:PURCHASE_ORDER_MAPPING,
+  [ModelEnum.PurchaseOrderProduct]: PURCHASE_ORDER_PRODUCT_MAPPING,
+  [ModelEnum.Receipt]:RECEIPT_MAPPING,
+  [ModelEnum.ReceiptProduct]: RECEIPT_PRODUCT_MAPPING,
   [ModelEnum.Vendor]: VENDOR_MAPPING,
   [ModelEnum.VendorContact]: VENDOR_CONTACT_MAPPING,
-  [ModelEnum.VendorOffer]: {
-    modelName: ModelEnum.VendorOffer,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
-  [ModelEnum.VendorOfferProduct]: {
-    modelName: ModelEnum.VendorOfferProduct,
-    columnDef: {id: {type: ColumnTypeEnum.Number}, uid: {type: ColumnTypeEnum.String}}
-  },
+  [ModelEnum.VendorOffer]: VENDOROFFER_MAPPING,
+  [ModelEnum.VendorOfferProduct]: VENDOR_OFFER_PRODUCT_MAPPING,
   [ModelEnum.PurchaseNeed]: PURCHASE_NEED_MAPPING,
   [ModelEnum.PurchaseNeedAttachment]: PURCHASE_NEED_ATTACHMENT_MAPPING,
   [ModelEnum.Category]: CATEGORY_MAPPING,
@@ -89,7 +67,8 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.ValidationPath]: VALIDATION_PATH_MAPPING,
   [ModelEnum.Location]: LOCATION_MAPPING,
   [ModelEnum.Resource]: RESOURCE_MAPPING,
-  [ModelEnum.Operation]: OPERATION_MAPPING
+  [ModelEnum.Operation]: OPERATION_MAPPING,
+
 };
 
 type ListingState = {

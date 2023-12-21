@@ -3,8 +3,8 @@ import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
 
-const mapping: ModelMapping<ModelEnum.Vendor> = {
-  modelName: ModelEnum.Vendor,
+const mapping: ModelMapping<ModelEnum.Discount> = {
+  modelName: ModelEnum.Discount,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
@@ -12,20 +12,12 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    name: {
+    discountType: {
       type: ColumnTypeEnum.String
     },
-    code: {
-      type: ColumnTypeEnum.String
-    },
-    ProductPricing: {
-      type: ModelEnum.ProductPricing
-    },
-    contacts: {
-      type: ModelEnum.VendorContact,
-      multiple: true,
-      embeddedForm: true
-    },
+    value:{
+      type:ColumnTypeEnum.Number
+    }
   },
   views: [
     {

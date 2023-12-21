@@ -30,6 +30,9 @@ const mapping: ModelMapping<ModelEnum.Step> = {
     users: {
       type: ModelEnum.User,
       multiple: true
+    },
+    validationPath: {
+      type: ModelEnum.ValidationPath
     }
   },
   views: [

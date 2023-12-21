@@ -1,8 +1,7 @@
-import { ModelMapping, ViewEnum } from '../../../_custom/types/ModelMapping';
-import React from 'react';
-import { StringFormat } from '../../../_custom/Column/String/StringColumn';
-import { ColumnTypeEnum } from '../../../_custom/types/types';
-import { ModelEnum } from '../types';
+import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {StringFormat} from '../../../_custom/Column/String/StringColumn';
+import {ColumnTypeEnum} from '../../../_custom/types/types';
+import {ModelEnum} from '../types';
 
 
 const mapping: ModelMapping<ModelEnum.VendorContact> = {
@@ -25,9 +24,13 @@ const mapping: ModelMapping<ModelEnum.VendorContact> = {
       type: ColumnTypeEnum.String,
       format: StringFormat.PhoneNumber
     },
-    activity: {
+    address: {
       type: ColumnTypeEnum.String,
+      format: StringFormat.Text,
       nullable: true
+    },
+    vendor: {
+      type: ModelEnum.Vendor
     }
   },
   views: [
