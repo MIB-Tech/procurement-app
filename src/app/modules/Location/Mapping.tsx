@@ -28,7 +28,24 @@ const mapping: ModelMapping<ModelEnum.Location> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+        name: true,
+        abbreviation: true
+      }
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        name: true,
+        abbreviation: true
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        name: true,
+        abbreviation: true
+      }
     }
   ]
 };

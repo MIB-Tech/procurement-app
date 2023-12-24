@@ -27,7 +27,10 @@ const mapping: ModelMapping<ModelEnum.Company> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+        name:true,
+        code:true
+      }
     }
   ]
 };

@@ -18,7 +18,8 @@ const mapping: ModelMapping<ModelEnum.VendorContact> = {
     },
     email: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Email
+      format: StringFormat.Email,
+      nullable: true
     },
     phoneNumber: {
       type: ColumnTypeEnum.String,
@@ -26,7 +27,6 @@ const mapping: ModelMapping<ModelEnum.VendorContact> = {
     },
     address: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Text,
       nullable: true
     },
     vendor: {
@@ -37,8 +37,27 @@ const mapping: ModelMapping<ModelEnum.VendorContact> = {
     {
       type: ViewEnum.Listing,
       columns: {
+        name: true,
         email: true,
         phoneNumber: true,
+      }
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        name: true,
+        phoneNumber: true,
+        email: true,
+        address: true
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        name: true,
+        phoneNumber: true,
+        email: true,
+        address: true
       }
     }
   ]

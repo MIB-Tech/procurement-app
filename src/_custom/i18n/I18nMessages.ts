@@ -1,8 +1,8 @@
-import { en } from './messages/en';
-import { ar } from './messages/ar';
-import { fr } from './messages/fr';
-import { CompoundFilterOperator, PropertyFilterOperator } from '../ListingView/Filter/Filter.types';
-import { PriorityEnum, PurchaseNeedStatusEnum } from '../../app/modules/PurchaseNeed/Model';
+import {en} from './messages/en';
+import {ar} from './messages/ar';
+import {fr} from './messages/fr';
+import {CompoundFilterOperator, PropertyFilterOperator} from '../ListingView/Filter/Filter.types';
+import {PriorityEnum, PurchaseNeedStatusEnum} from '../../app/modules/PurchaseNeed/Model';
 import {ListingModeEnum} from '../ListingView/ListingView.types';
 import {ViewEnum} from '../types/ModelMapping';
 
@@ -338,10 +338,150 @@ type I18nMessageKey =
   | 'LINE'
   | 'LINES'
   | 'VALIDATION_PATH'
+  | 'SIGN_IN'
+  | 'STEP'
+  | 'STEP_USER'
+  | 'STRATEGY'
+  | 'FILE_NAME'
+  | 'PURCHASE_NEED_NUMBER'
+  | 'RECOMENDED_VENDORS'
+  | 'ORDER_TYPE'
+  | 'VALIDATION_STARTED_AT'
+  | 'COMMENT'
+  | 'REFERENCE'
+  | 'NOTE'
+  | 'MEASUREMENT_UNIT'
+  | 'ACCOUNTING_ACCOUNT'
+  | 'VAT_RATE'
+  | 'IS_MOBILISED'
+  | 'STOCKABLE'
+  | 'APPLICATED_AT'
+  | 'BID_PRICE_INCL_TAX'
+  | 'DISCOUNT_VALUE'
+  | 'PURCHASE_PRICE_INCL_TAX'
+  | 'ICE'
+  | 'RECEIVE_AT'
+  | 'DEVIS_DATE'
+  | 'IS_VAT_INCLUDED'
+  | 'DEVISE_NUMBER'
+  | 'ORDERED_QUANTITY'
+  | 'VALIDATED_QUANTITY'
+  | 'PART_NUMBER'
+  | 'DEVIS_NUMBER'
+  | 'RECOMMENDED_PRICE'
+  | 'VENDOR_PRODUCT_CODE'
+  | 'DESINATION'
+  | 'IS_CONFORME'
+  | 'SCORE'
+  | 'POSTAL_CODE'
+  | 'ADDRESS'
+  | 'CITY_NAME'
+  | 'IS_MAIN'
+  | 'GROSS_PRICE'
+  | 'NET_PRICE'
+  | 'GROSS_TOTAL_EXCL_TAX'
+  | 'NET_TOTAL_EXCL_TAX'
+  | 'VAT_TAX'
+  | 'DISCOUNT_TYPE'
+  | 'IS_TAX_INCLUDED'
+  | 'REF'
+  | 'EXTERNAL_REF'
+  | 'TOTAL_VAT_TAX'
+  | 'STEP_USERS'
+  | 'STEPS'
+  | 'PURCHASE_FILE_TYPES'
+  | 'PURCHASE_FILES'
+  | 'VENDOR_OFFERS'
+  | 'PURCHASE_FILE_PRODUCTS'
+  | 'PURCHASE_FILE_PRODUCT'
+  | 'VENDOR_OFFER_PRODUCT'
+  | 'VENDOR_OFFER_PRODUCTS'
+  |'PURCHASE_ORDER'
+  |'PURCHASE_ORDERS'
+  |'PURCHASE_ORDER_CATEGORIES'
+  |'RECEIPT'
+  |'RECEIPTS'
+  |'RECEIPT_PRODUCT'
+  |'RECEIPT_PRODUCTS'
+  |'DESIRED_PRODUCT'
+  |'DESIRED_PRODUCTS'
+  |'PURCHASE_ORDER_PRODUCT'
+  |'PURCHASE_ORDER_PRODUCTS'
+  |'PRODUCT_PRICING'
+  |'PRODUCT_PRICINGS'
+|'VENDOR_OFFER'
+  |'PURCHASE_FILE'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 type I18nLanguage = Record<I18nMessageKey, string>
 
-const I18N_MESSAGES: Record<Lang, I18nLanguage> = { ar, en, fr };
+const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};
 
-export type { I18nMessageKey, Lang, I18nLanguage };
-export { I18N_MESSAGES };
+export type {I18nMessageKey, Lang, I18nLanguage};
+export {I18N_MESSAGES};

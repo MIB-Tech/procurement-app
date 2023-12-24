@@ -68,6 +68,7 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Location]: LOCATION_MAPPING,
   [ModelEnum.Resource]: RESOURCE_MAPPING,
   [ModelEnum.Operation]: OPERATION_MAPPING,
+  [ModelEnum.PurchaseOrderCategory]:PURCHASE_ORDER_CATEGORY_MAPPING
 };
 
 type ListingState = {

@@ -18,6 +18,9 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
     code: {
       type: ColumnTypeEnum.String
     },
+    ice:{
+      type:ColumnTypeEnum.String
+    },
     productPricing: {
       type: ModelEnum.ProductPricing,
       multiple: true
@@ -31,7 +34,25 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+        code:true,
+        ice:true,
+      }
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        name: true,
+        code:true,
+        ice:true,
+        contacts: true,
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        contacts: true,
+      }
     }
   ]
 };

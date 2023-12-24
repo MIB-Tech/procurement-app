@@ -1,4 +1,4 @@
-import {ModelMapping} from '../../../_custom/types/ModelMapping';
+import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
@@ -34,7 +34,27 @@ const mapping: ModelMapping<ModelEnum.Operation> = {
       type: ModelEnum.Role,
       multiple: true
     }
-  }
+  },
+  views: [
+    {
+      type: ViewEnum.Listing,
+      columns: {
+        title: true
+      }
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        title: true
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        title: true
+      }
+    }
+  ]
 };
 
 export default mapping;
