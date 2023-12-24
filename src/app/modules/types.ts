@@ -12,7 +12,6 @@ import {ValidationPathModel} from './ValidationPath';
 import {OperationModel} from './Operation';
 import {LocationModel} from './Location';
 import {ResourceModel} from './Resource';
-import {AbstractModel} from '../../_custom/types/types';
 import {PurchaseNeedAttachmentModel} from './PurchaseNeedAttachment';
 import {VendorContactModel} from './VendorContact';
 import {VendorModel} from './Vendor';
@@ -29,6 +28,7 @@ import {DiscountModel} from "./Discount";
 import {DesiredProductModel} from "./DesiredProduct";
 import {ReceiptModel} from "./Receipt";
 import {ReceiptProductModel} from "./ReceiptProduct";
+import {PurchaseOrderCategoryModel} from "./PurchaseOrderCategory";
 
 
 export enum ModelEnum {
@@ -62,6 +62,7 @@ export enum ModelEnum {
   VendorOffer = 'VendorOffer',
   VendorOfferProduct = 'VendorOfferProduct',
   ProductPricing = 'ProductPricing',
+  PurchaseOrderCategory = 'PurchaseOrderCategory',
 }
 
 export type Models = {
@@ -87,6 +88,7 @@ export type Models = {
   [ModelEnum.PurchaseFileProduct]: PurchaseFileProductModel,
   [ModelEnum.PurchaseFileType]: PurchaseFileTypeModel,
   [ModelEnum.PurchaseOrder]: PurchaseOrderModel,
+  [ModelEnum.PurchaseOrderCategory]: PurchaseOrderCategoryModel,
   [ModelEnum.PurchaseOrderProduct]: PurchaseOrderProductModel,
   [ModelEnum.Receipt]: ReceiptModel,
   [ModelEnum.ReceiptProduct]: ReceiptProductModel,

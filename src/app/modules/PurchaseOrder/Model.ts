@@ -3,6 +3,8 @@ import {PurchaseOrderProductModel} from "../PurchaseOrderProduct";
 import {VendorModel} from "../Vendor";
 import {CurrencyModel} from "../Currency";
 import {ReceiptModel} from "../Receipt";
+import {ProjectModel} from "../Project";
+import {PurchaseOrderCategoryModel} from "../PurchaseOrderCategory";
 
 
 type Model = {
@@ -16,7 +18,8 @@ type Model = {
   vendor:VendorModel
   currency:CurrencyModel
   receipts:Array<ReceiptModel>
-
+  projects:ProjectModel
+  purchaseOrderCategory:Array<PurchaseOrderCategoryModel>
 } & AbstractModel
 
 export default Model;

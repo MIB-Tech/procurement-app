@@ -5,8 +5,9 @@ import {ProductPricingModel} from "../ProductPricing";
 type Model = {
   name: string
   code: string
+  ice:string
   contacts: Array<VendorContactModel>
-  ProductPricing:Array<ProductPricingModel>
+  productPricing: Array<ProductPricingModel>
 } & AbstractModel
 
 export default Model;

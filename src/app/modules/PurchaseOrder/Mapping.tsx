@@ -44,14 +44,20 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     vendor:{
       type:ModelEnum.Vendor
+    },
+    projects:{
+      type:ModelEnum.Project
+    },
+    purchaseOrderCategory:{
+      type:ModelEnum.PurchaseOrderCategory
     }
-
-
   },
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+
+      }
     }
   ]
 };

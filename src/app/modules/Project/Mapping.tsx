@@ -18,12 +18,30 @@ const mapping: ModelMapping<ModelEnum.Project> = {
     purchaseNeeds: {
       type: ModelEnum.PurchaseNeed,
       multiple: true
+    },
+    PurchaseOrders: {
+      type: ModelEnum.PurchaseOrder,
+      multiple: true
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+        name: true,
+      },
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        name: true,
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        name: true
+      }
     }
   ]
 };
