@@ -1,39 +1,40 @@
 import React from 'react';
-import { EmailLink } from '../../../components/Button/EmailLink';
-import { PhoneNumberLink } from '../../../components/Button/PhoneNumberLink';
-import { Bullet } from '../../../components/Bullet';
-import { HydraItem } from '../../../types/hydra.types';
+import {EmailLink} from '../../../components/Button/EmailLink';
+import {PhoneNumberLink} from '../../../components/Button/PhoneNumberLink';
+import {Bullet} from '../../../components/Bullet';
+import {HydraItem} from '../../../types/hydra.types';
 import Moment from 'react-moment';
-import { Currency } from '../../../components/Currency';
+import {NumberUnit} from '../../../components/NumberUnit';
 import clsx from 'clsx';
-import { NumberFormat } from '../../../Column/Number/NumberColumn';
-import { DateFormatEnum, StringFormat, TimeFormatEnum } from '../../../Column/String/StringColumn';
-import { SVG } from '../../../components/SVG/SVG';
-import { Trans } from '../../../components/Trans';
-import { I18nMessageKey } from '../../../i18n/I18nMessages';
-import { KTSVG } from '../../../../_metronic/helpers';
-import { TypeColum } from '../../../types/ModelMapping';
-import { ModelCell } from './ModelCell';
-import { bytesToSize } from '../../../components/File/File.utils';
-import { ColumnTypeEnum } from '../../../types/types';
-import { ModelEnum } from '../../../../app/modules/types';
+import {NumberFormat} from '../../../Column/Number/NumberColumn';
+import {DateFormatEnum, StringFormat, TimeFormatEnum} from '../../../Column/String/StringColumn';
+import {SVG} from '../../../components/SVG/SVG';
+import {Trans} from '../../../components/Trans';
+import {I18nMessageKey} from '../../../i18n/I18nMessages';
+import {KTSVG} from '../../../../_metronic/helpers';
+import {TypeColum} from '../../../types/ModelMapping';
+import {ModelCell} from './ModelCell';
+import {bytesToSize} from '../../../components/File/File.utils';
+import {ColumnTypeEnum} from '../../../types/types';
 
 
-export type CellContentProps<M extends ModelEnum> = {
+export type CellContentProps = {
   value: any
 } & TypeColum
-export const CellContent = <M extends ModelEnum>(props: CellContentProps<M> & { className?: string }) => {
-  const { value, type } = props;
+export const CellContent = (props: CellContentProps & { className?: string }) => {
+  const {value, type} = props;
 
   switch (type) {
     case ColumnTypeEnum.Number:
       if (value !== 0 && !value) {
-        return <Bullet />;
+        return <Bullet/>;
       }
 
       switch (props.format) {
-        case NumberFormat.Currency:
-          return <Currency value={value as number} />;
+        case NumberFormat.Amount:
+          return <NumberUnit {...props} />;
+        case NumberFormat.Percent:
+          return <NumberUnit {...props} value={value * 100} unit='%'/>;
         case NumberFormat.DecimalUnit:
           return <>{bytesToSize(value as number)}</>;
         default:
@@ -81,7 +82,7 @@ export const CellContent = <M extends ModelEnum>(props: CellContentProps<M> & { 
           if (!option) {
             return <></>;
           }
-          const { label, color = 'light' } = option;
+          const {label, color = 'primary'} = option;
 
           return (
             <span className={clsx(`badge fs-7 badge-light-${color}`)}>
@@ -129,7 +130,7 @@ export const CellContent = <M extends ModelEnum>(props: CellContentProps<M> & { 
         return <Bullet />;
       }
 
-      const values = ('multiple' in props ? value : [value]) as Array<HydraItem<M> | string>
+      const values = ('multiple' in props ? value : [value]) as Array<HydraItem | string>
 
       return (
         <>

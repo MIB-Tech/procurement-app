@@ -21,7 +21,7 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
       enabled: !user.location
     },
     modelName,
-    path: getRoutePrefix(modelName) + '/base'
+    path: '/base' + getRoutePrefix(modelName)
   });
 
   return (

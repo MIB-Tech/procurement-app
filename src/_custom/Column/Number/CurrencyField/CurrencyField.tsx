@@ -10,15 +10,17 @@ export type Props = {
 
 export const CurrencyField: FC<Props> = ({ name = 'currency', currency, className, ...props }) => {
   return (
-    <div className='position-relative'>
+    <div className={clsx(currency && 'position-relative')}>
       <NumberField
         name={name}
-        className={clsx('pe-20', className)}
+        className={clsx(currency && 'pe-20', className)}
         {...props}
       />
-      <div className='position-absolute translate-middle-y top-50 end-0 me-12'>
-        {currency}
-      </div>
+      {currency && (
+        <div className='position-absolute translate-middle-y top-50 end-0 me-12'>
+          {currency}
+        </div>
+      )}
     </div>
   );
 }

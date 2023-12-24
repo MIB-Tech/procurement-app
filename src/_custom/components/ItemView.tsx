@@ -30,7 +30,7 @@ export const ItemView = <M extends ModelEnum>({
   return (
     <>
       {columnNames.map((columnName, index) => {
-        const def = getColumnMapping({modelName, columnName});
+        const columnMapping = getColumnMapping({modelName, columnName});
         const _columnName:string = columnName.toString().split('.').pop() as string
 
         return (
@@ -39,14 +39,14 @@ export const ItemView = <M extends ModelEnum>({
               <label
                 className={clsx(
                   'd-flex fw-semibold text-muted align-items-center',
-                  !detailView && !('multiple' in def) && !def.nullable && 'required',
+                  !detailView && !('multiple' in columnMapping) && !columnMapping.nullable && 'required',
                   labelClassName
                 )}>
-                {!hideIcon && (<ColumnIcon {...def} size='2' className='me-2' />)}
+                {!hideIcon && (<ColumnIcon {...columnMapping} size='2' className='me-2' />)}
                 <div className='text-truncate text-muted'>
                   <TitleContent
                     columnName={_columnName}
-                    {...def}
+                    {...columnMapping}
                   />
                 </div>
               </label>

@@ -18,8 +18,9 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
     code: {
       type: ColumnTypeEnum.String
     },
-    ProductPricing: {
-      type: ModelEnum.ProductPricing
+    productPricing: {
+      type: ModelEnum.ProductPricing,
+      multiple: true
     },
     contacts: {
       type: ModelEnum.VendorContact,

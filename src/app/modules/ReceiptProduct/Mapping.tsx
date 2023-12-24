@@ -12,19 +12,13 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    designation: {
-      type: ColumnTypeEnum.String
-    },
-    address:{
-      type:ColumnTypeEnum.String
-    },
     quantity:{
       type:ColumnTypeEnum.Number
     },
-    receipts:{
+    receipt:{
       type:ModelEnum.Receipt
     },
-    desiredProducts:{
+    desiredProduct:{
       type:ModelEnum.DesiredProduct
     }
   },

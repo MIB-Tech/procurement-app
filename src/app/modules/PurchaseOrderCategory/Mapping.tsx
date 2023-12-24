@@ -3,8 +3,8 @@ import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
 
-const mapping: ModelMapping<ModelEnum.Project> = {
-  modelName: ModelEnum.Project,
+const mapping: ModelMapping<ModelEnum.PurchaseOrderCategory> = {
+  modelName: ModelEnum.PurchaseOrderCategory,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
@@ -14,10 +14,6 @@ const mapping: ModelMapping<ModelEnum.Project> = {
     },
     name: {
       type: ColumnTypeEnum.String
-    },
-    purchaseNeeds: {
-      type: ModelEnum.PurchaseNeed,
-      multiple: true
     },
     purchaseOrders: {
       type: ModelEnum.PurchaseOrder,

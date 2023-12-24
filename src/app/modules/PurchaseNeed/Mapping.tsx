@@ -25,7 +25,7 @@ const LinesField = () => {
   const [data, setData] = useState<Array<Partial<Record<keyof Model<ModelEnum.PurchaseNeedProduct>, any>>>>([]);
   const {collection, isLoading} = useCollectionQuery<ModelEnum.Product>({
     modelName: ModelEnum.Product,
-    path: getRoutePrefix(ModelEnum.Product) + '/base',
+    path: '/base' + getRoutePrefix(ModelEnum.Product),
     params: {
       filter: {
         operator: CompoundFilterOperator.Or,

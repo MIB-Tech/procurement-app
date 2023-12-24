@@ -55,7 +55,7 @@ export type ItemOperationCallback<M extends ModelEnum> = (props: {
   operations: OperationModel[]
 }) => OperationModel[]
 
-export type ListingColumns<M extends ModelEnum> = Partial<Record<keyof Model<M>, boolean | {
+export type ListingColumns<M extends ModelEnum> = Partial<Record<keyof Model<M> | string, boolean | {
   render?: (props: { item: Model<M> }) => ReactNode
 }>>
 export type FilterColumns<M extends ModelEnum> = Partial<Record<string | keyof Model<M>, boolean | {

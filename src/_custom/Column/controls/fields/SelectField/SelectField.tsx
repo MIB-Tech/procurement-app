@@ -56,7 +56,7 @@ export const SelectField = <T extends {}>({
                 className
               )}
             >
-              {value ? getOptionLabel(value) : placeholder}
+              {(value !== null && value !== undefined) ? getOptionLabel(value) : placeholder}
             </Button>
           </Dropdown.Toggle>
           <Dropdown.Menu align='start'>

@@ -1,26 +1,26 @@
-import { TitleContent } from './HeaderCell';
-import React, { FC, HTMLAttributes, ReactNode } from 'react';
-import { CellContent } from './BodyCell';
-import { Skeleton } from '@mui/material';
-import { ColumnMapping, ListingColumns, Model } from '../../../types/ModelMapping';
-import { HydraItem } from '../../../types/hydra.types';
-import { Trans } from '../../../components/Trans';
+import {TitleContent} from './HeaderCell';
+import React, {FC, HTMLAttributes, ReactNode} from 'react';
+import {CellContent} from './BodyCell';
+import {Skeleton} from '@mui/material';
+import {ColumnMapping, ListingColumns, Model} from '../../../types/ModelMapping';
+import {HydraItem} from '../../../types/hydra.types';
+import {Trans} from '../../../components/Trans';
 import clsx from 'clsx';
-import { ModelCell, ModelCellSkeleton } from './ModelCell';
-import { useMapping } from '../../../hooks/UseMapping';
-import { stringToI18nMessageKey } from '../../../utils';
-import { PaginationInput } from '../../Pagination/Pagination.types';
-import { ModelEnum } from '../../../../app/modules/types';
-import { Checkbox } from '../../../Column/Boolean/Chechbox/Checkbox';
-import { ColumnTypeEnum } from '../../../types/types';
+import {ModelCell, ModelCellSkeleton} from './ModelCell';
+import {useMapping} from '../../../hooks/UseMapping';
+import {stringToI18nMessageKey} from '../../../utils';
+import {PaginationInput} from '../../Pagination/Pagination.types';
+import {ModelEnum} from '../../../../app/modules/types';
+import {Checkbox} from '../../../Column/Boolean/Chechbox/Checkbox';
+import {ColumnTypeEnum} from '../../../types/types';
 
 
 export type TableViewColumnMapping<M extends ModelEnum> = ColumnMapping<M>
 
-export const EmptyList:FC<{bordered?: boolean}> = ({bordered}) => (
+export const EmptyList: FC<{ bordered?: boolean }> = ({bordered}) => (
   <div className={clsx('card', bordered && 'card-bordered')}>
     <div className='card-body text-center fw-bolder'>
-      <Trans id='NO_ITEM_FOUND' />
+      <Trans id='NO_ITEM_FOUND'/>
     </div>
   </div>
 )
@@ -47,8 +47,8 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
     selectedItems = [],
     setSelectedItems
   } = props;
-  const {columnDef} = useMapping<M>({modelName})
-  const columnNames = (Object.keys(columns) as Array<keyof Model<M>>);
+  const {columnDef} = useMapping<M>({modelName});
+  const columnNames = (Object.keys(columns) as Array<keyof Model<M> | string>);
   const allItemsChecked = data.every(item => selectedItems.some(selectedItem => selectedItem.id === item.id));
 
   return (
@@ -82,7 +82,7 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
             </th>
             {columnNames.map(columnName => (
               <th key={columnName.toString()} className='text-truncate text-uppercase'>
-                <TitleContent columnName={columnName} title={columnDef[columnName].title} />
+                <TitleContent columnName={columnName} title={columnDef[columnName]?.title} />
               </th>
             ))}
             {renderAction && <th className='text-end' />}
@@ -140,16 +140,18 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
                 </div>
               </td>
               {columnNames.map(columnName => {
-                const columnMapping = columnDef[columnName];
                 const column = columns[columnName];
-                const render = typeof column !== 'boolean' ? column?.render : undefined;
 
                 return (
                   <td key={`${item.id}.${columnName.toString()}`}>
-                    <CellContent
-                      value={item[columnName]}
-                      {...columnMapping}
-                    />
+                    {typeof column === 'object' && column.render ?
+                      column.render?.({item}) :
+                      <CellContent
+                        // FIXME
+                        value={item[columnName as keyof Model<M>]}
+                        {...columnDef[columnName]}
+                      />
+                    }
                   </td>
                 );
               })}
@@ -167,14 +169,14 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
               Total {data.length}
             </td>
             {columnNames.map(columnName => {
-              const columnMapping = columnDef[columnName];
+              const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
 
               let value: any = '';
-              switch (columnMapping.type) {
+              switch (columnMapping?.type) {
                 case ColumnTypeEnum.Number:
                   value = data.reduce(
                     (count, currentValue) => {
-                      const _value = currentValue[columnName];
+                      const _value = currentValue[columnName as keyof Model<M>] as Model<M> | undefined;
                       if (typeof _value !== 'number') {
                         return count;
                       }
@@ -188,12 +190,17 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
 
               return (
                 <td key={columnName.toString()} className='text-truncate text-uppercase'>
-                  {columnMapping.footer?.({ value, collection: data }) || (
-                    <CellContent
-                      value={value}
-                      {...columnMapping}
-                    />
+                  {columnMapping && (
+                    <>
+                      {columnMapping.footer?.({value, collection: data}) || (
+                        <CellContent
+                          value={value}
+                          {...columnMapping}
+                        />
+                      )}
+                    </>
                   )}
+
                 </td>
               );
             })}

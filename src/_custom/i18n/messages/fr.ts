@@ -25,7 +25,7 @@ export const fr: I18nLanguage = {
   APPLICANT_SERVICE: 'Service du demandeur',
   BUYER_FULL_NAME: 'Acheteur',
   COMPANY: 'Société',
-  DESIRED_DELIVERY_DATE: 'Date de livraison souhaité',
+  DESIRED_DELIVERY_DATE: 'Livraison souhaitée le',
   IS_REGULARIZED: 'Régularisé',
   ORDERED_FOR: 'Demandeur',
   ORDER_NUMBER: 'N° DA',
@@ -358,5 +358,6 @@ export const fr: I18nLanguage = {
   VERSION: 'version',
   VIEWS: 'Vues',
   WORK_ORDER: 'Ordre de travail',
-  WORK_ORDERS: 'Ordres de travail'
+  WORK_ORDERS: 'Ordres de travail',
+  RECEIVED_QUANTITY: 'Qté réc.'
 };

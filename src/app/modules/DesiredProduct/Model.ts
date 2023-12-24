@@ -1,15 +1,14 @@
 import {AbstractModel} from '../../../_custom/types/types';
-import {ReceiptProductModel} from "../ReceiptProduct";
-import {PurchaseOrderProductModel} from "../PurchaseOrderProduct";
+import {PurchaseOrderProductModel} from '../PurchaseOrderProduct';
+import {ReceiptProductModel} from '../ReceiptProduct';
 
 
 type Model = {
   designation: string
   address: string
-  status:boolean
-  quantity:number
-  receiptproducts:Array<ReceiptProductModel>
-  purchaseorderproducts:PurchaseOrderProductModel
+  quantity: number
+  receiptProduct?: ReceiptProductModel
+  purchaseOrderProduct: PurchaseOrderProductModel
 } & AbstractModel
 
 export default Model;
