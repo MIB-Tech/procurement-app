@@ -15,7 +15,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderCategory> = {
     name:{
       type:ColumnTypeEnum.String
     },
-    PurchaseOrders:{
+    purchaseOrders:{
       type:ModelEnum.PurchaseOrder,
       multiple:true
     }

@@ -16,19 +16,18 @@ import {PurchaseNeedAttachmentModel} from './PurchaseNeedAttachment';
 import {VendorContactModel} from './VendorContact';
 import {VendorModel} from './Vendor';
 import {CurrencyModel} from './Currency';
-import {PurchaseFileTypeModel} from "./PurchaseFileType";
-import {PurchaseFileModel} from "./PurchaseFile";
-import {VendorOfferModel} from "./VendorOffer";
-import {VendorOfferProductModel} from "./VendorOfferProduct";
-import {PurchaseFileProductModel} from "./PurchaseFileProduct";
-import {ProductPricingModel} from "./ProductPricing";
-import {PurchaseOrderProductModel} from "./PurchaseOrderProduct";
-import {PurchaseOrderModel} from "./PurchaseOrder";
-import {DiscountModel} from "./Discount";
-import {DesiredProductModel} from "./DesiredProduct";
-import {ReceiptModel} from "./Receipt";
-import {ReceiptProductModel} from "./ReceiptProduct";
-import {PurchaseOrderCategoryModel} from "./PurchaseOrderCategory";
+import {PurchaseFileTypeModel} from './PurchaseFileType';
+import {PurchaseFileModel} from './PurchaseFile';
+import {VendorOfferModel} from './VendorOffer';
+import {VendorOfferProductModel} from './VendorOfferProduct';
+import {PurchaseFileProductModel} from './PurchaseFileProduct';
+import {ProductPricingModel} from './ProductPricing';
+import {PurchaseOrderProductModel} from './PurchaseOrderProduct';
+import {PurchaseOrderModel} from './PurchaseOrder';
+import {DesiredProductModel} from './DesiredProduct';
+import {ReceiptModel} from './Receipt';
+import {ReceiptProductModel} from './ReceiptProduct';
+import {PurchaseOrderCategoryModel} from './PurchaseOrderCategory';
 
 
 export enum ModelEnum {
@@ -37,7 +36,6 @@ export enum ModelEnum {
   Company = 'Company',
   Currency = 'Currency',
   DesiredProduct = 'DesiredProduct',
-  Discount = 'Discount',
   Location = 'Location',
   Operation = 'Operation',
   Product = 'Product',
@@ -50,6 +48,7 @@ export enum ModelEnum {
   PurchaseNeedProduct = 'PurchaseNeedProduct',
   PurchaseOrder = 'PurchaseOrder',
   PurchaseOrderProduct = 'PurchaseOrderProduct',
+  PurchaseOrderCategory = 'PurchaseOrderCategory',
   Receipt = 'Receipt',
   ReceiptProduct = 'ReceiptProduct',
   Resource = 'Resource',
@@ -62,7 +61,6 @@ export enum ModelEnum {
   VendorOffer = 'VendorOffer',
   VendorOfferProduct = 'VendorOfferProduct',
   ProductPricing = 'ProductPricing',
-  PurchaseOrderCategory = 'PurchaseOrderCategory',
 }
 
 export type Models = {
@@ -83,13 +81,12 @@ export type Models = {
   [ModelEnum.Resource]: ResourceModel,
   [ModelEnum.Currency]: CurrencyModel,
   [ModelEnum.DesiredProduct]: DesiredProductModel,
-  [ModelEnum.Discount]: DiscountModel,
   [ModelEnum.PurchaseFile]: PurchaseFileModel,
   [ModelEnum.PurchaseFileProduct]: PurchaseFileProductModel,
   [ModelEnum.PurchaseFileType]: PurchaseFileTypeModel,
   [ModelEnum.PurchaseOrder]: PurchaseOrderModel,
-  [ModelEnum.PurchaseOrderCategory]: PurchaseOrderCategoryModel,
   [ModelEnum.PurchaseOrderProduct]: PurchaseOrderProductModel,
+  [ModelEnum.PurchaseOrderCategory]: PurchaseOrderCategoryModel,
   [ModelEnum.Receipt]: ReceiptModel,
   [ModelEnum.ReceiptProduct]: ReceiptProductModel,
   [ModelEnum.Vendor]: VendorModel,

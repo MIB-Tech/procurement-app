@@ -39,7 +39,7 @@ export const NestedArrayField = <M extends ModelEnum>({ name, modelName }: Field
   return (
     <FieldArray name={name}>
       {({ remove, insert }) => (
-        <div className='table-responsive border border-2 rounded py-1 px-2'>
+        <div className='table-responsive border border-2 rounded py-1 px-2 min-h-250px'>
           <table className='table table-hover table-row-bordered table-row-dark g-1 mb-0 align-middle'>
             <thead className='fs-7 text-gray-400 text-uppercase'>
             <tr className='align-middle'>
@@ -121,25 +121,25 @@ export const NestedArrayField = <M extends ModelEnum>({ name, modelName }: Field
                   />
                 </td>
                 {columnNames.map(columnName => {
-                  const columnMapping = columnDef[columnName];
-                  const value = item[columnName];
-
                   const field = fields[columnName];
-                  const render = typeof field !== 'boolean' && field?.render;
-                  if (render) {
-                    return render({ item });
-                  }
+                  const render = typeof field === 'object' && field?.render;
+
                   const nestedName = `${name}.${itemIndex}.${columnName.toString()}`;
 
                   return (
                     <td key={nestedName}>
-                      <ValueField
-                        name={nestedName}
-                        column={columnDef[columnName]}
-                        size='sm'
-                        // className='border-0'
-                        // className='border-1'
-                      />
+                      {render ?
+                        render({item}):
+                        <ValueField
+                          name={nestedName}
+                          column={columnDef[columnName]}
+                          size='sm'
+                          // className='border-0'
+                          // className='border-1'
+                          className='border-1'
+                          hideAdornment
+                        />
+                      }
                     </td>
                   );
                 })}

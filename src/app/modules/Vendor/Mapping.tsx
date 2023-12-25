@@ -23,8 +23,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
     },
     productPricing: {
       type: ModelEnum.ProductPricing,
-      multiple: true,
-      embeddedForm: true
+      multiple: true
     },
     contacts: {
       type: ModelEnum.VendorContact,

@@ -6,7 +6,7 @@ import {PURCHASE_NEED_ATTACHMENT_MAPPING} from './PurchaseNeedAttachment';
 import {atomFamily} from 'recoil';
 import {ListingModeEnum, Params} from '../../_custom/ListingView/ListingView.types';
 import {CompoundFilterOperator} from '../../_custom/ListingView/Filter/Filter.types';
-import {ColumnTypeEnum, Mapping} from '../../_custom/types/types';
+import {Mapping} from '../../_custom/types/types';
 import {ModelEnum} from './types';
 import {ViewEnum} from '../../_custom/types/ModelMapping';
 import {APPLICANT_SERVICE_MAPPING} from './ApplicantService';
@@ -23,32 +23,31 @@ import {HydraItem} from '../../_custom/types/hydra.types';
 import {VENDOR_CONTACT_MAPPING} from './VendorContact';
 import {VENDOR_MAPPING} from './Vendor';
 import {CURRENCY_MAPPING} from './Currency';
-import {PURCHASEFILETYPE_MAPPING} from "./PurchaseFileType";
-import {PURCHASEFILE_MAPPING} from "./PurchaseFile";
-import {PURCHASEFILEPRODUCT_MAPPING} from "./PurchaseFileProduct";
-import {VENDOROFFER_MAPPING} from "./VendorOffer";
-import {VENDOR_OFFER_PRODUCT_MAPPING} from "./VendorOfferProduct";
-import {PRODUCT_PRICING_MAPPING} from "./ProductPricing";
-import {PURCHASE_ORDER_PRODUCT_MAPPING} from "./PurchaseOrderProduct";
-import {PURCHASE_ORDER_MAPPING} from "./PurchaseOrder";
-import {DISCOUNT_MAPPING} from "./Discount";
-import {DESIRED_PRODUCT_MAPPING} from "./DesiredProduct";
-import {RECEIPT_MAPPING} from "./Receipt";
-import {RECEIPT_PRODUCT_MAPPING} from "./ReceiptProduct";
-import {PURCHASE_ORDER_CATEGORY_MAPPING} from "./PurchaseOrderCategory";
+import {PURCHASEFILETYPE_MAPPING} from './PurchaseFileType';
+import {PURCHASEFILE_MAPPING} from './PurchaseFile';
+import {PURCHASEFILEPRODUCT_MAPPING} from './PurchaseFileProduct';
+import {VENDOROFFER_MAPPING} from './VendorOffer';
+import {VENDOR_OFFER_PRODUCT_MAPPING} from './VendorOfferProduct';
+import {PRODUCT_PRICING_MAPPING} from './ProductPricing';
+import {PURCHASE_ORDER_PRODUCT_MAPPING} from './PurchaseOrderProduct';
+import {PURCHASE_ORDER_MAPPING} from './PurchaseOrder';
+import {DESIRED_PRODUCT_MAPPING} from './DesiredProduct';
+import {RECEIPT_MAPPING} from './Receipt';
+import {RECEIPT_PRODUCT_MAPPING} from './ReceiptProduct';
+import {PURCHASE_ORDER_CATEGORY_MAPPING} from './PurchaseOrderCategory';
 
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
   [ModelEnum.ProductPricing]: PRODUCT_PRICING_MAPPING,
   [ModelEnum.DesiredProduct]: DESIRED_PRODUCT_MAPPING,
-  [ModelEnum.Discount]:DISCOUNT_MAPPING,
   [ModelEnum.PurchaseFile]: PURCHASEFILE_MAPPING,
   [ModelEnum.PurchaseFileProduct]: PURCHASEFILEPRODUCT_MAPPING,
   [ModelEnum.PurchaseFileType]: PURCHASEFILETYPE_MAPPING,
-  [ModelEnum.PurchaseOrder]:PURCHASE_ORDER_MAPPING,
+  [ModelEnum.PurchaseOrder]: PURCHASE_ORDER_MAPPING,
   [ModelEnum.PurchaseOrderProduct]: PURCHASE_ORDER_PRODUCT_MAPPING,
-  [ModelEnum.Receipt]:RECEIPT_MAPPING,
+  [ModelEnum.PurchaseOrderCategory]: PURCHASE_ORDER_CATEGORY_MAPPING,
+  [ModelEnum.Receipt]: RECEIPT_MAPPING,
   [ModelEnum.ReceiptProduct]: RECEIPT_PRODUCT_MAPPING,
   [ModelEnum.Vendor]: VENDOR_MAPPING,
   [ModelEnum.VendorContact]: VENDOR_CONTACT_MAPPING,
@@ -107,14 +106,14 @@ export const LISTING_FAMILY = atomFamily<ListingState, { modelName: ModelEnum, e
         }
 
         break;
-      // case ModelEnum.PurchaseNeed:
-      //   defaultValues = {
-      //     ...defaultValues,
-      //     sort: {
-      //       createdAt: 'desc'
-      //     }
-      //   };
-      //   break;
+      case ModelEnum.PurchaseOrder:
+        defaultValues = {
+          ...defaultValues,
+          sort: {
+            createdAt: 'desc'
+          }
+        };
+        break;
       default:
         break;
     }

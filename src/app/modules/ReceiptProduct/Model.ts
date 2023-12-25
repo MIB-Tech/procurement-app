@@ -1,14 +1,12 @@
 import {AbstractModel} from '../../../_custom/types/types';
-import {ReceiptModel} from "../Receipt";
-import {DesiredProductModel} from "../DesiredProduct";
+import {DesiredProductModel} from '../DesiredProduct';
+import {ReceiptModel} from '../Receipt';
 
 
 type Model = {
-  designation: string
-  quantity:number
-  address: string
-  receipts:ReceiptModel
-  desiredProducts:DesiredProductModel
+  quantity: number
+  desiredProduct: DesiredProductModel
+  receipt: ReceiptModel
 } & AbstractModel
 
 export default Model;

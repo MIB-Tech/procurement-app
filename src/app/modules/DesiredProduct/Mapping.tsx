@@ -18,49 +18,26 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
     address: {
       type: ColumnTypeEnum.String
     },
-    status: {
-      type: ColumnTypeEnum.Boolean
-    },
     quantity: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
+      title: 'RECEIVED_QUANTITY'
     },
-    receiptproducts: {
+    purchaseOrderProduct: {
+      type: ModelEnum.PurchaseOrderProduct
+    },
+    receiptProduct: {
       type: ModelEnum.ReceiptProduct
     },
-    purchaseorderproducts: {
-      type: ModelEnum.PurchaseOrderProduct
-    }
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
-        designation: true,
-        quantity: true,
         address: true,
-        status: true,
-        purchaseorderproducts: true,
-        receiptproducts: true
-      }
-    },
-    {
-      type: ViewEnum.Create,
-      fields: {
-        name: true,
-        designation:true,
-        quantity:true,
-        address:true,
-        status:true
-      }
-    },
-    {
-      type: ViewEnum.Update,
-      fields: {
-        name: true,
-        designation:true,
-        quantity:true,
-        address:true,
-        status:true
+        boughtQuantity: {
+          render: ({item}) => item.purchaseOrderProduct.quantity
+        },
+        quantity: true,
       }
     }
   ]

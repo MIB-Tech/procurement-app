@@ -34,7 +34,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseNeedProduct> = {
         quantity: {
           defaultValue: 1
         }
-      }
+      },
     },
   ]
 };

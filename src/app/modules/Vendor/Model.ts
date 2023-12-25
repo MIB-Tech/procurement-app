@@ -1,6 +1,6 @@
 import {VendorContactModel} from '../VendorContact';
 import {AbstractModel} from '../../../_custom/types/types';
-import {ProductPricingModel} from "../ProductPricing";
+import {ProductPricingModel} from '../ProductPricing';
 
 type Model = {
   name: string

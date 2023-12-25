@@ -21,8 +21,6 @@ import {SortToolbar} from './Sort/SortToolbar';
 import {Radio} from '../Column/controls/base/Radio/Radio';
 import {RouteLinks} from '../components/RouteAction/RouteLinks';
 import {TableView} from './views/Table/TableView';
-import {OPERATION_TYPE_CONFIG} from '../../app/modules/Operation/Model';
-import {RouteActionDropdown} from '../components/RouteAction/RouteActionDropdown';
 import {Pagination} from './Pagination';
 import FullCalendar from '@fullcalendar/react';
 import momentPlugin from '@fullcalendar/moment';
@@ -35,7 +33,7 @@ import {ItemView} from '../components/ItemView';
 import {DEFAULT_VIEW, isLocationColumn, RELATED_MODELS} from './ListingView.utils';
 import {BasicFilterToolbar} from './Filter/BasicFilterToolbar';
 import {getAdvancedPropertyFilter, getColumnMapping} from './Filter/Filter.utils';
-
+import {ItemAction} from './ItemAction';
 
 export const ListingView = <M extends ModelEnum>({modelName, parentModelName, parent}: ListingViewProps<M>) => {
   const [datesSet, setDatesSet] = useState<DatesSet>({
@@ -57,6 +55,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
   const [state, setState] = useRecoilState(LISTING_FAMILY({modelName, embedded: !!parentModelName}));
   const {selectedItems, basicFilter, ...params} = state;
   const {sort, page, itemsPerPage, mode, search} = params;
+  const isCalendar = mode === ListingModeEnum.Calendar
   const parentProperty = (Object.keys(columnDef) as Array<keyof Model<M>>).find(columnName => {
     const def = columnDef[columnName];
 
@@ -117,7 +116,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
 
     }
 
-    if (mode === ListingModeEnum.Calendar) {
+    if (isCalendar) {
       filters.push({
         operator: CompoundFilterOperator.Or,
         filters: dateFields.map(dateField => {
@@ -182,7 +181,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
       operator: CompoundFilterOperator.And,
       filters
     };
-  }, [state.filter, basicFilter, id, parentProperty, mode, dateFields]);
+  }, [state.filter, basicFilter, id, parentProperty, isCalendar, dateFields]);
 
   const {collection, totalCount, isLoading} = useCollectionQuery<M>({
     modelName,
@@ -190,8 +189,8 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
     params: {
       ...params,
       filter,
-      page: mode === ListingModeEnum.Calendar ? undefined : page,
-      itemsPerPage: mode === ListingModeEnum.Calendar ? undefined : itemsPerPage
+      page: isCalendar ? undefined : page,
+      itemsPerPage: isCalendar ? undefined : itemsPerPage
     }
   });
 
@@ -210,7 +209,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
     if (sortColumns) {
       return sortColumns[columnName];
     }
-    if (['id'].includes(columnName.toString())) {
+    if (['id', 'uid'].includes(columnName.toString())) {
       return false;
     }
     const def = columnDef[columnName];
@@ -274,7 +273,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
         return !columnFilterValue?.display || (user && columnFilterValue.display({user}));
       }
 
-      if (['id'].includes(columnName.toString())) {
+      if (['id', 'uid'].includes(columnName.toString())) {
         return false;
       }
       const def = columnDef[columnName as keyof Model<M>];
@@ -303,7 +302,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
     if (columns) {
       return columns[columnName];
     }
-    if (['id'].includes(columnName.toString())) {
+    if (['id', 'uid'].includes(columnName.toString())) {
       return false;
     }
     const def = columnDef[columnName];
@@ -325,7 +324,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
         return !('multiple' in def);
     }
   }).reduce(
-    (obj, columnName) => ({...obj, [columnName]: true}),
+    (obj, columnName) => ({...obj, [columnName]: columns?.[columnName] || true}),
     {} as ListingColumns<M>
   );
 
@@ -446,27 +445,13 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
                 selectedItems => setState({...state, selectedItems}) :
                 undefined
               }
-              renderAction={({item}) => {
-                let itemOperations = operations.filter(({operationType, resource}) => {
-
-                  return resource.name === modelName && !OPERATION_TYPE_CONFIG[operationType].isStatic;
-                });
-
-                if (itemOperationRoutes) {
-                  itemOperations = itemOperationRoutes({item, operations: itemOperations});
-                }
-
-                if (itemOperations.length === 0) {
-                  return <></>;
-                }
-
-                return (
-                  <RouteActionDropdown
-                    operations={itemOperations}
-                    params={{id: item['@uid']}}
-                  />
-                );
-              }}
+              renderAction={({item}) => (
+                <ItemAction
+                  item={item}
+                  itemOperationRoutes={itemOperationRoutes}
+                  modelName={modelName}
+                />
+              )}
             />
           </div>
         </div>
@@ -478,27 +463,13 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
           data={collection}
           loading={isLoading}
           itemsPerPage={itemsPerPage}
-          renderAction={({item}) => {
-            let itemOperations = operations.filter(({operationType, resource}) => {
-
-              return resource.name === modelName && !OPERATION_TYPE_CONFIG[operationType].isStatic;
-            });
-
-            if (itemOperationRoutes) {
-              itemOperations = itemOperationRoutes({item, operations: itemOperations});
-            }
-
-            if (itemOperations.length === 0) {
-              return <></>;
-            }
-
-            return (
-              <RouteActionDropdown
-                operations={itemOperations}
-                params={{id: item['@uid']}}
-              />
-            );
-          }}
+          renderAction={({item}) => (
+            <ItemAction
+              item={item}
+              itemOperationRoutes={itemOperationRoutes}
+              modelName={modelName}
+            />
+          )}
         />
       )}
       {mode === ListingModeEnum.Calendar && (

@@ -19,7 +19,7 @@ const mapping: ModelMapping<ModelEnum.Project> = {
       type: ModelEnum.PurchaseNeed,
       multiple: true
     },
-    PurchaseOrders: {
+    purchaseOrders: {
       type: ModelEnum.PurchaseOrder,
       multiple: true
     }

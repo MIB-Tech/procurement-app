@@ -1,7 +1,9 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
-import {StringFormat} from "../../../_custom/Column/String/StringColumn";
+import {StringFormat} from '../../../_custom/Column/String/StringColumn';
+import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
+import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField';
 
 
 const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
@@ -14,94 +16,137 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       type: ColumnTypeEnum.String
     },
     orderNumber: {
-      type: ColumnTypeEnum.Number
-    },
-    createdAt: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Datetime
-    },
-    isTaxIncluded: {
-      type: ColumnTypeEnum.Number
+      nullable: true
     },
     ref: {
       type: ColumnTypeEnum.String,
+      nullable: true
     },
     externalRef: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable: true
+    },
+    taxIncluded: {
+      type: ColumnTypeEnum.Boolean
     },
     desiredDeliveryDate: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Date
     },
-    currency: {
-      type: ModelEnum.Currency
+    totalExclTax: {
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
     },
-    purchaseOrderProducts: {
-      type: ModelEnum.PurchaseOrderProduct
+    totalInclTax: {
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount
     },
-    receipts: {
-      type: ModelEnum.Receipt
+    totalVatTax: {
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount
+    },
+    createdAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Datetime,
+      nullable: true
     },
     vendor: {
       type: ModelEnum.Vendor
     },
-    projects: {
-      type: ModelEnum.Project
+    currency: {
+      type: ModelEnum.Currency
     },
-    purchaseOrderCategory: {
-      type: ModelEnum.PurchaseOrderCategory
-    }
+    category: {
+      type: ModelEnum.PurchaseOrderCategory,
+      nullable: true
+    },
+    project: {
+      type: ModelEnum.Project,
+      nullable: true
+    },
+    purchaseOrderProducts: {
+      type: ModelEnum.PurchaseOrderProduct,
+      multiple: true,
+      embeddedForm: true
+    },
+    receipts: {
+      type: ModelEnum.Receipt,
+      multiple: true
+    },
   },
   views: [
     {
       type: ViewEnum.Listing,
+      filterColumns: {
+        orderNumber: true,
+        ref: true,
+        externalRef: true,
+        vendor: {
+          quickFilter: true
+        },
+        desiredDeliveryDate: {
+          quickFilter: true
+        },
+        createdAt: {
+          quickFilter: true
+        }
+      },
+      sortColumns: {
+        createdAt: true,
+        desiredDeliveryDate: true,
+        orderNumber: true,
+        ref: true,
+        externalRef: true,
+      },
       columns: {
         createdAt: true,
-        vendor: true,
-        purchaseOrderCategory: true,
-        projects: true,
-        purchaseOrderProducts: true,
-        receipts: true,
-        currency: true,
-        externalRef: true,
         ref: true,
+        externalRef: true,
         desiredDeliveryDate: true,
-        isTaxIncluded: true,
-        orderNumber: true
+        totalExclTax: true,
+        // totalVatTax: true,
+        totalInclTax: true,
       }
     },
     {
       type: ViewEnum.Create,
+      slotProps: {
+        item: {
+          sm: 4,
+          md: 3,
+          xl: 2,
+        }
+      },
       fields: {
+        vendor: true,
+        createdAt: true,
+        taxIncluded: {
+          defaultValue: true,
+          render: ({item}) => (
+            <RadioField
+              size='sm'
+              name='taxIncluded'
+              options={[true, false]}
+              getOptionLabel={taxIncluded => taxIncluded ? 'TTC' : 'HT'}
+            />
+          )
+        },
         ref: true,
         externalRef: true,
-        createdAt: true,
-        orderNumber: true,
-        projects: true,
-        vendor: true,
-        purchaseOrderCategory: true,
-        purchaseOrderProducts: true,
-        receipts: true,
         desiredDeliveryDate: true,
         currency: true,
-        isTaxIncluded: true,
-      }
-    },
-    {
-      type: ViewEnum.Update,
-      fields: {
-        ref: true,
-        externalRef: true,
-        createdAt: true,
-        orderNumber: true,
-        projects: true,
-        vendor: true,
-        purchaseOrderCategory: true,
-        purchaseOrderProducts: true,
-        receipts: true,
-        desiredDeliveryDate: true,
-        currency: true,
-        isTaxIncluded: true,
+        category: true,
+        project: true,
+        purchaseOrderProducts: {
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              xl: 12,
+            }
+          }
+        }
       }
     }
   ]

@@ -25,10 +25,11 @@ export type InputNumberProps = {
   step?: number,
   precision?: number,
   onChange?: (value: number) => void
+  hideAdornment?: boolean
 } & Omit<InputProps, 'onChange' | 'min' | 'max' | 'step' | 'value'>
 
 
-export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({ className, ...props }, ref) => {
+export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({ className, hideAdornment, ...props }, ref) => {
   const classes = useStyles();
   const {
     value = 0,
@@ -88,19 +89,20 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({ cla
   };
 
   return (
-    <div className='position-relative'>
-      <InputNumberButton
-        className='start-0'
-        path='/media/icons/duotune/general/gen036.svg'
-        onClick={() => {
-          handleChange(value - step);
-        }}
-        disabled={value <= min}
-      />
+    <div className={clsx(!hideAdornment && 'position-relative')}>
+      {!hideAdornment && (
+        <InputNumberButton
+          className='start-0'
+          path='/media/icons/duotune/general/gen036.svg'
+          onClick={() => {
+            handleChange(value - step);
+          }}
+          disabled={value <= min}
+        />
+      )}
       <Input
         className={clsx(
-          classes.input,
-          'px-12',
+          !hideAdornment && clsx('px-12', classes.input),
           className
           // 'border-left-0 border-right-0'
         )}
@@ -111,14 +113,16 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({ cla
         ref={ref}
         type='number'
       />
-      <InputNumberButton
-        className='end-0'
-        path='/media/icons/duotune/general/gen035.svg'
-        onClick={() => {
-          handleChange(value + step);
-        }}
-        disabled={value >= max}
-      />
+      {!hideAdornment && (
+        <InputNumberButton
+          className='end-0'
+          path='/media/icons/duotune/general/gen035.svg'
+          onClick={() => {
+            handleChange(value + step);
+          }}
+          disabled={value >= max}
+        />
+      )}
     </div>
   );
 });

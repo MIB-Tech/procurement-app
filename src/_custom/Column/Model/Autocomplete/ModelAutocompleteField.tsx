@@ -46,7 +46,7 @@ export const ModelAutocompleteField = <
 
   const { collection, isLoading, totalCount } = useCollectionQuery<M>({
     modelName,
-    path: getRoutePrefix(modelName) + '/base',
+    path: '/base' + getRoutePrefix(modelName),
     options: { enabled },
     params: {
       filter: getParams({

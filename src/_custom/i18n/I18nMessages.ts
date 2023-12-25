@@ -15,6 +15,7 @@ type I18nMessageKey =
   | CompoundFilterOperator
   | ListingModeEnum
   | ViewEnum
+  | 'RECEIVED_QUANTITY'
   | 'ADVANCED_FILTER'
   | 'PER_PAGE'
   | 'AUTH.LOGIN.TITLE'

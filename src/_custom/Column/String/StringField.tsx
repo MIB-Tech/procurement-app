@@ -39,7 +39,7 @@ export const StringField: FC<StringFieldProps> = ({ column, name, feedbackLabel,
   const { trans } = useTrans();
   let children: ReactNode;
   const { format } = column;
-  const icon: boolean | undefined = !(format && [StringFormat.Password, StringFormat.Icon].includes(format));
+  const icon: boolean | undefined = !(format && [StringFormat.Password, StringFormat.Icon, StringFormat.Select].includes(format));
 
   switch (format) {
     case StringFormat.Text:
