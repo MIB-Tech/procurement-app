@@ -47,6 +47,7 @@ export function PrivateRoutes() {
               break;
           }
 
+          console.log(resourceName)
           const {views, columnDef} = MODEL_MAPPINGS[resourceName] as ModelMapping<any>;
           const detailView = (views?.find(view => view.type === ViewEnum.Detail) || DEFAULT_DETAIL_VIEW) as DetailViewType<any>;
 

@@ -5,10 +5,12 @@ import {CurrencyModel} from '../Currency';
 import {ReceiptModel} from '../Receipt';
 import {ProjectModel} from '../Project';
 import {PurchaseOrderCategoryModel} from '../PurchaseOrderCategory';
+import {PurchaseOrderAttachmentModel} from "../PurchaseOrderAttachment";
 
 
 type Model = {
   orderNumber: number
+  createdAt:string
   taxIncluded: boolean
   ref?: string
   externalRef?: string
@@ -18,10 +20,11 @@ type Model = {
   project: ProjectModel
   category: PurchaseOrderCategoryModel
   purchaseOrderProducts: Array<PurchaseOrderProductModel>
-  receipts: Array<ReceiptModel>
+  purchaseOrderAttachments: Array<PurchaseOrderAttachmentModel>
   readonly totalExclTax: number
   readonly totalVatTax: number
   readonly totalInclTax: number
+  readonly status :boolean
 } & AbstractModel & CreateTimestamp
 
 export default Model;

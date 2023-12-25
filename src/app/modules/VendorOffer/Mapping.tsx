@@ -20,14 +20,14 @@ const mapping: ModelMapping<ModelEnum.VendorOffer> = {
       type: ColumnTypeEnum.String,
       format: StringFormat.Datetime
     },
-    devisDate: {
+    quoteDate: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Date
     },
-    isVATIncluded: {
+    VATIncluded: {
       type: ColumnTypeEnum.Boolean
     },
-    devisNumber: {
+    quoteNumber: {
       type: ColumnTypeEnum.Number,
     },
     note: {
@@ -50,7 +50,7 @@ const mapping: ModelMapping<ModelEnum.VendorOffer> = {
         devisNumber: true,
         devisDate: true,
         receiveAt: true,
-        isVATIncluded: true,
+        vatIncluded: true,
         status: true,
       }
     },
@@ -62,7 +62,7 @@ const mapping: ModelMapping<ModelEnum.VendorOffer> = {
         devisNumber: true,
         devisDate: true,
         receiveAt: true,
-        isVATIncluded: true,
+        vatIncluded: true,
         status: true,
       }
     },
@@ -70,7 +70,7 @@ const mapping: ModelMapping<ModelEnum.VendorOffer> = {
       type: ViewEnum.Update,
       fields: {
         note: true,
-        isVATIncluded: true,
+        vatIncluded: true,
         status: true,
       }
     }

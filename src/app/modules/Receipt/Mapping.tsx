@@ -23,9 +23,6 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     externalRef:{
       type:ColumnTypeEnum.Number
     },
-    purchaseOrder:{
-      type:ModelEnum.PurchaseOrder
-    },
     receiptProducts:{
       type:ModelEnum.ReceiptProduct
     }

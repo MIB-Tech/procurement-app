@@ -1,13 +1,10 @@
 import {AbstractModel} from '../../../_custom/types/types';
 import {PurchaseOrderModel} from "../PurchaseOrder";
-import {ReceiptProductModel} from "../ReceiptProduct";
 
 
 type Model = {
-  receiptNumber: number
-  receivedAt: string
-  externalRef:string
-  receiptProducts:Array<ReceiptProductModel>
+  fileName: string
+  purchaseOrder: PurchaseOrderModel
 } & AbstractModel
 
 export default Model;

@@ -1,6 +1,7 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import {StringFormat} from "../../../_custom/Column/String/StringColumn";
 
 
 const mapping: ModelMapping<ModelEnum.Project> = {
@@ -14,6 +15,17 @@ const mapping: ModelMapping<ModelEnum.Project> = {
     },
     name: {
       type: ColumnTypeEnum.String
+    },
+    amount: {
+      type: ColumnTypeEnum.Number
+    },
+    endAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Date
+    },
+    startAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Date
     },
     purchaseNeeds: {
       type: ModelEnum.PurchaseNeed,

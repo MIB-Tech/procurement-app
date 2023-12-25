@@ -1,4 +1,4 @@
-import { I18nLanguage } from '../I18nMessages';
+import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
@@ -8,9 +8,17 @@ export const fr: I18nLanguage = {
   TOTAL_INCL_TAX: 'Total TTC',
   AMOUNT: '$',
   CURRENCY: 'Devise',
-  NET_PRICE_EXCL_TAX: 'Mnt HT',
   PERCENT: '%',
-  PRICE_INCL_TAX: 'Mnt TTC',
+  RECEIVED_AT: "Date de reçu",
+  RECEIPT_NUMBER: "Numéro de reçu",
+  NET_PRICE_EXCL_TAX: "Prix HT",
+  PRICE_INCL_TAX: "PRIX TTC",
+  CONSULTED_AT: "Consulté le",
+  PURCHASE_FILE_TYPE: "Type de dossier d'achat",
+  QUOTE_DATE: "Date du devis",
+  QUOTE_NUMBER: "Numéro de devis",
+  VAT_INCLUDED: "TVA est incluse",
+  PURCHASE_FILE_NUMBER: "Numéro de dossier d'achat",
   PRODUCT_PRICING: "Tarification du produit",
   PRODUCT_PRICINGS: "Tarifications des produits",
   PURCHASE_FILE: "Fichier d'achat",
@@ -54,8 +62,8 @@ export const fr: I18nLanguage = {
   ICE: "ICE",
   IS_CONFORME: "Conforme",
   IS_MAIN: "Principal",
-  IS_MOBILISED: "Mobilisé",
   TAX_INCLUDED: "Taxe incluse",
+  IS_MOBILISED: "immobilisé",
   IS_VAT_INCLUDED: "TVA incluse",
   MEASUREMENT_UNIT: "Unité de mesure",
   NET_PRICE: "P.U net",
@@ -151,8 +159,8 @@ export const fr: I18nLanguage = {
   PART: 'Pièce',
   PARTS: 'Pièces',
   DIMENSIONS: 'Dimensions',
-  VENDOR_CONTACT: 'Contact',
-  VENDOR_CONTACTS: 'Contacts',
+  VENDOR_ADDRESS: 'Adresse',
+  VENDOR_ADDRESSES: 'Adresses',
   DOWNLOAD: 'Télécharger',
   SIZE: 'Taille',
   VIEW: 'Voir',

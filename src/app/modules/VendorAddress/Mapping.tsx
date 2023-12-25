@@ -1,11 +1,10 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
 
-const mapping: ModelMapping<ModelEnum.VendorContact> = {
-  modelName: ModelEnum.VendorContact,
+const mapping: ModelMapping<ModelEnum.VendorAddress> = {
+  modelName: ModelEnum.VendorAddress,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
@@ -16,18 +15,18 @@ const mapping: ModelMapping<ModelEnum.VendorContact> = {
     name: {
       type: ColumnTypeEnum.String
     },
-    email: {
-      type: ColumnTypeEnum.String,
-      format: StringFormat.Email,
-      nullable: true
-    },
-    phoneNumber: {
-      type: ColumnTypeEnum.String,
-      format: StringFormat.PhoneNumber
+    postalCode: {
+      type: ColumnTypeEnum.String
     },
     address: {
       type: ColumnTypeEnum.String,
       nullable: true
+    },
+    cityName: {
+      type: ColumnTypeEnum.String
+    },
+    isMain: {
+      type: ColumnTypeEnum.Boolean
     },
     vendor: {
       type: ModelEnum.Vendor
@@ -38,26 +37,34 @@ const mapping: ModelMapping<ModelEnum.VendorContact> = {
       type: ViewEnum.Listing,
       columns: {
         name: true,
+        postalCode: true,
         email: true,
-        phoneNumber: true,
+        cityName: true,
+        address: true,
+        isMain: true
       }
     },
     {
       type: ViewEnum.Create,
       fields: {
         name: true,
-        phoneNumber: true,
+        postalCode: true,
         email: true,
-        address: true
+        cityName: true,
+        address: true,
+        isMain: true
+
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
         name: true,
-        phoneNumber: true,
+        postalCode: true,
         email: true,
-        address: true
+        cityName: true,
+        address: true,
+        isMain: true
       }
     }
   ]

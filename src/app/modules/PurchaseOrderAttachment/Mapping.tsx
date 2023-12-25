@@ -3,8 +3,8 @@ import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
 
-const mapping: ModelMapping<ModelEnum.Company> = {
-  modelName: ModelEnum.Company,
+const mapping: ModelMapping<ModelEnum.purchaseOrderAttachment> = {
+  modelName: ModelEnum.purchaseOrderAttachment,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
@@ -12,38 +12,30 @@ const mapping: ModelMapping<ModelEnum.Company> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    code: {
-      type: ColumnTypeEnum.String,
-      uppercase: true
-    },
-    name: {
+    fileName: {
       type: ColumnTypeEnum.String
     },
-    purchaseNeeds: {
-      type: ModelEnum.PurchaseNeed,
-      multiple: true
-    }
+    purchaseOrder: {
+      type: ModelEnum.PurchaseOrder
+    },
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
-        name:true,
-        code:true
+        name: true,
       }
     },
     {
       type: ViewEnum.Create,
       fields: {
-        name:true,
-        code:true
+        name: true,
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
-        name:true,
-        code:true
+        name: true,
       }
     }
   ]

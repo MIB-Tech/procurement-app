@@ -22,6 +22,9 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       type: ColumnTypeEnum.Number,
       title: 'RECEIVED_QUANTITY'
     },
+    status: {
+      type: ColumnTypeEnum.Boolean
+    },
     purchaseOrderProduct: {
       type: ModelEnum.PurchaseOrderProduct
     },

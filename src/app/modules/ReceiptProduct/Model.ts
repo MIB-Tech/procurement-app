@@ -5,6 +5,7 @@ import {ReceiptModel} from '../Receipt';
 
 type Model = {
   quantity: number
+  note:string
   desiredProduct: DesiredProductModel
   receipt: ReceiptModel
 } & AbstractModel

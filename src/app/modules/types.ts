@@ -13,7 +13,7 @@ import {OperationModel} from './Operation';
 import {LocationModel} from './Location';
 import {ResourceModel} from './Resource';
 import {PurchaseNeedAttachmentModel} from './PurchaseNeedAttachment';
-import {VendorContactModel} from './VendorContact';
+import {VendorAddressModel} from './VendorAddress';
 import {VendorModel} from './Vendor';
 import {CurrencyModel} from './Currency';
 import {PurchaseFileTypeModel} from './PurchaseFileType';
@@ -28,6 +28,7 @@ import {DesiredProductModel} from './DesiredProduct';
 import {ReceiptModel} from './Receipt';
 import {ReceiptProductModel} from './ReceiptProduct';
 import {PurchaseOrderCategoryModel} from './PurchaseOrderCategory';
+import {PurchaseOrderAttachmentModel} from "./PurchaseOrderAttachment";
 
 
 export enum ModelEnum {
@@ -49,6 +50,7 @@ export enum ModelEnum {
   PurchaseOrder = 'PurchaseOrder',
   PurchaseOrderProduct = 'PurchaseOrderProduct',
   PurchaseOrderCategory = 'PurchaseOrderCategory',
+  purchaseOrderAttachment='PurchaseOrderAttachment',
   Receipt = 'Receipt',
   ReceiptProduct = 'ReceiptProduct',
   Resource = 'Resource',
@@ -57,7 +59,7 @@ export enum ModelEnum {
   User = 'User',
   ValidationPath = 'ValidationPath',
   Vendor = 'Vendor',
-  VendorContact = 'VendorContact',
+  VendorAddress = 'VendorAddress',
   VendorOffer = 'VendorOffer',
   VendorOfferProduct = 'VendorOfferProduct',
   ProductPricing = 'ProductPricing',
@@ -90,8 +92,10 @@ export type Models = {
   [ModelEnum.Receipt]: ReceiptModel,
   [ModelEnum.ReceiptProduct]: ReceiptProductModel,
   [ModelEnum.Vendor]: VendorModel,
-  [ModelEnum.VendorContact]: VendorContactModel,
+  [ModelEnum.VendorAddress]: VendorAddressModel,
   [ModelEnum.VendorOffer]: VendorOfferModel,
   [ModelEnum.VendorOfferProduct]: VendorOfferProductModel,
   [ModelEnum.ProductPricing]: ProductPricingModel
+  [ModelEnum.purchaseOrderAttachment]: PurchaseOrderAttachmentModel
+
 }

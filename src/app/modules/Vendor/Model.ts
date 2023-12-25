@@ -1,4 +1,4 @@
-import {VendorContactModel} from '../VendorContact';
+import {VendorAddressModel} from '../VendorAddress';
 import {AbstractModel} from '../../../_custom/types/types';
 import {ProductPricingModel} from '../ProductPricing';
 
@@ -6,7 +6,10 @@ type Model = {
   name: string
   code: string
   ice:string
-  contacts: Array<VendorContactModel>
+  email:string
+  phoneNumber:string
+  secondaryPhoneNumber:string
+  addresses: Array<VendorAddressModel>
   productPricing: Array<ProductPricingModel>
 } & AbstractModel
 

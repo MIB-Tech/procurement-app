@@ -71,10 +71,14 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       multiple: true,
       embeddedForm: true
     },
-    receipts: {
-      type: ModelEnum.Receipt,
-      multiple: true
+    status: {
+      type: ColumnTypeEnum.Boolean
     },
+    purchaseOrderAttachments: {
+      type: ModelEnum.purchaseOrderAttachment,
+      multiple: true,
+      embeddedForm: true
+    }
   },
   views: [
     {

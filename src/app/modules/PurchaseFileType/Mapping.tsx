@@ -23,7 +23,21 @@ const mapping: ModelMapping<ModelEnum.PurchaseFileType> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+        name:true,
+      }
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        name:true,
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        name:true,
+      }
     }
   ]
 };
