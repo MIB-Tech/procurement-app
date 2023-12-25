@@ -55,7 +55,7 @@ const RadioInner = <T extends {} | undefined>(
         )}
       >
         {options.map((option, index) => {
-          const isActive = value && isOptionEqualToValue(option, value);
+          const isActive = value !== undefined && isOptionEqualToValue(option, value);
           const variant = getOptionVariant(option) || defaultVariant;
 
           return (

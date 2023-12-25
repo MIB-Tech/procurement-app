@@ -15,7 +15,7 @@ const FeedbackError: FC<FeedbackErrorType> = ({ error, variant = 'danger' }) => 
 )
 
 const FeedbackLabel: FC<FeedbackLabelType> = ({ label }) => (
-  <div className='text-muted'>
+  <div className='text-gray-600'>
     {label && <Trans id={label} />}
   </div>
 );

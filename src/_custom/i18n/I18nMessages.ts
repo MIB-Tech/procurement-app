@@ -15,6 +15,15 @@ type I18nMessageKey =
   | CompoundFilterOperator
   | ListingModeEnum
   | ViewEnum
+  | 'MAD_BY_DEFAULT'
+  | 'NOW_BY_DEFAULT'
+  | 'TOTAL_INCL_TAX'
+  | 'TOTAL_EXCL_TAX'
+  | 'PERCENT'
+  | 'AMOUNT'
+  | 'CURRENCY'
+  | 'PRICE_INCL_TAX'
+  | 'NET_PRICE_EXCL_TAX'
   | 'RECEIVED_QUANTITY'
   | 'ADVANCED_FILTER'
   | 'PER_PAGE'
@@ -383,7 +392,7 @@ type I18nMessageKey =
   | 'NET_TOTAL_EXCL_TAX'
   | 'VAT_TAX'
   | 'DISCOUNT_TYPE'
-  | 'IS_TAX_INCLUDED'
+  | 'TAX_INCLUDED'
   | 'REF'
   | 'EXTERNAL_REF'
   | 'TOTAL_VAT_TAX'

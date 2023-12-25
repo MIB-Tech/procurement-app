@@ -34,9 +34,6 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       type: ViewEnum.Listing,
       columns: {
         address: true,
-        boughtQuantity: {
-          render: ({item}) => item.purchaseOrderProduct.quantity
-        },
         quantity: true,
       }
     }

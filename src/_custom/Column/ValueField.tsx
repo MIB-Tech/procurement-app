@@ -8,17 +8,25 @@ import {ModelField} from './Model/ModelField';
 import {NumberColumnField} from './Number/NumberColumnField';
 import {ColumnTypeEnum} from '../types/types';
 import {InputNumberProps} from './Number/InputNumber/InputNumber';
+import {FieldProps} from './controls/fields';
 
 
 export type ValueFieldProps = {
-  name: string
   column: TypeColum
   className?: string
   placeholder?: string
   icon?: boolean
-} & FormControlProps & Pick<InputNumberProps, 'hideAdornment'>
-export const ValueField = ({ column, name, size, className, placeholder, icon, hideAdornment }: ValueFieldProps) => {
-  const _props = { size, className, background: 'solid' as InputBackground, name, placeholder, icon };
+} & FieldProps & FormControlProps & Pick<InputNumberProps, 'hideAdornment'>
+export const ValueField = ({ column, name, size, className, placeholder, icon, hideAdornment, feedbackLabel }: ValueFieldProps) => {
+  const _props = {
+    size,
+    className,
+    background: 'solid' as InputBackground,
+    name,
+    placeholder,
+    icon,
+    feedbackLabel
+  };
   const { type } = column;
 
   switch (type) {

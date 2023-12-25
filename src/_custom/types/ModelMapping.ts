@@ -1,17 +1,18 @@
-import { ReactNode } from 'react';
-import { NumberColumn } from '../Column/Number/NumberColumn';
-import { StringColumn } from '../Column/String/StringColumn';
-import { ModelColumn } from '../Column/Model/ModelColumn';
-import { BooleanColumn } from '../Column/Boolean/BooleanColumn';
-import { ArrayColumn } from '../Column/Array/ArrayColumn';
-import { I18nMessageKey } from '../i18n/I18nMessages';
-import { UserModel } from '../../app/modules/User';
-import { RoleKeyEnum } from '../../app/modules/Role/Model';
-import { HydraItem } from './hydra.types';
-import { ModelEnum, Models } from '../../app/modules/types';
-import { Variant } from 'react-bootstrap/types';
-import { OperationModel } from '../../app/modules/Operation';
-import { GridProps } from '@mui/material';
+import {ReactNode} from 'react';
+import {NumberColumn} from '../Column/Number/NumberColumn';
+import {StringColumn} from '../Column/String/StringColumn';
+import {ModelColumn} from '../Column/Model/ModelColumn';
+import {BooleanColumn} from '../Column/Boolean/BooleanColumn';
+import {ArrayColumn} from '../Column/Array/ArrayColumn';
+import {I18nMessageKey} from '../i18n/I18nMessages';
+import {UserModel} from '../../app/modules/User';
+import {RoleKeyEnum} from '../../app/modules/Role/Model';
+import {HydraItem} from './hydra.types';
+import {ModelEnum, Models} from '../../app/modules/types';
+import {Variant} from 'react-bootstrap/types';
+import {OperationModel} from '../../app/modules/Operation';
+import {GridProps} from '@mui/material';
+import {FieldProps} from '../Column/controls/fields';
 
 
 export type Model<M extends ModelEnum> = Models[M]
@@ -98,8 +99,9 @@ export type FormField<M extends ModelEnum> = {
   // required?: boolean,
   display?: DisplayCallback<M>,
   grantedRoles?: RoleKeyEnum[]
-  render?: (props: { item: Model<M> }) => ReactNode
+  render?: (props: { item: Model<M>, fieldProps: FieldProps }) => ReactNode
   defaultValue?: any
+  helperText?: I18nMessageKey
   slotProps?: {
     root?: Omit<GridProps, 'item'>
   }

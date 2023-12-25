@@ -14,7 +14,7 @@ type Model = {
   externalRef?: string
   desiredDeliveryDate: string
   vendor: VendorModel
-  currency: CurrencyModel
+  currency?: CurrencyModel
   project: ProjectModel
   category: PurchaseOrderCategoryModel
   purchaseOrderProducts: Array<PurchaseOrderProductModel>

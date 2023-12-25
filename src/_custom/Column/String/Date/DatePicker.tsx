@@ -22,7 +22,6 @@ const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>((
     ...props
   }, ref) => {
   const [open, setOpen] = React.useState<boolean>(false);
-  console.log(value)
 
   return (
     <MomentLocalizationProvider>

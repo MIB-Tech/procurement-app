@@ -6,7 +6,7 @@ import {PurchaseOrderModel} from "../PurchaseOrder";
 
 
 type Model = {
-  designation: string
+  name: string
   code: string
   reference: string
   note: string
@@ -19,7 +19,7 @@ type Model = {
   parent?: Model
   children: Array<Model>
   purchaseNeedProducts: Array<PurchaseNeedProductModel>
-  productpricings: Array<ProductPricingModel>
+  pricing: Array<ProductPricingModel>
   purchaseOrders: Array<PurchaseOrderModel>
 
 } & AbstractModel

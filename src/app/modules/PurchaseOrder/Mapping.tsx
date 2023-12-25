@@ -55,7 +55,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       type: ModelEnum.Vendor
     },
     currency: {
-      type: ModelEnum.Currency
+      type: ModelEnum.Currency,
+      nullable: true
     },
     category: {
       type: ModelEnum.PurchaseOrderCategory,
@@ -120,22 +121,27 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       },
       fields: {
         vendor: true,
-        createdAt: true,
+        createdAt: {
+          helperText: 'NOW_BY_DEFAULT'
+        },
         taxIncluded: {
-          defaultValue: true,
-          render: ({item}) => (
+          defaultValue: false,
+          render: ({item: {purchaseOrderProducts}}) => (
             <RadioField
               size='sm'
               name='taxIncluded'
               options={[true, false]}
               getOptionLabel={taxIncluded => taxIncluded ? 'TTC' : 'HT'}
+              disabled={purchaseOrderProducts.length > 0}
             />
           )
         },
         ref: true,
         externalRef: true,
         desiredDeliveryDate: true,
-        currency: true,
+        currency: {
+          helperText: 'MAD_BY_DEFAULT'
+        },
         category: true,
         project: true,
         purchaseOrderProducts: {
@@ -145,7 +151,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
               md: 12,
               xl: 12,
             }
-          }
+          },
+          display: ({item})=> typeof item.taxIncluded === 'boolean'
         }
       }
     }

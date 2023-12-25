@@ -84,12 +84,16 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
           {columnNames.map((columnName, index, columnNames) => {
             const field = fields[columnName];
             const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
-            const render = typeof field !== 'boolean' && field?.render;
-            const gridProps = typeof field !== 'boolean' && field?.slotProps?.root;
             if (!field || !columnMapping) {
               return <></>;
             }
 
+            const render = typeof field === 'object' && field?.render;
+            const gridProps = typeof field === 'object' && field?.slotProps?.root;
+            const helperText = typeof field === 'object' ? field?.helperText : undefined;
+            const fieldProps = {
+              name: `${name ? `${name}.` : ''}${columnName.toString()}`
+            }
             return (
               <Grid key={index} item xs={12} {...view.slotProps?.item} {...gridProps}>
                 <div className={clsx(inlineForm && 'row')}>
@@ -104,11 +108,12 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
                   </label>
                   <div className={clsx(inlineForm && 'col-sm-9')}>
                     {render ?
-                      render({ item }) :
+                      render({ item, fieldProps }) :
                       <ValueField
-                        name={`${name ? `${name}.` : ''}${columnName.toString()}`}
+                        {...fieldProps}
                         column={columnMapping}
                         size='sm'
+                        feedbackLabel={helperText}
                       />
                     }
                   </div>

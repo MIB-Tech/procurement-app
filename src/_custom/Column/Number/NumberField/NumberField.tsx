@@ -13,8 +13,8 @@ export const NumberField: FC<InputFieldProps> = ({ name, feedbackLabel, ...props
     <Field name={name} feedbackLabel={feedbackLabel}>
       <InputNumber
         {...field}
-        {...props}
         onChange={setValue}
+        {...props}
       />
     </Field>
   );

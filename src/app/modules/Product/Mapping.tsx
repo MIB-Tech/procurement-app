@@ -17,7 +17,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    designation: {
+    name: {
       type: ColumnTypeEnum.String,
     },
     code: {
@@ -59,7 +59,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ModelEnum.PurchaseNeedProduct,
       multiple: true
     },
-    productpricings: {
+    pricing: {
       type: ModelEnum.ProductPricing
     },
     purchaseOrders: {
@@ -70,15 +70,9 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        //  code:true,
-        // reference:true,
-        // note:true,
         category: true,
         measurementUnit: true,
         vatRate: true,
-        // parent: true,
-        //  accountingAccount:true,
-        //   designation:true,
         isMobilised: true,
         stockable: true
       },
@@ -86,34 +80,31 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     {
       type: ViewEnum.Create,
       fields: {
-        //   designation: true,
-        //   category: true,
-        //   children: true,
+        name: true,
         code: true,
         reference: true,
-        //  note:true,
+        note: true,
         measurementUnit: true,
         accountingAccount: true,
+        isMobilised: true,
+        stockable: true,
         vatRate: true,
         category: true,
         parent: true,
-        children:true,
-        isMobilised: true,
-        stockable:true,
-        // designation:true,
+        children: true,
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
-        // designation: true,
+        // name: true,
         // category: true,
         // children: true,
         // purchaseNeedProducts:true,
         // note:true
         code: true,
         reference: true,
-        designation: true,
+        name: true,
         note: true,
         measurementUnit: true,
         category: true,
