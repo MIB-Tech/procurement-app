@@ -52,7 +52,13 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+        designation:true,
+        quantity:true,
+        discountType:true,
+        discountValue:true,
+
+      }
     }
 
   ]

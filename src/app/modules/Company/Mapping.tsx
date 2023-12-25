@@ -31,6 +31,20 @@ const mapping: ModelMapping<ModelEnum.Company> = {
         name:true,
         code:true
       }
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        name:true,
+        code:true
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        name:true,
+        code:true
+      }
     }
   ]
 };

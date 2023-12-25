@@ -45,15 +45,39 @@ const mapping: ModelMapping<ModelEnum.PurchaseFileProduct> = {
     columns: {
       designation: true,
       code: true,
-      devisNumber:true,
-      vendorOffer:true,
-      partNumber:true,
-      orderedQuantity:true,
-      validateQuantity:true,
-      recommendedPrice:true
+      devisNumber: true,
+      vendorOffer: true,
+      partNumber: true,
+      orderedQuantity: true,
+      validateQuantity: true,
+      recommendedPrice: true
     }
   },
-    {type:ViewEnum.Create,
+    {
+      type: ViewEnum.Create,
+      fields: {
+        designation: true,
+        code: true,
+        devisNumber: true,
+        vendorOffer: true,
+        partNumber: true,
+        orderedQuantity: true,
+        validateQuantity: true,
+        recommendedPrice: true
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        designation: true,
+        code: true,
+        devisNumber: true,
+        vendorOffer: true,
+        partNumber: true,
+        orderedQuantity: true,
+        validateQuantity: true,
+        recommendedPrice: true
+      }
     }
   ]
 };

@@ -16,9 +16,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     orderNumber: {
       type: ColumnTypeEnum.Number
     },
-    createdAt:{
-      type:ColumnTypeEnum.String,
-      format:StringFormat.Datetime
+    createdAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Datetime
     },
     isTaxIncluded: {
       type: ColumnTypeEnum.Number
@@ -26,37 +26,82 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     ref: {
       type: ColumnTypeEnum.String,
     },
-    externalRef:{
-      type:ColumnTypeEnum.String
+    externalRef: {
+      type: ColumnTypeEnum.String
     },
-    desiredDeliveryDate:{
-      type:ColumnTypeEnum.String,
-      format:StringFormat.Date
+    desiredDeliveryDate: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Date
     },
-    currency:{
-      type:ModelEnum.Currency
+    currency: {
+      type: ModelEnum.Currency
     },
-    purchaseOrderProducts:{
-      type:ModelEnum.PurchaseOrderProduct
+    purchaseOrderProducts: {
+      type: ModelEnum.PurchaseOrderProduct
     },
-    receipts:{
-      type:ModelEnum.Receipt
+    receipts: {
+      type: ModelEnum.Receipt
     },
-    vendor:{
-      type:ModelEnum.Vendor
+    vendor: {
+      type: ModelEnum.Vendor
     },
-    projects:{
-      type:ModelEnum.Project
+    projects: {
+      type: ModelEnum.Project
     },
-    purchaseOrderCategory:{
-      type:ModelEnum.PurchaseOrderCategory
+    purchaseOrderCategory: {
+      type: ModelEnum.PurchaseOrderCategory
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
-
+        createdAt: true,
+        vendor: true,
+        purchaseOrderCategory: true,
+        projects: true,
+        purchaseOrderProducts: true,
+        receipts: true,
+        currency: true,
+        externalRef: true,
+        ref: true,
+        desiredDeliveryDate: true,
+        isTaxIncluded: true,
+        orderNumber: true
+      }
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        ref: true,
+        externalRef: true,
+        createdAt: true,
+        orderNumber: true,
+        projects: true,
+        vendor: true,
+        purchaseOrderCategory: true,
+        purchaseOrderProducts: true,
+        receipts: true,
+        desiredDeliveryDate: true,
+        currency: true,
+        isTaxIncluded: true,
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        ref: true,
+        externalRef: true,
+        createdAt: true,
+        orderNumber: true,
+        projects: true,
+        vendor: true,
+        purchaseOrderCategory: true,
+        purchaseOrderProducts: true,
+        receipts: true,
+        desiredDeliveryDate: true,
+        currency: true,
+        isTaxIncluded: true,
       }
     }
   ]

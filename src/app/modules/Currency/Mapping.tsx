@@ -24,6 +24,18 @@ const mapping: ModelMapping<ModelEnum.Currency> = {
       sortColumns: {
         code: true
       }
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        code:true
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        code:true
+      }
     }
   ]
 };
