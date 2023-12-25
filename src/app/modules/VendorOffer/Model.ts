@@ -6,9 +6,9 @@ import {VendorModel} from "../Vendor";
 type Model = {
   status: boolean
   receiveAt: string
-  devisDate:string
-  isVATIncluded:boolean
-  devisNumber:string
+  quoteDate:string
+  VATIncluded:boolean
+  quoteNumber:string
   note:string
   vendorOfferProducts: Array<VendorOfferProductModel>
   vendor:VendorModel

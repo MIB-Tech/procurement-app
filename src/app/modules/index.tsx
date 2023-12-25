@@ -20,7 +20,7 @@ import {LOCATION_MAPPING} from './Location';
 import {RESOURCE_MAPPING} from './Resource';
 import {OPERATION_MAPPING} from './Operation';
 import {HydraItem} from '../../_custom/types/hydra.types';
-import {VENDOR_CONTACT_MAPPING} from './VendorContact';
+import {VENDOR_CONTACT_MAPPING} from './VendorAddress';
 import {VENDOR_MAPPING} from './Vendor';
 import {CURRENCY_MAPPING} from './Currency';
 import {PURCHASEFILETYPE_MAPPING} from './PurchaseFileType';
@@ -35,6 +35,7 @@ import {DESIRED_PRODUCT_MAPPING} from './DesiredProduct';
 import {RECEIPT_MAPPING} from './Receipt';
 import {RECEIPT_PRODUCT_MAPPING} from './ReceiptProduct';
 import {PURCHASE_ORDER_CATEGORY_MAPPING} from './PurchaseOrderCategory';
+import {PURCHASE_ORDER_ATTACHMENT_MAPPING} from "./PurchaseOrderAttachment";
 
 
 export const MODEL_MAPPINGS: Mapping = {
@@ -68,7 +69,9 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Location]: LOCATION_MAPPING,
   [ModelEnum.Resource]: RESOURCE_MAPPING,
   [ModelEnum.Operation]: OPERATION_MAPPING,
-  [ModelEnum.PurchaseOrderCategory]:PURCHASE_ORDER_CATEGORY_MAPPING
+  [ModelEnum.PurchaseOrderCategory]:PURCHASE_ORDER_CATEGORY_MAPPING,
+  [ModelEnum.purchaseOrderAttachment]:PURCHASE_ORDER_ATTACHMENT_MAPPING
+
 };
 
 type ListingState = {

@@ -15,6 +15,9 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     quantity:{
       type:ColumnTypeEnum.Number
     },
+    note:{
+      type:ColumnTypeEnum.String
+    },
     receipt:{
       type:ModelEnum.Receipt
     },

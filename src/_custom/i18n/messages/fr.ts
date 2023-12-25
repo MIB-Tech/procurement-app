@@ -1,7 +1,20 @@
-import { I18nLanguage } from '../I18nMessages';
+import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  RECEIVED_AT: "Date de reçu",
+  RECEIPT_NUMBER: "Numéro de reçu",
+  TAX_INCLUDED: "Taxe inclu",
+  NET_PRICE_EXCL_TAX: "Prix net hors taxe",
+  PRICE_INCL_TAX: "PRIX TTC",
+  CONSULTED_AT: "Consulté le",
+  PURCHASE_FILE_TYPE: "Type de dossier d'achat",
+  TOTAL_EXCL_TAX: "TOTAL HT",
+  TOTAL_INCL_TAX: "TOTAL TTC",
+  QUOTE_DATE: "Date du devis",
+  QUOTE_NUMBER: "Numéro de devis",
+  VAT_INCLUDED: "TVA est incluse",
+  PURCHASE_FILE_NUMBER: "Numéro de dossier d'achat",
   PRODUCT_PRICING: "Tarification du produit",
   PRODUCT_PRICINGS: "Tarifications des produits",
   PURCHASE_FILE: "Fichier d'achat",
@@ -45,7 +58,7 @@ export const fr: I18nLanguage = {
   ICE: "ICE",
   IS_CONFORME: "Conforme",
   IS_MAIN: "Principal",
-  IS_MOBILISED: "Mobilisé",
+  IS_MOBILISED: "immobilisé",
   IS_TAX_INCLUDED: "Taxe incluse",
   IS_VAT_INCLUDED: "TVA incluse",
   MEASUREMENT_UNIT: "Unité de mesure",

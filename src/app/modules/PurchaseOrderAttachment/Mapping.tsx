@@ -1,11 +1,10 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
-import {StringFormat} from "../../../_custom/Column/String/StringColumn";
 
 
-const mapping: ModelMapping<ModelEnum.Project> = {
-  modelName: ModelEnum.Project,
+const mapping: ModelMapping<ModelEnum.purchaseOrderAttachment> = {
+  modelName: ModelEnum.purchaseOrderAttachment,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
@@ -13,35 +12,19 @@ const mapping: ModelMapping<ModelEnum.Project> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    name: {
+    fileName: {
       type: ColumnTypeEnum.String
     },
-    amount: {
-      type: ColumnTypeEnum.Number
+    purchaseOrder: {
+      type: ModelEnum.PurchaseOrder
     },
-    endAt: {
-      type: ColumnTypeEnum.String,
-      format: StringFormat.Date
-    },
-    startAt: {
-      type: ColumnTypeEnum.String,
-      format: StringFormat.Date
-    },
-    purchaseNeeds: {
-      type: ModelEnum.PurchaseNeed,
-      multiple: true
-    },
-    purchaseOrders: {
-      type: ModelEnum.PurchaseOrder,
-      multiple: true
-    }
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
         name: true,
-      },
+      }
     },
     {
       type: ViewEnum.Create,
@@ -52,7 +35,7 @@ const mapping: ModelMapping<ModelEnum.Project> = {
     {
       type: ViewEnum.Update,
       fields: {
-        name: true
+        name: true,
       }
     }
   ]

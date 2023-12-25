@@ -7,6 +7,7 @@ type Model = {
   designation: string
   address: string
   quantity: number
+  readonly status:boolean
   receiptProduct?: ReceiptProductModel
   purchaseOrderProduct: PurchaseOrderProductModel
 } & AbstractModel

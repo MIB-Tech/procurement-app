@@ -100,8 +100,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
     designation: {
       type: ColumnTypeEnum.String
     },
-    quantity:{
-      type:ColumnTypeEnum.Number
+    quantity: {
+      type: ColumnTypeEnum.Number
     },
     grossPrice: {
       type: ColumnTypeEnum.Number,
@@ -137,6 +137,12 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       precision: 2,
+    },
+    status: {
+      type: ColumnTypeEnum.Boolean
+    },
+    vatTax: {
+      type: ColumnTypeEnum.Boolean
     },
     priceInclTax: {
       type: ColumnTypeEnum.Number,
