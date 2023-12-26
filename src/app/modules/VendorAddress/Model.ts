@@ -4,10 +4,9 @@ import {VendorModel} from "../Vendor";
 
 type Model = {
   name: string
-  postalCode:string
+  email?: string
+  phoneNumber: string
   address?: string
-  cityName:string
-  isMain:boolean
   vendor: VendorModel
 } & AbstractModel
 
