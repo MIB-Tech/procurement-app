@@ -16,11 +16,11 @@ const mapping: ModelMapping<ModelEnum.VendorAddress> = {
       type: ColumnTypeEnum.String
     },
     postalCode: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable:true
     },
     address: {
       type: ColumnTypeEnum.String,
-      nullable: true
     },
     cityName: {
       type: ColumnTypeEnum.String
@@ -38,10 +38,9 @@ const mapping: ModelMapping<ModelEnum.VendorAddress> = {
       columns: {
         name: true,
         postalCode: true,
-        email: true,
         cityName: true,
         address: true,
-        isMain: true
+        isMain: true,
       }
     },
     {
@@ -49,11 +48,9 @@ const mapping: ModelMapping<ModelEnum.VendorAddress> = {
       fields: {
         name: true,
         postalCode: true,
-        email: true,
         cityName: true,
         address: true,
         isMain: true
-
       }
     },
     {

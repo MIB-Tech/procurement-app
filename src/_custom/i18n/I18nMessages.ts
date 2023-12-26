@@ -433,6 +433,12 @@ type I18nMessageKey =
   | 'TAX_INCLUDED'
   | 'RECEIPT_NUMBER'
   | 'RECEIVED_AT'
+  | 'PRICING'
+  | 'PURCHASE_ORDER_ATTACHMENTS'
+  | 'PURCHASE_ORDER_ATTACHMENT'
+  | 'SECONDARY_PHONE_NUMBER'
+  | 'ADDRESSES'
+  | 'SUB_PRODUCTS'
 
 
 type I18nLanguage = Record<I18nMessageKey, string>

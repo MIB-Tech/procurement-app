@@ -1,6 +1,9 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import {SelectField} from "../../../_custom/Column/controls/fields/SelectField/SelectField";
+import {StringFormat} from "../../../_custom/Column/String/StringColumn";
+import {NumberFormat} from "../../../_custom/Column/Number/NumberColumn";
 
 
 const mapping: ModelMapping<ModelEnum.Product> = {
@@ -24,10 +27,13 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ColumnTypeEnum.String
     },
     reference: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable: true
     },
     note: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable: true,
+      format: StringFormat.Text,
     },
     measurementUnit: {
       type: ColumnTypeEnum.String
@@ -36,31 +42,35 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ColumnTypeEnum.String
     },
     isMobilised: {
-      type: ColumnTypeEnum.Boolean
+      type: ColumnTypeEnum.Boolean,
     },
     stockable: {
       type: ColumnTypeEnum.Boolean
     },
     vatRate: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Percent
     },
-    parent: {
+    parents: {
       type: ModelEnum.Product,
-      nullable: true
+      multiple: true
     },
     category: {
-      type: ModelEnum.Category
+      type: ModelEnum.Category,
+      nullable: true
     },
     children: {
       type: ModelEnum.Product,
-      multiple: true
+      multiple: true,
+      title: 'SUB_PRODUCTS'
     },
     purchaseNeedProducts: {
       type: ModelEnum.PurchaseNeedProduct,
       multiple: true
     },
     pricing: {
-      type: ModelEnum.ProductPricing
+      type: ModelEnum.ProductPricing,
+      multiple: true
     },
     purchaseOrders: {
       type: ModelEnum.PurchaseOrder
@@ -80,40 +90,54 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     {
       type: ViewEnum.Create,
       fields: {
-        name: true,
-        code: true,
         reference: true,
-        note: true,
+        name: true,
         measurementUnit: true,
         accountingAccount: true,
+        vatRate: {
+          defaultValue: .2,
+          render: ({fieldProps}) => (
+            <SelectField
+              size='sm'
+              options={[0, .07, .1, .14, .2]}
+              getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
+              placeholder='TVA'
+              {...fieldProps}
+            />
+          )
+        },
+        category: true,
+        children: true,
+        note: true,
         isMobilised: true,
         stockable: true,
-        vatRate: true,
-        category: true,
-        parent: true,
-        children: true,
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
-        // name: true,
-        // category: true,
-        // children: true,
-        // purchaseNeedProducts:true,
-        // note:true
-        code: true,
         reference: true,
         name: true,
-        note: true,
         measurementUnit: true,
+        accountingAccount: true,
+        vatRate: {
+          defaultValue: .2,
+          render: ({item, fieldProps}) => (
+            <SelectField
+              size='sm'
+              options={[0, .07, .1, .14, .2]}
+              getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
+              placeholder='TVA'
+              {...fieldProps}
+            />
+          )
+        },
         category: true,
         parent: true,
         children: true,
-        accountingAccount: true,
-        vatRate: true,
+        note: true,
         isMobilised: true,
-        stockable: true
+        stockable: true,
       }
     }
   ]

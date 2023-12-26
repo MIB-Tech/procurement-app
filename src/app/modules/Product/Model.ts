@@ -8,20 +8,19 @@ import {PurchaseOrderModel} from "../PurchaseOrder";
 type Model = {
   name: string
   code: string
-  reference: string
-  note: string
+  reference?: string
+  note?: string
   measurementUnit: string
   accountingAccount: string
   vatRate: number
   isMobilised: boolean
   stockable: boolean
   category: CategoryModel
-  parent?: Model
-  children: Array<Model>
+  parents?: Array<Model>
+  children?: Array<Model>
   purchaseNeedProducts: Array<PurchaseNeedProductModel>
   pricing: Array<ProductPricingModel>
   purchaseOrders: Array<PurchaseOrderModel>
-
 } & AbstractModel
 
 export default Model;
