@@ -18,7 +18,11 @@ const mapping: ModelMapping<ModelEnum.Category> = {
     products: {
       type: ModelEnum.Product,
       multiple: true
-    }
+    },
+    parents: {
+      type: ModelEnum.Category,
+      multiple: true
+    },
   },
   views: [
     {
@@ -39,8 +43,14 @@ const mapping: ModelMapping<ModelEnum.Category> = {
         name: true,
       }
     },
+    {
+      type:ViewEnum.Detail,
+      columns:{
+        name: true,
+        parents:true
+      }
+    }
   ]
-
 };
 
 export default mapping;

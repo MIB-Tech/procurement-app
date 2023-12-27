@@ -12,12 +12,9 @@ const mapping: ModelMapping<ModelEnum.VendorAddress> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    name: {
-      type: ColumnTypeEnum.String
-    },
     postalCode: {
       type: ColumnTypeEnum.String,
-      nullable:true
+      nullable: true
     },
     address: {
       type: ColumnTypeEnum.String,
@@ -36,7 +33,6 @@ const mapping: ModelMapping<ModelEnum.VendorAddress> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        name: true,
         postalCode: true,
         cityName: true,
         address: true,
@@ -46,21 +42,30 @@ const mapping: ModelMapping<ModelEnum.VendorAddress> = {
     {
       type: ViewEnum.Create,
       fields: {
-        name: true,
+        address: true,
         postalCode: true,
         cityName: true,
-        address: true,
-        isMain: true
+        isMain: true,
+        vendor: true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
-        name: true,
-        postalCode: true,
-        email: true,
-        cityName: true,
+        // name: true,
         address: true,
+        postalCode: true,
+        cityName: true,
+        isMain: true,
+        vendor: true
+      }
+    },
+    {
+      type: ViewEnum.Detail,
+      columns: {
+        address: true,
+        postalCode: true,
+        cityName: true,
         isMain: true
       }
     }
