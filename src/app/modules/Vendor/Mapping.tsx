@@ -28,7 +28,8 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
       type: ColumnTypeEnum.String
     },
     secondaryPhoneNumber: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable: true
     },
     productPricing: {
       type: ModelEnum.ProductPricing,
@@ -54,15 +55,37 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         name: true,
         code: true,
         ice: true,
-        addresses: true,
+        email: true,
+        phoneNumber: true,
+        secondaryPhoneNumber: true,
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
+        name: true,
+        code: true,
+        ice: true,
+        email: true,
+        phoneNumber: true,
+        secondaryPhoneNumber: true,
+      }
+    },
+    {
+      type: ViewEnum.Detail,
+      columns: {
         addresses: true,
+        name: true,
+        code: true,
+        ice: true,
+        email: true,
+        phoneNumber: true,
+        secondaryPhoneNumber: true,
+        productPricing:true
       }
     }
+
+
   ]
 };
 

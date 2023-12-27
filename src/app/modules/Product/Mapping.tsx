@@ -133,7 +133,6 @@ const mapping: ModelMapping<ModelEnum.Product> = {
           )
         },
         category: true,
-        parent: true,
         children: true,
         note: true,
         isMobilised: true,

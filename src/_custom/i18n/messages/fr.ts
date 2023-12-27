@@ -2,6 +2,12 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  "SUB_PRODUCTS": "Sous produit",
+  ADDRESSES: "Adresses",
+  SECONDARY_PHONE_NUMBER: "N° de téléphone secondaire",
+  PURCHASE_ORDER_ATTACHMENT: "Pièce jointe au bon de commande",
+  PURCHASE_ORDER_ATTACHMENTS: "Pièces jointes au bon de commande",
+  PRICING: "Prix",
   MAD_BY_DEFAULT: '*DH par défaut',
   NOW_BY_DEFAULT: '*Date du jour par défaut',
   TOTAL_EXCL_TAX: 'Total HT',
@@ -63,9 +69,9 @@ export const fr: I18nLanguage = {
   IS_CONFORME: "Conforme",
   IS_MAIN: "Principal",
   TAX_INCLUDED: "Taxe incluse",
-  IS_MOBILISED: "immobilisé",
+  IS_MOBILISED: "Immobilisé",
   IS_VAT_INCLUDED: "TVA incluse",
-  MEASUREMENT_UNIT: "Unité de mesure",
+  MEASUREMENT_UNIT: "Unité",
   NET_PRICE: "P.U net",
   NET_TOTAL_EXCL_TAX: "Total net excl. taxes",
   NOTE: "Note",

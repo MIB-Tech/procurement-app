@@ -5,6 +5,7 @@ import {ProductModel} from '../Product';
 type Model = {
   name: string
   products: Array<ProductModel>
+  parents?: Array<Model>
 } & AbstractModel
 
 export default Model;
