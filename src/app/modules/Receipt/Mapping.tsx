@@ -14,6 +14,7 @@ import {FieldProps} from '../../../_custom/Column/controls/fields';
 import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery';
 import {useFormikContext} from 'formik';
 import {ReceiptProductModel} from '../ReceiptProduct';
+import {Button} from '../../../_custom/components/Button';
 
 // const ReceiptProducts = ({item}: { item: Model<ModelEnum.Receipt> }) => {
 //   const {collection} = useCollectionQuery({
@@ -96,7 +97,6 @@ import {ReceiptProductModel} from '../ReceiptProduct';
 const PurchaseOrdersField = ({name}: FieldProps) => {
   const {values, setFieldValue} = useFormikContext<Model<ModelEnum.Receipt>>();
   const {vendor, purchaseOrders} = values;
-  console.log('aaa');
   const {collection: desiredProducts} = useCollectionQuery<ModelEnum.DesiredProduct>({
     modelName: ModelEnum.DesiredProduct,
     params: {
@@ -119,28 +119,38 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
   }, [desiredProducts]);
 
   return (
-    <ModelAutocompleteField
-      size='sm'
-      modelName={ModelEnum.PurchaseOrder}
-      multiple
-      // disabled={!vendor}
-      name={name}
-      getParams={filter => {
-        const newFilter: CompoundFilter<ModelEnum.PurchaseOrder> = {
-          operator: CompoundFilterOperator.And,
-          filters: [
-            filter,
-            {
-              property: 'vendor',
-              operator: PropertyFilterOperator.Equal,
-              value: vendor
-            }
-          ]
-        };
+    <div className='d-flex'>
+      <div className='flex-grow-1'>
+        <ModelAutocompleteField
+          size='sm'
+          modelName={ModelEnum.PurchaseOrder}
+          multiple
+          // disabled={!vendor}
+          name={name}
+          getParams={filter => {
+            const newFilter: CompoundFilter<ModelEnum.PurchaseOrder> = {
+              operator: CompoundFilterOperator.And,
+              filters: [
+                filter,
+                {
+                  property: 'vendor',
+                  operator: PropertyFilterOperator.Equal,
+                  value: vendor
+                }
+              ]
+            };
 
-        return newFilter;
-      }}
-    />
+            return newFilter;
+          }}
+        />
+      </div>
+      <Button
+        size='sm'
+        variant='primary'
+      >
+        Afficher
+      </Button>
+    </div>
   );
 };
 const mapping: ModelMapping<ModelEnum.Receipt> = {
@@ -185,35 +195,20 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     },
     {
       type: ViewEnum.Create,
-      slotProps: {
-        item: {
-          sm: 6
-        }
-      },
       fields: {
         externalRef: true,
         receivedAt: true,
         vendor: {
-          render: ({item, fieldProps}) => {
-
-            return (
-              <ModelAutocompleteField
-                size='sm'
-                modelName={ModelEnum.Vendor}
-                {...fieldProps}
-              />
-            );
-          }
+          render: ({fieldProps}) => (
+            <ModelAutocompleteField
+              size='sm'
+              modelName={ModelEnum.Vendor}
+              {...fieldProps}
+            />
+          )
         },
         purchaseOrders: {
-
-          render: ({item, fieldProps}) => {
-            const {vendor} = item;
-
-            return (
-              <PurchaseOrdersField name={fieldProps.name}/>
-            );
-          }
+          render: ({fieldProps}) => <PurchaseOrdersField {...fieldProps}/>
         },
         receiptProducts: {
           slotProps: {
