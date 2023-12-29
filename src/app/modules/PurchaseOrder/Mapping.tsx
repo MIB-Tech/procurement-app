@@ -78,6 +78,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       type: ModelEnum.purchaseOrderAttachment,
       multiple: true,
       embeddedForm: true
+    },
+    payementModalities: {
+      type: ModelEnum.PaymentModality
     }
   },
   views: [
@@ -156,7 +159,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
               xl: 12,
             }
           },
-          display: ({item})=> typeof item.taxIncluded === 'boolean'
+          display: ({item}) => typeof item.taxIncluded === 'boolean'
         }
       }
     }

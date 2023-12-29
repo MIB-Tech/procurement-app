@@ -3,6 +3,7 @@ import {PurchaseNeedProductModel} from '../PurchaseNeedProduct';
 import {CategoryModel} from '../Category';
 import {ProductPricingModel} from "../ProductPricing";
 import {PurchaseOrderModel} from "../PurchaseOrder";
+import {ComponentModel} from "../Component";
 
 
 type Model = {
@@ -16,8 +17,8 @@ type Model = {
   isMobilised: boolean
   stockable: boolean
   category: CategoryModel
-  parents?: Array<Model>
-  children?: Array<Model>
+  components: Array<ComponentModel>
+  parentComponents: Array<ComponentModel>
   purchaseNeedProducts: Array<PurchaseNeedProductModel>
   pricing: Array<ProductPricingModel>
   purchaseOrders: Array<PurchaseOrderModel>

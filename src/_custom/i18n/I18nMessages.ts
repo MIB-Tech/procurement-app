@@ -439,6 +439,8 @@ type I18nMessageKey =
   | 'SECONDARY_PHONE_NUMBER'
   | 'ADDRESSES'
   | 'SUB_PRODUCTS'
+  | 'BUDGET_AMOUNT'
+  | 'COMPONENTS'
 
 
 type I18nLanguage = Record<I18nMessageKey, string>

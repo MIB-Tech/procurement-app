@@ -51,18 +51,18 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Percent
     },
-    parents: {
-      type: ModelEnum.Product,
-      multiple: true
-    },
     category: {
       type: ModelEnum.Category,
       nullable: true
     },
-    children: {
-      type: ModelEnum.Product,
+    components: {
+      type: ModelEnum.Component,
       multiple: true,
-      title: 'SUB_PRODUCTS'
+      embeddedForm: true
+    },
+    parentComponents: {
+      type: ModelEnum.Component,
+      multiple: true
     },
     purchaseNeedProducts: {
       type: ModelEnum.PurchaseNeedProduct,
@@ -73,8 +73,9 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       multiple: true
     },
     purchaseOrders: {
-      type: ModelEnum.PurchaseOrder
-    }
+      type: ModelEnum.PurchaseOrder,
+      multiple: true
+    },
   },
   views: [
     {
@@ -84,8 +85,9 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         measurementUnit: true,
         vatRate: true,
         isMobilised: true,
-        stockable: true
-      },
+        stockable: true,
+        components: true
+      }
     },
     {
       type: ViewEnum.Create,
@@ -111,6 +113,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         note: true,
         isMobilised: true,
         stockable: true,
+        components: true,
       }
     },
     {
@@ -137,8 +140,21 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         note: true,
         isMobilised: true,
         stockable: true,
+        components: true
       }
-    }
+    },
+    {
+      type: ViewEnum.Detail,
+      columns: {
+        category: true,
+        measurementUnit: true,
+        vatRate: true,
+        isMobilised: true,
+        stockable: true,
+        pricing: true,
+        components: true
+      },
+    },
   ]
 };
 

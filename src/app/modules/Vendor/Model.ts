@@ -1,6 +1,7 @@
 import {VendorAddressModel} from '../VendorAddress';
 import {AbstractModel} from '../../../_custom/types/types';
 import {ProductPricingModel} from '../ProductPricing';
+import {PaymentModalityModel} from "../PaymentModality";
 
 type Model = {
   name: string
@@ -11,6 +12,8 @@ type Model = {
   secondaryPhoneNumber:string
   addresses: Array<VendorAddressModel>
   productPricing: Array<ProductPricingModel>
+  payementModalitys: PaymentModalityModel
+
 } & AbstractModel
 
 export default Model;

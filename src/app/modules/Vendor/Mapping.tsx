@@ -40,6 +40,9 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
       multiple: true,
       embeddedForm: true
     },
+    payementModalitys: {
+      type: ModelEnum.PaymentModality,
+    }
   },
   views: [
     {
@@ -58,6 +61,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         email: true,
         phoneNumber: true,
         secondaryPhoneNumber: true,
+        payementModalitys: true
       }
     },
     {
@@ -81,7 +85,8 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         email: true,
         phoneNumber: true,
         secondaryPhoneNumber: true,
-        productPricing:true
+        productPricing: true,
+        payementModalitys: true
       }
     }
 

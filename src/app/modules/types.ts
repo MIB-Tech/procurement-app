@@ -29,6 +29,8 @@ import {ReceiptModel} from './Receipt';
 import {ReceiptProductModel} from './ReceiptProduct';
 import {PurchaseOrderCategoryModel} from './PurchaseOrderCategory';
 import {PurchaseOrderAttachmentModel} from "./PurchaseOrderAttachment";
+import {PaymentModalityModel} from "./PaymentModality";
+import {ComponentModel} from "./Component";
 
 
 export enum ModelEnum {
@@ -50,7 +52,7 @@ export enum ModelEnum {
   PurchaseOrder = 'PurchaseOrder',
   PurchaseOrderProduct = 'PurchaseOrderProduct',
   PurchaseOrderCategory = 'PurchaseOrderCategory',
-  purchaseOrderAttachment='PurchaseOrderAttachment',
+  purchaseOrderAttachment = 'PurchaseOrderAttachment',
   Receipt = 'Receipt',
   ReceiptProduct = 'ReceiptProduct',
   Resource = 'Resource',
@@ -63,6 +65,8 @@ export enum ModelEnum {
   VendorOffer = 'VendorOffer',
   VendorOfferProduct = 'VendorOfferProduct',
   ProductPricing = 'ProductPricing',
+  Component = 'Component',
+  PaymentModality = 'PaymentModality'
 }
 
 export type Models = {
@@ -97,5 +101,8 @@ export type Models = {
   [ModelEnum.VendorOfferProduct]: VendorOfferProductModel,
   [ModelEnum.ProductPricing]: ProductPricingModel
   [ModelEnum.purchaseOrderAttachment]: PurchaseOrderAttachmentModel
+  [ModelEnum.PaymentModality]: PaymentModalityModel
+  [ModelEnum.Component]: ComponentModel
+
 
 }

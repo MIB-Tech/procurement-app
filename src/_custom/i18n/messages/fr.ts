@@ -2,7 +2,9 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
-  "SUB_PRODUCTS": "Sous produit",
+  COMPONENTS:'Composants',
+  BUDGET_AMOUNT: "Montant budget",
+  SUB_PRODUCTS: "Sous produit",
   ADDRESSES: "Adresses",
   SECONDARY_PHONE_NUMBER: "N° de téléphone secondaire",
   PURCHASE_ORDER_ATTACHMENT: "Pièce jointe au bon de commande",

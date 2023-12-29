@@ -19,7 +19,7 @@ import {HydraItem} from '../../../types/hydra.types';
 import {Modal} from 'react-bootstrap';
 import {Button} from '../../../components/Button';
 
-const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}: FieldProps & {modelName: M, item: HydraItem, index: number}) => {
+const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}: FieldProps & { modelName: M, item: HydraItem, index: number }) => {
   const [open, setOpen] = useState<boolean>();
   const {views, columnDef} = useMapping<M>({modelName});
   const {values: {id}} = useFormikContext<AbstractModel>();
@@ -229,7 +229,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, modelName}: FieldPr
             </tbody>
             <tfoot>
             <tr className='fs-7 text-gray-400 text-uppercase'>
-              <td />
+              <td/>
               {rootColumnNames.map(columnName => {
                 const columnMapping = columnDef[columnName];
 
@@ -250,7 +250,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, modelName}: FieldPr
 
                 return (
                   <td key={columnName.toString()} className='text-truncate text-uppercase'>
-                    {columnMapping.footer?.({ value, collection: items }) || (
+                    {columnMapping.footer?.({value, collection: items}) || (
                       <CellContent
                         value={value}
                         {...columnMapping}
