@@ -1,6 +1,9 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import {StringFormat} from '../../../_custom/Column/String/StringColumn';
+import {QUANTITY_STATUS_OPTIONS} from '../PurchaseOrder/Model';
+import {number} from 'yup';
 
 
 const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
@@ -20,10 +23,14 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
     },
     quantity: {
       type: ColumnTypeEnum.Number,
-      title: 'RECEIVED_QUANTITY'
+      title: 'RECEIVED_QUANTITY',
+      schema: number().positive()
     },
     status: {
-      type: ColumnTypeEnum.Boolean
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Select,
+      title: 'DELIVERY_STATUS',
+      options: QUANTITY_STATUS_OPTIONS
     },
     purchaseOrderProduct: {
       type: ModelEnum.PurchaseOrderProduct
@@ -38,6 +45,22 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       columns: {
         address: true,
         quantity: true,
+      }
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        designation: true,
+        quantity: true,
+        address: true,
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        designation: true,
+        quantity: true,
+        address: true,
       }
     }
   ]

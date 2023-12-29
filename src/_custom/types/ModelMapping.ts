@@ -150,9 +150,9 @@ export type View<M extends ModelEnum> =
 
 export type ModelMapping<M extends ModelEnum> = {
   modelName: M
-  uploadable?: boolean,
-  hydraTitle?: (item:HydraItem<M>) => ReactNode,
-  hydraSubtitle?: (item:HydraItem<M>) => ReactNode,
+  uploadable?: boolean
+  hydraTitle?: (item:HydraItem<M>) => ReactNode
+  hydraSubtitle?: (item:HydraItem<M>) => ReactNode
   columnDef: ColumnDef<M>
   views?: Array<View<M>>
 }

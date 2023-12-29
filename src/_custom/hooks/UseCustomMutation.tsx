@@ -33,7 +33,7 @@ export const useCustomMutation = <M extends ModelEnum>({
     }),
     {
       onSuccess: ({ data }) => {
-        navigate(data['@id']);
+        navigate(`${data['@id']}/update`);
         queryClient.invalidateQueries({ queryKey: [getListingQueryKey(modelName)] });
       },
       onError: ({ response }) => {

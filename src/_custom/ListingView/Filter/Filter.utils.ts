@@ -93,7 +93,13 @@ export const filterToParams = <M extends ModelEnum>(filter: Filter<M>, prefix: s
         case PropertyFilterOperator.IsFalse:
           break;
         default:
-          _value = typeof value === 'string' ? value : value?.id;
+          _value = typeof value === 'object' ?
+            (Array.isArray(value) ?
+              value.map(i=>i.id || i):
+              value?.id
+            ):
+            value
+          ;
       }
   }
 

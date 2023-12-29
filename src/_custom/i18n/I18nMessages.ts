@@ -5,6 +5,7 @@ import {CompoundFilterOperator, PropertyFilterOperator} from '../ListingView/Fil
 import {PriorityEnum, PurchaseNeedStatusEnum} from '../../app/modules/PurchaseNeed/Model';
 import {ListingModeEnum} from '../ListingView/ListingView.types';
 import {ViewEnum} from '../types/ModelMapping';
+import {QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model';
 
 
 type Lang = 'en' | 'ar' | 'fr'
@@ -15,15 +16,19 @@ type I18nMessageKey =
   | CompoundFilterOperator
   | ListingModeEnum
   | ViewEnum
+  | QuantityStatusEnum
+  | 'VALIDATION.PURCHASE_ORDER_PRODUCT.QUANTITY'
+  | 'GENERATE'
+  | 'PURCHASE_ORDER_ATTACHMENTS'
+  | 'GENERATE_PUSHASE_ORDER'
+  | 'DELIVERY_STATUS'
   | 'MAD_BY_DEFAULT'
   | 'NOW_BY_DEFAULT'
   | 'TOTAL_INCL_TAX'
-  | 'TOTAL_EXCL_TAX'
   | 'PERCENT'
   | 'AMOUNT'
   | 'CURRENCY'
   | 'PRICE_INCL_TAX'
-  | 'NET_PRICE_EXCL_TAX'
   | 'RECEIVED_QUANTITY'
   | 'ADVANCED_FILTER'
   | 'PER_PAGE'
@@ -392,7 +397,6 @@ type I18nMessageKey =
   | 'NET_TOTAL_EXCL_TAX'
   | 'VAT_TAX'
   | 'DISCOUNT_TYPE'
-  | 'TAX_INCLUDED'
   | 'REF'
   | 'EXTERNAL_REF'
   | 'TOTAL_VAT_TAX'
@@ -426,10 +430,8 @@ type I18nMessageKey =
   | 'QUOTE_DATE'
   | 'QUOTE_NUMBER'
   | 'TOTAL_EXCL_TAX'
-  | 'TOTAL_INCL_TAX'
   | 'CONSULTED_AT'
   | 'NET_PRICE_EXCL_TAX'
-  | 'PRICE_INCL_TAX'
   | 'TAX_INCLUDED'
   | 'RECEIPT_NUMBER'
   | 'RECEIVED_AT'

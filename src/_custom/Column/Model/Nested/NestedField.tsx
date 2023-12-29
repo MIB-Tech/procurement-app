@@ -11,9 +11,7 @@ export const NestedField = <M extends ModelEnum>({ name, modelName }: FieldProps
   const [{ value: item }, , { setValue }] = useField<Model<M>>({ name });
   const { views } = useMapping<M>({ modelName });
 
-  const view = views?.find(view => {
-    return view.type === ViewEnum.Create;
-  }) as FormViewType<M> | undefined;
+  const view = views?.find(view => view.type === ViewEnum.Create) as FormViewType<M> | undefined;
 
   if (!view) {
     return (

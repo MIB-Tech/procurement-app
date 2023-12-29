@@ -235,9 +235,6 @@ export const getInitialValues = <M extends ModelEnum>({
         break;
     }
 
-    defaultValues[columnName] = typeof field === 'object' && typeof field?.defaultValue !== 'undefined' ?
-      field.defaultValue:
-      defaultValue
     if (typeof field === 'object' && typeof field?.defaultValue !== 'undefined') {
       defaultValues[columnName] = field.defaultValue;
     } else {

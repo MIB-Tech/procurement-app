@@ -2,6 +2,14 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  'VALIDATION.PURCHASE_ORDER_PRODUCT.QUANTITY': 'Doit être égale à la somme des quantités livrées',
+  GENERATE: 'Génerer',
+  GENERATE_PUSHASE_ORDER: 'Génerer bon de reception',
+  PURCHASE_ORDER_ATTACHMENTS: 'Attachments',
+  DELIVERY_STATUS: 'Statut livr.',
+  FULLY_RECEIVED: 'Livré',
+  PARTIALLY_RECEIVED: 'Partiellement',
+  UNRECEIVED: 'No livré',
   MAD_BY_DEFAULT: '*DH par défaut',
   NOW_BY_DEFAULT: '*Date du jour par défaut',
   TOTAL_EXCL_TAX: 'Total HT',
@@ -320,7 +328,7 @@ export const fr: I18nLanguage = {
   'VALIDATION.NUMBER.MORE_THAN': 'Doit être supérieur à {more}',
   'VALIDATION.NUMBER.NEGATIVE': 'Doit être un nombre négatif',
   'VALIDATION.NUMBER.NOT_EQUAL': 'Ne doit pas être égal à {notEqual}',
-  'VALIDATION.NUMBER.POSITIVE': 'Doit être un nombre positif',
+  'VALIDATION.NUMBER.POSITIVE': 'Doit être positif.',
   'VALIDATION.OBJECT.NO_UNKNOWN': 'Ne peut pas avoir de clés non spécifiées dans la forme de l\'objet',
   'VALIDATION.STRING.EMAIL': 'Doit être un email valide',
   'VALIDATION.STRING.LENGTH': 'Doit contenir exactement {length} caractères',

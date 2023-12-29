@@ -1,5 +1,5 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
+import {FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {AbstractModel, ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
@@ -16,6 +16,12 @@ import {useEffect} from 'react';
 import {HydraItem} from '../../../_custom/types/hydra.types';
 import {NumberColumnField} from '../../../_custom/Column/Number/NumberColumnField';
 import {PrintButton} from '../PurchaseOrder/PrintButton';
+import {QUANTITY_STATUS_OPTIONS} from '../PurchaseOrder/Model';
+import {number} from 'yup';
+import {PurchaseOrderProductModel} from './index';
+import {DesiredProductModel} from '../DesiredProduct';
+import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
+import {useParams} from 'react-router-dom';
 
 type NetPriceProps =
   Pick<Model, 'grossPrice' | 'vatRate' | 'discountType' | 'discountValue'>
@@ -72,14 +78,48 @@ const getPriceInclTax = (item: PriceInclTaxProps) => {
     netPriceExclTax + netPriceExclTax * vatRate;
 };
 
+
+const DesiredProductsField = ({...fieldProps}: FieldProps) => {
+  const formik = useFormikContext<Partial<PurchaseOrderModel>>();
+  // if (!formik) {
+  //   return <></>;
+  // }
+
+  const index = fieldProps.name.split('.').at(1);
+
+  return (
+    <NestedArrayField
+      {...fieldProps}
+      modelName={ModelEnum.DesiredProduct}
+      extraAttribute={{
+        designation: index && formik.values.purchaseOrderProducts?.[parseInt(index)].designation
+      }}
+    />
+  )
+}
 const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
   const {name} = props;
+  const [{value: id}] = useField({name: name.replace('product', 'id')});
   const [{value: product}] = useField<HydraItem | null>({name});
   const [, , {setValue: setDesignation}] = useField({name: name.replace('product', 'designation')});
+  const [, , {setValue: setDesiredProducts}] = useField({name: name.replace('product', 'desiredProducts')});
   const productName = product?.['@title'];
   useEffect(() => {
-    setDesignation(productName || '');
-  }, [productName]);
+    if (!id) {
+      const designation = productName || ''
+      setDesignation(designation);
+      if (productName) {
+        const desiredProduct: Partial<DesiredProductModel> = {
+          designation,
+          quantity: 0,
+        }
+        setDesiredProducts([desiredProduct])
+      } else {
+        setDesiredProducts([])
+      }
+    }
+
+  }, [productName, id]);
 
   return (
     <ModelAutocompleteField
@@ -89,6 +129,68 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
     />
   );
 };
+
+const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
+  product: {
+    render: ({fieldProps}) => <ProductField {...fieldProps}/>
+  },
+  designation: true,
+  quantity: true,
+  grossPrice: true,
+  note: true,
+  discountType: {
+    defaultValue: DiscountType.Percent,
+  },
+  discountValue: {
+    render: ({item, fieldProps}) => (
+      <NumberColumnField
+        format={item.discountType === DiscountType.Percent ? NumberFormat.Percent : NumberFormat.Amount}
+        {...fieldProps}
+        size='sm'
+        hideAdornment
+        min={0}
+      />
+    )
+  },
+  netPrice: {
+    render: ({item}) => (
+      <AmountUnit
+        getValue={taxIncluded => getNetPrice({...item, taxIncluded})}
+      />
+    )
+  },
+  vatRate: {
+    defaultValue: .2,
+    render: ({item, fieldProps}) => (
+      <SelectField
+        size='sm'
+        options={[0, .07, .1, .14, .2]}
+        getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
+        placeholder='TVA'
+        {...fieldProps}
+      />
+    )
+  },
+  netPriceExclTax: {
+    render: ({item}) => (
+      <AmountUnit
+        getValue={taxIncluded => getNetPriceExclTax({...item, taxIncluded})}
+      />
+    )
+  },
+  priceInclTax: {
+    render: ({item}) => (
+      <AmountUnit
+        getValue={taxIncluded => getPriceInclTax({...item, taxIncluded})}
+      />
+    )
+  },
+  desiredProducts: {
+    display: ({item}) => !!item.product,
+    render: ({fieldProps}) => <DesiredProductsField {...fieldProps}/>
+  },
+}
+
 const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
   modelName: ModelEnum.PurchaseOrderProduct,
   columnDef: {
@@ -102,16 +204,46 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       type: ColumnTypeEnum.String
     },
     quantity: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
+      schema: number()
+        .positive()
+        .test(
+          'is-valid',
+          'VALIDATION.PURCHASE_ORDER_PRODUCT.QUANTITY',
+          (quantity, context) => {
+            const {desiredProducts} = context.parent as PurchaseOrderProductModel
+            const count = desiredProducts.reduce(
+              (count, desiredProduct) => count + desiredProduct.quantity,
+              0
+            );
+            return count === quantity;
+          }
+        )
+      // .when('desiredProducts', {
+      //   is: function(desiredProducts: DesiredProductModel[]) {
+      //     console.log(this)
+      //     const quantity = 0
+      //     const count = desiredProducts.reduce(
+      //       (count, desiredProduct)=> count + desiredProduct.quantity,
+      //       0
+      //     )
+      //
+      //     return count !== quantity
+      //   },
+      //   then: (schema) => schema.min(5),
+      //   otherwise: (schema) => schema.min(0),
+      // })
     },
     grossPrice: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       precision: 2,
+      schema: number().positive()
     },
     note: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Text
+      format: StringFormat.Text,
+      nullable: true
     },
     vatRate: {
       type: ColumnTypeEnum.Number,
@@ -133,6 +265,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       precision: 2,
+      nullable: true,
       footer: ({collection, value}) => (
         <AmountUnit
           defaultValue={value as number}
@@ -147,6 +280,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       precision: 2,
+      nullable: true,
       footer: ({collection, value}) => (
         <AmountUnit
           defaultValue={value as number}
@@ -158,7 +292,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       )
     },
     status: {
-      type: ColumnTypeEnum.Boolean
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Select,
+      title: 'DELIVERY_STATUS',
+      options: QUANTITY_STATUS_OPTIONS
     },
     vatTax: {
       type: ColumnTypeEnum.Boolean
@@ -167,6 +304,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       precision: 2,
+      nullable: true,
       footer: ({collection, value}) => (
         <AmountUnit
           defaultValue={value as number}
@@ -186,7 +324,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
     desiredProducts: {
       type: ModelEnum.DesiredProduct,
       multiple: true,
-      embeddedForm: true
+      embeddedForm: true,
     },
   },
   views: [
@@ -213,6 +351,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
         vatRate: true,
         netPriceExclTax: true,
         priceInclTax: true,
+        status: true,
       }
     },
     {
@@ -244,64 +383,11 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
     },
     {
       type: ViewEnum.Create,
-      fields: {
-        desiredProducts: true,
-        product: {
-          render: ({fieldProps}) => (
-            <ProductField {...fieldProps}/>
-          )
-        },
-        designation: true,
-        quantity: true,
-        grossPrice: true,
-        discountType: {
-          defaultValue: DiscountType.Percent,
-        },
-        discountValue: {
-          render: ({item, fieldProps}) => (
-            <NumberColumnField
-              format={item.discountType === DiscountType.Percent ? NumberFormat.Percent : NumberFormat.Amount}
-              {...fieldProps}
-              size='sm'
-              hideAdornment
-              min={0}
-            />
-          )
-        },
-        netPrice: {
-          render: ({item}) => (
-            <AmountUnit
-              getValue={taxIncluded => getNetPrice({...item, taxIncluded})}
-            />
-          )
-        },
-        vatRate: {
-          defaultValue: .2,
-          render: ({item, fieldProps}) => (
-            <SelectField
-              size='sm'
-              options={[0, .07, .1, .14, .2]}
-              getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
-              placeholder='TVA'
-              {...fieldProps}
-            />
-          )
-        },
-        netPriceExclTax: {
-          render: ({item}) => (
-            <AmountUnit
-              getValue={taxIncluded => getNetPriceExclTax({...item, taxIncluded})}
-            />
-          )
-        },
-        priceInclTax: {
-          render: ({item}) => (
-            <AmountUnit
-              getValue={taxIncluded => getPriceInclTax({...item, taxIncluded})}
-            />
-          )
-        },
-      }
+      fields: formFields
+    },
+    {
+      type: ViewEnum.Update,
+      fields: formFields
     }
   ]
 };

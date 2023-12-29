@@ -28,7 +28,7 @@ import {DesiredProductModel} from './DesiredProduct';
 import {ReceiptModel} from './Receipt';
 import {ReceiptProductModel} from './ReceiptProduct';
 import {PurchaseOrderCategoryModel} from './PurchaseOrderCategory';
-import {PurchaseOrderAttachmentModel} from "./PurchaseOrderAttachment";
+import {PurchaseOrderAttachmentModel} from './PurchaseOrderAttachment';
 
 
 export enum ModelEnum {
@@ -97,5 +97,4 @@ export type Models = {
   [ModelEnum.VendorOfferProduct]: VendorOfferProductModel,
   [ModelEnum.ProductPricing]: ProductPricingModel
   [ModelEnum.purchaseOrderAttachment]: PurchaseOrderAttachmentModel
-
 }

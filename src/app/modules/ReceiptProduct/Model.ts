@@ -8,6 +8,7 @@ type Model = {
   note:string
   desiredProduct: DesiredProductModel
   receipt: ReceiptModel
+  readonly desiredProductQuantity: number
 } & AbstractModel
 
 export default Model;

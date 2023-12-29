@@ -1,6 +1,6 @@
 import React, {useMemo, useRef, useState} from 'react';
 import {FieldProps} from '../../controls/fields';
-import {CreateViewType, FormViewType, Model, UpdateViewType, ViewEnum} from '../../../types/ModelMapping';
+import {ColumnMapping, CreateViewType, Model, UpdateViewType, ViewEnum} from '../../../types/ModelMapping';
 import {FieldArray, useField, useFormikContext} from 'formik';
 import {useMapping} from '../../../hooks/UseMapping';
 import {getDefaultFields, getInitialValues, stringToI18nMessageKey} from '../../../utils';
@@ -17,9 +17,15 @@ import {useTrans} from '../../../components/Trans';
 import {CellContent} from '../../../ListingView/views/Table/BodyCell';
 import {HydraItem} from '../../../types/hydra.types';
 import {Modal} from 'react-bootstrap';
-import {Button} from '../../../components/Button';
+import clsx from 'clsx';
+import {StringFormat} from '../../String/StringColumn';
 
-const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}: FieldProps & {modelName: M, item: HydraItem, index: number}) => {
+const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}: FieldProps & {
+  modelName: M,
+  item: HydraItem,
+  index: number
+}) => {
+  const [, {error},] = useField<Array<HydraItem<M>>>({name});
   const [open, setOpen] = useState<boolean>();
   const {views, columnDef} = useMapping<M>({modelName});
   const {values: {id}} = useFormikContext<AbstractModel>();
@@ -32,7 +38,16 @@ const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}
   }, [id, views]);
   const {fields = getDefaultFields(columnDef)} = view;
   const _columnNames = Object.keys(fields) as Array<keyof Model<M>>;
-  const columnNames = _columnNames.filter(columnName => 'embeddedForm' in columnDef[columnName]);
+  const columnNames = _columnNames.filter(columnName => {
+    const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
+    if (!columnMapping) return false;
+    switch (columnMapping.type) {
+      case ColumnTypeEnum.String:
+        return columnMapping.format === StringFormat.Text;
+      default:
+        return 'embeddedForm' in columnMapping;
+    }
+  });
 
   return (
     <>
@@ -41,6 +56,8 @@ const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}
         variant='primary'
         size='2x'
         onClick={() => setOpen(true)}
+        pulse={!!error}
+        pulseVariant='danger'
       />
       <Modal
         size='xl'
@@ -48,7 +65,7 @@ const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}
         onHide={() => setOpen(o => !o)}
       >
         <Modal.Header closeButton/>
-        <Modal.Body>
+        <Modal.Body className='d-flex flex-column gap-5'>
           {columnNames.map(columnName => {
             const field = fields[columnName];
             const render = typeof field === 'object' && field?.render;
@@ -59,8 +76,21 @@ const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}
               className: 'border-1'
             };
 
+            const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
+            if (!field || !columnMapping) {
+              return <></>;
+            }
+
             return (
-              <td key={nestedName}>
+              <div key={nestedName}>
+                <label
+                  className={clsx(
+                    'd-flex fw-semibold text-truncate text-muted',
+                    !('multiple' in columnMapping) && !columnMapping.nullable && 'required'
+                  )}
+                >
+                  <TitleContent columnName={columnName} {...columnMapping} />
+                </label>
                 {render ?
                   render({item, fieldProps}) :
                   <ValueField
@@ -70,26 +100,20 @@ const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}
                     hideAdornment
                   />
                 }
-              </td>
+              </div>
             );
           })}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={() => setOpen(false)}>
-            Close
-          </Button>
-          <Button variant='primary' onClick={() => {
-          }}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
 };
 
-export const NestedArrayField = <M extends ModelEnum>({name, modelName}: FieldProps & {
-  modelName: M
+export const NestedArrayField = <M extends ModelEnum>({name, modelName, disableInsert, disableDelete, extraAttribute}: FieldProps & {
+  modelName: M,
+  disableInsert?: boolean
+  disableDelete?: boolean
+  extraAttribute?: Record<any, any>
 }) => {
   const {trans} = useTrans();
   const {values: {id}} = useFormikContext<AbstractModel>();
@@ -105,8 +129,17 @@ export const NestedArrayField = <M extends ModelEnum>({name, modelName}: FieldPr
   const fileInputRef = useRef<HTMLInputElement>(null);
   const {fields = getDefaultFields(columnDef)} = view;
   const columnNames = Object.keys(fields) as Array<keyof Model<M>>;
-  const rootColumnNames = columnNames.filter(columnName => !('embeddedForm' in columnDef[columnName]));
-  const nestedColumnNames = columnNames.filter(columnName => 'embeddedForm' in columnDef[columnName]);
+  const nestedColumnNames = columnNames.filter(columnName => {
+    const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
+    if (!columnMapping) return false;
+    switch (columnMapping.type) {
+      case ColumnTypeEnum.String:
+        return columnMapping.format === StringFormat.Text;
+      default:
+        return 'embeddedForm' in columnMapping;
+    }
+  });
+  const rootColumnNames = columnNames.filter(columnName => !nestedColumnNames.some(nestedColumnName => columnName === nestedColumnName));
 
   return (
     <FieldArray name={name}>
@@ -116,54 +149,56 @@ export const NestedArrayField = <M extends ModelEnum>({name, modelName}: FieldPr
             <thead className='fs-7 text-gray-400 text-uppercase'>
             <tr className='align-middle'>
               <th>
-                <div className='d-flex'>
-                  <input
-                    type='file'
-                    accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-                    style={{display: 'none'}} // Hide the file input
-                    ref={fileInputRef}
-                    onChange={event => {
-                      const file = event.target.files?.[0];
+                {!disableInsert && (
+                  <div className='d-flex'>
+                    <input
+                      type='file'
+                      accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                      style={{display: 'none'}} // Hide the file input
+                      ref={fileInputRef}
+                      onChange={event => {
+                        const file = event.target.files?.[0];
 
-                      if (file) {
-                        file.arrayBuffer().then(file => {
-                          const workbook = read(file/*, { dateNF: 'yyyy-mm-dd' }*/);
-                          const data = getData<M>({
-                            workbook,
-                            mapping: rootColumnNames.reduce(
-                              (previousValue, columnName) => ({
-                                ...previousValue,
-                                [columnName]: trans({id: stringToI18nMessageKey(columnName.toString())})
-                              }),
-                              {} as Record<keyof Model<M>, string>
-                            )
+                        if (file) {
+                          file.arrayBuffer().then(file => {
+                            const workbook = read(file/*, { dateNF: 'yyyy-mm-dd' }*/);
+                            const data = getData<M>({
+                              workbook,
+                              mapping: rootColumnNames.reduce(
+                                (previousValue, columnName) => ({
+                                  ...previousValue,
+                                  [columnName]: trans({id: stringToI18nMessageKey(columnName.toString())})
+                                }),
+                                {} as Record<keyof Model<M>, string>
+                              )
+                            });
+                            // @ts-ignore
+                            setValue([...data, ...items]);
                           });
-                          // @ts-ignore
-                          setValue([...data, ...items]);
-                        });
-                      }
-                    }}
-                  />
-                  <IconButton
-                    path='/general/gen035.svg'
-                    variant='primary'
-                    size='2x'
-                    onClick={() => {
-                      const view = (views?.find(({type}) => type === ViewEnum.Create) as FormViewType<M> | undefined) || DEFAULT_CREATE_VIEW;
-                      const {fields = getDefaultFields(columnDef)} = view;
-
-                      insert(0, getInitialValues({columnDef, fields}));
-                    }}
-                  />
-                  <IconButton
-                    path='/files/fil010.svg'
-                    variant='primary'
-                    size='2x'
-                    onClick={() => {
-                      fileInputRef.current?.click();
-                    }}
-                  />
-                </div>
+                        }
+                      }}
+                    />
+                    <IconButton
+                      path='/general/gen035.svg'
+                      variant='primary'
+                      size='2x'
+                      onClick={() => {
+                        insert(
+                          0,
+                          {...getInitialValues({columnDef, fields}), ...extraAttribute}
+                          );
+                      }}
+                    />
+                    <IconButton
+                      path='/files/fil010.svg'
+                      variant='primary'
+                      size='2x'
+                      onClick={() => {
+                        fileInputRef.current?.click();
+                      }}
+                    />
+                  </div>
+                )}
               </th>
               {rootColumnNames.map(columnName => (
                 <th key={columnName.toString()}>
@@ -176,19 +211,21 @@ export const NestedArrayField = <M extends ModelEnum>({name, modelName}: FieldPr
             </tr>
             </thead>
             <tbody>
-            {items.map((item, itemIndex) => (
+            {[...items].reverse().map((item, itemIndex) => (
               <tr key={itemIndex}>
                 <td className='align-middle'>
                   <div className='d-flex align-items-center'>
                     <div className='badge badge-secondary badge-square rounded'>
                       #{itemIndex + 1}
                     </div>
-                    <IconButton
-                      path='/general/gen034.svg'
-                      variant='danger'
-                      size='2x'
-                      onClick={() => remove(itemIndex)}
-                    />
+                    {!disableDelete && (
+                      <IconButton
+                        path='/general/gen034.svg'
+                        variant='danger'
+                        size='2x'
+                        onClick={() => remove(itemIndex)}
+                      />
+                    )}
                     {nestedColumnNames.length > 0 && (
                       <NestedColumnsButton
                         name={name}
@@ -211,7 +248,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, modelName}: FieldPr
                   };
 
                   return (
-                    <td key={nestedName}>
+                    <td key={nestedName} className={clsx(!render && '-align-top')}>
                       {render ?
                         render({item, fieldProps}) :
                         <ValueField
@@ -232,7 +269,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, modelName}: FieldPr
               <td />
               {rootColumnNames.map(columnName => {
                 const columnMapping = columnDef[columnName];
-
+                if (!columnMapping) return false;
                 let value: any = '';
                 switch (columnMapping.type) {
                   case ColumnTypeEnum.Number:

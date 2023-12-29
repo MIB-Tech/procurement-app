@@ -30,7 +30,7 @@ export const ModelField = <M extends ModelEnum>({
 
   if (embeddedForm) {
     return multiple ?
-      <NestedArrayField modelName={modelName} {...props}/> :
+      <NestedArrayField modelName={modelName} {...props} disableInsert={column.disableInsert}/> :
       <NestedField modelName={modelName} {...props}/>;
   }
 

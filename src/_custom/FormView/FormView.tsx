@@ -1,26 +1,26 @@
-import React, { useEffect, useMemo } from 'react';
-import { useMapping } from '../hooks/UseMapping';
-import { Trans, useTrans } from '../components/Trans';
-import { GoBackButton } from '../components/Button/GoBackButton';
-import { Button } from '../components/Button';
-import { FormFields, Model, MutationMode } from '../types/ModelMapping';
-import { useAuth } from '../hooks/UseAuth';
-import { FormikProvider, useFormik } from 'formik';
-import { FormViewProps, Input } from './FormView.types';
-import { FormCard } from './FormCard';
-import { getDefaultFields, getInitialValues, getValidationSchema } from '../utils';
-import { useCustomMutation } from '../hooks/UseCustomMutation';
-import { useCustomQuery } from '../hooks/UseCustomQuery';
-import { ModelEnum } from '../../app/modules/types';
+import React, {useEffect, useMemo} from 'react';
+import {useMapping} from '../hooks/UseMapping';
+import {Trans, useTrans} from '../components/Trans';
+import {GoBackButton} from '../components/Button/GoBackButton';
+import {Button} from '../components/Button';
+import {FormFields, Model, MutationMode} from '../types/ModelMapping';
+import {useAuth} from '../hooks/UseAuth';
+import {FormikProvider, useFormik} from 'formik';
+import {FormViewProps, Input} from './FormView.types';
+import {FormCard} from './FormCard';
+import {getDefaultFields, getInitialValues, getValidationSchema} from '../utils';
+import {useCustomMutation} from '../hooks/UseCustomMutation';
+import {useCustomQuery} from '../hooks/UseCustomQuery';
+import {ModelEnum} from '../../app/modules/types';
 
-import { isLocationColumn } from '../ListingView/ListingView.utils';
+import {isLocationColumn} from '../ListingView/ListingView.utils';
 
 
-export const FormView = <M extends ModelEnum>({ modelName, view, ...props }: FormViewProps<M>) => {
-  const { trans } = useTrans();
-  const { columnDef } = useMapping({ modelName });
-  const { mode = MutationMode.Post, submittable } = view;
-  const mutation = useCustomMutation<M>({ modelName, mode });
+export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormViewProps<M>) => {
+  const {trans} = useTrans();
+  const {columnDef} = useMapping({modelName});
+  const {mode = MutationMode.Post, submittable} = view;
+  const mutation = useCustomMutation<M>({modelName, mode});
   const isCreateMode = mode === MutationMode.Post;
   const query = useCustomQuery({ modelName, enabled: !isCreateMode });
   const { isGranted, location } = useAuth();

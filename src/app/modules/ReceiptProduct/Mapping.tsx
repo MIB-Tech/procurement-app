@@ -15,6 +15,9 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     quantity:{
       type:ColumnTypeEnum.Number
     },
+    desiredProductQuantity:{
+      type:ColumnTypeEnum.Number
+    },
     note:{
       type:ColumnTypeEnum.String
     },
@@ -29,6 +32,19 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     {
       type: ViewEnum.Listing,
       columns: {}
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        desiredProductQuantity: {
+          render: ({item}) => {
+
+            return item.desiredProduct.quantity
+          }
+        },
+        quantity: true,
+        note: true,
+      }
     }
   ]
 };

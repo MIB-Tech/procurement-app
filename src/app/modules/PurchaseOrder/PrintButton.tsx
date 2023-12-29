@@ -6,12 +6,9 @@ import {Button} from '../../../_custom/components/Button';
 import {Trans} from '../../../_custom/components/Trans';
 import {TableView} from '../../../_custom/ListingView/views/Table/TableView';
 import {Checkbox} from '../../../_custom/Column/Boolean/Chechbox/Checkbox';
-import {DESIRED_PRODUCT_MAPPING} from '../DesiredProduct';
 
 
-export const PrintButton: FC<{
-  selectedItems: Array<HydraItem<ModelEnum.PurchaseOrderProduct>>
-}> = ({selectedItems}) => {
+export const PrintButton: FC<{selectedItems: Array<HydraItem<ModelEnum.PurchaseOrderProduct>>}> = ({selectedItems}) => {
   const [open, setOpen] = useState<boolean>();
   const [checkedItems, setCheckedItems] = useState<Array<HydraItem<ModelEnum.DesiredProduct>>>([]);
 
@@ -33,7 +30,7 @@ export const PrintButton: FC<{
           disabled={selectedItems.length === 0}
           onClick={() => setOpen(true)}
         >
-          Génerer bon de reception
+          <Trans id='GENERATE_PUSHASE_ORDER'/>
         </Button>
         {selectedItems.length > 0 && (
           <div
@@ -54,7 +51,7 @@ export const PrintButton: FC<{
         >
           <Modal.Header>
             <Modal.Title>
-              Génerer bon de reception
+              <Trans id='GENERATE_PUSHASE_ORDER'/>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className='scroll-y max-h-600px'>
@@ -64,9 +61,7 @@ export const PrintButton: FC<{
               columns={{
                 address: true,
                 quantity: true,
-                status: {
-                  render: ({item: {receiptProduct}}) => receiptProduct && 'Génerée'
-                }
+                status: true
               }}
               renderAction={({item}) => {
                 const checked = checkedItems.some(checkedItem => checkedItem.id === item.id);
@@ -98,7 +93,7 @@ export const PrintButton: FC<{
                 // todo mutate
               }}
             >
-              Génerer
+              <Trans id='GENERATE'/>
             </Button>
           </Modal.Footer>
         </Modal>

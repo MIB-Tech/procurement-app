@@ -1,4 +1,4 @@
-import React, {Fragment, useMemo, useState} from 'react';
+import React, {Fragment, useEffect, useMemo, useState} from 'react';
 import {ColumnDef, FilterColumns, ListingColumns, ListingViewType, Model, ViewEnum} from '../types/ModelMapping';
 import {DatesSet, ExtendedProps, ListingModeEnum, ListingViewProps} from './ListingView.types';
 import {ModelEnum} from '../../app/modules/types';
@@ -55,12 +55,19 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
   const [state, setState] = useRecoilState(LISTING_FAMILY({modelName, embedded: !!parentModelName}));
   const {selectedItems, basicFilter, ...params} = state;
   const {sort, page, itemsPerPage, mode, search} = params;
-  const isCalendar = mode === ListingModeEnum.Calendar
+  const isCalendar = mode === ListingModeEnum.Calendar;
   const parentProperty = (Object.keys(columnDef) as Array<keyof Model<M>>).find(columnName => {
     const def = columnDef[columnName];
 
     return def.type === parentModelName && !('multiple' in def);
   });
+
+  useEffect(() => {
+
+    return () => {
+      setState({...state, selectedItems: []});
+    };
+  }, [modelName]);
 
   const {dateFields = []} = view;
   const filter = useMemo<Filter<M>>(() => {

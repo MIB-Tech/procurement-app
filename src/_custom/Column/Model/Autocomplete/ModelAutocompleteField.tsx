@@ -1,26 +1,22 @@
-import { UndefinedBool } from '../../controls/base/Autocomplete';
-import React, { useEffect } from 'react';
-import {
-  CompoundFilter,
-  CompoundFilterOperator,
-  PropertyFilterOperator
-} from '../../../ListingView/Filter/Filter.types';
-import { AutocompleteField, AutocompleteFieldProps } from '../../controls/fields/AutocompleteField';
-import { Model } from '../../../types/ModelMapping';
-import { useField } from 'formik';
-import { useMapping } from '../../../hooks/UseMapping';
-import { getRoutePrefix } from '../../../utils';
-import { HydraItem } from '../../../types/hydra.types';
-import { Trans, useTrans } from '../../../components/Trans';
-import { fr } from '../../../i18n/messages/fr';
-import { I18nMessageKey } from '../../../i18n/I18nMessages';
-import { ModelCell } from '../../../ListingView/views/Table/ModelCell';
+import {UndefinedBool} from '../../controls/base/Autocomplete';
+import React, {useEffect, useMemo} from 'react';
+import {CompoundFilter, CompoundFilterOperator, PropertyFilterOperator} from '../../../ListingView/Filter/Filter.types';
+import {AutocompleteField, AutocompleteFieldProps} from '../../controls/fields/AutocompleteField';
+import {Model} from '../../../types/ModelMapping';
+import {useField} from 'formik';
+import {useMapping} from '../../../hooks/UseMapping';
+import {getRoutePrefix} from '../../../utils';
+import {HydraItem} from '../../../types/hydra.types';
+import {Trans, useTrans} from '../../../components/Trans';
+import {fr} from '../../../i18n/messages/fr';
+import {I18nMessageKey} from '../../../i18n/I18nMessages';
+import {ModelCell} from '../../../ListingView/views/Table/ModelCell';
 import clsx from 'clsx';
-import { Popper } from '../../controls/base/Autocomplete/Tag';
-import { Pagination } from '../../../ListingView/Pagination';
-import { useCollectionQuery } from '../../../hooks/UseCollectionQuery';
-import { PaginationInput } from '../../../ListingView/Pagination/Pagination.types';
-import { ModelEnum } from '../../../../app/modules/types';
+import {Popper} from '../../controls/base/Autocomplete/Tag';
+import {Pagination} from '../../../ListingView/Pagination';
+import {useCollectionQuery} from '../../../hooks/UseCollectionQuery';
+import {PaginationInput} from '../../../ListingView/Pagination/Pagination.types';
+import {ModelEnum} from '../../../../app/modules/types';
 
 
 type ModelAutocomplete<M extends ModelEnum, Multiple extends UndefinedBool> =
@@ -29,7 +25,7 @@ type ModelAutocomplete<M extends ModelEnum, Multiple extends UndefinedBool> =
     name: string
     getParams?: (filter: CompoundFilter<M>) => CompoundFilter<M>
   }
-  & Pick<AutocompleteFieldProps<Model<M>, Multiple, false, false>, 'size' | 'className' | 'bg' | 'placeholder' | 'multiple' | 'autoSelect'>
+  & Pick<AutocompleteFieldProps<Model<M>, Multiple, false, false>, 'size' | 'className' | 'bg' | 'placeholder' | 'multiple' | 'autoSelect' | 'disabled'>
 export const ModelAutocompleteField = <
   M extends ModelEnum,
   Multiple extends UndefinedBool
@@ -43,20 +39,23 @@ export const ModelAutocompleteField = <
     itemsPerPage: 5
   });
   const { searchableColumnNames } = useMapping<M>({ modelName });
+  const filter = useMemo(()=>{
+    return getParams({
+      operator: CompoundFilterOperator.Or,
+      filters: searchableColumnNames.map(columnName => ({
+        property: columnName,
+        operator: PropertyFilterOperator.Contain,
+        value: inputValue
+      }))
+    })
+  }, [getParams, searchableColumnNames, inputValue])
 
   const { collection, isLoading, totalCount } = useCollectionQuery<M>({
     modelName,
     path: '/base' + getRoutePrefix(modelName),
     options: { enabled },
     params: {
-      filter: getParams({
-        operator: CompoundFilterOperator.Or,
-        filters: searchableColumnNames.map(columnName => ({
-          property: columnName,
-          operator: PropertyFilterOperator.Contain,
-          value: inputValue
-        }))
-      }),
+      filter,
       ...pagination
     }
   });
@@ -105,13 +104,11 @@ export const ModelAutocompleteField = <
       onInputChange={(e, value, reason) => {
         if (reason === 'input') {
           setInputValue(value);
-          setPagination({ ...pagination, page: 1 });
+          setPagination({...pagination, page: 1});
           setEnabled(true);
         }
       }}
-      onFocus={() => {
-        setEnabled(true);
-      }}
+      onFocus={() => setEnabled(true)}
       loading={isLoading}
       renderPopper={({ options, getOptionProps, ...listboxProps }) => (
         <Popper {...listboxProps} >

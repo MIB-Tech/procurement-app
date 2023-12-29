@@ -1,10 +1,50 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField';
+import {QUANTITY_STATUS_OPTIONS} from './Model';
+import {InputField} from '../../../_custom/Column/String/InputField';
 
+const formFields:FormFields<ModelEnum.PurchaseOrder> = {
+  vendor: true,
+  createdAt: {
+    helperText: 'NOW_BY_DEFAULT',
+  },
+  taxIncluded: {
+    defaultValue: false,
+    render: ({item: {purchaseOrderProducts}}) => (
+      <RadioField
+        size='sm'
+        name='taxIncluded'
+        options={[true, false]}
+        getOptionLabel={taxIncluded => taxIncluded ? 'TTC' : 'HT'}
+        disabled={purchaseOrderProducts.length > 0}
+        scrollDisabled
+      />
+    )
+  },
+  ref: true,
+  externalRef: true,
+  desiredDeliveryDate: true,
+  currency: {
+    helperText: 'MAD_BY_DEFAULT'
+  },
+  category: true,
+  project: true,
+  purchaseOrderProducts: {
+    slotProps: {
+      root: {
+        sm: 12,
+        md: 12,
+        lg: 12,
+        xl: 12,
+      }
+    },
+    display: ({item})=> typeof item.taxIncluded === 'boolean'
+  }
+}
 
 const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
   modelName: ModelEnum.PurchaseOrder,
@@ -48,7 +88,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     createdAt: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Datetime,
+      format: StringFormat.Date,
       nullable: true
     },
     vendor: {
@@ -63,8 +103,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       nullable: true
     },
     project: {
-      type: ModelEnum.Project,
-      nullable: true
+      type: ModelEnum.Project
     },
     purchaseOrderProducts: {
       type: ModelEnum.PurchaseOrderProduct,
@@ -72,7 +111,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       embeddedForm: true
     },
     status: {
-      type: ColumnTypeEnum.Boolean
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Select,
+      title: 'DELIVERY_STATUS',
+      options: QUANTITY_STATUS_OPTIONS
     },
     purchaseOrderAttachments: {
       type: ModelEnum.purchaseOrderAttachment,
@@ -112,6 +154,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalExclTax: true,
         // totalVatTax: true,
         totalInclTax: true,
+        status: true
       }
     },
     {
@@ -120,44 +163,25 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         item: {
           sm: 4,
           md: 3,
-          xl: 2,
+          lg: 2,
+        }
+      },
+      fields: formFields
+    },
+    {
+      type: ViewEnum.Update,
+      slotProps: {
+        item: {
+          sm: 4,
+          md: 3,
+          lg: 2,
         }
       },
       fields: {
-        vendor: true,
-        createdAt: {
-          helperText: 'NOW_BY_DEFAULT'
+        orderNumber: {
+          render: ({fieldProps}) => <InputField {...fieldProps} disabled/>
         },
-        taxIncluded: {
-          defaultValue: false,
-          render: ({item: {purchaseOrderProducts}}) => (
-            <RadioField
-              size='sm'
-              name='taxIncluded'
-              options={[true, false]}
-              getOptionLabel={taxIncluded => taxIncluded ? 'TTC' : 'HT'}
-              disabled={purchaseOrderProducts.length > 0}
-            />
-          )
-        },
-        ref: true,
-        externalRef: true,
-        desiredDeliveryDate: true,
-        currency: {
-          helperText: 'MAD_BY_DEFAULT'
-        },
-        category: true,
-        project: true,
-        purchaseOrderProducts: {
-          slotProps: {
-            root: {
-              sm: 12,
-              md: 12,
-              xl: 12,
-            }
-          },
-          display: ({item})=> typeof item.taxIncluded === 'boolean'
-        }
+        ...formFields
       }
     }
   ]
