@@ -3,8 +3,8 @@ import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
 
-const mapping: ModelMapping<ModelEnum.Category> = {
-  modelName: ModelEnum.Category,
+const mapping: ModelMapping<ModelEnum.PaymentModality> = {
+  modelName: ModelEnum.PaymentModality,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
@@ -15,20 +15,20 @@ const mapping: ModelMapping<ModelEnum.Category> = {
     name: {
       type: ColumnTypeEnum.String
     },
-    products: {
-      type: ModelEnum.Product,
-      multiple: true
+    vendors: {
+      type: ModelEnum.Vendor,
+      multiple:true
     },
-    parents: {
-      type: ModelEnum.Category,
+    PurchaseOrders: {
+      type: ModelEnum.PurchaseOrder,
       multiple: true
-    },
+    }
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
-        name: true,
+        name: true
       }
     },
     {
@@ -41,13 +41,15 @@ const mapping: ModelMapping<ModelEnum.Category> = {
       type: ViewEnum.Update,
       fields: {
         name: true,
+        vendors:true
       }
     },
     {
-      type:ViewEnum.Detail,
-      columns:{
+      type: ViewEnum.Detail,
+      columns: {
         name: true,
-        parents:true
+        vendors:true,
+        PurchaseOrders:true
       }
     }
   ]

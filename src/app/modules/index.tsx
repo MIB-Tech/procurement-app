@@ -36,6 +36,8 @@ import {RECEIPT_MAPPING} from './Receipt';
 import {RECEIPT_PRODUCT_MAPPING} from './ReceiptProduct';
 import {PURCHASE_ORDER_CATEGORY_MAPPING} from './PurchaseOrderCategory';
 import {PURCHASE_ORDER_ATTACHMENT_MAPPING} from "./PurchaseOrderAttachment";
+import {COMPONENT_MAPPING} from "./Component";
+import {PAYMENT_MODALITY_MAPPING} from "./PaymentModality";
 
 
 export const MODEL_MAPPINGS: Mapping = {
@@ -69,8 +71,11 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Location]: LOCATION_MAPPING,
   [ModelEnum.Resource]: RESOURCE_MAPPING,
   [ModelEnum.Operation]: OPERATION_MAPPING,
-  [ModelEnum.PurchaseOrderCategory]:PURCHASE_ORDER_CATEGORY_MAPPING,
-  [ModelEnum.purchaseOrderAttachment]:PURCHASE_ORDER_ATTACHMENT_MAPPING
+  [ModelEnum.PurchaseOrderCategory]: PURCHASE_ORDER_CATEGORY_MAPPING,
+  [ModelEnum.purchaseOrderAttachment]: PURCHASE_ORDER_ATTACHMENT_MAPPING,
+  [ModelEnum.Component]: COMPONENT_MAPPING,
+  [ModelEnum.PaymentModality]: PAYMENT_MODALITY_MAPPING,
+
 
 };
 

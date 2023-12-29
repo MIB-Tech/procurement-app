@@ -344,6 +344,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
   const parentColumnMapping = inverseBy && parentDef[inverseBy];
   const item = parent && {
     id: parent.id,
+    uid: parent.uid,
     '@id': parent['@id'],
     '@title': parent['@title'],
     '@subTitle': parent['@subTitle']

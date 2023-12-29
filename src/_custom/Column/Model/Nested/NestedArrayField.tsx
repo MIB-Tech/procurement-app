@@ -266,7 +266,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, modelName, disableI
             </tbody>
             <tfoot>
             <tr className='fs-7 text-gray-400 text-uppercase'>
-              <td />
+              <td/>
               {rootColumnNames.map(columnName => {
                 const columnMapping = columnDef[columnName];
                 if (!columnMapping) return false;
@@ -287,7 +287,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, modelName, disableI
 
                 return (
                   <td key={columnName.toString()} className='text-truncate text-uppercase'>
-                    {columnMapping.footer?.({ value, collection: items }) || (
+                    {columnMapping.footer?.({value, collection: items}) || (
                       <CellContent
                         value={value}
                         {...columnMapping}

@@ -1,13 +1,12 @@
 import {AbstractModel} from '../../../_custom/types/types';
 import {VendorModel} from "../Vendor";
+import {PurchaseOrderModel} from "../PurchaseOrder";
 
 
 type Model = {
-  postalCode:string
-  address?: string
-  cityName:string
-  isMain:boolean
-  vendor: VendorModel
+  name: string
+  vendors:Array<VendorModel>
+  PurchaseOrders:Array<PurchaseOrderModel>
 } & AbstractModel
 
 export default Model;

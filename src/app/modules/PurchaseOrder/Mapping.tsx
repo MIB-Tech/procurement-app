@@ -33,6 +33,7 @@ const formFields:FormFields<ModelEnum.PurchaseOrder> = {
   },
   category: true,
   project: true,
+  paymentModality: true,
   purchaseOrderProducts: {
     slotProps: {
       root: {
@@ -105,22 +106,25 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     project: {
       type: ModelEnum.Project
     },
-    purchaseOrderProducts: {
-      type: ModelEnum.PurchaseOrderProduct,
-      multiple: true,
-      embeddedForm: true
-    },
     status: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Select,
       title: 'DELIVERY_STATUS',
       options: QUANTITY_STATUS_OPTIONS
     },
+    paymentModality: {
+      type: ModelEnum.PaymentModality
+    },
     purchaseOrderAttachments: {
       type: ModelEnum.purchaseOrderAttachment,
       multiple: true,
       embeddedForm: true
-    }
+    },
+    purchaseOrderProducts: {
+      type: ModelEnum.PurchaseOrderProduct,
+      multiple: true,
+      embeddedForm: true
+    },
   },
   views: [
     {
