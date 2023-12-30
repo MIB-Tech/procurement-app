@@ -39,12 +39,13 @@ const mapping: ModelMapping<ModelEnum.Component> = {
       columns: {
         product: true,
         price: true,
+        quantity: true,
       }
     },
     {
       type: ViewEnum.Create,
       fields: {
-        parentProduct: true,
+        product: true,
         price: true,
         quantity: true,
       }
