@@ -2,6 +2,8 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  PURCHASE_ORDER_ALLOWED: "Bon de commande autorisé",
+  PAYMENT_MODALITY: "Modalités de paiement",
   'VALIDATION.PURCHASE_ORDER_PRODUCT.QUANTITY': 'Doit être égale à la somme des quantités livrées',
   GENERATE: 'Génerer',
   GENERATE_PUSHASE_ORDER: 'Génerer bon de reception',

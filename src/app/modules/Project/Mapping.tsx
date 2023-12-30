@@ -16,19 +16,22 @@ const mapping: ModelMapping<ModelEnum.Project> = {
     name: {
       type: ColumnTypeEnum.String
     },
-    budgetAmount: {
-      type: ColumnTypeEnum.Number
+    amount: {
+      type: ColumnTypeEnum.Number,
+      title: 'BUDGET_AMOUNT'
     },
-    endDate: {
+    endAt: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Date
+      format: StringFormat.Date,
+      title: 'END_DATE'
     },
-    startDate: {
+    startAt: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Date
+      format: StringFormat.Date,
+      title: 'START_DATE'
     },
-    purchaseOrderAllowed:{
-      type:ColumnTypeEnum.Boolean
+    purchaseOrderAllowed: {
+      type: ColumnTypeEnum.Boolean
     },
     purchaseNeeds: {
       type: ModelEnum.PurchaseNeed,
@@ -43,27 +46,39 @@ const mapping: ModelMapping<ModelEnum.Project> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        budgetAmount: true,
-        startDate: true,
-        endDate: true
-      },
+        amount: true,
+        startAt: true,
+        endAt: true
+      }
     },
     {
       type: ViewEnum.Create,
       fields: {
         name: true,
-        budgetAmount: true,
-        startDate: true,
-        endDate: true
+        amount: true,
+        startAt: true,
+        endAt: true,
+        purchaseOrderAllowed: true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
         name: true,
-        budgetAmount: true,
-        startDate: true,
-        endDate: true
+        amount: true,
+        startAt: true,
+        endAt: true,
+        purchaseOrderAllowed: true
+      }
+    },
+    {
+      type: ViewEnum.Detail,
+      columns: {
+        name: true,
+        amount: true,
+        startAt: true,
+        endAt: true,
+        purchaseOrderAllowed: true
       }
     }
   ]
