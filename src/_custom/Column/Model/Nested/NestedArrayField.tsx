@@ -231,7 +231,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
                             name={name}
                             modelName={modelName}
                             item={item}
-                            index={itemIndex}
+                            index={item._index}
                           />
                         )}
                       </div>
