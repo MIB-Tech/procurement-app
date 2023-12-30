@@ -1,4 +1,4 @@
-import {FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {ColumnMapping, FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {AbstractModel, ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
@@ -191,6 +191,12 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
   },
 }
 
+export const QUANTITY_STATUS_COLUMN:ColumnMapping<ModelEnum.PurchaseOrderProduct> = {
+  type: ColumnTypeEnum.String,
+  format: StringFormat.Select,
+  title: 'DELIVERY_STATUS',
+  options: QUANTITY_STATUS_OPTIONS
+}
 const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
   modelName: ModelEnum.PurchaseOrderProduct,
   columnDef: {
@@ -291,12 +297,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
         />
       )
     },
-    status: {
-      type: ColumnTypeEnum.String,
-      format: StringFormat.Select,
-      title: 'DELIVERY_STATUS',
-      options: QUANTITY_STATUS_OPTIONS
-    },
+    status: QUANTITY_STATUS_COLUMN,
     vatTax: {
       type: ColumnTypeEnum.Boolean
     },

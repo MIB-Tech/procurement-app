@@ -2,6 +2,8 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  VALIDATED: 'Validé',
+  SHOW: 'Afficher',
   'VALIDATION.PURCHASE_ORDER_PRODUCT.QUANTITY': 'Doit être égale à la somme des quantités livrées',
   GENERATE: 'Génerer',
   GENERATE_PUSHASE_ORDER: 'Génerer bon de reception',
@@ -9,7 +11,7 @@ export const fr: I18nLanguage = {
   DELIVERY_STATUS: 'Statut livr.',
   FULLY_RECEIVED: 'Livré',
   PARTIALLY_RECEIVED: 'Partiellement',
-  UNRECEIVED: 'No livré',
+  UNRECEIVED: 'Non livré',
   COMPONENTS:'Composants',
   BUDGET_AMOUNT: "Montant budget",
   SUB_PRODUCTS: "Sous produit",
@@ -84,7 +86,7 @@ export const fr: I18nLanguage = {
   NET_PRICE: "P.U net",
   NET_TOTAL_EXCL_TAX: "Total net excl. taxes",
   NOTE: "Note",
-  ORDERED_QUANTITY: "Quantité commandée",
+  ORDERED_QUANTITY: "Qté prévue",
   ORDER_TYPE: "Type de commande",
   PART_NUMBER: "Numéro de pièce",
   POSTAL_CODE: "Code postal",
@@ -317,7 +319,7 @@ export const fr: I18nLanguage = {
   'STOCK.EMPTY': 'Rupture',
   'STOCK.LOW': 'Faible',
   'VALIDATION.ARRAY.MAX': 'Doit avoir inférieur ou égal à {max} articles',
-  'VALIDATION.ARRAY.MIN': 'Doit avoir au moins {min} articles',
+  'VALIDATION.ARRAY.MIN': 'Doit avoir au moins {min}',
   'VALIDATION.DATE.MAX': 'Doit être au plus tôt {max}',
   'VALIDATION.DATE.MIN': 'Doit être au plus tard {min}',
   'VALIDATION.MIXED.DEFAULT': 'Doit être valide',

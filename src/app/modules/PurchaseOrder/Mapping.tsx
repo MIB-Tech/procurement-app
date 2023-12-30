@@ -6,11 +6,13 @@ import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField';
 import {QUANTITY_STATUS_OPTIONS} from './Model';
 import {InputField} from '../../../_custom/Column/String/InputField';
+import moment from 'moment/moment';
+import {array} from 'yup';
 
 const formFields:FormFields<ModelEnum.PurchaseOrder> = {
   vendor: true,
   createdAt: {
-    helperText: 'NOW_BY_DEFAULT',
+    defaultValue: moment().format()
   },
   taxIncluded: {
     defaultValue: false,
@@ -123,7 +125,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     purchaseOrderProducts: {
       type: ModelEnum.PurchaseOrderProduct,
       multiple: true,
-      embeddedForm: true
+      embeddedForm: true,
+      min: 1
     },
   },
   views: [
@@ -183,7 +186,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       },
       fields: {
         orderNumber: {
-          render: ({fieldProps}) => <InputField {...fieldProps} disabled/>
+          render: ({fieldProps}) => <InputField {...fieldProps} size='sm' disabled/>
         },
         ...formFields
       }

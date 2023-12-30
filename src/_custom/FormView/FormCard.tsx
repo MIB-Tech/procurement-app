@@ -1,16 +1,16 @@
-import { ColumnMapping, FormViewType, Model, MutationMode } from '../types/ModelMapping';
-import { useMapping } from '../hooks/UseMapping';
-import { useAuth } from '../hooks/UseAuth';
+import {ColumnMapping, CreateViewType, Model, UpdateViewType, ViewEnum} from '../types/ModelMapping';
+import {useMapping} from '../hooks/UseMapping';
+import {useAuth} from '../hooks/UseAuth';
 import clsx from 'clsx';
-import { TitleContent } from '../ListingView/views/Table/HeaderCell';
-import { ValueField } from '../Column/ValueField';
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useCustomQuery } from '../hooks/UseCustomQuery';
-import { getDefaultFields } from '../utils';
-import { ModelEnum } from '../../app/modules/types';
-import { Grid } from '@mui/material';
-import { isLocationColumn } from '../ListingView/ListingView.utils';
+import {TitleContent} from '../ListingView/views/Table/HeaderCell';
+import {ValueField} from '../Column/ValueField';
+import React, {useEffect} from 'react';
+import {useLocation} from 'react-router-dom';
+import {useCustomQuery} from '../hooks/UseCustomQuery';
+import {getDefaultFields} from '../utils';
+import {ModelEnum} from '../../app/modules/types';
+import {Grid} from '@mui/material';
+import {isLocationColumn} from '../ListingView/ListingView.utils';
 
 
 export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, view, className }: {
@@ -18,7 +18,7 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
   modelName: M
   item: Model<M>
   setItem: (item: Model<M>) => void
-  view: Omit<FormViewType<M>, 'type'>,
+  view: CreateViewType<M> | UpdateViewType<M>,
   className?: string
 }) => {
   const { columnDef } = useMapping<M>({ modelName });
@@ -49,7 +49,7 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
   const query = useCustomQuery({
     modelName,
     url,
-    enabled: view.mode === MutationMode.Put
+    enabled: view.type === ViewEnum.Update
   });
 
   useEffect(() => {

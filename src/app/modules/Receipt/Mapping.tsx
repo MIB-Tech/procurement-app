@@ -3,7 +3,7 @@ import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   CompoundFilter,
   CompoundFilterOperator,
@@ -15,6 +15,9 @@ import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery';
 import {useFormikContext} from 'formik';
 import {ReceiptProductModel} from '../ReceiptProduct';
 import {Button} from '../../../_custom/components/Button';
+import {HydraItem} from '../../../_custom/types/hydra.types';
+import {Trans} from '../../../_custom/components/Trans';
+import moment from 'moment';
 
 // const ReceiptProducts = ({item}: { item: Model<ModelEnum.Receipt> }) => {
 //   const {collection} = useCollectionQuery({
@@ -97,7 +100,7 @@ import {Button} from '../../../_custom/components/Button';
 const PurchaseOrdersField = ({name}: FieldProps) => {
   const {values, setFieldValue} = useFormikContext<Model<ModelEnum.Receipt>>();
   const {vendor, purchaseOrders} = values;
-  const {collection: desiredProducts} = useCollectionQuery<ModelEnum.DesiredProduct>({
+  const {isLoading, refetch} = useCollectionQuery<ModelEnum.DesiredProduct>({
     modelName: ModelEnum.DesiredProduct,
     params: {
       filter: {
@@ -105,27 +108,18 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
         operator: PropertyFilterOperator.In,
         value: purchaseOrders
       }
-    }
+    },
+    options: {enabled: false}
   });
 
-  useEffect(() => {
-    const receiptProducts: Array<Partial<ReceiptProductModel>> = desiredProducts.map(desiredProduct => ({
-      quantity: 0,
-      note: '',
-      desiredProduct,
-      desiredProductQuantity: desiredProduct.quantity
-    }));
-    setFieldValue('receiptProducts', receiptProducts);
-  }, [desiredProducts]);
-
   return (
-    <div className='d-flex'>
+    <div className='d-flex gap-3'>
       <div className='flex-grow-1'>
         <ModelAutocompleteField
           size='sm'
           modelName={ModelEnum.PurchaseOrder}
           multiple
-          // disabled={!vendor}
+          disabled={!vendor}
           name={name}
           getParams={filter => {
             const newFilter: CompoundFilter<ModelEnum.PurchaseOrder> = {
@@ -144,12 +138,29 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
           }}
         />
       </div>
-      <Button
-        size='sm'
-        variant='primary'
-      >
-        Afficher
-      </Button>
+      <div>
+        <Button
+          size='sm'
+          variant='primary'
+          loading={isLoading}
+          loadingLabel='SHOW'
+          onClick={() => {
+            refetch().then(r => {
+              const desiredProducts = r.data?.data['hydra:member'] as Array<HydraItem<ModelEnum.DesiredProduct>>
+              const receiptProducts: Array<Partial<ReceiptProductModel>> = desiredProducts.map(desiredProduct => ({
+                quantity: desiredProduct.quantity,
+                note: '',
+                desiredProductQuantity: desiredProduct.quantity,
+                desiredProduct,
+              }));
+              setFieldValue('receiptProducts', receiptProducts);
+            });
+
+          }}
+        >
+          <Trans id='SHOW' />
+        </Button>
+      </div>
     </div>
   );
 };
@@ -167,7 +178,7 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     },
     receivedAt: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Datetime
+      format: StringFormat.Date
     },
     externalRef: {
       type: ColumnTypeEnum.String
@@ -183,7 +194,8 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
       type: ModelEnum.ReceiptProduct,
       multiple: true,
       embeddedForm: true,
-      disableInsert: true
+      disableInsert: true,
+      min: 1
     }
   },
   views: [
@@ -195,19 +207,37 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     },
     {
       type: ViewEnum.Create,
+      slotProps: {
+        item: {
+          sm: 6
+        }
+      },
       fields: {
         externalRef: true,
-        receivedAt: true,
+        receivedAt: {
+          defaultValue: moment().format()
+        },
         vendor: {
-          render: ({fieldProps}) => (
+          slotProps: {
+            root: {
+              sm: 3
+            }
+          },
+          render: ({fieldProps, item}) => (
             <ModelAutocompleteField
               size='sm'
               modelName={ModelEnum.Vendor}
               {...fieldProps}
+              disabled={item.purchaseOrders.length > 0}
             />
           )
         },
         purchaseOrders: {
+          slotProps: {
+            root: {
+              sm: 9
+            }
+          },
           render: ({fieldProps}) => <PurchaseOrdersField {...fieldProps}/>
         },
         receiptProducts: {
@@ -216,18 +246,15 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
               sm: 12
             }
           },
-          display: ({item}) => item.purchaseOrders.length > 0,
-          render: ({item, fieldProps}) => {
-
-            return (
-              <NestedArrayField
-                modelName={ModelEnum.ReceiptProduct}
-                disableInsert
-                disableDelete
-                {...fieldProps}
-              />
-            );
-          }
+          // display: ({item}) => item.purchaseOrders.length > 0,
+          render: ({item, fieldProps}) => (
+            <NestedArrayField
+              modelName={ModelEnum.ReceiptProduct}
+              disableInsert
+              disableDelete
+              {...fieldProps}
+            />
+          )
         }
       }
     }

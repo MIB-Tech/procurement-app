@@ -17,9 +17,10 @@ type I18nMessageKey =
   | ListingModeEnum
   | ViewEnum
   | QuantityStatusEnum
+  | 'VALIDATED'
+  | 'SHOW'
   | 'VALIDATION.PURCHASE_ORDER_PRODUCT.QUANTITY'
   | 'GENERATE'
-  | 'PURCHASE_ORDER_ATTACHMENTS'
   | 'GENERATE_PUSHASE_ORDER'
   | 'DELIVERY_STATUS'
   | 'MAD_BY_DEFAULT'

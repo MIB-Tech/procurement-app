@@ -32,7 +32,7 @@ export type ViewColumn<M extends ModelEnum> = {
   footer?: (props: { value?: any, collection: Array<HydraItem<M>> }) => ReactNode
 }
 export type TypeColum<M extends ModelEnum = any> =
-  NumberColumn
+  NumberColumn<M>
   | StringColumn
   | ModelColumn<M>
   | BooleanColumn
@@ -115,7 +115,6 @@ export enum MutationMode {
 }
 
 export type FormViewType<M extends ModelEnum> = {
-  mode?: MutationMode
   inlineForm?: boolean
   /** @deprecated */
   submittable?: DisplayCallback<M>

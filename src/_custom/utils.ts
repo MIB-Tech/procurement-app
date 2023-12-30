@@ -1,21 +1,14 @@
-import { plural } from 'pluralize';
-import { I18nMessageKey } from './i18n/I18nMessages';
-import {
-  ColumnDef,
-  ColumnMapping,
-  FormFields,
-  FormViewType,
-  Model,
-  ModelMapping,
-  ViewEnum
-} from './types/ModelMapping';
-import { array, bool, mixed, number, object, ObjectSchema, string, StringSchema } from 'yup';
-import { StringFormat } from './Column/String/StringColumn';
-import { MODEL_MAPPINGS } from '../app/modules';
-import { ColumnTypeEnum, ValidationSchemaDef, ValidationSchemaProps } from './types/types';
+import {plural} from 'pluralize';
+import {I18nMessageKey} from './i18n/I18nMessages';
+import {ColumnDef, ColumnMapping, FormFields, FormViewType, Model, ModelMapping, ViewEnum} from './types/ModelMapping';
+import {array, bool, mixed, number, object, ObjectSchema, string, StringSchema} from 'yup';
+import {StringFormat} from './Column/String/StringColumn';
+import {MODEL_MAPPINGS} from '../app/modules';
+import {ColumnTypeEnum, ValidationSchemaDef, ValidationSchemaProps} from './types/types';
 import 'yup-phone';
-import { ModelEnum } from '../app/modules/types';
-import { datetime, relation } from './yup';
+import {ModelEnum} from '../app/modules/types';
+import {datetime, relation} from './yup';
+import Reference from 'yup/lib/Reference';
 
 
 export const camelCaseToDash = (str: string) => str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
@@ -52,9 +45,15 @@ export const getValidationSchema = <M extends ModelEnum>({ columnDef, trans, fie
       switch (type) {
         case ColumnTypeEnum.Number:
           fieldSchema = number();
+          if (columnMapping.min) {
+            fieldSchema = fieldSchema.min(columnMapping.min as number | Reference<number>);
+          }
+          if (columnMapping.max) {
+            fieldSchema = fieldSchema.max(columnMapping.max as number | Reference<number>);
+          }
           break;
         case ColumnTypeEnum.String:
-          const { format, length, uppercase } = columnMapping;
+          const {format, length, uppercase} = columnMapping;
           switch (format) {
             case StringFormat.Email:
               fieldSchema = string().email();
@@ -128,13 +127,22 @@ export const getValidationSchema = <M extends ModelEnum>({ columnDef, trans, fie
             relationSchema = getValidationSchema({
               columnDef: embeddedModelMapping.columnDef as ValidationSchemaDef<M>,
               trans,
-              fields: embeddedFields
+              fields: embeddedFields,
             });
           }
           if ('multiple' in columnMapping) {
             required = false;
+            fieldSchema = array().of(relationSchema);
+            if (columnMapping.min) {
+              fieldSchema = fieldSchema.min(columnMapping.min);
+            }
+            if (columnMapping.max) {
+              fieldSchema = fieldSchema.max(columnMapping.max);
+            }
+          } else {
+            fieldSchema = relationSchema.nullable();
           }
-          fieldSchema = 'multiple' in columnMapping ? array().of(relationSchema) : relationSchema.nullable();
+
           break;
       }
     }

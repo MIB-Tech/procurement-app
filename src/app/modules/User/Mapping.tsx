@@ -5,6 +5,7 @@ import {CREATED_AT_COLUMN} from '../columns';
 import {ref, string} from 'yup';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import moment from 'moment';
 
 
 const mapping: ModelMapping<ModelEnum.User> = {
@@ -45,7 +46,13 @@ const mapping: ModelMapping<ModelEnum.User> = {
       title: 'PASSWORD_CONFIRM',
       schema: string().oneOf([ref('password'), null], 'VALIDATION.STRING.PASSWORD_CONFIRM')
     },
-    createdAt: CREATED_AT_COLUMN,
+    createdAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Datetime,
+      title: 'CREATE_TIME',
+      nullable: true,
+      min: moment().format()
+    },
     updatedAt: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Datetime,

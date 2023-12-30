@@ -153,7 +153,13 @@ const mapping: ModelMapping<ModelEnum.PurchaseNeed> = {
     recommendedVendors: {
       type: ColumnTypeEnum.Array
     },
-    createdAt: CREATED_AT_COLUMN,
+    createdAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Datetime,
+      title: 'CREATE_TIME',
+      nullable: true,
+      min: moment().format()
+    },
     isRegularized: {
       type: ColumnTypeEnum.Boolean,
       nullable: true

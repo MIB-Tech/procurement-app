@@ -1,6 +1,11 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import {CellContent} from '../../../_custom/ListingView/views/Table/BodyCell';
+import {QUANTITY_STATUS_COLUMN} from '../PurchaseOrderProduct/Mapping';
+import {BooleanField} from '../../../_custom/Column/Boolean/BooleanField';
+import React from 'react';
+import {QuantityStatusEnum} from '../PurchaseOrder/Model';
 
 
 const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
@@ -12,20 +17,26 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    quantity:{
-      type:ColumnTypeEnum.Number
+    quantity: {
+      type: ColumnTypeEnum.Number,
+      min: 0,
+      max: 'desiredProductQuantity'
     },
-    desiredProductQuantity:{
-      type:ColumnTypeEnum.Number
+    desiredProductQuantity: {
+      type: ColumnTypeEnum.Number,
+      title: 'ORDERED_QUANTITY'
     },
-    note:{
-      type:ColumnTypeEnum.String
+    note: {
+      type: ColumnTypeEnum.String
     },
-    receipt:{
-      type:ModelEnum.Receipt
+    validated: {
+      type: ColumnTypeEnum.Boolean
     },
-    desiredProduct:{
-      type:ModelEnum.DesiredProduct
+    receipt: {
+      type: ModelEnum.Receipt
+    },
+    desiredProduct: {
+      type: ModelEnum.DesiredProduct
     }
   },
   views: [
@@ -36,14 +47,32 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     {
       type: ViewEnum.Create,
       fields: {
+        designation: {
+          render: ({item}) => item.desiredProduct.designation
+        },
         desiredProductQuantity: {
-          render: ({item}) => {
-
-            return item.desiredProduct.quantity
-          }
+          render: ({item}) => item.desiredProduct.quantity
         },
         quantity: true,
         note: true,
+        status: {
+          render: ({item}) => {
+            return (
+              <CellContent
+                {...QUANTITY_STATUS_COLUMN}
+                value={item.desiredProduct.status}
+              />
+            );
+          }
+        },
+        validated: {
+          render: ({fieldProps, item}) => (
+            <BooleanField
+              {...fieldProps}
+              disabled={item.desiredProduct.status === QuantityStatusEnum.FullyReceived}
+            />
+          )
+        }
       }
     }
   ]

@@ -1,5 +1,5 @@
 import React, {useMemo, useRef, useState} from 'react';
-import {FieldProps} from '../../controls/fields';
+import {Field, FieldProps} from '../../controls/fields';
 import {ColumnMapping, CreateViewType, Model, UpdateViewType, ViewEnum} from '../../../types/ModelMapping';
 import {FieldArray, useField, useFormikContext} from 'formik';
 import {useMapping} from '../../../hooks/UseMapping';
@@ -109,7 +109,7 @@ const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}
   );
 };
 
-export const NestedArrayField = <M extends ModelEnum>({name, modelName, disableInsert, disableDelete, extraAttribute}: FieldProps & {
+export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, modelName, disableInsert, disableDelete, extraAttribute}: FieldProps & {
   modelName: M,
   disableInsert?: boolean
   disableDelete?: boolean
@@ -117,7 +117,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, modelName, disableI
 }) => {
   const {trans} = useTrans();
   const {values: {id}} = useFormikContext<AbstractModel>();
-  const [{value: items}, , {setValue}] = useField<Array<HydraItem<M>>>({name});
+  const [{value: baseItems}, , {setValue}] = useField<Array<HydraItem<M>>>({name});
   const {views, columnDef} = useMapping<M>({modelName});
   const view = useMemo<CreateViewType<M> | UpdateViewType<M>>(() => {
     if (id) {
@@ -140,167 +140,171 @@ export const NestedArrayField = <M extends ModelEnum>({name, modelName, disableI
     }
   });
   const rootColumnNames = columnNames.filter(columnName => !nestedColumnNames.some(nestedColumnName => columnName === nestedColumnName));
+  const items = useMemo(()=>[...baseItems].map((item, _index)=>({...item, _index })).reverse(), [baseItems])
 
   return (
-    <FieldArray name={name}>
-      {({remove, insert}) => (
-        <div className='table-responsive border border-2 rounded py-1 px-2 min-h-250px'>
-          <table className='table table-hover table-row-bordered table-row-dark g-1 mb-0 align-middle'>
-            <thead className='fs-7 text-gray-400 text-uppercase'>
-            <tr className='align-middle'>
-              <th>
-                {!disableInsert && (
-                  <div className='d-flex'>
-                    <input
-                      type='file'
-                      accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-                      style={{display: 'none'}} // Hide the file input
-                      ref={fileInputRef}
-                      onChange={event => {
-                        const file = event.target.files?.[0];
+    <Field name={name} feedbackLabel={feedbackLabel}>
+      <FieldArray name={name}>
+        {({remove, push}) => (
+          <div className='table-responsive border border-2 rounded py-1 px-2 min-h-250px'>
+            <table className='table table-hover table-row-bordered table-row-dark g-1 mb-0 align-middle'>
+              <thead className='fs-7 text-gray-400 text-uppercase'>
+              <tr className='align-middle'>
+                <th>
+                  {!disableInsert && (
+                    <div className='d-flex'>
+                      <input
+                        type='file'
+                        accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+                        style={{display: 'none'}} // Hide the file input
+                        ref={fileInputRef}
+                        onChange={event => {
+                          const file = event.target.files?.[0];
 
-                        if (file) {
-                          file.arrayBuffer().then(file => {
-                            const workbook = read(file/*, { dateNF: 'yyyy-mm-dd' }*/);
-                            const data = getData<M>({
-                              workbook,
-                              mapping: rootColumnNames.reduce(
-                                (previousValue, columnName) => ({
-                                  ...previousValue,
-                                  [columnName]: trans({id: stringToI18nMessageKey(columnName.toString())})
-                                }),
-                                {} as Record<keyof Model<M>, string>
-                              )
+                          if (file) {
+                            file.arrayBuffer().then(file => {
+                              const workbook = read(file/*, { dateNF: 'yyyy-mm-dd' }*/);
+                              const data = getData<M>({
+                                workbook,
+                                mapping: rootColumnNames.reduce(
+                                  (previousValue, columnName) => ({
+                                    ...previousValue,
+                                    [columnName]: trans({id: stringToI18nMessageKey(columnName.toString())})
+                                  }),
+                                  {} as Record<keyof Model<M>, string>
+                                )
+                              });
+                              // @ts-ignore
+                              setValue([...data, ...items]);
                             });
-                            // @ts-ignore
-                            setValue([...data, ...items]);
-                          });
-                        }
-                      }}
-                    />
-                    <IconButton
-                      path='/general/gen035.svg'
-                      variant='primary'
-                      size='2x'
-                      onClick={() => {
-                        insert(
-                          0,
-                          {...getInitialValues({columnDef, fields}), ...extraAttribute}
-                          );
-                      }}
-                    />
-                    <IconButton
-                      path='/files/fil010.svg'
-                      variant='primary'
-                      size='2x'
-                      onClick={() => {
-                        fileInputRef.current?.click();
-                      }}
-                    />
-                  </div>
-                )}
-              </th>
-              {rootColumnNames.map(columnName => (
-                <th key={columnName.toString()}>
-                  <TitleContent
-                    columnName={columnName}
-                    {...columnDef[columnName]}
-                  />
-                </th>
-              ))}
-            </tr>
-            </thead>
-            <tbody>
-            {[...items].reverse().map((item, itemIndex) => (
-              <tr key={itemIndex}>
-                <td className='align-middle'>
-                  <div className='d-flex align-items-center'>
-                    <div className='badge badge-secondary badge-square rounded'>
-                      #{itemIndex + 1}
-                    </div>
-                    {!disableDelete && (
+                          }
+                        }}
+                      />
                       <IconButton
-                        path='/general/gen034.svg'
-                        variant='danger'
+                        path='/general/gen035.svg'
+                        variant='primary'
                         size='2x'
-                        onClick={() => remove(itemIndex)}
+                        onClick={() => {
+                          push({...getInitialValues({columnDef, fields}), ...extraAttribute});
+                        }}
                       />
-                    )}
-                    {nestedColumnNames.length > 0 && (
-                      <NestedColumnsButton
-                        name={name}
-                        modelName={modelName}
-                        item={item}
-                        index={itemIndex}
+                      <IconButton
+                        path='/files/fil010.svg'
+                        variant='primary'
+                        size='2x'
+                        onClick={() => {
+                          fileInputRef.current?.click();
+                        }}
                       />
-                    )}
-                  </div>
-                </td>
-
-                {rootColumnNames.map(columnName => {
-                  const field = fields[columnName];
-                  const render = typeof field === 'object' && field?.render;
-
-                  const nestedName = `${name}.${itemIndex}.${columnName.toString()}`;
-                  const fieldProps = {
-                    name: nestedName,
-                    className: 'border-1'
-                  };
-
-                  return (
-                    <td key={nestedName} className={clsx(!render && '-align-top')}>
-                      {render ?
-                        render({item, fieldProps}) :
-                        <ValueField
-                          {...fieldProps}
-                          column={columnDef[columnName]}
-                          size='sm'
-                          hideAdornment
-                        />
-                      }
-                    </td>
-                  );
-                })}
+                    </div>
+                  )}
+                </th>
+                {rootColumnNames.map(columnName => (
+                  <th key={columnName.toString()}>
+                    <TitleContent
+                      columnName={columnName}
+                      {...columnDef[columnName]}
+                    />
+                  </th>
+                ))}
               </tr>
-            ))}
-            </tbody>
-            <tfoot>
-            <tr className='fs-7 text-gray-400 text-uppercase'>
-              <td/>
-              {rootColumnNames.map(columnName => {
-                const columnMapping = columnDef[columnName];
-                if (!columnMapping) return false;
-                let value: any = '';
-                switch (columnMapping.type) {
-                  case ColumnTypeEnum.Number:
-                    value = items.reduce(
-                      (count, currentValue) => {
-                        const _value = currentValue[columnName];
-                        if (typeof _value !== 'number') {
-                          return count;
-                        }
-
-                        return count + _value;
-                      }, 0);
-                    break;
-                }
-
+              </thead>
+              <tbody>
+              {items.map((item, itemIndex) => {
                 return (
-                  <td key={columnName.toString()} className='text-truncate text-uppercase'>
-                    {columnMapping.footer?.({value, collection: items}) || (
-                      <CellContent
-                        value={value}
-                        {...columnMapping}
-                      />
-                    )}
-                  </td>
+                  <tr key={item._index}>
+                    <td className='align-middle'>
+                      <div className='d-flex align-items-center'>
+                        <div className='badge badge-secondary badge-square rounded'>
+                          #{itemIndex + 1}
+                        </div>
+                        {!disableDelete && (
+                          <IconButton
+                            path='/general/gen034.svg'
+                            variant='danger'
+                            size='2x'
+                            onClick={() => remove(item._index)}
+                          />
+                        )}
+                        {nestedColumnNames.length > 0 && (
+                          <NestedColumnsButton
+                            name={name}
+                            modelName={modelName}
+                            item={item}
+                            index={itemIndex}
+                          />
+                        )}
+                      </div>
+                    </td>
+
+                    {rootColumnNames.map(columnName => {
+                      const field = fields[columnName];
+                      const render = typeof field === 'object' && field?.render;
+
+                      const nestedName = `${name}.${item._index}.${columnName.toString()}`;
+                      const fieldProps = {
+                        name: nestedName,
+                        className: 'border-1'
+                      };
+
+                      return (
+                        <td key={nestedName} className={clsx(!render && '-align-top')}>
+                          {render ?
+                            render({item, fieldProps}) :
+                            <ValueField
+                              {...fieldProps}
+                              column={columnDef[columnName]}
+                              size='sm'
+                              hideAdornment
+                            />
+                          }
+                        </td>
+                      );
+                    })}
+                  </tr>
                 );
               })}
-            </tr>
-            </tfoot>
-          </table>
-        </div>
-      )}
-    </FieldArray>
+              </tbody>
+              <tfoot>
+              {items.length > 0 && (
+                <tr className='fs-7 text-gray-400 text-uppercase'>
+                  <td/>
+                  {rootColumnNames.map(columnName => {
+                    const columnMapping = columnDef[columnName];
+                    if (!columnMapping) return false;
+                    let value: any = '';
+                    switch (columnMapping.type) {
+                      case ColumnTypeEnum.Number:
+                        value = items.reduce(
+                          (count, currentValue) => {
+                            const _value = currentValue[columnName];
+                            if (typeof _value !== 'number') {
+                              return count;
+                            }
+
+                            return count + _value;
+                          }, 0);
+                        break;
+                    }
+
+                    return (
+                      <td key={columnName.toString()} className='text-truncate text-uppercase'>
+                        {columnMapping.footer?.({value, collection: items}) || (
+                          <CellContent
+                            value={value}
+                            {...columnMapping}
+                          />
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              )}
+              </tfoot>
+            </table>
+          </div>
+        )}
+      </FieldArray>
+    </Field>
   )
 };
