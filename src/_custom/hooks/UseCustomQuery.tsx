@@ -12,7 +12,7 @@ export const useCustomQuery = <M extends ModelEnum>({ modelName, url, enabled }:
   const { itemNotFoundError } = useToastr();
   const uri = useUri({ modelName });
   const queryKey = getRoutePrefix(modelName);
-  const queryFn = () => axios.get<HydraItem<M>>(url || `${uri}/update`);
+  const queryFn = () => axios.get<HydraItem<M>>(url || `/update${uri}`);
   const query = useQuery(
     queryKey,
     queryFn,
