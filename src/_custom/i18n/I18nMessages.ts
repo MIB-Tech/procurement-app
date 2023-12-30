@@ -443,6 +443,8 @@ type I18nMessageKey =
   | 'SUB_PRODUCTS'
   | 'BUDGET_AMOUNT'
   | 'COMPONENTS'
+  | 'PAYMENT_MODALITY'
+  | 'PURCHASE_ORDER_ALLOWED'
 
 
 type I18nLanguage = Record<I18nMessageKey, string>
