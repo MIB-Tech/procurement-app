@@ -45,10 +45,11 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
   });
 
   const { pathname } = useLocation();
-  const url = pathname.split('/').slice(0, 3).join('/') + '/update';
+  console.log(pathname)
+  // const url = '/update' + pathname.split('/').slice(0, 3).join('/');
   const query = useCustomQuery({
     modelName,
-    url,
+    // url,
     enabled: view.type === ViewEnum.Update
   });
 
