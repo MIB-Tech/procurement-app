@@ -1,4 +1,4 @@
-import React, {HTMLAttributes, useMemo} from 'react';
+import React, {Fragment, HTMLAttributes, useMemo} from 'react';
 import {useMapping} from '../hooks/UseMapping';
 import {ItemView} from '../components/ItemView';
 import {Skeleton} from '@mui/material';
@@ -24,6 +24,7 @@ import {Help} from '../components/Help';
 import {ModelCellSkeleton} from '../ListingView/views/Table/ModelCell';
 import {isLocationColumn} from '../ListingView/ListingView.utils';
 import {useCurrentOperation} from '../../_metronic/layout/components/header/page-title/DefaultTitle';
+import {Button} from '../components/Button';
 
 export const DEFAULT_DETAIL_VIEW: DetailViewType<any> = {
   type: ViewEnum.Detail
@@ -40,7 +41,7 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {modelN
   });
 
   const view = (views?.find(view => view.type === ViewEnum.Detail) || DEFAULT_DETAIL_VIEW) as DetailViewType<M>;
-  const {itemOperationRoutes} = view;
+  const {itemOperationRoutes, customActions} = view;
   const _operations = useMemo(() => {
     if (!item) {
       return [];
@@ -105,13 +106,20 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {modelN
                   </a>
                 </Help>
               </div>
-              {uid && (
-                <RouteLinks
-                  operations={_operations}
-                  params={{id: uid}}
-                  // useContextualTitle
-                />
-              )}
+              <div className='d-flex gap-3'>
+                {item && customActions?.map(({render}, index) => (
+                  <Fragment key={index}>
+                    {render({item})}
+                  </Fragment>
+                ))}
+                {uid && (
+                  <RouteLinks
+                    operations={_operations}
+                    params={{id: uid}}
+                    // useContextualTitle
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

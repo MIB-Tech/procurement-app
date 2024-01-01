@@ -6,6 +6,13 @@ import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField';
 import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum} from './Model';
 import moment from 'moment/moment';
+import {HydraItem} from '../../../_custom/types/hydra.types';
+import {Link} from 'react-router-dom';
+import {Trans, useTrans} from '../../../_custom/components/Trans';
+import {RouteLinks} from '../../../_custom/components/RouteAction/RouteLinks';
+import React, {FC} from 'react';
+import {useAuth} from '../../../_custom/hooks/UseAuth';
+import {ReceiptModel} from '../Receipt';
 
 const formFields:FormFields<ModelEnum.PurchaseOrder> = {
   vendor: true,
@@ -46,6 +53,27 @@ const formFields:FormFields<ModelEnum.PurchaseOrder> = {
     display: ({item})=> typeof item.taxIncluded === 'boolean'
   }
 }
+
+const GenerateReceiptButton:FC<{ item: HydraItem<ModelEnum.PurchaseOrder> }> = ({item}) => {
+  const {trans} = useTrans();
+  const {operations} = useAuth();
+  const createOperation = operations.find(({resource, operationType}) => {
+    return resource.name === ModelEnum.Receipt && operationType === ViewEnum.Create
+  })
+  if (!createOperation) {
+    return <></>
+  }
+
+  const state:Partial<ReceiptModel> = {
+    purchaseOrders: [item]
+  }
+  return (
+    <RouteLinks
+      operations={[{...createOperation, title: trans({id: 'GENERATE_RECEIPT'})}]}
+      linkProps={{state}}
+    />
+  )
+};
 
 const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
   modelName: ModelEnum.PurchaseOrder,
@@ -173,18 +201,18 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Detail,
-      itemOperationRoutes: ({operations, item}) => {
-
-        return operations.filter(({operationType}) => {
-          switch (operationType) {
-            case ViewEnum.Update:
-            case ViewEnum.Delete:
-              return item.status === QuantityStatusEnum.Unreceived;
-            default:
-              return true;
-          }
-        })
-      },
+      customActions: [
+        {render: ({item}) => <GenerateReceiptButton item={item}/>}
+      ],
+      itemOperationRoutes: ({operations, item}) => operations.filter(({operationType}) => {
+        switch (operationType) {
+          case ViewEnum.Update:
+          case ViewEnum.Delete:
+            return item.status === QuantityStatusEnum.Unreceived;
+          default:
+            return true;
+        }
+      })
     },
     {
       type: ViewEnum.Create,

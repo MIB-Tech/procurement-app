@@ -9,7 +9,7 @@ export const fr: I18nLanguage = {
   'VALIDATION.PURCHASE_ORDER_PRODUCT.QUANTITY': 'Doit être égale à la somme des quantités livrées',
   'VALIDATION.RECEIPT.RECEIPT_PRODUCTS': 'Au moins 1 doit être valide',
   GENERATE: 'Génerer',
-  GENERATE_PUSHASE_ORDER: 'Génerer bon de reception',
+  GENERATE_RECEIPT: 'Génerer un BR',
   PURCHASE_ORDER_ATTACHMENTS: 'Attachments',
   DELIVERY_STATUS: 'Statut livr.',
   FULLY_RECEIVED: 'Livré',

@@ -120,7 +120,7 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
           size='sm'
           modelName={ModelEnum.PurchaseOrder}
           multiple
-          disabled={!vendor}
+          disabled={!vendor && purchaseOrders.length === 0}
           name={name}
           getParams={filter => {
             const newFilter: CompoundFilter<ModelEnum.PurchaseOrder> = {

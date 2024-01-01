@@ -30,7 +30,7 @@ export const PrintButton: FC<{selectedItems: Array<HydraItem<ModelEnum.PurchaseO
           disabled={selectedItems.length === 0}
           onClick={() => setOpen(true)}
         >
-          <Trans id='GENERATE_PUSHASE_ORDER'/>
+          <Trans id='GENERATE_RECEIPT'/>
         </Button>
         {selectedItems.length > 0 && (
           <div
@@ -51,7 +51,7 @@ export const PrintButton: FC<{selectedItems: Array<HydraItem<ModelEnum.PurchaseO
         >
           <Modal.Header>
             <Modal.Title>
-              <Trans id='GENERATE_PUSHASE_ORDER'/>
+              <Trans id='GENERATE_RECEIPT'/>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className='scroll-y max-h-600px'>

@@ -87,10 +87,14 @@ export type DetailColumns<M extends ModelEnum> = Partial<Record<keyof Model<M> |
   grantedRoles?: RoleKeyEnum[]
   render?: (props: { item: Model<M> }) => ReactNode
 }>>
+export type CustomItemAction<M extends ModelEnum> = {
+  render: (props: {item: HydraItem<M>}) => ReactNode
+}
 export type DetailViewType<M extends ModelEnum> = {
   type: ViewEnum.Detail
   itemOperationRoutes?: ItemOperationCallback<M>
   columns?: DetailColumns<M>
+  customActions?: Array<CustomItemAction<M>>
 }
 /** @deprecated */
 export type ImportViewType<M extends ModelEnum> = {
