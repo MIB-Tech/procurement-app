@@ -1,47 +1,131 @@
-import React, { useMemo } from 'react';
-import { useMapping } from '../hooks/UseMapping';
-import { ItemView } from '../components/ItemView';
-import { Skeleton } from '@mui/material';
-import { Trans } from '../components/Trans';
+import React, {HTMLAttributes, useMemo} from 'react';
+import {useMapping} from '../hooks/UseMapping';
+import {ItemView} from '../components/ItemView';
+import {Skeleton} from '@mui/material';
+import {Trans} from '../components/Trans';
 import clsx from 'clsx';
-import {
-  ColumnDef,
-  ColumnMapping,
-  CreateViewType,
-  DetailColumns,
-  DetailViewType,
-  Model,
-  ViewEnum
-} from '../types/ModelMapping';
-import { TitleContent } from '../ListingView/views/Table/HeaderCell';
-import { ListingView } from '../ListingView/ListingView';
-import { Link, useParams } from 'react-router-dom';
-import { DetailViewColumnContent } from './DetailViewColumnContent';
-import { useAuth } from '../hooks/UseAuth';
-import { camelCaseToDash } from '../utils';
-import { StringFormat } from '../Column/String/StringColumn';
-import { RouteLinks } from '../components/RouteAction/RouteLinks';
-import { useProperty } from '../hooks/UseProperty';
-import { useItemQuery } from '../hooks/UseItemQuery';
-import { useUri } from '../hooks/UseUri';
-import { ColumnTypeEnum } from '../types/types';
-import { ModelEnum } from '../../app/modules/types';
-import { SVG } from '../components/SVG/SVG';
-import { IconButton } from '../components/Button/IconButton';
-import { Help } from '../components/Help';
-import { ModelCellSkeleton } from '../ListingView/views/Table/ModelCell';
-import { isLocationColumn } from '../ListingView/ListingView.utils';
+import {ColumnDef, ColumnMapping, DetailColumns, DetailViewType, Model, ViewEnum} from '../types/ModelMapping';
+import {TitleContent} from '../ListingView/views/Table/HeaderCell';
+import {ListingView} from '../ListingView/ListingView';
+import {Link, useParams} from 'react-router-dom';
+import {DetailViewColumnContent} from './DetailViewColumnContent';
+import {useAuth} from '../hooks/UseAuth';
+import {camelCaseToDash} from '../utils';
+import {StringFormat} from '../Column/String/StringColumn';
+import {RouteLinks} from '../components/RouteAction/RouteLinks';
+import {useProperty} from '../hooks/UseProperty';
+import {useItemQuery} from '../hooks/UseItemQuery';
+import {useUri} from '../hooks/UseUri';
+import {ColumnTypeEnum} from '../types/types';
+import {ModelEnum} from '../../app/modules/types';
+import {SVG} from '../components/SVG/SVG';
+import {IconButton} from '../components/Button/IconButton';
+import {Help} from '../components/Help';
+import {ModelCellSkeleton} from '../ListingView/views/Table/ModelCell';
+import {isLocationColumn} from '../ListingView/ListingView.utils';
+import {useCurrentOperation} from '../../_metronic/layout/components/header/page-title/DefaultTitle';
 
 export const DEFAULT_DETAIL_VIEW: DetailViewType<any> = {
   type: ViewEnum.Detail
 };
 
-export const DetailView = <M extends ModelEnum>({ modelName }: { modelName: M }) => {
-  const { columnDef, views } = useMapping<M>({ modelName });
-  const { isGranted, operations, location,  } = useAuth();
+export const ItemOverview = <M extends ModelEnum>({modelName, children}: {modelName: M} & HTMLAttributes<HTMLDivElement>) => {
+  const {views} = useMapping<M>({modelName});
+  const { id:uid } = useParams<{ id: string }>();
+  const {operations} = useAuth();
+  const currentOperation = useCurrentOperation();
+  const {item, isLoading} = useItemQuery<M>({
+    modelName,
+    // enabled: isOverview || (typeof column !== 'boolean' && column?.as === 'TAB')
+  });
+
   const view = (views?.find(view => view.type === ViewEnum.Detail) || DEFAULT_DETAIL_VIEW) as DetailViewType<M>;
-  const { itemOperationRoutes } = view;
-  const { property } = useProperty<M>();
+  const {itemOperationRoutes} = view;
+  const _operations = useMemo(() => {
+    if (!item) {
+      return [];
+    }
+
+    const itemOperations = operations.filter(({ resource, operationType }) => {
+      if (resource.name !== modelName) return false
+
+      return currentOperation?.operationType &&
+        [ViewEnum.Listing, ViewEnum.Update, ViewEnum.Delete, ViewEnum.Detail]
+          .filter(viewEnum => viewEnum !== currentOperation.operationType)
+          .includes(operationType)
+    });
+
+    return itemOperationRoutes?.({ item, operations: itemOperations }) || itemOperations;
+  }, [item]);
+
+  return (
+    <div className='card mb-3'>
+      <div className={clsx('card-body', children && 'pb-0')}>
+        <div className={clsx('d-flex flex-wrap flex-xs-nowrap', children && 'mb-5')}>
+          {isLoading && (
+            <ModelCellSkeleton
+              iconSize={75}
+              titleHeight={26}
+              subTitleHeight={25}
+            />
+          )}
+          {item?.['@icon'] && (
+            <div className='symbol symbol-75px me-3'>
+              <div className='symbol-label bg-light-primary'>
+                <SVG path={item['@icon']} size='5x' variant='primary'/>
+              </div>
+            </div>
+          )}
+          <div className='flex-grow-1'>
+            <div className='d-flex justify-content-between align-items-start flex-wrap gap-3'>
+              <div className='d-flex flex-column'>
+                <div className='d-flex align-items-center'>
+                  <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bold me-3'>
+                    {item?.['@title']}
+                  </a>
+                </div>
+                <div className='d-flex flex-wrap fw-semibold fs-5 text-gray-500'>
+                  {uid !== item?.['@subTitle'] && item?.['@subTitle']}
+                </div>
+                <Help overlay='Copier' placement='right' className='mt-1 d-flex'>
+                  <a
+                    href='#'
+                    className='d-flex align-items-center bg-gray-200 rounded ps-2 text-muted text-hover-primary'
+                    onClick={e => {
+                      e.preventDefault();
+                      if (uid) {
+                        navigator.clipboard.writeText(uid);
+                      }
+                    }}
+                  >
+                    <small className='fw-bold fs-8'>
+                      {uid}
+                    </small>
+                    <IconButton path='/general/gen054.svg' size='2'/>
+                  </a>
+                </Help>
+              </div>
+              {uid && (
+                <RouteLinks
+                  operations={_operations}
+                  params={{id: uid}}
+                  // useContextualTitle
+                />
+              )}
+            </div>
+          </div>
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+export const DetailView = <M extends ModelEnum>({modelName}: { modelName: M }) => {
+  const {columnDef, views} = useMapping<M>({modelName});
+  const {isGranted, location,} = useAuth();
+  const view = (views?.find(view => view.type === ViewEnum.Detail) || DEFAULT_DETAIL_VIEW) as DetailViewType<M>;
+  const {property} = useProperty<M>();
   const isOverview = !property || property.toString().includes('_');
 
   const columns = view.columns ?
@@ -66,7 +150,6 @@ export const DetailView = <M extends ModelEnum>({ modelName }: { modelName: M })
     );
 
   const column = property && columns[property];
-  const { id:uid } = useParams<{ id: string }>();
   const uri = useUri({ modelName });
   const { item, isLoading } = useItemQuery<M>({
     modelName,
@@ -119,114 +202,47 @@ export const DetailView = <M extends ModelEnum>({ modelName }: { modelName: M })
   const overviewColumnNames = columnNames.filter(columnName => {
     return !embeddedColumnNames.includes(columnName) && !emptyColumnNames.includes(columnName);
   });
-  const _operations = useMemo(() => {
-    if (!item) {
-      return [];
-    }
-
-    const itemOperations = operations.filter(({ resource, operationType }) => {
-      return resource.name === modelName && [ViewEnum.Update, ViewEnum.Delete].includes(operationType)
-    });
-
-    return itemOperationRoutes?.({ item, operations: itemOperations }) || itemOperations;
-  }, [item]);
 
   const embeddedModelNameType = property && columnDef[property]?.type;
 
   return (
     <div>
-      <div className='card mb-5'>
-        <div className='card-body pb-0'>
-          <div className='d-flex flex-wrap flex-xs-nowrap mb-5'>
-            {isLoading && (
-              <ModelCellSkeleton
-                iconSize={75}
-                titleHeight={26}
-                subTitleHeight={25}
-              />
-            )}
-            {item?.['@icon'] && (
-              <div className='symbol symbol-75px me-3'>
-                <div className='symbol-label bg-light-primary'>
-                  <SVG path={item['@icon']} size='5x' variant='primary' />
-                </div>
-              </div>
-            )}
-            <div className='flex-grow-1'>
-              <div className='d-flex justify-content-between align-items-start flex-wrap mb-2 gap-3'>
-                <div className='d-flex flex-column'>
-                  <div className='d-flex align-items-center'>
-                    <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bold me-3'>
-                      {item?.['@title']}
-                    </a>
-                  </div>
-                  <div className='d-flex flex-wrap fw-semibold fs-5 text-gray-500'>
-                    {uid !== item?.['@subTitle'] && item?.['@subTitle']}
-                  </div>
-                  <Help overlay='Copier' placement='right' className='mt-3 d-flex'>
-                    <a
-                      href='#'
-                      className='d-flex align-items-center bg-gray-200 rounded ps-2 text-muted text-hover-primary'
-                      onClick={e => {
-                        e.preventDefault();
-                        if (uid) {
-                          navigator.clipboard.writeText(uid);
-                        }
-                      }}
-                    >
-                      <small className='fw-bold fs-8'>
-                        {uid}
-                      </small>
-                      <IconButton path='/general/gen054.svg' size='2' />
-                    </a>
-                  </Help>
-                </div>
-                {uid && (
-                  <RouteLinks
-                    operations={_operations}
-                    params={{ id: uid }}
-                    useContextualTitle
-                  />
-                )}
-              </div>
-            </div>
-          </div>
-          <div className='separator' />
-          <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold'>
-            <li className='nav-item'>
-              <Link
-                to={uri}
-                relative={isOverview ? 'route' : 'path'}
-                className={clsx(
-                  'nav-link text-active-primary py-2 me-3',
-                  isOverview && 'active'
-                )}
-              >
-                <Trans id='OVERVIEW' />
-              </Link>
-            </li>
+      <ItemOverview modelName={modelName}>
+        <div className='separator' />
+        <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold'>
+          <li className='nav-item'>
+            <Link
+              to={uri}
+              relative={isOverview ? 'route' : 'path'}
+              className={clsx(
+                'nav-link text-active-primary py-2 me-3',
+                isOverview && 'active'
+              )}
+            >
+              <Trans id='OVERVIEW' />
+            </Link>
+          </li>
 
-            {!isLoading && embeddedColumnNames.map(columnName => {
-              const to = camelCaseToDash(columnName.toString());
-              const def = columnDef[columnName] as ColumnMapping<M> | undefined;
+          {!isLoading && embeddedColumnNames.map(columnName => {
+            const to = camelCaseToDash(columnName.toString());
+            const def = columnDef[columnName] as ColumnMapping<M> | undefined;
 
-              return (
-                <li key={to} className='nav-item'>
-                  <Link
-                    to={to}
-                    className={clsx(
-                      'nav-link text-active-primary py-3',
-                      property === columnName && 'active'
-                    )}
-                  >
-                    <TitleContent columnName={columnName.toString()} title={def?.title} />
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      </div>
+            return (
+              <li key={to} className='nav-item'>
+                <Link
+                  to={to}
+                  className={clsx(
+                    'nav-link text-active-primary py-3',
+                    property === columnName && 'active'
+                  )}
+                >
+                  <TitleContent columnName={columnName.toString()} title={def?.title} />
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </ItemOverview>
       <div className=''>
         {isOverview && (
           <div className='d-flex flex-column gap-3'>

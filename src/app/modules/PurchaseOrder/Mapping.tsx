@@ -4,10 +4,8 @@ import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField';
-import {QUANTITY_STATUS_OPTIONS} from './Model';
-import {InputField} from '../../../_custom/Column/String/InputField';
+import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum} from './Model';
 import moment from 'moment/moment';
-import {array} from 'yup';
 
 const formFields:FormFields<ModelEnum.PurchaseOrder> = {
   vendor: true,
@@ -132,6 +130,15 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
   views: [
     {
       type: ViewEnum.Listing,
+      itemOperationRoutes: ({operations, item}) => operations.filter(({operationType}) => {
+        switch (operationType) {
+          case ViewEnum.Update:
+          case ViewEnum.Delete:
+            return item.status === QuantityStatusEnum.Unreceived;
+          default:
+            return true;
+        }
+      }),
       filterColumns: {
         orderNumber: true,
         ref: true,
@@ -165,6 +172,21 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       }
     },
     {
+      type: ViewEnum.Detail,
+      itemOperationRoutes: ({operations, item}) => {
+
+        return operations.filter(({operationType}) => {
+          switch (operationType) {
+            case ViewEnum.Update:
+            case ViewEnum.Delete:
+              return item.status === QuantityStatusEnum.Unreceived;
+            default:
+              return true;
+          }
+        })
+      },
+    },
+    {
       type: ViewEnum.Create,
       slotProps: {
         item: {
@@ -177,6 +199,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Update,
+      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived,
       slotProps: {
         item: {
           sm: 4,
@@ -184,12 +207,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         }
       },
-      fields: {
-        orderNumber: {
-          render: ({fieldProps}) => <InputField {...fieldProps} size='sm' disabled/>
-        },
-        ...formFields
-      }
+      fields: formFields
     }
   ]
 };

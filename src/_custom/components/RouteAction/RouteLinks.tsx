@@ -31,6 +31,9 @@ export const RouteLinks: FC<ActionDropdownProps & {
         switch (operationType) {
           case ViewEnum.Delete:
             variant = 'light-danger'
+            break
+          case ViewEnum.Update:
+            variant = 'light-primary'
             break;
         }
 
