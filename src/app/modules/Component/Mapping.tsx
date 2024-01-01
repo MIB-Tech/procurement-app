@@ -35,20 +35,29 @@ const mapping: ModelMapping<ModelEnum.Component> = {
       }
     },
     {
-      type: ViewEnum.Detail,
-      columns: {
-        product: true,
-        price: true,
-      }
-    },
-    {
       type: ViewEnum.Create,
       fields: {
         parentProduct: true,
         price: true,
         quantity: true,
       }
-    }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        parentProduct: true,
+        price: true,
+        quantity: true,
+      }
+    },
+    {
+      type: ViewEnum.Detail,
+      columns: {
+        product: true,
+        price: true,
+      }
+    },
+
   ]
 };
 

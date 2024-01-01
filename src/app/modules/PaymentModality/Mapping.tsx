@@ -28,7 +28,7 @@ const mapping: ModelMapping<ModelEnum.PaymentModality> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        name: true
+        // name: true
       }
     },
     {
