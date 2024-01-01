@@ -1,7 +1,7 @@
 import {plural} from 'pluralize';
 import {I18nMessageKey} from './i18n/I18nMessages';
 import {ColumnDef, ColumnMapping, FormFields, FormViewType, Model, ModelMapping, ViewEnum} from './types/ModelMapping';
-import {array, bool, mixed, number, object, ObjectSchema, string, StringSchema} from 'yup';
+import {array, bool, mixed, number, object, ObjectSchema, ref, string, StringSchema} from 'yup';
 import {StringFormat} from './Column/String/StringColumn';
 import {MODEL_MAPPINGS} from '../app/modules';
 import {ColumnTypeEnum, ValidationSchemaDef, ValidationSchemaProps} from './types/types';
@@ -21,16 +21,19 @@ export const stringToI18nMessageKey = (str: string) => {
 };
 export const camelCaseToPascalCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 export const pascalCaseToCamelCase = (str: string) => str.charAt(0).toLowerCase() + str.slice(1);
-export const getValidationSchema = <M extends ModelEnum>({ columnDef, trans, fields }: ValidationSchemaProps<M>) => {
+const getReference = (value: string | number) => {
+  return typeof value === 'number' ? value : ref(value) as Reference<number>;
+};
+export const getValidationSchema = <M extends ModelEnum>({columnDef, trans, fields}: ValidationSchemaProps<M>) => {
   let objectSchema: Record<any, any> = {};
 
   (Object.keys(fields) as Array<keyof Model<M> | string>)
-  .filter(columnName => {
-    if (!(columnName in columnDef)) {
-      return false
-    }
-    // @ts-ignore
-    return columnName !== 'id' || columnDef[columnName];
+    .filter(columnName => {
+      if (!(columnName in columnDef)) {
+        return false;
+      }
+      // @ts-ignore
+      return columnName !== 'id' || columnDef[columnName];
   })
   .forEach(columnName => {
     const columnMapping = columnDef[columnName] as ColumnMapping<M>;
@@ -39,18 +42,23 @@ export const getValidationSchema = <M extends ModelEnum>({ columnDef, trans, fie
 
     let fieldSchema;
 
-    if (schema) {
+    if (typeof schema === 'object') {
       fieldSchema = schema;
     } else {
       switch (type) {
         case ColumnTypeEnum.Number:
           fieldSchema = number();
-          if (columnMapping.min) {
-            fieldSchema = fieldSchema.min(columnMapping.min as number | Reference<number>);
+          const {validation} = columnMapping
+          if (validation) {
+            const {min, max, lessThan, moreThan, positive, negative} = validation
+            if (min) fieldSchema = fieldSchema.min(getReference(min.toString()));
+            if (max) fieldSchema = fieldSchema.max(getReference(max.toString()));
+            if (lessThan) fieldSchema = fieldSchema.lessThan(getReference(lessThan.toString()));
+            if (moreThan) fieldSchema = fieldSchema.lessThan(getReference(moreThan.toString()));
+            if (positive) fieldSchema = fieldSchema.positive();
+            if (negative) fieldSchema = fieldSchema.negative();
           }
-          if (columnMapping.max) {
-            fieldSchema = fieldSchema.max(columnMapping.max as number | Reference<number>);
-          }
+
           break;
         case ColumnTypeEnum.String:
           const {format, length, uppercase} = columnMapping;
@@ -144,6 +152,10 @@ export const getValidationSchema = <M extends ModelEnum>({ columnDef, trans, fie
           }
 
           break;
+      }
+
+      if (schema) {
+        fieldSchema = schema(fieldSchema)
       }
     }
 

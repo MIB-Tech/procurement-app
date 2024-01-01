@@ -9,6 +9,7 @@ type Model = {
   desiredProduct: DesiredProductModel
   receipt: ReceiptModel
   readonly desiredProductQuantity: number
+  readonly restQuantity: number
   readonly validated: number
 } & AbstractModel
 

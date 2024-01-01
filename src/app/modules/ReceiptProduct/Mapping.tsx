@@ -6,6 +6,7 @@ import {QUANTITY_STATUS_COLUMN} from '../PurchaseOrderProduct/Mapping';
 import {BooleanField} from '../../../_custom/Column/Boolean/BooleanField';
 import React from 'react';
 import {QuantityStatusEnum} from '../PurchaseOrder/Model';
+import {ref} from 'yup';
 
 
 const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
@@ -19,18 +20,25 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     },
     quantity: {
       type: ColumnTypeEnum.Number,
-      min: 0,
-      max: 'desiredProductQuantity'
+      schema: schema => schema.when('restQuantity', {
+        is: (restQuantity: number) => restQuantity > 0,
+        then: schema => schema.positive().max(ref('restQuantity')),
+      })
     },
     desiredProductQuantity: {
       type: ColumnTypeEnum.Number,
       title: 'ORDERED_QUANTITY'
     },
+    restQuantity: {
+      type: ColumnTypeEnum.Number,
+    },
     note: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable: true
     },
     validated: {
-      type: ColumnTypeEnum.Boolean
+      type: ColumnTypeEnum.Boolean,
+      nullable: true
     },
     receipt: {
       type: ModelEnum.Receipt
@@ -42,7 +50,11 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+        quantity: true,
+        // desiredProduct: true,
+        note: true,
+      }
     },
     {
       type: ViewEnum.Create,
@@ -52,6 +64,9 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
         },
         desiredProductQuantity: {
           render: ({item}) => item.desiredProduct.quantity
+        },
+        restQuantity: {
+          render: ({item}) => item.restQuantity
         },
         quantity: true,
         note: true,

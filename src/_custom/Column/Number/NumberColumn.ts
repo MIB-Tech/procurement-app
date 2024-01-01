@@ -1,4 +1,4 @@
-import { NumberSchema } from 'yup';
+import {ArraySchema, NumberSchema} from 'yup';
 import { ColumnTypeEnum } from '../../types/types';
 import Reference from 'yup/lib/Reference';
 import {Model} from '../../types/ModelMapping';
@@ -14,14 +14,21 @@ export enum NumberFormat {
   // Duration = 'DURATION',
 }
 
+type Limit<M extends ModelEnum> = number | keyof Model<M>
 export type NumberColumn<M extends ModelEnum> = {
   type: ColumnTypeEnum.Number,
   format?: NumberFormat
-  schema?: NumberSchema
+  schema?: NumberSchema | ((schema: NumberSchema) => NumberSchema)
   unit?: string
   precision?: number
-  min?: number | keyof Model<M>
-  max?: number | keyof Model<M>
+  validation?: {
+    min?: Limit<M>
+    max?: Limit<M>
+    lessThan?: Limit<M>
+    moreThan?: Limit<M>
+    positive?: boolean
+    negative?: boolean
+  }
   // step?: number
   // symbol: string => PERCENT
   // max?: number => RATING

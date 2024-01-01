@@ -19,7 +19,7 @@ import {isLocationColumn} from '../ListingView/ListingView.utils';
 export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormViewProps<M>) => {
   const {trans} = useTrans();
   const {columnDef} = useMapping({modelName});
-  const {type, submittable} = view;
+  const {type, submittable, getMutateInput} = view;
   const isCreateMode = type === ViewEnum.Create;
   const mutation = useCustomMutation<M>({modelName, mode: isCreateMode ? MutationMode.Post: MutationMode.Put});
   const query = useCustomQuery({ modelName, enabled: !isCreateMode });
@@ -77,11 +77,12 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
 
         return !grantedRoles || isGranted(grantedRoles);
       });
+
       const input = columnNames.reduce((input, columnName) => ({
         ...input,
         [columnName]: item[columnName]
-      }), {} as Input<M>);
-      mutation.mutate(input);
+      }), {} as Input<M>)
+      mutation.mutate(getMutateInput?.(input) || input);
     }
   });
 

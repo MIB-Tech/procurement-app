@@ -13,6 +13,7 @@ import {Variant} from 'react-bootstrap/types';
 import {OperationModel} from '../../app/modules/Operation';
 import {GridProps} from '@mui/material';
 import {FieldProps} from '../Column/controls/fields';
+import {Input} from '../FormView/FormView.types';
 
 
 export type Model<M extends ModelEnum> = Models[M]
@@ -124,6 +125,7 @@ export type FormViewType<M extends ModelEnum> = {
     root?: Omit<GridProps, 'container'>
     item?: Omit<GridProps, 'item'>
   }
+  getMutateInput?: (input: Input<M>) => Input<M>
 }
 export type CreateViewType<M extends ModelEnum> = {
   type: ViewEnum.Create

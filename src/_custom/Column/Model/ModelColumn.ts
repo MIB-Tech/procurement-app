@@ -10,7 +10,7 @@ type ToManyColumn<M extends ModelEnum> = {
   multiple: true
   min?: number
   max?: number
-  schema?: ArraySchema<any>
+  schema?: ArraySchema<any> | ((schema: ArraySchema<any>) => ArraySchema<any>)
 }
 
 type ToOneColumn<M extends ModelEnum> = {
