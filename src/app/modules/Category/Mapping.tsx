@@ -28,19 +28,21 @@ const mapping: ModelMapping<ModelEnum.Category> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        name: true,
+        parents: true,
       }
     },
     {
       type: ViewEnum.Create,
       fields: {
         name: true,
+        parents:true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
         name: true,
+        parents: true
       }
     },
     {
