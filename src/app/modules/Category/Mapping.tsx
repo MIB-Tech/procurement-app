@@ -35,7 +35,7 @@ const mapping: ModelMapping<ModelEnum.Category> = {
       type: ViewEnum.Create,
       fields: {
         name: true,
-        parents:true
+        parents: true
       }
     },
     {

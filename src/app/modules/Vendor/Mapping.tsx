@@ -61,7 +61,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         email: true,
         phoneNumber: true,
         secondaryPhoneNumber: true,
-           paymentModality: true
+        paymentModality: true
       }
     },
     {
