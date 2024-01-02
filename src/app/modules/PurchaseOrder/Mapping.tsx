@@ -68,8 +68,8 @@ const GenerateReceiptButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder>> 
   if (!createOperation) {
     return <></>;
   }
-
   const state: Partial<ReceiptModel> = {
+    vendor: item.vendor,
     purchaseOrders: [item]
   };
 
