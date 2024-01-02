@@ -1,9 +1,9 @@
-import {Model, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {CustomItemActionProps, Model, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
-import React from 'react';
+import React, {FC, useState} from 'react';
 import {
   CompoundFilter,
   CompoundFilterOperator,
@@ -19,6 +19,10 @@ import {HydraItem} from '../../../_custom/types/hydra.types';
 import {Trans} from '../../../_custom/components/Trans';
 import moment from 'moment';
 import {ArraySchema} from 'yup';
+import {useUri} from '../../../_custom/hooks/UseUri';
+import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
+import {Modal} from 'react-bootstrap';
+import ReportViewer from '../PurchaseOrder/components/ReportViewer';
 
 // const ReceiptProducts = ({item}: { item: Model<ModelEnum.Receipt> }) => {
 //   const {collection} = useCollectionQuery({
@@ -167,6 +171,37 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
     </div>
   );
 };
+
+const GenerateInvoiceButton: FC<CustomItemActionProps<ModelEnum.Receipt>> = ({...props}) => {
+  const [open, setOpen] = useState<boolean>();
+
+  return (
+    <div>
+      <div className='position-relative'>
+        <Button
+          size='sm'
+          variant='outline-default'
+          className='bg-white'
+          onClick={() => setOpen(true)}
+        >
+          <Trans id='GENERATE_INVOICE'/>
+        </Button>
+      </div>
+      <Modal
+        fullscreen
+        show={open}
+        onHide={() => setOpen(false)}
+      >
+        <Modal.Header closeButton/>
+        <Modal.Body>
+          {/*{isLoading && <Trans id='LOADING'/>}*/}
+
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
+};
+
 const mapping: ModelMapping<ModelEnum.Receipt> = {
   modelName: ModelEnum.Receipt,
   columnDef: {
@@ -227,6 +262,9 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     },
     {
       type: ViewEnum.Detail,
+      customActions: [
+        {render: ({item}) => <GenerateInvoiceButton item={item}/>},
+      ],
       columns: {
         receiptNumber: true,
         externalRef: true,

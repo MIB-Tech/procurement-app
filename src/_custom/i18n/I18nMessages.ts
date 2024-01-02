@@ -17,6 +17,7 @@ type I18nMessageKey =
   | ListingModeEnum
   | ViewEnum
   | QuantityStatusEnum
+  | 'GENERATE_INVOICE'
   | 'VALIDATED'
   | 'SHOW'
   | 'VALIDATION.PURCHASE_ORDER_PRODUCT.QUANTITY'
