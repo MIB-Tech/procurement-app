@@ -14,22 +14,25 @@ import {useCustomQuery} from '../hooks/UseCustomQuery';
 import {ModelEnum} from '../../app/modules/types';
 
 import {isLocationColumn} from '../ListingView/ListingView.utils';
+import {RouteLinks} from '../components/RouteAction/RouteLinks';
+import {useParams} from 'react-router-dom';
 
 
 export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormViewProps<M>) => {
   const {trans} = useTrans();
-  const {columnDef} = useMapping({modelName});
-  const {type, submittable} = view;
+  const {id: uid} = useParams<{ id: string }>();
+  const {columnDef,} = useMapping({modelName});
+  const {type, submittable, getMutateInput,} = view;
   const isCreateMode = type === ViewEnum.Create;
-  const mutation = useCustomMutation<M>({modelName, mode: isCreateMode ? MutationMode.Post: MutationMode.Put});
-  const query = useCustomQuery({ modelName, enabled: !isCreateMode });
-  const { isGranted, location } = useAuth();
+  const mutation = useCustomMutation<M>({modelName, mode: isCreateMode ? MutationMode.Post : MutationMode.Put});
+  const query = useCustomQuery({modelName, enabled: !isCreateMode});
+  const {isGranted, location, operations} = useAuth();
   const _fields = view?.fields || getDefaultFields(columnDef);
   const fields = (Object.keys(_fields) as Array<keyof Model<M> | string>)
-  .filter(columnName=>{
-    return !location || !isLocationColumn({ modelName, columnName });
-  })
-  .reduce(
+    .filter(columnName => {
+      return !location || !isLocationColumn({modelName, columnName});
+    })
+    .reduce(
     (obj, columnName) => {
       const field = _fields[columnName];
 
@@ -77,11 +80,12 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
 
         return !grantedRoles || isGranted(grantedRoles);
       });
+
       const input = columnNames.reduce((input, columnName) => ({
         ...input,
         [columnName]: item[columnName]
-      }), {} as Input<M>);
-      mutation.mutate(input);
+      }), {} as Input<M>)
+      mutation.mutate(getMutateInput?.(input) || input);
     }
   });
 
@@ -91,24 +95,34 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
     }
   }, [mutation.validationErrors]);
 
+  const _operations = useMemo(() => {
+    if (!initialValues) {
+      return [];
+    }
+
+    const itemOperations = operations.filter(({resource, operationType}) => {
+      return resource.name === modelName && [ViewEnum.Listing, ViewEnum.Detail, ViewEnum.Delete].includes(operationType);
+    });
+
+    return /*itemOperationRoutes?.({ item, operations: itemOperations }) ||*/ itemOperations;
+  }, [initialValues]);
+
   return (
     <FormikProvider value={formik}>
       <div className='mb-3'>
         <div className='text-end'>
           <GoBackButton size='sm' className='me-2'>
-            <Trans id='CANCEL' />
+            <Trans id='CANCEL'/>
           </GoBackButton>
           <Button
             variant='primary'
             size='sm'
-            onClick={() => {
-              formik.handleSubmit();
-            }}
+            onClick={() => formik.handleSubmit()}
             loading={mutation.isLoading || query.isLoading}
             loadingLabel={query.isLoading ? 'LOADING' : undefined}
-            disabled={submittable && !submittable({ item: formik.values })}
+            disabled={submittable && !submittable({item: formik.values})}
           >
-            <Trans id='SAVE' />
+            <Trans id='SAVE'/>
           </Button>
         </div>
       </div>

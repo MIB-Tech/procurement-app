@@ -13,6 +13,7 @@ import {Variant} from 'react-bootstrap/types';
 import {OperationModel} from '../../app/modules/Operation';
 import {GridProps} from '@mui/material';
 import {FieldProps} from '../Column/controls/fields';
+import {Input} from '../FormView/FormView.types';
 
 
 export type Model<M extends ModelEnum> = Models[M]
@@ -86,10 +87,15 @@ export type DetailColumns<M extends ModelEnum> = Partial<Record<keyof Model<M> |
   grantedRoles?: RoleKeyEnum[]
   render?: (props: { item: Model<M> }) => ReactNode
 }>>
+export type CustomItemActionProps<M extends ModelEnum> = {item: HydraItem<M>}
+export type CustomItemAction<M extends ModelEnum> = {
+  render: (props: CustomItemActionProps<M>) => ReactNode
+}
 export type DetailViewType<M extends ModelEnum> = {
   type: ViewEnum.Detail
   itemOperationRoutes?: ItemOperationCallback<M>
   columns?: DetailColumns<M>
+  customActions?: Array<CustomItemAction<M>>
 }
 /** @deprecated */
 export type ImportViewType<M extends ModelEnum> = {
@@ -124,6 +130,7 @@ export type FormViewType<M extends ModelEnum> = {
     root?: Omit<GridProps, 'container'>
     item?: Omit<GridProps, 'item'>
   }
+  getMutateInput?: (input: Input<M>) => Input<M>
 }
 export type CreateViewType<M extends ModelEnum> = {
   type: ViewEnum.Create

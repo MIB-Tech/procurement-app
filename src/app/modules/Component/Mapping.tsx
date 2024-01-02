@@ -45,7 +45,7 @@ const mapping: ModelMapping<ModelEnum.Component> = {
     {
       type: ViewEnum.Update,
       fields: {
-        parentProduct: true,
+        product: true,
         price: true,
         quantity: true,
       }

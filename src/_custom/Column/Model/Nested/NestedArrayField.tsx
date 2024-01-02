@@ -271,7 +271,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
                   <td/>
                   {rootColumnNames.map(columnName => {
                     const columnMapping = columnDef[columnName];
-                    if (!columnMapping) return false;
+                    if (!columnMapping) return <td key={columnName.toString()}/>;
                     let value: any = '';
                     switch (columnMapping.type) {
                       case ColumnTypeEnum.Number:

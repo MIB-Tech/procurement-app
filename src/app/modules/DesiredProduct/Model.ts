@@ -11,6 +11,7 @@ type Model = {
   receiptProduct?: ReceiptProductModel
   purchaseOrderProduct: PurchaseOrderProductModel
   readonly status: QuantityStatusEnum
+  readonly restQuantity: number
 } & AbstractModel
 
 export default Model;

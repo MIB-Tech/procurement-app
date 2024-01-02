@@ -428,9 +428,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
             </Fragment>
           ))}
           <RouteLinks
-            operations={operations.filter(({resource, operationType}) => {
-              return resource.name === modelName && operationType === ViewEnum.Create;
-            })}
+            operations={operations.filter(({resource, operationType}) => resource.name === modelName && operationType === ViewEnum.Create)}
             linkProps={{
               state: parentColumnMapping && item && {
                 [inverseBy]: 'multiple' in parentColumnMapping ? [item] : item

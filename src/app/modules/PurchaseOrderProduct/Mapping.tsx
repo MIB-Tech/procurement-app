@@ -222,7 +222,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
               (count, desiredProduct) => count + desiredProduct.quantity,
               0
             );
-            console.log(count, quantity)
             return count === quantity;
           }
         )

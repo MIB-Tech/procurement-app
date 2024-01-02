@@ -26,6 +26,9 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       title: 'RECEIVED_QUANTITY',
       schema: number().positive()
     },
+    restQuantity: {
+      type: ColumnTypeEnum.Number
+    },
     status: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Select,

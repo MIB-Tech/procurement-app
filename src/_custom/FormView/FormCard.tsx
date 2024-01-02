@@ -45,7 +45,6 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
   });
 
   const { pathname } = useLocation();
-  console.log(pathname)
   // const url = '/update' + pathname.split('/').slice(0, 3).join('/');
   const query = useCustomQuery({
     modelName,

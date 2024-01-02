@@ -1,9 +1,9 @@
-import {Model, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {CustomItemActionProps, Model, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
-import React from 'react';
+import React, {FC, useState} from 'react';
 import {
   CompoundFilter,
   CompoundFilterOperator,
@@ -18,6 +18,11 @@ import {Button} from '../../../_custom/components/Button';
 import {HydraItem} from '../../../_custom/types/hydra.types';
 import {Trans} from '../../../_custom/components/Trans';
 import moment from 'moment';
+import {ArraySchema} from 'yup';
+import {useUri} from '../../../_custom/hooks/UseUri';
+import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
+import {Modal} from 'react-bootstrap';
+import ReportViewer from '../PurchaseOrder/components/ReportViewer';
 
 // const ReceiptProducts = ({item}: { item: Model<ModelEnum.Receipt> }) => {
 //   const {collection} = useCollectionQuery({
@@ -119,7 +124,7 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
           size='sm'
           modelName={ModelEnum.PurchaseOrder}
           multiple
-          disabled={!vendor}
+          disabled={!vendor && purchaseOrders.length === 0}
           name={name}
           getParams={filter => {
             const newFilter: CompoundFilter<ModelEnum.PurchaseOrder> = {
@@ -142,16 +147,18 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
         <Button
           size='sm'
           variant='primary'
+          disabled={purchaseOrders.length === 0}
           loading={isLoading}
           loadingLabel='SHOW'
           onClick={() => {
             refetch().then(r => {
               const desiredProducts = r.data?.data['hydra:member'] as Array<HydraItem<ModelEnum.DesiredProduct>>
               const receiptProducts: Array<Partial<ReceiptProductModel>> = desiredProducts.map(desiredProduct => ({
-                quantity: desiredProduct.quantity,
+                desiredProduct,
+                quantity: desiredProduct.restQuantity,
+                restQuantity: desiredProduct.restQuantity,
                 note: '',
                 desiredProductQuantity: desiredProduct.quantity,
-                desiredProduct,
               }));
               setFieldValue('receiptProducts', receiptProducts);
             });
@@ -164,6 +171,37 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
     </div>
   );
 };
+
+const GenerateInvoiceButton: FC<CustomItemActionProps<ModelEnum.Receipt>> = ({...props}) => {
+  const [open, setOpen] = useState<boolean>();
+
+  return (
+    <div>
+      <div className='position-relative'>
+        <Button
+          size='sm'
+          variant='outline-default'
+          className='bg-white'
+          onClick={() => setOpen(true)}
+        >
+          <Trans id='GENERATE_INVOICE'/>
+        </Button>
+      </div>
+      <Modal
+        fullscreen
+        show={open}
+        onHide={() => setOpen(false)}
+      >
+        <Modal.Header closeButton/>
+        <Modal.Body>
+          {/*{isLoading && <Trans id='LOADING'/>}*/}
+
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
+};
+
 const mapping: ModelMapping<ModelEnum.Receipt> = {
   modelName: ModelEnum.Receipt,
   columnDef: {
@@ -178,10 +216,12 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     },
     receivedAt: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Date
+      format: StringFormat.Date,
+      nullable: true
     },
     externalRef: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable: true
     },
     vendor: {
       type: ModelEnum.Vendor,
@@ -195,7 +235,22 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
       multiple: true,
       embeddedForm: true,
       disableInsert: true,
-      min: 1
+      min: 1,
+      schema: (schema: ArraySchema<any>) => schema.test(
+        'VALIDATION.RECEIPT.RECEIPT_PRODUCTS',
+        'VALIDATION.RECEIPT.RECEIPT_PRODUCTS',
+        (receiptProducts: any) => {
+
+          return (receiptProducts as ReceiptProductModel[]).some(({validated}) => validated);
+          // const {desiredProducts} = context.parent as PurchaseOrderProductModel
+          // const validatedDesiredProducts = desiredProducts.filter(({}) => false)
+          // const count = desiredProducts.reduce(
+          //   (count, desiredProduct) => count + desiredProduct.quantity,
+          //   0
+          // );
+          // return count === quantity;
+        }
+      )
     }
   },
   views: [
@@ -206,7 +261,23 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
       }
     },
     {
+      type: ViewEnum.Detail,
+      customActions: [
+        {render: ({item}) => <GenerateInvoiceButton item={item}/>},
+      ],
+      columns: {
+        receiptNumber: true,
+        externalRef: true,
+        receivedAt: true,
+        receiptProducts: true,
+      }
+    },
+    {
       type: ViewEnum.Create,
+      getMutateInput: item => ({
+        ...item,
+        receiptProducts: item.receiptProducts?.filter(({validated}) => validated)
+      }),
       slotProps: {
         item: {
           sm: 6
