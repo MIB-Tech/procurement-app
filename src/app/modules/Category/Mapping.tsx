@@ -28,7 +28,7 @@ const mapping: ModelMapping<ModelEnum.Category> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        parents: true,
+        parents: true
       }
     },
     {
