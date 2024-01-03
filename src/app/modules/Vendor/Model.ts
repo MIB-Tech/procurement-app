@@ -1,7 +1,7 @@
 import {VendorAddressModel} from '../VendorAddress';
 import {AbstractModel} from '../../../_custom/types/types';
 import {ProductPricingModel} from '../ProductPricing';
-import {paymentModalityModel} from "../PaymentModality";
+import {PaymentModalityModel} from "../PaymentModality";
 
 type Model = {
   name: string
@@ -12,7 +12,7 @@ type Model = {
   secondaryPhoneNumber: string
   addresses: Array<VendorAddressModel>
   productPricing: Array<ProductPricingModel>
-  paymentModality: paymentModalityModel
+  paymentModality: PaymentModalityModel
   readonly defaultAddress: VendorAddressModel
 } & AbstractModel
 
