@@ -19,10 +19,7 @@ import {HydraItem} from '../../../_custom/types/hydra.types';
 import {Trans} from '../../../_custom/components/Trans';
 import moment from 'moment';
 import {ArraySchema} from 'yup';
-import {useUri} from '../../../_custom/hooks/UseUri';
-import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
 import {Modal} from 'react-bootstrap';
-import ReportViewer from '../PurchaseOrder/components/ReportViewer';
 
 // const ReceiptProducts = ({item}: { item: Model<ModelEnum.Receipt> }) => {
 //   const {collection} = useCollectionQuery({
@@ -165,7 +162,7 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
 
           }}
         >
-          <Trans id='SHOW' />
+          <Trans id='SHOW'/>
         </Button>
       </div>
     </div>
