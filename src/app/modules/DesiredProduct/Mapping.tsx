@@ -4,6 +4,8 @@ import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {QUANTITY_STATUS_OPTIONS} from '../PurchaseOrder/Model';
 import {number} from 'yup';
+import React from "react";
+import {SelectField} from "../../../_custom/Column/controls/fields/SelectField/SelectField";
 
 
 const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
@@ -55,7 +57,16 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       fields: {
         designation: true,
         quantity: true,
-        address: true,
+        address: {
+          render: ({item, fieldProps}) => (
+            <SelectField
+              size='sm'
+              options={['CIOC', 'HPC', 'CGO', 'COC']}
+              placeholder='Adrs'
+              {...fieldProps}
+            />
+          )
+        }
       }
     },
     {
@@ -63,7 +74,16 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       fields: {
         designation: true,
         quantity: true,
-        address: true,
+        address: {
+          render: ({item, fieldProps}) => (
+            <SelectField
+              size='sm'
+              options={['CIOC', 'HPC', 'CGO', 'COC']}
+              placeholder='Adrs'
+              {...fieldProps}
+            />
+          )
+        }
       }
     }
   ]
