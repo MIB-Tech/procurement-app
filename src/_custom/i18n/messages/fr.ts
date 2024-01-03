@@ -2,6 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  REST_QUANTITY: "Reste à livré",
   VALIDATED: 'Validé',
   SHOW: 'Afficher',
   PURCHASE_ORDER_ALLOWED: "Bon de commande autorisé",
@@ -16,7 +17,7 @@ export const fr: I18nLanguage = {
   FULLY_RECEIVED: 'Livré',
   PARTIALLY_RECEIVED: 'Partiellement',
   UNRECEIVED: 'Non livré',
-  COMPONENTS:'Composants',
+  COMPONENTS: 'Composants',
   BUDGET_AMOUNT: "Montant budget",
   SUB_PRODUCTS: "Sous produit",
   ADDRESSES: "Adresses",
