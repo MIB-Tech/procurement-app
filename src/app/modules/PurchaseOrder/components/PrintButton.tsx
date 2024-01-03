@@ -1,11 +1,11 @@
 import React, {FC, useState} from 'react';
 import {Modal} from 'react-bootstrap';
-import {ModelEnum} from '../types';
-import {HydraItem} from '../../../_custom/types/hydra.types';
-import {Button} from '../../../_custom/components/Button';
-import {Trans} from '../../../_custom/components/Trans';
-import {TableView} from '../../../_custom/ListingView/views/Table/TableView';
-import {Checkbox} from '../../../_custom/Column/Boolean/Chechbox/Checkbox';
+import {ModelEnum} from '../../types';
+import {HydraItem} from '../../../../_custom/types/hydra.types';
+import {Button} from '../../../../_custom/components/Button';
+import {Trans} from '../../../../_custom/components/Trans';
+import {TableView} from '../../../../_custom/ListingView/views/Table/TableView';
+import {Checkbox} from '../../../../_custom/Column/Boolean/Chechbox/Checkbox';
 
 
 export const PrintButton: FC<{selectedItems: Array<HydraItem<ModelEnum.PurchaseOrderProduct>>}> = ({selectedItems}) => {

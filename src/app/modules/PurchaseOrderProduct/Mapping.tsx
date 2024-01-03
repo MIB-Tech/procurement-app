@@ -15,7 +15,7 @@ import {FieldProps} from '../../../_custom/Column/controls/fields';
 import {useEffect} from 'react';
 import {HydraItem} from '../../../_custom/types/hydra.types';
 import {NumberColumnField} from '../../../_custom/Column/Number/NumberColumnField';
-import {PrintButton} from '../PurchaseOrder/PrintButton';
+import {PrintButton} from '../PurchaseOrder/components/PrintButton';
 import {QUANTITY_STATUS_OPTIONS} from '../PurchaseOrder/Model';
 import {number} from 'yup';
 import {PurchaseOrderProductModel} from './index';
@@ -331,9 +331,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
   views: [
     {
       type: ViewEnum.Listing,
-      bulkActions: [
-        {render: props => <PrintButton selectedItems={props.selectedItems}/>}
-      ],
+      // bulkActions: [
+      //   {render: props => <PrintButton selectedItems={props.selectedItems}/>}
+      // ],
       columns: {
         quantity: true,
         discountValue: {
