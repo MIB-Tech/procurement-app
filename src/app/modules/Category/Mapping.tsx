@@ -19,37 +19,37 @@ const mapping: ModelMapping<ModelEnum.Category> = {
       type: ModelEnum.Product,
       multiple: true
     },
-    parents: {
+    parent: {
       type: ModelEnum.Category,
-      multiple: true
+      nullable: true
     },
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
-        parents: true
+        parent: true
       }
     },
     {
       type: ViewEnum.Create,
       fields: {
         name: true,
-        parents: true
+        parent: true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
         name: true,
-        parents: true
+        parent: true
       }
     },
     {
       type: ViewEnum.Detail,
       columns: {
         name: true,
-        parents: true
+        parent: true
       }
     }
   ]
