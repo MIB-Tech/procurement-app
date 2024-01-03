@@ -3,7 +3,7 @@ import {ListingQueryProps} from '../ListingView/ListingView.types';
 import {useMapping} from './UseMapping';
 import {filterToParams, serializeSort} from '../ListingView/Filter/Filter.utils';
 import {CompoundFilterOperator, Filter, PropertyFilterOperator} from '../ListingView/Filter/Filter.types';
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import {HydraItem, JsonldCollectionResponse} from '../types/hydra.types';
 import {useQuery} from 'react-query';
 import {ModelEnum} from '../../app/modules/types';
@@ -54,7 +54,7 @@ export const useCollectionQuery = <M extends ModelEnum>({
 
   // QUERY
   const queryFn = () => axios.get<JsonldCollectionResponse<M>>(path, { params: _params });
-  const query = useQuery({
+  const query = useQuery<AxiosResponse<JsonldCollectionResponse<M>>>({
     queryKey: [path, params, queryKey],
     queryFn,
     ...options

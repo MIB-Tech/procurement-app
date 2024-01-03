@@ -24,7 +24,7 @@ export const useAuth = () => {
     return auth;
   }, shallowEqual) as Required<Pick<AuthState, 'user'>> & Pick<AuthState, 'location'>;
   const { role } = user;
-  const operations = role?.operations || [];
+  const operations = (role?.operations || []) ;
 
   const isGranted = (permissions: Permission[]) => {
     let granted = false;

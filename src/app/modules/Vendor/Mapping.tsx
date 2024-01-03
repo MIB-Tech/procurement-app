@@ -31,6 +31,9 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
       type: ColumnTypeEnum.String,
       nullable: true
     },
+    defaultAddress: {
+      type: ModelEnum.VendorAddress
+    },
     productPricing: {
       type: ModelEnum.ProductPricing,
       multiple: true
@@ -61,7 +64,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         email: true,
         phoneNumber: true,
         secondaryPhoneNumber: true,
-           paymentModality: true
+        paymentModality: true
       }
     },
     {

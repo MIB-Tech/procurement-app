@@ -1,4 +1,4 @@
-import React, {FC, createContext, useContext} from 'react'
+import React, {FC, createContext, useContext, HTMLAttributes} from 'react';
 import { Lang } from "../../_custom/i18n/I18nMessages";
 
 const I18N_CONFIG_KEY = process.env.REACT_APP_I18N_CONFIG_KEY || 'i18nConfig'
@@ -34,7 +34,7 @@ const useLang = () => {
   return useContext(I18nContext).selectedLang
 }
 
-const MetronicI18nProvider: FC = ({children}) => {
+const MetronicI18nProvider: FC<HTMLAttributes<any>> = ({children}) => {
   const lang = getConfig()
   return <I18nContext.Provider value={lang}>{children}</I18nContext.Provider>
 }

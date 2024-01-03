@@ -4,14 +4,6 @@ import {ResourceModel} from '../Resource';
 import {ViewEnum} from '../../../_custom/types/ModelMapping';
 
 
-export enum OperationType {
-  Listing = 'LISTING',
-  Create = 'CREATE',
-  Detail = 'DETAIL',
-  Update = 'UPDATE',
-  Delete = 'DELETE'
-}
-
 type Model = {
   title: string
   operationType: ViewEnum

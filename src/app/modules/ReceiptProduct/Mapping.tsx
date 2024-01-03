@@ -1,6 +1,12 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import {CellContent} from '../../../_custom/ListingView/views/Table/BodyCell';
+import {QUANTITY_STATUS_COLUMN} from '../PurchaseOrderProduct/Mapping';
+import {BooleanField} from '../../../_custom/Column/Boolean/BooleanField';
+import React from 'react';
+import {QuantityStatusEnum} from '../PurchaseOrder/Model';
+import {ref} from 'yup';
 
 
 const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
@@ -12,38 +18,76 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    quantity:{
-      type:ColumnTypeEnum.Number
+    quantity: {
+      type: ColumnTypeEnum.Number,
+      schema: schema => schema.when('restQuantity', {
+        is: (restQuantity: number) => restQuantity > 0,
+        then: schema => schema.positive().max(ref('restQuantity')),
+      })
     },
-    desiredProductQuantity:{
-      type:ColumnTypeEnum.Number
+    desiredProductQuantity: {
+      type: ColumnTypeEnum.Number,
+      title: 'ORDERED_QUANTITY'
     },
-    note:{
-      type:ColumnTypeEnum.String
+    restQuantity: {
+      type: ColumnTypeEnum.Number,
     },
-    receipt:{
-      type:ModelEnum.Receipt
+    note: {
+      type: ColumnTypeEnum.String,
+      nullable: true
     },
-    desiredProduct:{
-      type:ModelEnum.DesiredProduct
+    validated: {
+      type: ColumnTypeEnum.Boolean,
+      nullable: true
+    },
+    receipt: {
+      type: ModelEnum.Receipt
+    },
+    desiredProduct: {
+      type: ModelEnum.DesiredProduct
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+        quantity: true,
+        // desiredProduct: true,
+        note: true,
+      }
     },
     {
       type: ViewEnum.Create,
       fields: {
+        designation: {
+          render: ({item}) => item.desiredProduct.designation
+        },
         desiredProductQuantity: {
-          render: ({item}) => {
-
-            return item.desiredProduct.quantity
-          }
+          render: ({item}) => item.desiredProduct.quantity
+        },
+        restQuantity: {
+          render: ({item}) => item.restQuantity
         },
         quantity: true,
         note: true,
+        status: {
+          render: ({item}) => {
+            return (
+              <CellContent
+                {...QUANTITY_STATUS_COLUMN}
+                value={item.desiredProduct.status}
+              />
+            );
+          }
+        },
+        validated: {
+          render: ({fieldProps, item}) => (
+            <BooleanField
+              {...fieldProps}
+              disabled={item.desiredProduct.status === QuantityStatusEnum.FullyReceived}
+            />
+          )
+        }
       }
     }
   ]

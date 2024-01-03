@@ -1,11 +1,11 @@
 import React, {FC, useState} from 'react';
 import {Modal} from 'react-bootstrap';
-import {ModelEnum} from '../types';
-import {HydraItem} from '../../../_custom/types/hydra.types';
-import {Button} from '../../../_custom/components/Button';
-import {Trans} from '../../../_custom/components/Trans';
-import {TableView} from '../../../_custom/ListingView/views/Table/TableView';
-import {Checkbox} from '../../../_custom/Column/Boolean/Chechbox/Checkbox';
+import {ModelEnum} from '../../types';
+import {HydraItem} from '../../../../_custom/types/hydra.types';
+import {Button} from '../../../../_custom/components/Button';
+import {Trans} from '../../../../_custom/components/Trans';
+import {TableView} from '../../../../_custom/ListingView/views/Table/TableView';
+import {Checkbox} from '../../../../_custom/Column/Boolean/Chechbox/Checkbox';
 
 
 export const PrintButton: FC<{selectedItems: Array<HydraItem<ModelEnum.PurchaseOrderProduct>>}> = ({selectedItems}) => {
@@ -30,7 +30,7 @@ export const PrintButton: FC<{selectedItems: Array<HydraItem<ModelEnum.PurchaseO
           disabled={selectedItems.length === 0}
           onClick={() => setOpen(true)}
         >
-          <Trans id='GENERATE_PUSHASE_ORDER'/>
+          <Trans id='GENERATE_RECEIPT'/>
         </Button>
         {selectedItems.length > 0 && (
           <div
@@ -51,7 +51,7 @@ export const PrintButton: FC<{selectedItems: Array<HydraItem<ModelEnum.PurchaseO
         >
           <Modal.Header>
             <Modal.Title>
-              <Trans id='GENERATE_PUSHASE_ORDER'/>
+              <Trans id='GENERATE_RECEIPT'/>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className='scroll-y max-h-600px'>

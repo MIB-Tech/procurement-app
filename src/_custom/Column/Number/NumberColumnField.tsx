@@ -7,7 +7,7 @@ import {InputNumberProps} from './InputNumber/InputNumber';
 import {useField} from 'formik';
 
 
-export const NumberColumnField: FC<Pick<NumberColumn, 'format'> & FieldProps & InputNumberProps> = (
+export const NumberColumnField: FC<Pick<NumberColumn<any>, 'format'> & FieldProps & InputNumberProps> = (
   {
     format,
     ...props

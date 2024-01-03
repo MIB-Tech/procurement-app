@@ -6,8 +6,8 @@ import {PurchaseOrderModel} from '../PurchaseOrder';
 
 type Model = {
   receiptNumber: number
-  receivedAt: string
-  externalRef: string
+  receivedAt?: string
+  externalRef?: string
   receiptProducts: Array<ReceiptProductModel>
   readonly vendor: VendorModel
   readonly purchaseOrders: Array<PurchaseOrderModel>
