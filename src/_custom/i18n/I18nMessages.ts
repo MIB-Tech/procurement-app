@@ -450,7 +450,6 @@ type I18nMessageKey =
   | 'PURCHASE_ORDER_ALLOWED'
   | 'REST_QUANTITY'
 
-
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};
