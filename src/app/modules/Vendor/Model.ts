@@ -13,7 +13,7 @@ type Model = {
   addresses: Array<VendorAddressModel>
   productPricing: Array<ProductPricingModel>
   paymentModality: paymentModalityModel
-  readonly defaultAddress?: VendorAddressModel
+  readonly defaultAddress: VendorAddressModel
 } & AbstractModel
 
 export default Model;

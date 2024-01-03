@@ -6,7 +6,9 @@ import {ProjectModel} from '../Project';
 import {PurchaseOrderCategoryModel} from '../PurchaseOrderCategory';
 import {PurchaseOrderAttachmentModel} from '../PurchaseOrderAttachment';
 import {StringSelectOption} from '../../../_custom/Column/String/StringColumn';
-import {paymentModalityModel} from "../PaymentModality";
+import {paymentModalityModel} from '../PaymentModality';
+import {VendorAddressModel} from '../VendorAddress';
+import {ProductModel} from '../Product';
 
 export enum QuantityStatusEnum {
   Unreceived = 'UNRECEIVED',
@@ -22,7 +24,6 @@ export const QUANTITY_STATUS_OPTIONS: Array<StringSelectOption> = [
 
 type Model = {
   orderNumber: number
-  createdAt: string
   taxIncluded: boolean
   ref?: string
   externalRef?: string
@@ -40,4 +41,24 @@ type Model = {
   readonly status: QuantityStatusEnum
 } & AbstractModel & CreateTimestamp
 
+export type PurchaseOrderPrint = {
+  taxType?: 'HT' | 'TTC'
+  grossTotalExclTax: string
+  totalInclTax: string
+  totalVatTax: string
+  //
+  comment?: string
+  groupement1?: string
+  groupement2?: string
+  vendor: Pick<VendorModel, 'name' | 'phoneNumber'> & Pick<VendorAddressModel, 'address' | 'postalCode'>
+  currency: Pick<CurrencyModel, 'code'>
+  purchaseOrderProducts: Array<{
+    product: Pick<ProductModel, 'code'>
+    vatRate?: string
+    grossPrice?: string
+    netPrice: string
+    grossTotalExclTax: string
+    discount: {value: number} & Pick<PurchaseOrderProductModel, 'discountType'>
+  } & Pick<PurchaseOrderProductModel, 'designation' | 'quantity'>>
+} & Pick<Model, 'orderNumber' | 'createdAt' | 'desiredDeliveryDate' | 'ref' | 'externalRef'>
 export default Model;
