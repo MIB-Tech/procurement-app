@@ -23,6 +23,14 @@ const mapping: ModelMapping<ModelEnum.Location> = {
     users: {
       type: ModelEnum.User,
       multiple: true
+    },
+    parent:{
+      type:ModelEnum.Location,
+      nullable:true
+    },
+    children:{
+      type:ModelEnum.Location,
+      multiple:true
     }
   },
   views: [
@@ -30,23 +38,27 @@ const mapping: ModelMapping<ModelEnum.Location> = {
       type: ViewEnum.Listing,
       columns: {
         name: true,
-        abbreviation: true
+        abbreviation: true,
+        parent:true
       }
     },
     {
       type: ViewEnum.Create,
       fields: {
         name: true,
-        abbreviation: true
+        abbreviation: true,
+        parent:true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
         name: true,
-        abbreviation: true
+        abbreviation: true,
+        parent:true
       }
-    }
+    },
+
   ]
 };
 

@@ -45,7 +45,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
     },
     paymentModality: {
       type: ModelEnum.PaymentModality,
-      nullable: true
+      nullable: true,
     }
   },
   views: [
