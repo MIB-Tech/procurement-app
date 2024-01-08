@@ -101,7 +101,7 @@ const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder
       totalExclTax: getNumberUnit({value: item.totalExclTax, precision: 2, unit}),
       totalInclTax: getNumberUnit({value: item.totalInclTax, precision: 2}),
       totalVatTax: getNumberUnit({value: item.totalVatTax, precision: 2}),
-      totalDiscount: getNumberUnit({value: 0, precision: 2}),// TODO
+      totalDiscount: getNumberUnit({value: 0, precision: 2}), // TODO
       createdAt: moment(item.createdAt).format('L'),
       desiredDeliveryDate: moment(item.desiredDeliveryDate).format('L'),
       purchaseOrderProducts: item.purchaseOrderProducts.map(purchaseOrderProduct => {

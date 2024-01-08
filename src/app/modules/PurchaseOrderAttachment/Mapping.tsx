@@ -23,19 +23,18 @@ const mapping: ModelMapping<ModelEnum.purchaseOrderAttachment> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        name: true,
       }
     },
     {
       type: ViewEnum.Create,
       fields: {
-        name: true,
+        fileName: true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
-        name: true,
+        fileName: true
       }
     }
   ]

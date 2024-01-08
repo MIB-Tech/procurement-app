@@ -15,13 +15,14 @@ const mapping: ModelMapping<ModelEnum.PaymentModality> = {
     name: {
       type: ColumnTypeEnum.String
     },
-    vendors: {
-      type: ModelEnum.Vendor,
-      multiple:true
-    },
+
     PurchaseOrders: {
       type: ModelEnum.PurchaseOrder,
       multiple: true
+    },
+    vendors:{
+      type:ModelEnum.Vendor,
+      multiple:true
     }
   },
   views: [
@@ -41,7 +42,6 @@ const mapping: ModelMapping<ModelEnum.PaymentModality> = {
       type: ViewEnum.Update,
       fields: {
         name: true,
-        vendors:true
       }
     },
     {

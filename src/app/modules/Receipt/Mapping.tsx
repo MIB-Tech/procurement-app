@@ -3,7 +3,7 @@ import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
-import React, {FC, useState} from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import {
   CompoundFilter,
   CompoundFilterOperator,
@@ -20,6 +20,10 @@ import {Trans} from '../../../_custom/components/Trans';
 import moment from 'moment';
 import {ArraySchema} from 'yup';
 import {Modal} from 'react-bootstrap';
+import {useUri} from '../../../_custom/hooks/UseUri';
+import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
+import ReportViewer from '../PurchaseOrder/components/ReportViewer';
+import {ReceiptPrint} from './Model';
 
 // const ReceiptProducts = ({item}: { item: Model<ModelEnum.Receipt> }) => {
 //   const {collection} = useCollectionQuery({
@@ -98,6 +102,70 @@ import {Modal} from 'react-bootstrap';
 //     </div>
 //   );
 // };
+
+const PrintReceiptButton: FC<CustomItemActionProps<ModelEnum.Receipt>> = ({...props}) => {
+  const [open, setOpen] = useState<boolean>();
+  const modelName = ModelEnum.Receipt;
+  const uri = useUri({modelName});
+  const {item, isLoading} = useItemQuery<ModelEnum.Receipt>({
+    modelName,
+    path: `/print${uri}`,
+    enabled: open
+  });
+  const params = useMemo<ReceiptPrint | undefined>(() => {
+    if (!item) return undefined;
+
+    return {
+      ...item,
+      receivedAt: moment(item.receivedAt).format('L'),
+      lines: item.receiptProducts.map(receiptProduct => {
+        const {desiredProduct} = receiptProduct;
+        const {designation, purchaseOrderProduct, quantity} = desiredProduct;
+
+        return {
+          ...receiptProduct,
+          ref: purchaseOrderProduct.product.code,
+          name: designation,
+          desiredProductQuantity: quantity,
+        };
+      })
+    };
+  }, [item]);
+  console.log(params);
+
+  return (
+    <div>
+      <div className='position-relative'>
+        <Button
+          size='sm'
+          variant='outline-default'
+          className='bg-white'
+          onClick={() => setOpen(true)}
+        >
+          <Trans id='PRINT'/>
+        </Button>
+      </div>
+      <Modal
+        fullscreen
+        show={open}
+        onHide={() => setOpen(false)}
+      >
+        <Modal.Header closeButton/>
+        <Modal.Body>
+          {isLoading && <Trans id='LOADING'/>}
+          {params && (
+            <ReportViewer
+              fileName='receipt.mrt'
+              // params={example}
+              params={params}
+            />
+          )}
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
+};
+
 
 const PurchaseOrdersField = ({name}: FieldProps) => {
   const {values, setFieldValue} = useFormikContext<Model<ModelEnum.Receipt>>();
@@ -223,6 +291,9 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     vendor: {
       type: ModelEnum.Vendor,
     },
+    paymentModality: {
+      type: ModelEnum.PaymentModality,
+    },
     purchaseOrders: {
       type: ModelEnum.PurchaseOrder,
       multiple: true
@@ -260,6 +331,7 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     {
       type: ViewEnum.Detail,
       customActions: [
+        {render: ({item}) => <PrintReceiptButton item={item}/>},
         {render: ({item}) => <GenerateInvoiceButton item={item}/>},
       ],
       columns: {

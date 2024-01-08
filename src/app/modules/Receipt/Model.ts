@@ -3,6 +3,7 @@ import {ReceiptProductModel} from '../ReceiptProduct';
 import {VendorModel} from '../Vendor';
 import {PurchaseOrderModel} from '../PurchaseOrder';
 import {PurchaseOrderPrint} from '../PurchaseOrder/Model';
+import {PaymentModalityModel} from '../PaymentModality';
 
 
 type Model = {
@@ -11,6 +12,7 @@ type Model = {
   externalRef?: string
   receiptProducts: Array<ReceiptProductModel>
   readonly vendor: VendorModel
+  readonly paymentModality: PaymentModalityModel
   readonly purchaseOrders: Array<PurchaseOrderModel>
 } & AbstractModel
 
@@ -23,7 +25,7 @@ export type ReceiptPrint = {
   & Pick<PurchaseOrderPrint, 'vendor' | 'address' | 'paymentModality' | 'comment' | 'groupement1' | 'groupement2'>
 
 const EXAMPLE: ReceiptPrint = {
-  'address': 'string',
+  'address': '',
   'comment': '',
   'groupement1': '',
   'groupement2': '',
