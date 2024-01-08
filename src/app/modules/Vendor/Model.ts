@@ -2,6 +2,7 @@ import {VendorAddressModel} from '../VendorAddress';
 import {AbstractModel} from '../../../_custom/types/types';
 import {ProductPricingModel} from '../ProductPricing';
 import {PaymentModalityModel} from "../PaymentModality";
+import {AriaAttributes} from "react";
 
 type Model = {
   name: string

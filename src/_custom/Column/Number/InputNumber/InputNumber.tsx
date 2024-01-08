@@ -108,6 +108,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({ cla
         )}
         {...props}
         onChange={event => {
+          console.log(event.target.value, event.target.valueAsNumber)
           handleChange(event.target.valueAsNumber);
         }}
         ref={ref}

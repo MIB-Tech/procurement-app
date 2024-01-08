@@ -247,7 +247,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       precision: 2,
-      schema: number().positive()
+      schema: number().integer()
     },
     note: {
       type: ColumnTypeEnum.String,
