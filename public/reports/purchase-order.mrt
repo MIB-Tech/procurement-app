@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.2.0",
-  "ReportGuid": "ab1d550916bc41ed98d66c8b75465bc2",
+  "ReportGuid": "30be1568ae6641a1b61fce97f8cbdea1",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1704213448253+0100)/",
+  "ReportChanged": "/Date(1704292917792+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -340,6 +340,319 @@
           }
         },
         "NameInSource": "DATA_TEST.root_vendor"
+      },
+      "6": {
+        "Ident": "StiDataTableSource",
+        "Name": "root2",
+        "Alias": "root2",
+        "Key": "a035a5770f7247829db7ee31eeee5b25",
+        "Columns": {
+          "0": {
+            "Name": "grossTotalExclTax",
+            "Index": -1,
+            "NameInSource": "grossTotalExclTax",
+            "Alias": "grossTotalExclTax",
+            "Type": "System.Decimal"
+          },
+          "1": {
+            "Name": "totalInclTax",
+            "Index": -1,
+            "NameInSource": "totalInclTax",
+            "Alias": "totalInclTax",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "totalVatTax",
+            "Index": -1,
+            "NameInSource": "totalVatTax",
+            "Alias": "totalVatTax",
+            "Type": "System.Decimal"
+          },
+          "3": {
+            "Name": "orderNumber",
+            "Index": -1,
+            "NameInSource": "orderNumber",
+            "Alias": "orderNumber",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "createdAt",
+            "Index": -1,
+            "NameInSource": "createdAt",
+            "Alias": "createdAt",
+            "Type": "System.String"
+          },
+          "5": {
+            "Name": "comment",
+            "Index": -1,
+            "NameInSource": "comment",
+            "Alias": "comment",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "groupement1",
+            "Index": -1,
+            "NameInSource": "groupement1",
+            "Alias": "groupement1",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "groupement2",
+            "Index": -1,
+            "NameInSource": "groupement2",
+            "Alias": "groupement2",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "currency",
+            "Index": -1,
+            "NameInSource": "currency",
+            "Alias": "currency",
+            "Type": "System.String"
+          },
+          "9": {
+            "Name": "desiredDeliveryDate",
+            "Index": -1,
+            "NameInSource": "desiredDeliveryDate",
+            "Alias": "desiredDeliveryDate",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "externalRef",
+            "Index": -1,
+            "NameInSource": "externalRef",
+            "Alias": "externalRef",
+            "Type": "System.String"
+          },
+          "11": {
+            "Name": "ref",
+            "Index": -1,
+            "NameInSource": "ref",
+            "Alias": "ref",
+            "Type": "System.String"
+          },
+          "12": {
+            "Name": "taxType",
+            "Index": -1,
+            "NameInSource": "taxType",
+            "Alias": "taxType",
+            "Type": "System.String"
+          },
+          "13": {
+            "Name": "vendor",
+            "Index": -1,
+            "NameInSource": "vendor",
+            "Alias": "vendor",
+            "Type": "System.String"
+          },
+          "14": {
+            "Name": "purchaseOrderProducts",
+            "Index": -1,
+            "NameInSource": "purchaseOrderProducts",
+            "Alias": "purchaseOrderProducts",
+            "Type": "System.String"
+          },
+          "15": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "DATA_TEST.root"
+      },
+      "7": {
+        "Ident": "StiDataTableSource",
+        "Name": "root_currency2",
+        "Alias": "root_currency2",
+        "Key": "e3c63108f0e24f78aec98f61e50a8f9b",
+        "Columns": {
+          "0": {
+            "Name": "code",
+            "Index": -1,
+            "NameInSource": "code",
+            "Alias": "code",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "DATA_TEST.root_currency"
+      },
+      "8": {
+        "Ident": "StiDataTableSource",
+        "Name": "root_purchaseOrderProducts2",
+        "Alias": "root_purchaseOrderProducts2",
+        "Key": "f0cfbfa97147400b97f3cd6c5c810a49",
+        "Columns": {
+          "0": {
+            "Name": "product",
+            "Index": -1,
+            "NameInSource": "product",
+            "Alias": "product",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "designation",
+            "Index": -1,
+            "NameInSource": "designation",
+            "Alias": "designation",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "quantity",
+            "Index": -1,
+            "NameInSource": "quantity",
+            "Alias": "quantity",
+            "Type": "System.Decimal"
+          },
+          "3": {
+            "Name": "grossTotalExclTax",
+            "Index": -1,
+            "NameInSource": "grossTotalExclTax",
+            "Alias": "grossTotalExclTax",
+            "Type": "System.Decimal"
+          },
+          "4": {
+            "Name": "vatRate",
+            "Index": -1,
+            "NameInSource": "vatRate",
+            "Alias": "vatRate",
+            "Type": "System.Decimal"
+          },
+          "5": {
+            "Name": "grossPrice",
+            "Index": -1,
+            "NameInSource": "grossPrice",
+            "Alias": "grossPrice",
+            "Type": "System.Decimal"
+          },
+          "6": {
+            "Name": "netPrice",
+            "Index": -1,
+            "NameInSource": "netPrice",
+            "Alias": "netPrice",
+            "Type": "System.Decimal"
+          },
+          "7": {
+            "Name": "discount",
+            "Index": -1,
+            "NameInSource": "discount",
+            "Alias": "discount",
+            "Type": "System.String"
+          },
+          "8": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "DATA_TEST.root_purchaseOrderProducts"
+      },
+      "9": {
+        "Ident": "StiDataTableSource",
+        "Name": "root_purchaseOrderProducts_discount2",
+        "Alias": "root_purchaseOrderProducts_discount2",
+        "Key": "a1f6d63d48aa4955b66aaa9b3e762fb1",
+        "Columns": {
+          "0": {
+            "Name": "discountType",
+            "Index": -1,
+            "NameInSource": "discountType",
+            "Alias": "discountType",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "value",
+            "Index": -1,
+            "NameInSource": "value",
+            "Alias": "value",
+            "Type": "System.Decimal"
+          },
+          "2": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "DATA_TEST.root_purchaseOrderProducts_discount"
+      },
+      "10": {
+        "Ident": "StiDataTableSource",
+        "Name": "root_purchaseOrderProducts_product2",
+        "Alias": "root_purchaseOrderProducts_product2",
+        "Key": "095d583c4db24cc197836c3719f2003f",
+        "Columns": {
+          "0": {
+            "Name": "code",
+            "Index": -1,
+            "NameInSource": "code",
+            "Alias": "code",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "DATA_TEST.root_purchaseOrderProducts_product"
+      },
+      "11": {
+        "Ident": "StiDataTableSource",
+        "Name": "root_vendor2",
+        "Alias": "root_vendor2",
+        "Key": "ec162f997fce4ce081f2dc4155863b3d",
+        "Columns": {
+          "0": {
+            "Name": "name",
+            "Index": -1,
+            "NameInSource": "name",
+            "Alias": "name",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "address",
+            "Index": -1,
+            "NameInSource": "address",
+            "Alias": "address",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "postalCode",
+            "Index": -1,
+            "NameInSource": "postalCode",
+            "Alias": "postalCode",
+            "Type": "System.Decimal"
+          },
+          "3": {
+            "Name": "phoneNumber",
+            "Index": -1,
+            "NameInSource": "phoneNumber",
+            "Alias": "phoneNumber",
+            "Type": "System.String"
+          },
+          "4": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "DATA_TEST.root_vendor"
       }
     },
     "Databases": {
@@ -480,123 +793,6 @@
             },
             "2": {
               "Ident": "StiRichText",
-              "Name": "RichText1",
-              "ClientRectangle": "0,3.6,5.8,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x005C_cpg437_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020_N_x005C__x0027_b0_x0020_de_x0020_BC_x005C_kerning0_x005C_b0_x005C_f1_x005C_fs16_x005C_lang1033_x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "3": {
-              "Ident": "StiRichText",
-              "Name": "RichText2",
-              "ClientRectangle": "0,4.2,5.8,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x005C_cpg437_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020_Date_x0020_BC_x005C_kerning0_x005C_b0_x005C_f1_x005C_fs16_x005C_lang1033_x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "4": {
-              "Ident": "StiRichText",
-              "Name": "RichText3",
-              "ClientRectangle": "0,4.8,5.8,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x005C_cpg437_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020_R_x005C__x0027_e9f_x005C__x0027_e9rence_x005C_kerning0_x005C_b0_x005C_f1_x005C_fs16_x005C_lang1033_x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "5": {
-              "Ident": "StiRichText",
-              "Name": "RichText4",
-              "ClientRectangle": "0,5.4,5.8,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x005C_cpg437_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020_D_x005C__x0027_e9lai_x0020_de_x0020_livraison_x005C_kerning0_x005C_b0_x005C_f1_x005C_fs16_x005C_lang1033_x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "6": {
-              "Ident": "StiRichText",
-              "Name": "RichText5",
-              "ClientRectangle": "0,6,5.8,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x005C_cpg437_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020_Modalit_x005C__x0027_e9_x0020_de_x0020_paiement_x005C_kerning0_x005C_b0_x005C_f1_x005C_fs16_x005C_lang1033_x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "7": {
-              "Ident": "StiRichText",
-              "Name": "RichText6",
-              "ClientRectangle": "0,6.6,5.8,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x005C_cpg437_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020_Adresse_x0020_de_x0020_livraison_x005C_kerning0_x005C_b0_x005C_f1_x005C_fs16_x005C_lang1033_x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "8": {
-              "Ident": "StiRichText",
-              "Name": "RichText7",
-              "ClientRectangle": "6.2,0.6,5.8,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x005C_cpg437_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020__x0020__x007B_root.orderNumber_x007D__x005C_kerning0_x005C_b0_x005C_f1_x005C_fs16_x005C_lang1033_x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "9": {
-              "Ident": "StiRichText",
-              "Name": "RichText9",
-              "ClientRectangle": "5.8,4.8,5.8,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020__x0020__x007B_root.ref__x007D__x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "10": {
-              "Ident": "StiRichText",
-              "Name": "RichText11",
-              "ClientRectangle": "5.8,6,13.2,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020__x0020__x007B_root.ref__x007D__x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "11": {
-              "Ident": "StiRichText",
               "Name": "RichText12",
               "ClientRectangle": "5.8,6.6,13.2,0.6",
               "Interaction": {
@@ -608,20 +804,7 @@
               "Border": "All;;;;;;;solid:Black",
               "BackColor": "Transparent"
             },
-            "12": {
-              "Ident": "StiRichText",
-              "Name": "RichText13",
-              "ClientRectangle": "11.6,3.6,7.4,2.4",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020__x005C_ul_x0020_Informations_x0020_du_x0020_fournisseur_x005C_ulnone_x0020__x0020__x005C_par_x000D__x000A__x0020__x0020_Raison_x0020_sociale_x0020_:_x0020__x007B_root_vendor.name_x007D__x005C_par_x000D__x000A__x0020__x0020_Adresse_x0020_Fournisseur_x0020_:_x0020__x007B_root_vendor.address_x007D__x005C_par_x000D__x000A__x0020__x0020_ICE_x0020_:_x0020_1.603.940.000.046_x005C_par_x000D__x000A__x0020__x0020_FAX_x0020_:_x002B_212_x0020__x0028_0_x0029__x0020_5_x0020_37_x0020_26_x0020_00_x0020_66_x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "13": {
+            "3": {
               "Ident": "StiText",
               "Name": "Text23",
               "ClientRectangle": "0,7.2,19,1.6",
@@ -651,43 +834,205 @@
               },
               "Type": "Expression"
             },
-            "14": {
-              "Ident": "StiRichText",
-              "Name": "RichText8",
+            "4": {
+              "Ident": "StiText",
+              "Name": "Text28",
+              "ClientRectangle": "5.8,3.6,5.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": " {root.orderNumber}"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Text38",
               "ClientRectangle": "5.8,4.2,5.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____LP___x005C_f1_x005C_fnil_x005C_fcharset0_x005C_cpg437_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020__x0020__x007B_root.createdAt_x007D__x005C_kerning0_x005C_b0_x005C_f1_x005C_fs16_x005C_lang1033_x005C_par_x000D__x000A___RP___x000D__x000A_"
+                "Value": " {root.createdAt}"
               },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
             },
-            "15": {
-              "Ident": "StiRichText",
-              "Name": "RichText10",
+            "6": {
+              "Ident": "StiText",
+              "Name": "Text40",
+              "ClientRectangle": "5.8,4.8,5.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": " {root.ref_}"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "7": {
+              "Ident": "StiText",
+              "Name": "Text45",
               "ClientRectangle": "5.8,5.4,5.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fswiss_x005C_fprq2_x005C_fcharset0_x0020_Calibri_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_kerning2_x005C_b_x005C_f0_x005C_fs22_x005C_lang1036_x0020__x0020__x0020__x0020__x007B_root.desiredDeliveryDate_x007D__x005C_par_x000D__x000A___RP___x000D__x000A_"
+                "Value": " {root.desiredDeliveryDate}"
               },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
             },
-            "16": {
+            "8": {
               "Ident": "StiText",
-              "Name": "Text28",
-              "ClientRectangle": "5.8,3.6,6,0.6",
+              "Name": "Text46",
+              "ClientRectangle": "5.8,6,13.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "   {root.orderNumber}"
+                "Value": " {root.ref_}"
               },
-              "Font": ";11;Bold;",
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "9": {
+              "Ident": "StiText",
+              "Name": "Text47",
+              "ClientRectangle": "0,3.6,5.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "  N° de BC"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "10": {
+              "Ident": "StiText",
+              "Name": "Text48",
+              "ClientRectangle": "0,4.2,5.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "  Date BC"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "11": {
+              "Ident": "StiText",
+              "Name": "Text50",
+              "ClientRectangle": "0,4.8,5.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "  Référence"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "12": {
+              "Ident": "StiText",
+              "Name": "Text51",
+              "ClientRectangle": "0,5.4,5.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "  Délai de livraison"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "13": {
+              "Ident": "StiText",
+              "Name": "Text52",
+              "ClientRectangle": "0,6,5.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "  Modalité de paiement"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "14": {
+              "Ident": "StiText",
+              "Name": "Text53",
+              "ClientRectangle": "0,6.6,5.8,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "  Adresse de livraison"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "15": {
+              "Ident": "StiText",
+              "Name": "Text54",
+              "ClientRectangle": "11.6,3.6,7.4,2.4",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "  Informations du fournisseur \r\n  Raison sociale : {root_vendor.name}\r\n  Adresse Fournisseur : {root_vendor.address}\r\n  ICE : 1.603.940.000.046\r\n  FAX :+212 (0) 5 37 26 00 66\r\n"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
@@ -698,7 +1043,7 @@
         "1": {
           "Ident": "StiPageFooterBand",
           "Name": "PageFooterBand1",
-          "ClientRectangle": "0,31.44,19,1.8",
+          "ClientRectangle": "0,25.9,19,1.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -781,7 +1126,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text25",
-              "ClientRectangle": "1.4,0,9.2,0.6",
+              "ClientRectangle": "1.4,0,9.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -863,7 +1208,7 @@
         "4": {
           "Ident": "StiChildBand",
           "Name": "ChildBand1",
-          "ClientRectangle": "0,10,19,0.6",
+          "ClientRectangle": "0,10,19,0",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -912,7 +1257,7 @@
         "5": {
           "Ident": "StiChildBand",
           "Name": "ChildBand2",
-          "ClientRectangle": "0,11.4,19,0.6",
+          "ClientRectangle": "0,10.8,19,0",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -962,7 +1307,7 @@
         "6": {
           "Ident": "StiTable",
           "Name": "Table5",
-          "ClientRectangle": "0,12.8,19,0.8",
+          "ClientRectangle": "0,11.6,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1000,7 +1345,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
-              "Type": "Expression",
+              "Type": "DataColumn",
               "ID": 0
             },
             "1": {
@@ -1034,7 +1379,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
-              "Type": "Expression",
+              "Type": "DataColumn",
               "ID": 1
             },
             "2": {
@@ -1068,7 +1413,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
-              "Type": "Expression",
+              "Type": "DataColumn",
               "ID": 2
             },
             "3": {
@@ -1102,7 +1447,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
-              "Type": "Expression",
+              "Type": "DataColumn",
               "ID": 3
             },
             "4": {
@@ -1183,7 +1528,7 @@
         "7": {
           "Ident": "StiDataBand",
           "Name": "DataBand1",
-          "ClientRectangle": "0,14.4,19,5.6",
+          "ClientRectangle": "0,13.2,19,4.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1193,7 +1538,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text30",
-              "ClientRectangle": "0,1.6,14.4,0.6",
+              "ClientRectangle": "0,0,14.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1211,7 +1556,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text34",
-              "ClientRectangle": "14.4,1.6,4.6,0.6",
+              "ClientRectangle": "14.4,0,4.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1224,20 +1569,12 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 0,
-                "DecimalDigits": 2,
-                "GroupSeparator": " ",
-                "State": "GroupSeparator, GroupSize",
-                "PositivePattern": 0
-              },
-              "Type": "Expression"
+              "Type": "DataColumn"
             },
             "2": {
               "Ident": "StiText",
               "Name": "Text32",
-              "ClientRectangle": "0,2.2,14.4,0.6",
+              "ClientRectangle": "0,0.6,14.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1255,7 +1592,7 @@
             "3": {
               "Ident": "StiText",
               "Name": "Text33",
-              "ClientRectangle": "0,2.8,14.4,0.6",
+              "ClientRectangle": "0,1.2,14.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1273,7 +1610,7 @@
             "4": {
               "Ident": "StiText",
               "Name": "Text36",
-              "ClientRectangle": "14.4,2.2,4.6,0.6",
+              "ClientRectangle": "14.4,0.6,4.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1286,20 +1623,12 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 0,
-                "DecimalDigits": 2,
-                "GroupSeparator": " ",
-                "State": "GroupSeparator, GroupSize",
-                "PositivePattern": 0
-              },
               "Type": "Expression"
             },
             "5": {
               "Ident": "StiText",
               "Name": "Text37",
-              "ClientRectangle": "14.4,2.8,4.6,0.6",
+              "ClientRectangle": "14.4,1.2,4.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1312,34 +1641,13 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 0,
-                "DecimalDigits": 2,
-                "GroupSeparator": " ",
-                "State": "GroupSeparator, GroupSize",
-                "PositivePattern": 0
-              },
               "Type": "Expression"
             },
             "6": {
-              "Ident": "StiRichText",
-              "Name": "RichText15",
-              "ClientRectangle": "0,0,19,1.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fnil_x005C_fcharset0_x005C_cpg437_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_f0_x005C_fs16_x005C_lang1033_x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "7": {
               "Ident": "StiText",
               "Name": "Text1",
               "CanGrow": true,
-              "ClientRectangle": "1,4.2,16.8,1.2",
+              "ClientRectangle": "1,2.6,16.8,1.2",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1355,10 +1663,10 @@
               },
               "Type": "Expression"
             },
-            "8": {
+            "7": {
               "Ident": "StiText",
               "Name": "Text21",
-              "ClientRectangle": "0,3.4,14.4,0.6",
+              "ClientRectangle": "0,1.8,14.4,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1373,10 +1681,10 @@
               "TextBrush": "solid:Black",
               "Type": "Expression"
             },
-            "9": {
+            "8": {
               "Ident": "StiText",
               "Name": "Text22",
-              "ClientRectangle": "14.4,3.4,4.6,0.6",
+              "ClientRectangle": "14.4,1.8,4.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -1389,14 +1697,6 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "TextFormat": {
-                "Ident": "StiCurrencyFormatService",
-                "NegativePattern": 0,
-                "DecimalDigits": 2,
-                "GroupSeparator": " ",
-                "State": "GroupSeparator, GroupSize",
-                "PositivePattern": 0
-              },
               "Type": "Expression"
             }
           }
@@ -1412,6 +1712,9 @@
         "Right": 1.0,
         "Top": 1.0,
         "Bottom": 1.0
+      },
+      "ReportUnit": {
+        "Ident": "StiCentimetersUnit"
       }
     },
     "1": {

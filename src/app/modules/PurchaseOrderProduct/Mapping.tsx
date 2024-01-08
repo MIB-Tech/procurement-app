@@ -22,6 +22,7 @@ import {PurchaseOrderProductModel} from './index';
 import {DesiredProductModel} from '../DesiredProduct';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
 import {useParams} from 'react-router-dom';
+import {useAuth} from '../../../_custom/hooks/UseAuth';
 
 type NetPriceProps =
   Pick<Model, 'grossPrice' | 'vatRate' | 'discountType' | 'discountValue'>
@@ -98,6 +99,7 @@ const DesiredProductsField = ({...fieldProps}: FieldProps) => {
   )
 }
 const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
+  const {location} = useAuth()
   const {name} = props;
   const [{value: id}] = useField({name: name.replace('product', 'id')});
   const [{value: product}] = useField<HydraItem | null>({name});
@@ -112,6 +114,7 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
         const desiredProduct: Partial<DesiredProductModel> = {
           designation,
           quantity: 0,
+          address: location?.['@title'] || 'AKDITAL HOLDING'
         }
         setDesiredProducts([desiredProduct])
       } else {
