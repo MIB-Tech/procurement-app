@@ -8,7 +8,7 @@ import {PurchaseOrderAttachmentModel} from '../PurchaseOrderAttachment';
 import {StringSelectOption} from '../../../_custom/Column/String/StringColumn';
 import {VendorAddressModel} from '../VendorAddress';
 import {ProductModel} from '../Product';
-import {PaymentModalityModel} from "../PaymentModality";
+import {PaymentModalityModel} from '../PaymentModality';
 
 export enum QuantityStatusEnum {
   Unreceived = 'UNRECEIVED',
@@ -23,7 +23,7 @@ export const QUANTITY_STATUS_OPTIONS: Array<StringSelectOption> = [
 ]
 
 type Model = {
-  orderNumber: number
+  orderNumber: string
   taxIncluded: boolean
   ref?: string
   externalRef?: string
@@ -42,23 +42,27 @@ type Model = {
 } & AbstractModel & CreateTimestamp
 
 export type PurchaseOrderPrint = {
-  taxType?: 'HT' | 'TTC'
-  grossTotalExclTax: string
+  totalExclTax: string
   totalInclTax: string
   totalVatTax: string
+  totalDiscount: string
+  address?: string
+  paymentModality: Pick<PaymentModalityModel, 'name'>
+  vendor: {
+    defaultAddress: Pick<VendorAddressModel, 'address' | 'postalCode'>
+  } & Pick<VendorModel, 'name' | 'phoneNumber'>
   //
+  purchaseOrderProducts: Array<{
+    product: Pick<ProductModel, 'code'>
+    grossPrice?: string
+    netPriceExclTax: string
+    discount: string
+  } & Pick<PurchaseOrderProductModel, 'designation' | 'quantity'>>
+  // FIXME
   comment?: string
   groupement1?: string
   groupement2?: string
-  vendor: Pick<VendorModel, 'name' | 'phoneNumber'> & Pick<VendorAddressModel, 'address' | 'postalCode'>
-  currency: Pick<CurrencyModel, 'code'>
-  purchaseOrderProducts: Array<{
-    product: Pick<ProductModel, 'code'>
-    vatRate?: string
-    grossPrice?: string
-    netPrice: string
-    grossTotalExclTax: string
-    discount: {value: number} & Pick<PurchaseOrderProductModel, 'discountType'>
-  } & Pick<PurchaseOrderProductModel, 'designation' | 'quantity'>>
-} & Pick<Model, 'orderNumber' | 'createdAt' | 'desiredDeliveryDate' | 'ref' | 'externalRef'>
+} & Pick<Model, 'orderNumber' | 'createdAt' | 'desiredDeliveryDate' | 'ref'>
+
+
 export default Model;

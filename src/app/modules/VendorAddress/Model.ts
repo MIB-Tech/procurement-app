@@ -3,7 +3,7 @@ import {VendorModel} from '../Vendor';
 
 
 type Model = {
-  postalCode: string
+  postalCode?: string
   address: string
   cityName: string
   isMain: boolean

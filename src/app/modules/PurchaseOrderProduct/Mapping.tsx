@@ -1,5 +1,5 @@
 import {ColumnMapping, FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {AbstractModel, ColumnTypeEnum} from '../../../_custom/types/types';
+import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
@@ -15,13 +15,11 @@ import {FieldProps} from '../../../_custom/Column/controls/fields';
 import {useEffect} from 'react';
 import {HydraItem} from '../../../_custom/types/hydra.types';
 import {NumberColumnField} from '../../../_custom/Column/Number/NumberColumnField';
-import {PrintButton} from '../PurchaseOrder/components/PrintButton';
 import {QUANTITY_STATUS_OPTIONS} from '../PurchaseOrder/Model';
 import {number} from 'yup';
 import {PurchaseOrderProductModel} from './index';
 import {DesiredProductModel} from '../DesiredProduct';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
-import {useParams} from 'react-router-dom';
 import {useAuth} from '../../../_custom/hooks/UseAuth';
 
 type NetPriceProps =
@@ -68,9 +66,7 @@ const getNetPriceExclTax = ({quantity, ...item}: NetPriceExclTaxProps) => getNet
 type PriceInclTaxProps = NetPriceProps & Pick<Model, 'quantity'>
 const getPriceInclTax = (item: PriceInclTaxProps) => {
   const {taxIncluded, grossPrice, vatRate, quantity} = item;
-  if (!vatRate) {
-    return 0;
-  }
+  if (!vatRate) return 0;
 
   const netPriceExclTax = getNetPriceExclTax(item);
 
@@ -99,30 +95,43 @@ const DesiredProductsField = ({...fieldProps}: FieldProps) => {
   )
 }
 const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
-  const {location} = useAuth()
+  const {location} = useAuth();
   const {name} = props;
   const [{value: id}] = useField({name: name.replace('product', 'id')});
   const [{value: product}] = useField<HydraItem | null>({name});
   const [, , {setValue: setDesignation}] = useField({name: name.replace('product', 'designation')});
-  const [, , {setValue: setDesiredProducts}] = useField({name: name.replace('product', 'desiredProducts')});
+  const [{value: desiredProducts}, , {setValue: setDesiredProducts}] = useField<Array<Partial<DesiredProductModel>>>({name: name.replace('product', 'desiredProducts')});
+  //
+  const [{value: quantity},, {setValue: setQuantity}] = useField<number>({name: name.replace('product', 'quantity')});
+
   const productName = product?.['@title'];
   useEffect(() => {
     if (!id) {
-      const designation = productName || ''
+      const designation = productName || '';
       setDesignation(designation);
       if (productName) {
         const desiredProduct: Partial<DesiredProductModel> = {
           designation,
           quantity: 0,
           address: location?.['@title'] || 'AKDITAL HOLDING'
-        }
-        setDesiredProducts([desiredProduct])
+        };
+        setDesiredProducts([desiredProduct]);
+        setQuantity(0);
       } else {
-        setDesiredProducts([])
+        setDesiredProducts([]);
       }
     }
 
   }, [productName, id]);
+
+  useEffect(() => {
+    if (desiredProducts.length === 1) {
+      setDesiredProducts([{
+        ...desiredProducts[0],
+        quantity
+      }]);
+    }
+  }, [quantity]);
 
   return (
     <ModelAutocompleteField

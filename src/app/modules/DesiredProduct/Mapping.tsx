@@ -58,10 +58,11 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
         designation: true,
         quantity: true,
         address: {
+          defaultValue: 'AKDITAL HOLDING',
           render: ({item, fieldProps}) => (
             <SelectField
               size='sm'
-              options={['CIOC', 'HPC', 'CGO', 'COC']}
+              options={['AKDITAL HOLDING', 'CIOC', 'HPC', 'CGO', 'COC']}
               placeholder='Adrs'
               {...fieldProps}
             />

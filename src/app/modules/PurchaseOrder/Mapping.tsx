@@ -8,7 +8,7 @@ import {PurchaseOrderPrint, QUANTITY_STATUS_OPTIONS, QuantityStatusEnum} from '.
 import moment from 'moment/moment';
 import {Trans, useTrans} from '../../../_custom/components/Trans';
 import {RouteLinks} from '../../../_custom/components/RouteAction/RouteLinks';
-import React, {FC, useState} from 'react';
+import React, {FC, useMemo, useState} from 'react';
 import {useAuth} from '../../../_custom/hooks/UseAuth';
 import {ReceiptModel} from '../Receipt';
 import {Button} from '../../../_custom/components/Button';
@@ -17,6 +17,7 @@ import ReportViewer from './components/ReportViewer';
 import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
 import {useUri} from '../../../_custom/hooks/UseUri';
 import {getNumberUnit} from '../../../_custom/components/NumberUnit';
+import {DiscountType} from '../PurchaseOrderProduct/Model';
 
 const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   vendor: true,
@@ -90,38 +91,40 @@ const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder
     path: `/print${uri}`,
     enabled: open
   });
-  const unit = item?.currency?.code || 'MAD'
-  const params: PurchaseOrderPrint | undefined = item && {
-    ...item,
-    taxType: item.taxIncluded ? 'HT' : 'TTC',
-    grossTotalExclTax: getNumberUnit({value: item.totalExclTax, precision: 2, unit}),
-    totalInclTax: getNumberUnit({value: item.totalInclTax, precision: 2}),
-    totalVatTax: getNumberUnit({value: item.totalVatTax, precision: 2}),
-    createdAt: moment(item.createdAt).format('L'),
-    desiredDeliveryDate: moment(item.desiredDeliveryDate).format('L'),
-    currency: {
-      code: unit
-    },
-    vendor: {
-      ...item.vendor,
-      ...item.vendor.defaultAddress,
-    },
-    purchaseOrderProducts: item.purchaseOrderProducts.map(purchaseOrderProduct => {
-      const precision = 2
+  const params = useMemo<PurchaseOrderPrint | undefined>(() => {
+    if (!item) return undefined;
 
-      return {
-        ...purchaseOrderProduct,
-        grossTotalExclTax: getNumberUnit({value: purchaseOrderProduct.netPriceExclTax, precision}),
-        discount: {
-          discountType: purchaseOrderProduct.discountType,
-          value: purchaseOrderProduct.discountValue
-        },
-        vatRate: getNumberUnit({value: purchaseOrderProduct.vatRate, unit: '%', precision}),
-        grossPrice: getNumberUnit({value: purchaseOrderProduct.grossPrice, precision}),
-        netPrice: getNumberUnit({value: purchaseOrderProduct.netPrice, precision}),
-      }
-    })
-  };
+    const unit = item?.currency?.code || 'DH';
+
+    return {
+      ...item,
+      totalExclTax: getNumberUnit({value: item.totalExclTax, precision: 2, unit}),
+      totalInclTax: getNumberUnit({value: item.totalInclTax, precision: 2}),
+      totalVatTax: getNumberUnit({value: item.totalVatTax, precision: 2}),
+      totalDiscount: getNumberUnit({value: 0, precision: 2}),// TODO
+      createdAt: moment(item.createdAt).format('L'),
+      desiredDeliveryDate: moment(item.desiredDeliveryDate).format('L'),
+      purchaseOrderProducts: item.purchaseOrderProducts.map(purchaseOrderProduct => {
+        const precision = 2;
+        const isPercentCentDiscount = purchaseOrderProduct.discountType === DiscountType.Percent;
+
+        return {
+          ...purchaseOrderProduct,
+          netPriceExclTax: getNumberUnit({value: purchaseOrderProduct.netPriceExclTax, precision}),
+          discount: getNumberUnit({
+            value: isPercentCentDiscount ?
+              purchaseOrderProduct.discountValue * 100 :
+              purchaseOrderProduct.discountValue,
+            unit: isPercentCentDiscount ? '%' : unit,
+            precision: isPercentCentDiscount ? 2 : precision,
+          }),
+          vatRate: getNumberUnit({value: purchaseOrderProduct.vatRate, unit: '%', precision}),
+          grossPrice: getNumberUnit({value: purchaseOrderProduct.grossPrice, precision}),
+          netPrice: getNumberUnit({value: purchaseOrderProduct.netPrice, precision}),
+        };
+      })
+    };
+  }, [item]);
 
   return (
     <div>
@@ -188,14 +191,17 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     totalExclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
+      precision: 2
     },
     totalInclTax: {
       type: ColumnTypeEnum.Number,
-      format: NumberFormat.Amount
+      format: NumberFormat.Amount,
+      precision: 2
     },
     totalVatTax: {
       type: ColumnTypeEnum.Number,
-      format: NumberFormat.Amount
+      format: NumberFormat.Amount,
+      precision: 2
     },
     createdAt: {
       type: ColumnTypeEnum.String,

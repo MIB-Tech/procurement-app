@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.2.0",
-  "ReportGuid": "30be1568ae6641a1b61fce97f8cbdea1",
+  "ReportGuid": "89b13e292226487d962c8a5b1b14b34e",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1704292917792+0100)/",
+  "ReportChanged": "/Date(1704454021617+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -32,34 +32,34 @@
         "Ident": "StiDataTableSource",
         "Name": "root",
         "Alias": "root",
-        "Key": "94d847cfb4d54bc0b744869dfb7a996a",
+        "Key": "99464ea149294814bbb742c80e895eb1",
         "Columns": {
           "0": {
-            "Name": "grossTotalExclTax",
+            "Name": "comment",
             "Index": -1,
-            "NameInSource": "grossTotalExclTax",
-            "Alias": "grossTotalExclTax",
-            "Type": "System.Decimal"
+            "NameInSource": "comment",
+            "Alias": "comment",
+            "Type": "System.String"
           },
           "1": {
-            "Name": "totalInclTax",
+            "Name": "groupement1",
             "Index": -1,
-            "NameInSource": "totalInclTax",
-            "Alias": "totalInclTax",
-            "Type": "System.Decimal"
+            "NameInSource": "groupement1",
+            "Alias": "groupement1",
+            "Type": "System.String"
           },
           "2": {
-            "Name": "totalVatTax",
+            "Name": "groupement2",
             "Index": -1,
-            "NameInSource": "totalVatTax",
-            "Alias": "totalVatTax",
-            "Type": "System.Decimal"
+            "NameInSource": "groupement2",
+            "Alias": "groupement2",
+            "Type": "System.String"
           },
           "3": {
-            "Name": "orderNumber",
+            "Name": "paymentModality",
             "Index": -1,
-            "NameInSource": "orderNumber",
-            "Alias": "orderNumber",
+            "NameInSource": "paymentModality",
+            "Alias": "paymentModality",
             "Type": "System.String"
           },
           "4": {
@@ -70,17 +70,17 @@
             "Type": "System.String"
           },
           "5": {
-            "Name": "comment",
+            "Name": "orderNumber",
             "Index": -1,
-            "NameInSource": "comment",
-            "Alias": "comment",
+            "NameInSource": "orderNumber",
+            "Alias": "orderNumber",
             "Type": "System.String"
           },
           "6": {
-            "Name": "currency",
+            "Name": "ref",
             "Index": -1,
-            "NameInSource": "currency",
-            "Alias": "currency",
+            "NameInSource": "ref",
+            "Alias": "ref",
             "Type": "System.String"
           },
           "7": {
@@ -91,59 +91,59 @@
             "Type": "System.String"
           },
           "8": {
-            "Name": "externalRef",
-            "Index": -1,
-            "NameInSource": "externalRef",
-            "Alias": "externalRef",
-            "Type": "System.String"
-          },
-          "9": {
-            "Name": "ref",
-            "Index": -1,
-            "NameInSource": "ref",
-            "Alias": "ref",
-            "Type": "System.String"
-          },
-          "10": {
-            "Name": "taxType",
-            "Index": -1,
-            "NameInSource": "taxType",
-            "Alias": "taxType",
-            "Type": "System.String"
-          },
-          "11": {
             "Name": "vendor",
             "Index": -1,
             "NameInSource": "vendor",
             "Alias": "vendor",
             "Type": "System.String"
           },
+          "9": {
+            "Name": "totalExclTax",
+            "Index": -1,
+            "NameInSource": "totalExclTax",
+            "Alias": "totalExclTax",
+            "Type": "System.String"
+          },
+          "10": {
+            "Name": "totalVatTax",
+            "Index": -1,
+            "NameInSource": "totalVatTax",
+            "Alias": "totalVatTax",
+            "Type": "System.String"
+          },
+          "11": {
+            "Name": "totalDiscount",
+            "Index": -1,
+            "NameInSource": "totalDiscount",
+            "Alias": "totalDiscount",
+            "Type": "System.String"
+          },
           "12": {
+            "Name": "totalInclTax",
+            "Index": -1,
+            "NameInSource": "totalInclTax",
+            "Alias": "totalInclTax",
+            "Type": "System.String"
+          },
+          "13": {
+            "Name": "adresse",
+            "Index": -1,
+            "NameInSource": "adresse",
+            "Alias": "adresse",
+            "Type": "System.String"
+          },
+          "14": {
             "Name": "purchaseOrderProducts",
             "Index": -1,
             "NameInSource": "purchaseOrderProducts",
             "Alias": "purchaseOrderProducts",
             "Type": "System.String"
           },
-          "13": {
+          "15": {
             "Name": "relationId",
             "Index": -1,
             "NameInSource": "relationId",
             "Alias": "relationId",
-            "Type": "System.String"
-          },
-          "14": {
-            "Name": "groupement1",
-            "Index": -1,
-            "NameInSource": "groupement1",
-            "Alias": "groupement1",
-            "Type": "System.String"
-          },
-          "15": {
-            "Name": "groupement2",
-            "Index": -1,
-            "NameInSource": "groupement2",
-            "Alias": "groupement2",
             "Type": "System.String"
           }
         },
@@ -151,15 +151,15 @@
       },
       "1": {
         "Ident": "StiDataTableSource",
-        "Name": "root_currency",
-        "Alias": "root_currency",
-        "Key": "d3b6121fb0ac45d581e4355016613bb0",
+        "Name": "root_paymentModality",
+        "Alias": "root_paymentModality",
+        "Key": "9b351bd852434601ba9ec2d67ea5ddbe",
         "Columns": {
           "0": {
-            "Name": "code",
+            "Name": "name",
             "Index": -1,
-            "NameInSource": "code",
-            "Alias": "code",
+            "NameInSource": "name",
+            "Alias": "name",
             "Type": "System.String"
           },
           "1": {
@@ -170,71 +170,59 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "DATA_TEST.root_currency"
+        "NameInSource": "DATA_TEST.root_paymentModality"
       },
       "2": {
         "Ident": "StiDataTableSource",
         "Name": "root_purchaseOrderProducts",
         "Alias": "root_purchaseOrderProducts",
-        "Key": "3f5b20458972432da79cc7ee0ca09c1f",
+        "Key": "adb93935b76e48ec8583714c5f1bae5a",
         "Columns": {
           "0": {
+            "Name": "designation",
+            "Index": -1,
+            "NameInSource": "designation",
+            "Alias": "designation",
+            "Type": "System.String",
+            "Key": "4a8db131e6c342c09c7d4128fc55e536"
+          },
+          "1": {
+            "Name": "quantity",
+            "Index": -1,
+            "NameInSource": "quantity",
+            "Alias": "quantity",
+            "Type": "System.Single",
+            "Key": "14a75bacddf84747b9bc958ec048ab2a"
+          },
+          "2": {
+            "Name": "grossPrice",
+            "Index": -1,
+            "NameInSource": "grossPrice",
+            "Alias": "grossPrice",
+            "Type": "System.String"
+          },
+          "3": {
             "Name": "product",
             "Index": -1,
             "NameInSource": "product",
             "Alias": "product",
             "Type": "System.String"
           },
-          "1": {
-            "Name": "designation",
+          "4": {
+            "Name": "netPriceExclTax",
             "Index": -1,
-            "NameInSource": "designation",
-            "Alias": "designation",
+            "NameInSource": "netPriceExclTax",
+            "Alias": "netPriceExclTax",
             "Type": "System.String"
           },
-          "2": {
-            "Name": "quantity",
-            "Index": -1,
-            "NameInSource": "quantity",
-            "Alias": "quantity",
-            "Type": "System.Decimal"
-          },
-          "3": {
-            "Name": "grossTotalExclTax",
-            "Index": -1,
-            "NameInSource": "grossTotalExclTax",
-            "Alias": "grossTotalExclTax",
-            "Type": "System.Decimal"
-          },
-          "4": {
-            "Name": "vatRate",
-            "Index": -1,
-            "NameInSource": "vatRate",
-            "Alias": "vatRate",
-            "Type": "System.Decimal"
-          },
           "5": {
-            "Name": "grossPrice",
-            "Index": -1,
-            "NameInSource": "grossPrice",
-            "Alias": "grossPrice",
-            "Type": "System.Decimal"
-          },
-          "6": {
-            "Name": "netPrice",
-            "Index": -1,
-            "NameInSource": "netPrice",
-            "Alias": "netPrice",
-            "Type": "System.Decimal"
-          },
-          "7": {
             "Name": "discount",
             "Index": -1,
             "NameInSource": "discount",
             "Alias": "discount",
             "Type": "System.String"
           },
-          "8": {
+          "6": {
             "Name": "relationId",
             "Index": -1,
             "NameInSource": "relationId",
@@ -246,25 +234,18 @@
       },
       "3": {
         "Ident": "StiDataTableSource",
-        "Name": "root_purchaseOrderProducts_discount",
-        "Alias": "root_purchaseOrderProducts_discount",
-        "Key": "4c540ff8e2134d33919020c278b9f901",
+        "Name": "root_purchaseOrderProducts_product",
+        "Alias": "root_purchaseOrderProducts_product",
+        "Key": "f64f79ce457c4c72b8320d3e7fa0b028",
         "Columns": {
           "0": {
-            "Name": "discountType",
+            "Name": "code",
             "Index": -1,
-            "NameInSource": "discountType",
-            "Alias": "discountType",
+            "NameInSource": "code",
+            "Alias": "code",
             "Type": "System.String"
           },
           "1": {
-            "Name": "value",
-            "Index": -1,
-            "NameInSource": "value",
-            "Alias": "value",
-            "Type": "System.Decimal"
-          },
-          "2": {
             "Name": "relationId",
             "Index": -1,
             "NameInSource": "relationId",
@@ -272,22 +253,36 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "DATA_TEST.root_purchaseOrderProducts_discount"
+        "NameInSource": "DATA_TEST.root_purchaseOrderProducts_product"
       },
       "4": {
         "Ident": "StiDataTableSource",
-        "Name": "root_purchaseOrderProducts_product",
-        "Alias": "root_purchaseOrderProducts_product",
-        "Key": "4efc4a017f5746e18a7532f965c2c999",
+        "Name": "root_vendor",
+        "Alias": "root_vendor",
+        "Key": "9f6bcfad94f94242a04624b1dd1688bb",
         "Columns": {
           "0": {
-            "Name": "code",
+            "Name": "name",
             "Index": -1,
-            "NameInSource": "code",
-            "Alias": "code",
+            "NameInSource": "name",
+            "Alias": "name",
             "Type": "System.String"
           },
           "1": {
+            "Name": "phoneNumber",
+            "Index": -1,
+            "NameInSource": "phoneNumber",
+            "Alias": "phoneNumber",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "defaultAddress",
+            "Index": -1,
+            "NameInSource": "defaultAddress",
+            "Alias": "defaultAddress",
+            "Type": "System.String"
+          },
+          "3": {
             "Name": "relationId",
             "Index": -1,
             "NameInSource": "relationId",
@@ -295,19 +290,19 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "DATA_TEST.root_purchaseOrderProducts_product"
+        "NameInSource": "DATA_TEST.root_vendor"
       },
       "5": {
         "Ident": "StiDataTableSource",
-        "Name": "root_vendor",
-        "Alias": "root_vendor",
-        "Key": "e32bb827964c44cb87837b255274e601",
+        "Name": "root_vendor_defaultAddress",
+        "Alias": "root_vendor_defaultAddress",
+        "Key": "3e3ef5a69aa549f1b38217233e61a2e0",
         "Columns": {
           "0": {
-            "Name": "name",
+            "Name": "postalCode",
             "Index": -1,
-            "NameInSource": "name",
-            "Alias": "name",
+            "NameInSource": "postalCode",
+            "Alias": "postalCode",
             "Type": "System.String"
           },
           "1": {
@@ -318,20 +313,6 @@
             "Type": "System.String"
           },
           "2": {
-            "Name": "postalCode",
-            "Index": -1,
-            "NameInSource": "postalCode",
-            "Alias": "postalCode",
-            "Type": "System.Decimal"
-          },
-          "3": {
-            "Name": "phoneNumber",
-            "Index": -1,
-            "NameInSource": "phoneNumber",
-            "Alias": "phoneNumber",
-            "Type": "System.String"
-          },
-          "4": {
             "Name": "relationId",
             "Index": -1,
             "NameInSource": "relationId",
@@ -339,320 +320,7 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "DATA_TEST.root_vendor"
-      },
-      "6": {
-        "Ident": "StiDataTableSource",
-        "Name": "root2",
-        "Alias": "root2",
-        "Key": "a035a5770f7247829db7ee31eeee5b25",
-        "Columns": {
-          "0": {
-            "Name": "grossTotalExclTax",
-            "Index": -1,
-            "NameInSource": "grossTotalExclTax",
-            "Alias": "grossTotalExclTax",
-            "Type": "System.Decimal"
-          },
-          "1": {
-            "Name": "totalInclTax",
-            "Index": -1,
-            "NameInSource": "totalInclTax",
-            "Alias": "totalInclTax",
-            "Type": "System.Decimal"
-          },
-          "2": {
-            "Name": "totalVatTax",
-            "Index": -1,
-            "NameInSource": "totalVatTax",
-            "Alias": "totalVatTax",
-            "Type": "System.Decimal"
-          },
-          "3": {
-            "Name": "orderNumber",
-            "Index": -1,
-            "NameInSource": "orderNumber",
-            "Alias": "orderNumber",
-            "Type": "System.String"
-          },
-          "4": {
-            "Name": "createdAt",
-            "Index": -1,
-            "NameInSource": "createdAt",
-            "Alias": "createdAt",
-            "Type": "System.String"
-          },
-          "5": {
-            "Name": "comment",
-            "Index": -1,
-            "NameInSource": "comment",
-            "Alias": "comment",
-            "Type": "System.String"
-          },
-          "6": {
-            "Name": "groupement1",
-            "Index": -1,
-            "NameInSource": "groupement1",
-            "Alias": "groupement1",
-            "Type": "System.String"
-          },
-          "7": {
-            "Name": "groupement2",
-            "Index": -1,
-            "NameInSource": "groupement2",
-            "Alias": "groupement2",
-            "Type": "System.String"
-          },
-          "8": {
-            "Name": "currency",
-            "Index": -1,
-            "NameInSource": "currency",
-            "Alias": "currency",
-            "Type": "System.String"
-          },
-          "9": {
-            "Name": "desiredDeliveryDate",
-            "Index": -1,
-            "NameInSource": "desiredDeliveryDate",
-            "Alias": "desiredDeliveryDate",
-            "Type": "System.String"
-          },
-          "10": {
-            "Name": "externalRef",
-            "Index": -1,
-            "NameInSource": "externalRef",
-            "Alias": "externalRef",
-            "Type": "System.String"
-          },
-          "11": {
-            "Name": "ref",
-            "Index": -1,
-            "NameInSource": "ref",
-            "Alias": "ref",
-            "Type": "System.String"
-          },
-          "12": {
-            "Name": "taxType",
-            "Index": -1,
-            "NameInSource": "taxType",
-            "Alias": "taxType",
-            "Type": "System.String"
-          },
-          "13": {
-            "Name": "vendor",
-            "Index": -1,
-            "NameInSource": "vendor",
-            "Alias": "vendor",
-            "Type": "System.String"
-          },
-          "14": {
-            "Name": "purchaseOrderProducts",
-            "Index": -1,
-            "NameInSource": "purchaseOrderProducts",
-            "Alias": "purchaseOrderProducts",
-            "Type": "System.String"
-          },
-          "15": {
-            "Name": "relationId",
-            "Index": -1,
-            "NameInSource": "relationId",
-            "Alias": "relationId",
-            "Type": "System.String"
-          }
-        },
-        "NameInSource": "DATA_TEST.root"
-      },
-      "7": {
-        "Ident": "StiDataTableSource",
-        "Name": "root_currency2",
-        "Alias": "root_currency2",
-        "Key": "e3c63108f0e24f78aec98f61e50a8f9b",
-        "Columns": {
-          "0": {
-            "Name": "code",
-            "Index": -1,
-            "NameInSource": "code",
-            "Alias": "code",
-            "Type": "System.String"
-          },
-          "1": {
-            "Name": "relationId",
-            "Index": -1,
-            "NameInSource": "relationId",
-            "Alias": "relationId",
-            "Type": "System.String"
-          }
-        },
-        "NameInSource": "DATA_TEST.root_currency"
-      },
-      "8": {
-        "Ident": "StiDataTableSource",
-        "Name": "root_purchaseOrderProducts2",
-        "Alias": "root_purchaseOrderProducts2",
-        "Key": "f0cfbfa97147400b97f3cd6c5c810a49",
-        "Columns": {
-          "0": {
-            "Name": "product",
-            "Index": -1,
-            "NameInSource": "product",
-            "Alias": "product",
-            "Type": "System.String"
-          },
-          "1": {
-            "Name": "designation",
-            "Index": -1,
-            "NameInSource": "designation",
-            "Alias": "designation",
-            "Type": "System.String"
-          },
-          "2": {
-            "Name": "quantity",
-            "Index": -1,
-            "NameInSource": "quantity",
-            "Alias": "quantity",
-            "Type": "System.Decimal"
-          },
-          "3": {
-            "Name": "grossTotalExclTax",
-            "Index": -1,
-            "NameInSource": "grossTotalExclTax",
-            "Alias": "grossTotalExclTax",
-            "Type": "System.Decimal"
-          },
-          "4": {
-            "Name": "vatRate",
-            "Index": -1,
-            "NameInSource": "vatRate",
-            "Alias": "vatRate",
-            "Type": "System.Decimal"
-          },
-          "5": {
-            "Name": "grossPrice",
-            "Index": -1,
-            "NameInSource": "grossPrice",
-            "Alias": "grossPrice",
-            "Type": "System.Decimal"
-          },
-          "6": {
-            "Name": "netPrice",
-            "Index": -1,
-            "NameInSource": "netPrice",
-            "Alias": "netPrice",
-            "Type": "System.Decimal"
-          },
-          "7": {
-            "Name": "discount",
-            "Index": -1,
-            "NameInSource": "discount",
-            "Alias": "discount",
-            "Type": "System.String"
-          },
-          "8": {
-            "Name": "relationId",
-            "Index": -1,
-            "NameInSource": "relationId",
-            "Alias": "relationId",
-            "Type": "System.String"
-          }
-        },
-        "NameInSource": "DATA_TEST.root_purchaseOrderProducts"
-      },
-      "9": {
-        "Ident": "StiDataTableSource",
-        "Name": "root_purchaseOrderProducts_discount2",
-        "Alias": "root_purchaseOrderProducts_discount2",
-        "Key": "a1f6d63d48aa4955b66aaa9b3e762fb1",
-        "Columns": {
-          "0": {
-            "Name": "discountType",
-            "Index": -1,
-            "NameInSource": "discountType",
-            "Alias": "discountType",
-            "Type": "System.String"
-          },
-          "1": {
-            "Name": "value",
-            "Index": -1,
-            "NameInSource": "value",
-            "Alias": "value",
-            "Type": "System.Decimal"
-          },
-          "2": {
-            "Name": "relationId",
-            "Index": -1,
-            "NameInSource": "relationId",
-            "Alias": "relationId",
-            "Type": "System.String"
-          }
-        },
-        "NameInSource": "DATA_TEST.root_purchaseOrderProducts_discount"
-      },
-      "10": {
-        "Ident": "StiDataTableSource",
-        "Name": "root_purchaseOrderProducts_product2",
-        "Alias": "root_purchaseOrderProducts_product2",
-        "Key": "095d583c4db24cc197836c3719f2003f",
-        "Columns": {
-          "0": {
-            "Name": "code",
-            "Index": -1,
-            "NameInSource": "code",
-            "Alias": "code",
-            "Type": "System.String"
-          },
-          "1": {
-            "Name": "relationId",
-            "Index": -1,
-            "NameInSource": "relationId",
-            "Alias": "relationId",
-            "Type": "System.String"
-          }
-        },
-        "NameInSource": "DATA_TEST.root_purchaseOrderProducts_product"
-      },
-      "11": {
-        "Ident": "StiDataTableSource",
-        "Name": "root_vendor2",
-        "Alias": "root_vendor2",
-        "Key": "ec162f997fce4ce081f2dc4155863b3d",
-        "Columns": {
-          "0": {
-            "Name": "name",
-            "Index": -1,
-            "NameInSource": "name",
-            "Alias": "name",
-            "Type": "System.String"
-          },
-          "1": {
-            "Name": "address",
-            "Index": -1,
-            "NameInSource": "address",
-            "Alias": "address",
-            "Type": "System.String"
-          },
-          "2": {
-            "Name": "postalCode",
-            "Index": -1,
-            "NameInSource": "postalCode",
-            "Alias": "postalCode",
-            "Type": "System.Decimal"
-          },
-          "3": {
-            "Name": "phoneNumber",
-            "Index": -1,
-            "NameInSource": "phoneNumber",
-            "Alias": "phoneNumber",
-            "Type": "System.String"
-          },
-          "4": {
-            "Name": "relationId",
-            "Index": -1,
-            "NameInSource": "relationId",
-            "Alias": "relationId",
-            "Type": "System.String"
-          }
-        },
-        "NameInSource": "DATA_TEST.root_vendor"
+        "NameInSource": "DATA_TEST.root_vendor_defaultAddress"
       }
     },
     "Databases": {
@@ -660,7 +328,8 @@
         "Ident": "StiJsonDatabase",
         "Name": "DATA_TEST",
         "Alias": "DATA_TEST",
-        "PathData": "C:\\Users\\USER\\Desktop\\stimu repo\\DATA_TEST.json",
+        "Key": "3128b2b5910549fda1393a7d76afb105",
+        "PathData": "C:\\Users\\user\\OneDrive\\Desktop\\stimu repo\\DATA_TEST.json",
         "HeadersString": ""
       }
     },
@@ -671,12 +340,12 @@
           "0": "relationId"
         },
         "ParentColumns": {
-          "0": "currency"
+          "0": "paymentModality"
         },
-        "NameInSource": "root_currency",
+        "NameInSource": "root_paymentModality",
         "Alias": "root",
         "ParentSource": "root",
-        "ChildSource": "root_currency"
+        "ChildSource": "root_paymentModality"
       },
       "1": {
         "Name": "root",
@@ -688,6 +357,7 @@
         },
         "NameInSource": "root_purchaseOrderProducts",
         "Alias": "root",
+        "Key": "7ac34d5eed4b4e4e8aef8ec381d9bacb",
         "ParentSource": "root",
         "ChildSource": "root_purchaseOrderProducts"
       },
@@ -697,27 +367,15 @@
           "0": "relationId"
         },
         "ParentColumns": {
-          "0": "discount"
-        },
-        "NameInSource": "root_purchaseOrderProducts_discount",
-        "Alias": "root_purchaseOrderProducts",
-        "ParentSource": "root_purchaseOrderProducts",
-        "ChildSource": "root_purchaseOrderProducts_discount"
-      },
-      "3": {
-        "Name": "root_purchaseOrderProducts",
-        "ChildColumns": {
-          "0": "relationId"
-        },
-        "ParentColumns": {
           "0": "product"
         },
         "NameInSource": "root_purchaseOrderProducts_product",
         "Alias": "root_purchaseOrderProducts",
+        "Key": "aa76261fbc934a7f94de4d9e8dbb9d70",
         "ParentSource": "root_purchaseOrderProducts",
         "ChildSource": "root_purchaseOrderProducts_product"
       },
-      "4": {
+      "3": {
         "Name": "root",
         "ChildColumns": {
           "0": "relationId"
@@ -729,6 +387,19 @@
         "Alias": "root",
         "ParentSource": "root",
         "ChildSource": "root_vendor"
+      },
+      "4": {
+        "Name": "root_vendor",
+        "ChildColumns": {
+          "0": "relationId"
+        },
+        "ParentColumns": {
+          "0": "defaultAddress"
+        },
+        "NameInSource": "root_vendor_defaultAddress",
+        "Alias": "root_vendor",
+        "ParentSource": "root_vendor",
+        "ChildSource": "root_vendor_defaultAddress"
       }
     }
   },
@@ -792,19 +463,6 @@
               "ImageBytes": "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"
             },
             "2": {
-              "Ident": "StiRichText",
-              "Name": "RichText12",
-              "ClientRectangle": "5.8,6.6,13.2,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "__LP___x005C_rtf1_x005C_ansi_x005C_ansicpg1252_x005C_deff0_x005C_nouicompat_x005C_deflang14348__LP___x005C_fonttbl__LP___x005C_f0_x005C_fnil_x005C_fcharset0_x005C_cpg437_x0020_Microsoft_x0020_Sans_x0020_Serif_x003B___RP____RP___x000D__x000A___LP___x005C__x002A__x005C_generator_x0020_Riched20_x0020_10.0.22621__RP___x005C_viewkind4_x005C_uc1_x0020__x000D__x000A__x005C_pard_x005C_f0_x005C_fs16_x005C_lang1033_x005C_par_x000D__x000A___RP___x000D__x000A_"
-              },
-              "Border": "All;;;;;;;solid:Black",
-              "BackColor": "Transparent"
-            },
-            "3": {
               "Ident": "StiText",
               "Name": "Text23",
               "ClientRectangle": "0,7.2,19,1.6",
@@ -834,7 +492,7 @@
               },
               "Type": "Expression"
             },
-            "4": {
+            "3": {
               "Ident": "StiText",
               "Name": "Text28",
               "ClientRectangle": "5.8,3.6,5.8,0.6",
@@ -842,16 +500,22 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": " {root.orderNumber}"
+                "Value": "{root.orderNumber}"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
               "Type": "Expression"
             },
-            "5": {
+            "4": {
               "Ident": "StiText",
               "Name": "Text38",
               "ClientRectangle": "5.8,4.2,5.8,0.6",
@@ -859,16 +523,22 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": " {root.createdAt}"
+                "Value": "{root.createdAt}"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
               "Type": "Expression"
             },
-            "6": {
+            "5": {
               "Ident": "StiText",
               "Name": "Text40",
               "ClientRectangle": "5.8,4.8,5.8,0.6",
@@ -876,16 +546,22 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": " {root.ref_}"
+                "Value": "{root.ref_}"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
               "Type": "Expression"
             },
-            "7": {
+            "6": {
               "Ident": "StiText",
               "Name": "Text45",
               "ClientRectangle": "5.8,5.4,5.8,0.6",
@@ -893,16 +569,22 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": " {root.desiredDeliveryDate}"
+                "Value": "{root.desiredDeliveryDate}"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
               "Type": "Expression"
             },
-            "8": {
+            "7": {
               "Ident": "StiText",
               "Name": "Text46",
               "ClientRectangle": "5.8,6,13.2,0.6",
@@ -910,16 +592,22 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": " {root.ref_}"
+                "Value": "{root.ref_}"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
               "Type": "Expression"
             },
-            "9": {
+            "8": {
               "Ident": "StiText",
               "Name": "Text47",
               "ClientRectangle": "0,3.6,5.8,0.6",
@@ -927,16 +615,22 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "  N° de BC"
+                "Value": "N° de BC"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
               "Type": "Expression"
             },
-            "10": {
+            "9": {
               "Ident": "StiText",
               "Name": "Text48",
               "ClientRectangle": "0,4.2,5.8,0.6",
@@ -944,16 +638,22 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "  Date BC"
+                "Value": "Date BC"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
               "Type": "Expression"
             },
-            "11": {
+            "10": {
               "Ident": "StiText",
               "Name": "Text50",
               "ClientRectangle": "0,4.8,5.8,0.6",
@@ -961,16 +661,22 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "  Référence"
+                "Value": "Référence"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
               "Type": "Expression"
             },
-            "12": {
+            "11": {
               "Ident": "StiText",
               "Name": "Text51",
               "ClientRectangle": "0,5.4,5.8,0.6",
@@ -978,16 +684,22 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "  Délai de livraison"
+                "Value": "Délai de livraison"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
               "Type": "Expression"
             },
-            "13": {
+            "12": {
               "Ident": "StiText",
               "Name": "Text52",
               "ClientRectangle": "0,6,5.8,0.6",
@@ -995,16 +707,22 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "  Modalité de paiement"
+                "Value": "Modalité de paiement"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
               "Type": "Expression"
             },
-            "14": {
+            "13": {
               "Ident": "StiText",
               "Name": "Text53",
               "ClientRectangle": "0,6.6,5.8,0.6",
@@ -1012,16 +730,22 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "  Adresse de livraison"
+                "Value": "Adresse de livraison"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
               "Type": "Expression"
             },
-            "15": {
+            "14": {
               "Ident": "StiText",
               "Name": "Text54",
               "ClientRectangle": "11.6,3.6,7.4,2.4",
@@ -1029,13 +753,46 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "  Informations du fournisseur \r\n  Raison sociale : {root_vendor.name}\r\n  Adresse Fournisseur : {root_vendor.address}\r\n  ICE : 1.603.940.000.046\r\n  FAX :+212 (0) 5 37 26 00 66\r\n"
+                "Value": "Informations du fournisseur \r\nRaison sociale : {root_vendor.name}\r\nAdresse Fournisseur : {root_vendor_defaultAddress.address}\r\nICE : 1.603.940.000.046\r\nFAX :+212 (0) 5 37 26 00 66\r\n"
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 6.0,
+                "Bottom": 6.0
+              },
+              "ExceedMargins": "All",
+              "Type": "Expression"
+            },
+            "15": {
+              "Ident": "StiText",
+              "Name": "Text55",
+              "ClientRectangle": "5.8,6.6,13.2,0.6",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{root.adresse}"
+              },
+              "VertAlignment": "Center",
+              "Font": ";9;Bold;",
+              "Border": "All;;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Margins": {
+                "Left": 6.0,
+                "Right": 6.0,
+                "Top": 3.0,
+                "Bottom": 3.0
+              },
               "Type": "Expression"
             }
           }
@@ -1110,13 +867,15 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text24",
-              "ClientRectangle": "0,0,1.4,0.6",
+              "ClientRectangle": "0,0,2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Réf."
               },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
               "Font": ";11;;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:0,32,96",
@@ -1126,13 +885,15 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text25",
-              "ClientRectangle": "1.4,0,9.4,0.6",
+              "ClientRectangle": "2,0,8.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Description"
               },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
               "Font": ";11;;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:0,32,96",
@@ -1147,8 +908,10 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Quantité"
+                "Value": "Qte"
               },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
               "Font": ";11;;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:0,32,96",
@@ -1158,13 +921,15 @@
             "3": {
               "Ident": "StiText",
               "Name": "Text27",
-              "ClientRectangle": "12.4,0,2.2,0.6",
+              "ClientRectangle": "12.4,0,2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Prix brut"
+                "Value": "P.U Brut"
               },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
               "Font": ";11;;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:0,32,96",
@@ -1174,13 +939,15 @@
             "4": {
               "Ident": "StiText",
               "Name": "Text31",
-              "ClientRectangle": "14.6,0,1.6,0.6",
+              "ClientRectangle": "14.4,0,1.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Remise"
               },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
               "Font": ";11;;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:0,32,96",
@@ -1197,6 +964,8 @@
               "Text": {
                 "Value": "Montant HT"
               },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
               "Font": ";11;;",
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:0,32,96",
@@ -1319,7 +1088,7 @@
               "Name": "TableCell19",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "0,0,1.4,0.8",
+              "ClientRectangle": "0,0,2,0.8",
               "Restrictions": "AllowMove, AllowSelect, AllowChange",
               "Expressions": {
                 "0": {
@@ -1337,6 +1106,7 @@
               "Text": {
                 "Value": "{root_purchaseOrderProducts_product.code}"
               },
+              "HorAlignment": "Center",
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
@@ -1353,7 +1123,7 @@
               "Name": "TableCell20",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "1.4,0,9.2,0.8",
+              "ClientRectangle": "2,0,8.6,0.8",
               "Restrictions": "AllowMove, AllowSelect, AllowChange",
               "Expressions": {
                 "0": {
@@ -1371,6 +1141,7 @@
               "Text": {
                 "Value": "{root_purchaseOrderProducts_product.root_purchaseOrderProducts.designation}"
               },
+              "HorAlignment": "Center",
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
@@ -1405,6 +1176,7 @@
               "Text": {
                 "Value": "{root_purchaseOrderProducts_product.root_purchaseOrderProducts.quantity}"
               },
+              "HorAlignment": "Center",
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
@@ -1421,7 +1193,7 @@
               "Name": "TableCell22",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "12.4,0,2.2,0.8",
+              "ClientRectangle": "12.4,0,2,0.8",
               "Restrictions": "AllowMove, AllowSelect, AllowChange",
               "Expressions": {
                 "0": {
@@ -1439,6 +1211,7 @@
               "Text": {
                 "Value": "{root_purchaseOrderProducts_product.root_purchaseOrderProducts.grossPrice}"
               },
+              "HorAlignment": "Center",
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
@@ -1455,7 +1228,7 @@
               "Name": "TableCell23",
               "CanGrow": true,
               "GrowToHeight": true,
-              "ClientRectangle": "14.6,0,1.6,0.8",
+              "ClientRectangle": "14.4,0,1.8,0.8",
               "Restrictions": "AllowMove, AllowSelect, AllowChange",
               "Expressions": {
                 "0": {
@@ -1473,6 +1246,7 @@
               "Text": {
                 "Value": "{root_purchaseOrderProducts_product.root_purchaseOrderProducts.discount}"
               },
+              "HorAlignment": "Center",
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
@@ -1481,7 +1255,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
-              "Type": "Expression",
+              "Type": "DataColumn",
               "ID": 4
             },
             "5": {
@@ -1505,8 +1279,9 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root_purchaseOrderProducts_product.root_purchaseOrderProducts.grossTotalExclTax}"
+                "Value": "{root_purchaseOrderProducts_product.root_purchaseOrderProducts.netPriceExclTax}"
               },
+              "HorAlignment": "Center",
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
               "Border": "All;;;;;;;solid:Black",
@@ -1515,7 +1290,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
-              "Type": "Expression",
+              "Type": "DataColumn",
               "ID": 25
             }
           },
@@ -1561,7 +1336,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root.grossTotalExclTax}"
+                "Value": "{root.totalExclTax}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
@@ -1615,7 +1390,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root.totalInclTax}"
+                "Value": "{root.totalVatTax}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
@@ -1623,7 +1398,7 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "Type": "Expression"
+              "Type": "DataColumn"
             },
             "5": {
               "Ident": "StiText",
@@ -1633,7 +1408,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root.totalVatTax}"
+                "Value": "{root.totalDiscount}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
@@ -1641,7 +1416,7 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "Type": "Expression"
+              "Type": "DataColumn"
             },
             "6": {
               "Ident": "StiText",
@@ -1689,7 +1464,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root.totalVatTax}"
+                "Value": "{root.totalInclTax}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
@@ -1697,590 +1472,9 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
-              "Type": "Expression"
+              "Type": "DataColumn"
             }
           }
-        }
-      },
-      "PageWidth": 21.0,
-      "PageHeight": 29.7,
-      "Watermark": {
-        "TextBrush": "solid:50,0,0,0"
-      },
-      "Margins": {
-        "Left": 1.0,
-        "Right": 1.0,
-        "Top": 1.0,
-        "Bottom": 1.0
-      },
-      "ReportUnit": {
-        "Ident": "StiCentimetersUnit"
-      }
-    },
-    "1": {
-      "Ident": "StiPage",
-      "Name": "Page2",
-      "Guid": "6ce387783c51452f85f95c367ef9e130",
-      "Conditions": {
-        "0": {
-          "Ident": "StiCondition",
-          "Item": "Expression",
-          "Expression": {
-            "Value": "{1=1}"
-          },
-          "BorderSides": "None"
-        }
-      },
-      "Interaction": {
-        "Ident": "StiInteraction"
-      },
-      "Border": ";;2;;;;;solid:Black",
-      "Brush": "solid:",
-      "Components": {
-        "0": {
-          "Ident": "StiPageHeaderBand",
-          "Name": "PageHeaderBand2",
-          "ClientRectangle": "0,0.4,19,3.8",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiImage",
-              "Name": "Image4",
-              "ClientRectangle": "15.6,0.8,3,1.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "ImageBytes": "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"
-            }
-          }
-        },
-        "1": {
-          "Ident": "StiPageFooterBand",
-          "Name": "PageFooterBand2",
-          "ClientRectangle": "0,25.9,19,1.8",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text3",
-              "ClientRectangle": "3,0.7,13,1",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "AKDITAL\r\n62 ,Plateaux 13-14, 2ème Angle Route d'El Jadida et Bd Abderrahim Bouabid , Casablanca\r\nICE 001755804000005\r\n"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text2",
-              "ClientRectangle": "8.6,0.1,8.2,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "page {PageNumber}/{TotalPageCount}"
-              },
-              "Font": ";9;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            }
-          }
-        },
-        "2": {
-          "Ident": "StiImage",
-          "Name": "Image3",
-          "ClientRectangle": "-0.8,0,6.4,2.6",
-          "Interaction": {
-            "Ident": "StiInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "ImageBytes": "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"
-        },
-        "3": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand3",
-          "ClientRectangle": "0,5,19,0.8",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:"
-        },
-        "4": {
-          "Ident": "StiDataBand",
-          "Name": "DataBand2",
-          "ClientRectangle": "0,6.6,19,8",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text5",
-              "ClientRectangle": "0.2,0,11,2.8",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "\r\nToute livraison de Produits devra faire l’objet d’un bon de livraison en trois exemplaires signés et cachetés :\r\n\r\n1 copie originale pour le bureau d’ordre du site\r\n1 copie originale pour la comptabilité\r\n1 copie originale pour le fournisseur\r\n"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text6",
-              "ClientRectangle": "11.2,0,7.2,2.8",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Signature Directrice Achats :\r\nZeineb BENNIS\r\n"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text7",
-              "ClientRectangle": "6.2,3.4,5.2,0.8",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Détail des receptions"
-              },
-              "Font": ";14;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text8",
-              "ClientRectangle": "0,4.4,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "N° de BC"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "4": {
-              "Ident": "StiText",
-              "Name": "Text9",
-              "ClientRectangle": "5,4.4,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "5": {
-              "Ident": "StiText",
-              "Name": "Text10",
-              "ClientRectangle": "0,5,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Date BC"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "6": {
-              "Ident": "StiText",
-              "Name": "Text11",
-              "ClientRectangle": "5,5,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "7": {
-              "Ident": "StiText",
-              "Name": "Text12",
-              "ClientRectangle": "0,5.6,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Référence"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "8": {
-              "Ident": "StiText",
-              "Name": "Text13",
-              "ClientRectangle": "5,5.6,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "9": {
-              "Ident": "StiText",
-              "Name": "Text14",
-              "ClientRectangle": "0,6.2,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Délai de livraison\r\n"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "10": {
-              "Ident": "StiText",
-              "Name": "Text15",
-              "ClientRectangle": "5,6.2,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "11": {
-              "Ident": "StiText",
-              "Name": "Text16",
-              "ClientRectangle": "0,6.8,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "12": {
-              "Ident": "StiText",
-              "Name": "Text17",
-              "ClientRectangle": "5,6.8,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "13": {
-              "Ident": "StiText",
-              "Name": "Text18",
-              "ClientRectangle": "0,7.4,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "14": {
-              "Ident": "StiText",
-              "Name": "Text19",
-              "ClientRectangle": "5,7.4,5,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Font": ";10;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            }
-          }
-        },
-        "5": {
-          "Ident": "StiGroupHeaderBand",
-          "Name": "GroupHeaderBand1",
-          "ClientRectangle": "0,15.4,19,1.2",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": ";;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiText",
-              "Name": "Text41",
-              "ClientRectangle": "0,0.6,19,0.6",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Adresse de réception : Localisation Etage 1 – Clinique "
-              },
-              "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:White",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "1": {
-              "Ident": "StiText",
-              "Name": "Text42",
-              "ClientRectangle": "0,0,4,0.6",
-              "Expressions": {
-                "0": {
-                  "Name": "Brush",
-                  "Expression": "SolidBrushValue(\"#050178\")"
-                },
-                "1": {
-                  "Name": "TextBrush",
-                  "Expression": "SolidBrushValue(\"#FFFFFF\")"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Réf."
-              },
-              "Font": ";9;Bold;",
-              "Border": "All;Transparent;;;;;;solid:",
-              "Brush": "solid:5,1,120",
-              "TextBrush": "solid:255,255,255",
-              "Type": "Expression"
-            },
-            "2": {
-              "Ident": "StiText",
-              "Name": "Text43",
-              "ClientRectangle": "4,0,13,0.6",
-              "Expressions": {
-                "0": {
-                  "Name": "Brush",
-                  "Expression": "SolidBrushValue(\"#050178\")"
-                },
-                "1": {
-                  "Name": "TextBrush",
-                  "Expression": "SolidBrushValue(\"#FFFFFF\")"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Description"
-              },
-              "Font": ";9;Bold;",
-              "Border": "All;Transparent;;;;;;solid:",
-              "Brush": "solid:5,1,120",
-              "TextBrush": "solid:255,255,255",
-              "Type": "Expression"
-            },
-            "3": {
-              "Ident": "StiText",
-              "Name": "Text44",
-              "ClientRectangle": "17,0,2,0.6",
-              "Expressions": {
-                "0": {
-                  "Name": "Brush",
-                  "Expression": "SolidBrushValue(\"#050178\")"
-                },
-                "1": {
-                  "Name": "TextBrush",
-                  "Expression": "SolidBrushValue(\"#FFFFFF\")"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Quantité"
-              },
-              "Font": ";9;Bold;",
-              "Border": "All;Transparent;;;;;;solid:",
-              "Brush": "solid:5,1,120",
-              "TextBrush": "solid:255,255,255",
-              "Type": "Expression"
-            }
-          },
-          "Condition": {
-            "Value": "{root.vendor}"
-          }
-        },
-        "6": {
-          "Ident": "StiTable",
-          "Name": "Table2",
-          "ClientRectangle": "0,17.4,19,0.8",
-          "Interaction": {
-            "Ident": "StiBandInteraction"
-          },
-          "Border": "Bottom;;;;;;;solid:Black",
-          "Brush": "solid:",
-          "Components": {
-            "0": {
-              "Ident": "StiTableCell",
-              "Name": "Table2_Cell1",
-              "ClientRectangle": "0,0,4,0.8",
-              "Restrictions": "AllowMove, AllowSelect, AllowChange",
-              "Expressions": {
-                "0": {
-                  "Name": "Brush",
-                  "Expression": "SolidBrushValue(\"#FFFFFF\")"
-                },
-                "1": {
-                  "Name": "TextBrush",
-                  "Expression": "SolidBrushValue(\"#000000\")"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{root_purchaseOrderProducts_product.root_purchaseOrderProducts.product}"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:255,255,255",
-              "TextBrush": "solid:0,0,0",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Type": "DataColumn",
-              "ID": 0
-            },
-            "1": {
-              "Ident": "StiTableCell",
-              "Name": "Table2_Cell2",
-              "ClientRectangle": "4,0,13,0.8",
-              "Restrictions": "AllowMove, AllowSelect, AllowChange",
-              "Expressions": {
-                "0": {
-                  "Name": "Brush",
-                  "Expression": "SolidBrushValue(\"#FFFFFF\")"
-                },
-                "1": {
-                  "Name": "TextBrush",
-                  "Expression": "SolidBrushValue(\"#000000\")"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Description{root_purchaseOrderProducts2.designation}"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:255,255,255",
-              "TextBrush": "solid:0,0,0",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Type": "Expression",
-              "ID": 1
-            },
-            "2": {
-              "Ident": "StiTableCell",
-              "Name": "Table2_Cell3",
-              "ClientRectangle": "17,0,2,0.8",
-              "Restrictions": "AllowMove, AllowSelect, AllowChange",
-              "Expressions": {
-                "0": {
-                  "Name": "Brush",
-                  "Expression": "SolidBrushValue(\"#FFFFFF\")"
-                },
-                "1": {
-                  "Name": "TextBrush",
-                  "Expression": "SolidBrushValue(\"#000000\")"
-                }
-              },
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "{root_purchaseOrderProducts2.quantity}"
-              },
-              "HorAlignment": "Center",
-              "VertAlignment": "Center",
-              "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
-              "Brush": "solid:255,255,255",
-              "TextBrush": "solid:0,0,0",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Type": "Expression",
-              "ID": 2
-            }
-          },
-          "MinHeight": 0.2,
-          "DataSourceName": "root_purchaseOrderProducts2",
-          "RowCount": 1,
-          "ColumnCount": 3,
-          "NumberID": 75
         }
       },
       "PageWidth": 21.0,
