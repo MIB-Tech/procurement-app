@@ -86,7 +86,6 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         vatRate: true,
         isMobilised: true,
         stockable: true,
-        components: true
       }
     },
     {
