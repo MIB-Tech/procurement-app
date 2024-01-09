@@ -48,7 +48,6 @@ const mapping: ModelMapping<ModelEnum.Category> = {
     {
       type: ViewEnum.Detail,
       columns: {
-        name: true,
         parent: true
       }
     }
