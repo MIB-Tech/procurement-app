@@ -79,7 +79,6 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
         discountValue: true,
         applicatedAt: true,
         product: true,
-        //  vendor: true
       }
     }
 
