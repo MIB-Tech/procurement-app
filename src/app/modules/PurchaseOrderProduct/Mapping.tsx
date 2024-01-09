@@ -159,7 +159,6 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
         format={item.discountType === DiscountType.Percent ? NumberFormat.Percent : NumberFormat.Amount}
         {...fieldProps}
         size='sm'
-        hideAdornment
         min={0}
       />
     )

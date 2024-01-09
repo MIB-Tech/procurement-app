@@ -22,7 +22,7 @@ export const NumberColumnField: FC<Pick<NumberColumn<any>, 'format'> & FieldProp
         <NumberField
           {...props}
           value={field.value * 100}
-          onChange={value => setValue(value / 100)}
+          onChange={e => setValue(parseFloat(e.target.value) / 100)}
         />
       );
     default:

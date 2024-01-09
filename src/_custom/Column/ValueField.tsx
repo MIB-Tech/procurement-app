@@ -16,8 +16,8 @@ export type ValueFieldProps = {
   className?: string
   placeholder?: string
   icon?: boolean
-} & FieldProps & FormControlProps & Pick<InputNumberProps, 'hideAdornment'>
-export const ValueField = ({ column, name, size, className, placeholder, icon, hideAdornment, feedbackLabel }: ValueFieldProps) => {
+} & FieldProps & FormControlProps
+export const ValueField = ({ column, name, size, className, placeholder, icon, feedbackLabel }: ValueFieldProps) => {
   const _props = {
     size,
     className,
@@ -31,7 +31,7 @@ export const ValueField = ({ column, name, size, className, placeholder, icon, h
 
   switch (type) {
     case ColumnTypeEnum.Number:
-      return <NumberColumnField format={column.format} {..._props} hideAdornment={hideAdornment}/>;
+      return <NumberColumnField format={column.format} {..._props} />;
     case ColumnTypeEnum.Boolean:
       return <BooleanField {..._props} />;
     case ColumnTypeEnum.String:

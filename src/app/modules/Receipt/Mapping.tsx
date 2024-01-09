@@ -124,14 +124,13 @@ const PrintReceiptButton: FC<CustomItemActionProps<ModelEnum.Receipt>> = ({...pr
 
         return {
           ...receiptProduct,
-          ref: purchaseOrderProduct.product.code,
+          reference: purchaseOrderProduct.product.code,
           name: designation,
           desiredProductQuantity: quantity,
         };
       })
     };
   }, [item]);
-  console.log(params);
 
   return (
     <div>
@@ -237,35 +236,6 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
   );
 };
 
-const GenerateInvoiceButton: FC<CustomItemActionProps<ModelEnum.Receipt>> = ({...props}) => {
-  const [open, setOpen] = useState<boolean>();
-
-  return (
-    <div>
-      <div className='position-relative'>
-        <Button
-          size='sm'
-          variant='outline-default'
-          className='bg-white'
-          onClick={() => setOpen(true)}
-        >
-          <Trans id='GENERATE_INVOICE'/>
-        </Button>
-      </div>
-      <Modal
-        fullscreen
-        show={open}
-        onHide={() => setOpen(false)}
-      >
-        <Modal.Header closeButton/>
-        <Modal.Body>
-          {/*{isLoading && <Trans id='LOADING'/>}*/}
-
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
-};
 
 const mapping: ModelMapping<ModelEnum.Receipt> = {
   modelName: ModelEnum.Receipt,
@@ -332,7 +302,6 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
       type: ViewEnum.Detail,
       customActions: [
         {render: ({item}) => <PrintReceiptButton item={item}/>},
-        {render: ({item}) => <GenerateInvoiceButton item={item}/>},
       ],
       columns: {
         receiptNumber: true,

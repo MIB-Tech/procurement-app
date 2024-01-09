@@ -3,9 +3,7 @@ import clsx from 'clsx';
 import { FormControlProps } from './Input.types';
 
 
-export type InputProps = {
-
-} & FormControlProps & Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>
+export type InputProps = FormControlProps & Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((
   {

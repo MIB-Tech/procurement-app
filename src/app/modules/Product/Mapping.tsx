@@ -4,6 +4,7 @@ import {ModelEnum} from '../types';
 import {SelectField} from "../../../_custom/Column/controls/fields/SelectField/SelectField";
 import {StringFormat} from "../../../_custom/Column/String/StringColumn";
 import {NumberFormat} from "../../../_custom/Column/Number/NumberColumn";
+import {HydraItem} from '../../../_custom/types/hydra.types';
 
 
 const mapping: ModelMapping<ModelEnum.Product> = {
@@ -91,6 +92,13 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     },
     {
       type: ViewEnum.Create,
+      getMutateInput: item => ({
+        ...item,
+        components: item.components?.map(component => ({
+          ...component,
+          product: (component as HydraItem)['@id']
+        }))
+      }),
       fields: {
         reference: true,
         name: true,
@@ -118,6 +126,13 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     },
     {
       type: ViewEnum.Update,
+      getMutateInput: item => ({
+        ...item,
+        components: item.components?.map(component => ({
+          ...component,
+          product: (component as HydraItem)['@id']
+        }))
+      }),
       fields: {
         reference: true,
         name: true,

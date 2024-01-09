@@ -97,7 +97,6 @@ const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}
                     {...fieldProps}
                     column={columnDef[columnName]}
                     size='sm'
-                    hideAdornment
                   />
                 }
               </div>
@@ -255,7 +254,6 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
                               {...fieldProps}
                               column={columnDef[columnName]}
                               size='sm'
-                              hideAdornment
                             />
                           }
                         </td>
