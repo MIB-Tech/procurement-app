@@ -227,7 +227,7 @@ const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder>> = (
           {item && params && (
             <ReportViewer
               fileName={item.taxIncluded ?
-                'purchase-order-invoice.tax-included.mrt' :
+                'purchase-order-invoice-tax-igncluded.mrt' :
                 'purchase-order-invoice.mrt'
               }
               // params={example}
