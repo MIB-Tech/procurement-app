@@ -1,11 +1,52 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
-import {SelectField} from "../../../_custom/Column/controls/fields/SelectField/SelectField";
-import {StringFormat} from "../../../_custom/Column/String/StringColumn";
-import {NumberFormat} from "../../../_custom/Column/Number/NumberColumn";
-import {HydraItem} from '../../../_custom/types/hydra.types';
+import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/SelectField';
+import {StringFormat} from '../../../_custom/Column/String/StringColumn';
+import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 
+const formFields: FormFields<ModelEnum.Product> = {
+  reference: true,
+  name: true,
+  measurementUnit: {
+    defaultValue: 'U'
+  },
+  accountingAccount: true,
+  vatRate: {
+    defaultValue: .2,
+    render: ({fieldProps}) => (
+      <SelectField
+        size='sm'
+        options={[0, .07, .1, .14, .2]}
+        getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
+        placeholder='TVA'
+        {...fieldProps}
+      />
+    )
+  },
+  category: true,
+  children: true,
+  isMobilised: true,
+  stockable: true,
+  note: {
+    slotProps: {
+      root: {
+        sm: 12,
+        md: 12,
+        lg: 12,
+      }
+    }
+  },
+  components: {
+    slotProps: {
+      root: {
+        sm: 12,
+        md: 12,
+        lg: 12,
+      }
+    }
+  },
+};
 
 const mapping: ModelMapping<ModelEnum.Product> = {
   modelName: ModelEnum.Product,
@@ -91,71 +132,25 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     },
     {
       type: ViewEnum.Create,
-      getMutateInput: item => ({
-        ...item,
-        components: item.components?.map(component => ({
-          ...component,
-          product: (component as HydraItem)['@id']
-        }))
-      }),
-      fields: {
-        reference: true,
-        name: true,
-        measurementUnit: true,
-        accountingAccount: true,
-        vatRate: {
-          defaultValue: .2,
-          render: ({fieldProps}) => (
-            <SelectField
-              size='sm'
-              options={[0, .07, .1, .14, .2]}
-              getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
-              placeholder='TVA'
-              {...fieldProps}
-            />
-          )
-        },
-        category: true,
-        children: true,
-        note: true,
-        isMobilised: true,
-        stockable: true,
-        components: true,
-      }
+      slotProps: {
+        item: {
+          sm: 4,
+          md: 3,
+          lg: 2,
+        }
+      },
+      fields: formFields
     },
     {
       type: ViewEnum.Update,
-      getMutateInput: item => ({
-        ...item,
-        components: item.components?.map(component => ({
-          ...component,
-          product: (component as HydraItem)['@id']
-        }))
-      }),
-      fields: {
-        reference: true,
-        name: true,
-        measurementUnit: true,
-        accountingAccount: true,
-        vatRate: {
-          defaultValue: .2,
-          render: ({item, fieldProps}) => (
-            <SelectField
-              size='sm'
-              options={[0, .07, .1, .14, .2]}
-              getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
-              placeholder='TVA'
-              {...fieldProps}
-            />
-          )
-        },
-        category: true,
-        children: true,
-        note: true,
-        isMobilised: true,
-        stockable: true,
-        components: true
-      }
+      slotProps: {
+        item: {
+          sm: 4,
+          md: 3,
+          lg: 2,
+        }
+      },
+      fields: formFields
     },
     {
       type: ViewEnum.Detail,

@@ -23,9 +23,7 @@ const AutocompleteField = <T,
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
-        onBlur={() => {
-          setTouched(true);
-        }}
+        onBlur={() => setTouched(true)}
         className={clsx(className, error && 'is-invalid')}
       />
     </Field>
