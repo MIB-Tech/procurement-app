@@ -14,7 +14,6 @@ import {useCustomQuery} from '../hooks/UseCustomQuery';
 import {ModelEnum} from '../../app/modules/types';
 
 import {isLocationColumn} from '../ListingView/ListingView.utils';
-import {RouteLinks} from '../components/RouteAction/RouteLinks';
 import {useParams} from 'react-router-dom';
 
 
@@ -68,7 +67,8 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
     enableReinitialize: true,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: item => {
+    onSubmit: (item, formikHelpers) => {
+      formikHelpers.setTouched({});
       const columnNames = (Object.keys(fields) as Array<keyof Model<M>>).filter(columnName => {
 
         const field = fields[columnName];
@@ -81,11 +81,12 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
         return !grantedRoles || isGranted(grantedRoles);
       });
 
+
       const input = columnNames.reduce((input, columnName) => ({
         ...input,
         [columnName]: item[columnName]
-      }), {} as Input<M>)
-      mutation.mutate(getMutateInput?.(input) || input);
+      }), {} as Input<M>);
+      mutation.mutate(getMutateInput?.(input) || input)
     }
   });
 

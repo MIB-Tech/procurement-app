@@ -102,14 +102,27 @@ const Helper: FC<ArrayHelpers & {
   initialValues: Record<any, any>,
   components: Array<ComponentModel>
 }> = ({push, initialValues, components}) => {
+  const {location} = useAuth();
   useEffect(() => {
     components.forEach(component => {
+      const {product, quantity, price} = component
+      const {name:designation, note, vatRate} = product
+      const desiredProduct: Partial<DesiredProductModel> = {
+        designation,
+        quantity,
+        address: location?.['@title'] || 'AKDITAL HOLDING'
+      };
+
       push({
         ...initialValues,
         id: null,
-        quantity: component.quantity,
-        grossPrice: component.price,
-        product: component.product,
+        quantity: quantity,
+        grossPrice: price,
+        product,
+        designation,
+        note,
+        vatRate,
+        desiredProducts: [desiredProduct]
       });
     });
   }, [components]);
@@ -119,6 +132,8 @@ const Helper: FC<ArrayHelpers & {
 };
 const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
   const {location} = useAuth();
+  const formikContext = useFormikContext();
+  console.log(formikContext.isSubmitting)
   const {name} = props;
   const [, {touched}] = useField({name});
   const [{value: purchaseOrderProduct}] = useField({name: name.replace('.product', '')});
@@ -129,10 +144,10 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
   const [{value: desiredProducts}, , {setValue: setDesiredProducts}] = useField<Array<Partial<DesiredProductModel>>>({name: name.replace('product', 'desiredProducts')});
   //
   const [{value: quantity = 0}, , {setValue: setQuantity}] = useField<number>({name: name.replace('product', 'quantity')});
-  const productId = product?.id;
   const productURI = product?.['@id'];
 
-  const {item: detailedProduct} = useItemQuery<ModelEnum.Product>({
+  console.log(productURI, touched)
+  const {item: detailedProduct, isFetching:isdDetailedProductFetching} = useItemQuery<ModelEnum.Product>({
     modelName: ModelEnum.Product,
     path: productURI,
     enabled: !!productURI && touched
@@ -187,14 +202,15 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
         size='sm'
         {...props}
       />
-      {detailedProduct && touched && (
+      {!isdDetailedProductFetching && detailedProduct && touched && (
         <FieldArray
           name='purchaseOrderProducts'
           render={formikArrayRenderProps => (
             <Helper
               components={detailedProduct.components}
               initialValues={purchaseOrderProduct}
-              {...formikArrayRenderProps}/>
+              {...formikArrayRenderProps}
+            />
           )}
         />
       )}

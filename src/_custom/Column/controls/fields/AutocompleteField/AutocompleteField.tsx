@@ -22,7 +22,10 @@ const AutocompleteField = <T,
         {...props}
         onChange={(_, newValue) => setValue(newValue)}
         // onBlur={() => setTouched(true)}
-        onFocus={() => setTouched(true)}
+        // onFocus={e => {
+        //   props.onFocus?.(e)
+        //   setTouched(true)
+        // }}
         className={clsx(className, error && 'is-invalid')}
       />
     </Field>

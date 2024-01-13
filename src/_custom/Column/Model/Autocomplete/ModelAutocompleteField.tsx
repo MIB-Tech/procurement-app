@@ -31,7 +31,7 @@ export const ModelAutocompleteField = <
   Multiple extends UndefinedBool
 >({ modelName, autoSelect, getParams = filter => filter, ...props }: ModelAutocomplete<M, Multiple>) => {
   const { trans } = useTrans();
-  const [{ value }, , { setValue }] = useField<HydraItem>({ name: props.name });
+  const [{ value }, , { setValue, setTouched }] = useField<HydraItem>({ name: props.name });
   const [inputValue, setInputValue] = React.useState<string>('');
   const [enabled, setEnabled] = React.useState<boolean>(false);
   const [pagination, setPagination] = React.useState<Required<PaginationInput>>({
@@ -108,7 +108,10 @@ export const ModelAutocompleteField = <
           setEnabled(true);
         }
       }}
-      onFocus={() => setEnabled(true)}
+      onFocus={() => {
+        setTouched(true)
+        setEnabled(true)
+      }}
       loading={isLoading}
       renderPopper={({ options, getOptionProps, ...listboxProps }) => (
         <Popper {...listboxProps} >
