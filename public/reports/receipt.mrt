@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.2.0",
-  "ReportGuid": "da37484c74524863a6f524f58d8c1895",
+  "ReportGuid": "ed311f4eda6f4a11bb9aeb3409a94c56",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1704797172881+0100)/",
+  "ReportChanged": "/Date(1704900405249+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -341,13 +341,15 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text29",
-              "ClientRectangle": "6.8,2.6,5.6,0.8",
+              "ClientRectangle": "0,2.6,19,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Bon de reception"
+                "Value": "Bon de réception"
               },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
               "Font": ";12;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
@@ -368,7 +370,7 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text23",
-              "ClientRectangle": "0,7.6,19,0.6",
+              "ClientRectangle": "0,6.8,19,0.6",
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
@@ -444,6 +446,7 @@
             "5": {
               "Ident": "StiText",
               "Name": "Text46",
+              "CanGrow": true,
               "ClientRectangle": "5.8,5.2,5.8,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -456,6 +459,9 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Margins": {
                 "Left": 6.0,
                 "Right": 6.0,
@@ -536,6 +542,7 @@
             "9": {
               "Ident": "StiText",
               "Name": "Text53",
+              "CanGrow": true,
               "ClientRectangle": "0,6,5.8,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -548,6 +555,9 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Margins": {
                 "Left": 6.0,
                 "Right": 6.0,
@@ -586,6 +596,7 @@
             "11": {
               "Ident": "StiText",
               "Name": "Text55",
+              "CanGrow": true,
               "ClientRectangle": "5.8,6,13.2,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -598,6 +609,9 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Margins": {
                 "Left": 6.0,
                 "Right": 6.0,
@@ -966,6 +980,8 @@
             "3": {
               "Ident": "StiTableCell",
               "Name": "Table5_Cell4",
+              "CanGrow": true,
+              "GrowToHeight": true,
               "ClientRectangle": "16,0,3,0.8",
               "Restrictions": "AllowMove, AllowSelect, AllowChange",
               "Interaction": {
@@ -980,6 +996,9 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:White",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Type": "Expression",
               "ID": 90
             }

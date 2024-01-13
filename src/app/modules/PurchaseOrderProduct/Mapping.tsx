@@ -21,9 +21,9 @@ import {PurchaseOrderProductModel} from './index';
 import {DesiredProductModel} from '../DesiredProduct';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
 import {useAuth} from '../../../_custom/hooks/UseAuth';
-import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery';
-import {PropertyFilterOperator} from '../../../_custom/ListingView/Filter/Filter.types';
 import {ArrayHelpers} from 'formik/dist/FieldArray';
+import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
+import {ComponentModel} from '../Component';
 
 type NetPriceProps =
   Pick<Model, 'grossPrice' | 'vatRate' | 'discountType' | 'discountValue'>
@@ -98,23 +98,10 @@ const DesiredProductsField = ({...fieldProps}: FieldProps) => {
   );
 }
 
-const Helper: FC<ArrayHelpers & { productId: number, initialValues: Record<any, any> }> = ({
-                                                                                             productId,
-                                                                                             push,
-                                                                                             initialValues
-                                                                                           }) => {
-  const {collection: components} = useCollectionQuery<ModelEnum.Component>({
-    modelName: ModelEnum.Component,
-    options: {enabled: !!productId},
-    params: {
-      filter: {
-        property: 'parentProduct',
-        operator: PropertyFilterOperator.Equal,
-        value: productId
-      }
-    }
-  });
-
+const Helper: FC<ArrayHelpers & {
+  initialValues: Record<any, any>,
+  components: Array<ComponentModel>
+}> = ({push, initialValues, components}) => {
   useEffect(() => {
     components.forEach(component => {
       push({
@@ -125,7 +112,7 @@ const Helper: FC<ArrayHelpers & { productId: number, initialValues: Record<any, 
         product: component.product,
       });
     });
-  }, [productId, components]);
+  }, [components]);
 
 
   return <></>;
@@ -135,36 +122,41 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
   const {name} = props;
   const [, {touched}] = useField({name});
   const [{value: purchaseOrderProduct}] = useField({name: name.replace('.product', '')});
-  const [{value: id}] = useField({name: name.replace('product', 'id')});
   const [{value: product}] = useField<HydraItem | null>({name});
-  // const [{value: note}] = useField<HydraItem | null>({name});
+  const [, , {setValue: setNote}] = useField<HydraItem | null>({name: name.replace('product', 'note')});
+  const [, , {setValue: setVatRate}] = useField<HydraItem | null>({name: name.replace('product', 'vatRate')});
   const [, , {setValue: setDesignation}] = useField({name: name.replace('product', 'designation')});
   const [{value: desiredProducts}, , {setValue: setDesiredProducts}] = useField<Array<Partial<DesiredProductModel>>>({name: name.replace('product', 'desiredProducts')});
   //
   const [{value: quantity = 0}, , {setValue: setQuantity}] = useField<number>({name: name.replace('product', 'quantity')});
   const productId = product?.id;
+  const productURI = product?.['@id'];
 
+  const {item: detailedProduct} = useItemQuery<ModelEnum.Product>({
+    modelName: ModelEnum.Product,
+    path: productURI,
+    enabled: !!productURI && touched
+  });
 
   useEffect(() => {
-    if (!id) {
-      const designation = product?.['@title'] || '';
-      setDesignation(designation);
-      if (designation) {
-        const desiredProduct: Partial<DesiredProductModel> = {
-          designation,
-          quantity,
-          address: location?.['@title'] || 'AKDITAL HOLDING'
-        };
-        setDesiredProducts([desiredProduct]);
-        if (!quantity) {
-          setQuantity(0);
-        }
-      } else {
-        setDesiredProducts([]);
+    if (detailedProduct) {
+      const designation = product['@title'];
+      setDesignation(detailedProduct.name);
+      setNote(detailedProduct.note);
+      setVatRate(detailedProduct.vatRate);
+      const desiredProduct: Partial<DesiredProductModel> = {
+        designation,
+        quantity,
+        address: location?.['@title'] || 'AKDITAL HOLDING'
+      };
+      setDesiredProducts([desiredProduct]);
+      if (!quantity) {
+        setQuantity(0);
       }
+    } else {
+      setDesiredProducts([]);
     }
-
-  }, [product, id, quantity]);
+  }, [detailedProduct]);
 
   useEffect(() => {
     if (desiredProducts.length === 1) {
@@ -195,12 +187,12 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
         size='sm'
         {...props}
       />
-      {productId && touched && (
+      {detailedProduct && touched && (
         <FieldArray
           name='purchaseOrderProducts'
           render={formikArrayRenderProps => (
             <Helper
-              productId={productId}
+              components={detailedProduct.components}
               initialValues={purchaseOrderProduct}
               {...formikArrayRenderProps}/>
           )}
