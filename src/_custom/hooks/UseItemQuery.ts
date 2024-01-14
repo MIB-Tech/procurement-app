@@ -1,25 +1,26 @@
 import { useQuery } from 'react-query';
-import axios from 'axios';
+import axios, {AxiosResponse} from 'axios';
 import { HydraItem } from '../types/hydra.types';
 import { useUri } from './UseUri';
 import { getDetailQueryKey } from '../utils';
 import { useToastr } from '../Toastr/UseToastr';
 import { ModelEnum } from '../../app/modules/types';
+import {QueryObserverOptions} from 'react-query/types/core/types';
 
 
 export const useItemQuery = <M extends ModelEnum>({
   modelName,
-  enabled,
-  path
-}: { modelName: M, path?: string, enabled?: boolean }) => {
+  path,
+  ...options
+}: { modelName: M, path?: string } & Pick<QueryObserverOptions<AxiosResponse<HydraItem<M>>>, 'enabled' | 'refetchOnWindowFocus'>) => {
   const { itemNotFoundError } = useToastr();
   const uri = useUri({ modelName });
   const url = path || uri;
-  const result = useQuery(
+  const result = useQuery<AxiosResponse<HydraItem<M>>>(
     [getDetailQueryKey(modelName), url],
-    () => axios.get<HydraItem<M>>(url),
+    () => axios.get(url),
     {
-      enabled,
+      ...options,
       onError: () => {
         itemNotFoundError();
       }

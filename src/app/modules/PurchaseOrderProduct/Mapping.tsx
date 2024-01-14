@@ -132,8 +132,6 @@ const Helper: FC<ArrayHelpers & {
 };
 const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
   const {location} = useAuth();
-  const formikContext = useFormikContext();
-  console.log(formikContext.isSubmitting)
   const {name} = props;
   const [, {touched}] = useField({name});
   const [{value: purchaseOrderProduct}] = useField({name: name.replace('.product', '')});
@@ -145,12 +143,11 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
   //
   const [{value: quantity = 0}, , {setValue: setQuantity}] = useField<number>({name: name.replace('product', 'quantity')});
   const productURI = product?.['@id'];
-
-  console.log(productURI, touched)
   const {item: detailedProduct, isFetching:isdDetailedProductFetching} = useItemQuery<ModelEnum.Product>({
     modelName: ModelEnum.Product,
     path: productURI,
-    enabled: !!productURI && touched
+    enabled: !!productURI && touched,
+    refetchOnWindowFocus: false
   });
 
   useEffect(() => {
