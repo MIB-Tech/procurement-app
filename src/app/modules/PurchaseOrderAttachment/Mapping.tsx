@@ -22,8 +22,7 @@ const mapping: ModelMapping<ModelEnum.purchaseOrderAttachment> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {
-      }
+      columns: {}
     },
     {
       type: ViewEnum.Create,

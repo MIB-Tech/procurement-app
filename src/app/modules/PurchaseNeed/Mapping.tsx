@@ -1,7 +1,6 @@
 import {Model, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
-import {CREATED_AT_COLUMN} from '../columns';
-import {PurchaseNeedStatusEnum, PriorityEnum} from './Model';
+import {PriorityEnum, PurchaseNeedStatusEnum} from './Model';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';

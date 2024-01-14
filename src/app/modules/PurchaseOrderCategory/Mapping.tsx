@@ -12,34 +12,34 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderCategory> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    name:{
-      type:ColumnTypeEnum.String
+    name: {
+      type: ColumnTypeEnum.String
     },
-    purchaseOrders:{
-      type:ModelEnum.PurchaseOrder,
-      multiple:true
+    purchaseOrders: {
+      type: ModelEnum.PurchaseOrder,
+      multiple: true
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
-        name:true,
-        PurchaseOrders:true
+        name: true,
+        PurchaseOrders: true
       }
     },
     {
       type: ViewEnum.Create,
       fields: {
-        name:true,
-        PurchaseOrders:true
+        name: true,
+        PurchaseOrders: true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
-        name:true,
-        PurchaseOrders:true
+        name: true,
+        PurchaseOrders: true
       }
     },
   ]

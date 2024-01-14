@@ -29,8 +29,8 @@ export const ABSTRACT_FILE_LISTING_VIEW: ListingViewType<any> = {
   },
   columns: {
     originalName: {
-      render: ({ item }) => {
-        const { contentUrl, originalName } = item;
+      render: ({item}) => {
+        const {contentUrl, originalName} = item;
         if (!contentUrl) {
 
           return <span>{originalName}</span>;
@@ -41,14 +41,14 @@ export const ABSTRACT_FILE_LISTING_VIEW: ListingViewType<any> = {
             href='#'
             onClick={e => {
               e.preventDefault();
-              axios.post('/custom/download', { contentUrl }, { responseType: 'blob' })
-              .then((response) => {
-                const link = document.createElement('a');
-                link.href = window.URL.createObjectURL(new Blob([response.data]));
-                link.setAttribute('download', originalName || 'file');
-                document.body.appendChild(link);
-                link.click();
-              });
+              axios.post('/custom/download', {contentUrl}, {responseType: 'blob'})
+                .then((response) => {
+                  const link = document.createElement('a');
+                  link.href = window.URL.createObjectURL(new Blob([response.data]));
+                  link.setAttribute('download', originalName || 'file');
+                  document.body.appendChild(link);
+                  link.click();
+                });
             }}
           >
             {originalName}
@@ -63,12 +63,12 @@ export const ABSTRACT_IMAGE_LISTING_VIEW: ListingViewType<any> = {
   ...ABSTRACT_FILE_LISTING_VIEW,
   columns: {
     preview: {
-      render: ({ item: { contentUrl } }) => (
+      render: ({item: {contentUrl}}) => (
         <>
           {
             contentUrl && (
               <div className='symbol symbol-50px bg-light'>
-                <img src={toAbsoluteApi(contentUrl)} alt='' />
+                <img src={toAbsoluteApi(contentUrl)} alt=''/>
               </div>
             )
           }
@@ -78,7 +78,7 @@ export const ABSTRACT_IMAGE_LISTING_VIEW: ListingViewType<any> = {
     ...ABSTRACT_FILE_LISTING_VIEW.columns,
     dimensions: true
   }
-}
+};
 export const ABSTRACT_FILE_MAPPING: Omit<ModelMapping<any>, 'recoilState' | 'modelName'> = {
   uploadable: true,
   columnDef: {

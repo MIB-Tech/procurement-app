@@ -1,9 +1,9 @@
 import {AbstractModel} from '../../../_custom/types/types';
 import {PurchaseNeedProductModel} from '../PurchaseNeedProduct';
 import {CategoryModel} from '../Category';
-import {ProductPricingModel} from "../ProductPricing";
-import {PurchaseOrderModel} from "../PurchaseOrder";
-import {ComponentModel} from "../Component";
+import {ProductPricingModel} from '../ProductPricing';
+import {PurchaseOrderModel} from '../PurchaseOrder';
+import {ComponentModel} from '../Component';
 
 
 type Model = {

@@ -57,7 +57,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
     },
     display: ({item}) => typeof item.taxIncluded === 'boolean'
   }
-}
+};
 
 
 const GenerateReceiptButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder>> = ({item}) => {
@@ -379,7 +379,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {
           render: ({item}) => {
             if (item.status !== QuantityStatusEnum.FullyReceived) {
-              return <></>
+              return <></>;
             }
 
             return <PrintInvoiceButton item={item}/>;

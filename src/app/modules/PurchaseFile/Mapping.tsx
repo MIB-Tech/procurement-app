@@ -1,7 +1,7 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
-import {StringFormat} from "../../../_custom/Column/String/StringColumn";
+import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 
 
 const mapping: ModelMapping<ModelEnum.PurchaseFile> = {

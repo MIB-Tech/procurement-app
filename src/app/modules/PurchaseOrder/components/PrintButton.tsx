@@ -8,7 +8,9 @@ import {TableView} from '../../../../_custom/ListingView/views/Table/TableView';
 import {Checkbox} from '../../../../_custom/Column/Boolean/Chechbox/Checkbox';
 
 
-export const PrintButton: FC<{selectedItems: Array<HydraItem<ModelEnum.PurchaseOrderProduct>>}> = ({selectedItems}) => {
+export const PrintButton: FC<{
+  selectedItems: Array<HydraItem<ModelEnum.PurchaseOrderProduct>>
+}> = ({selectedItems}) => {
   const [open, setOpen] = useState<boolean>();
   const [checkedItems, setCheckedItems] = useState<Array<HydraItem<ModelEnum.DesiredProduct>>>([]);
 

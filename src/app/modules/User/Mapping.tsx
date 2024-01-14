@@ -1,7 +1,6 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import React from 'react';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
-import {CREATED_AT_COLUMN} from '../columns';
 import {ref, string} from 'yup';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';

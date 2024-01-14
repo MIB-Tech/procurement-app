@@ -46,7 +46,10 @@ const getNetPrice = (item: NetPriceProps) => {
   return amount - discountAmount;
 };
 
-const AmountUnit = ({getValue, defaultValue = 0}: { defaultValue?: number, getValue: (taxIncluded: boolean) => number }) => {
+const AmountUnit = ({getValue, defaultValue = 0}: {
+  defaultValue?: number,
+  getValue: (taxIncluded: boolean) => number
+}) => {
   const formik = useFormikContext<Partial<PurchaseOrderModel>>();
   if (!formik) {
     return <NumberUnit value={defaultValue}/>;
@@ -96,7 +99,7 @@ const DesiredProductsField = ({...fieldProps}: FieldProps) => {
       }}
     />
   );
-}
+};
 
 const Helper: FC<ArrayHelpers & {
   initialValues: Record<any, any>,
@@ -105,8 +108,8 @@ const Helper: FC<ArrayHelpers & {
   const {location} = useAuth();
   useEffect(() => {
     components.forEach(component => {
-      const {product, quantity, price} = component
-      const {name:designation, note, vatRate} = product
+      const {product, quantity, price} = component;
+      const {name: designation, note, vatRate} = product;
       const desiredProduct: Partial<DesiredProductModel> = {
         designation,
         quantity,
@@ -143,7 +146,7 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
   //
   const [{value: quantity = 0}, , {setValue: setQuantity}] = useField<number>({name: name.replace('product', 'quantity')});
   const productURI = product?.['@id'];
-  const {item: detailedProduct, isFetching:isdDetailedProductFetching} = useItemQuery<ModelEnum.Product>({
+  const {item: detailedProduct, isFetching: isdDetailedProductFetching} = useItemQuery<ModelEnum.Product>({
     modelName: ModelEnum.Product,
     path: productURI,
     enabled: !!productURI && touched,
@@ -273,14 +276,14 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
     display: ({item}) => !!item.product,
     render: ({fieldProps}) => <DesiredProductsField {...fieldProps}/>
   },
-}
+};
 
-export const QUANTITY_STATUS_COLUMN:ColumnMapping<ModelEnum.PurchaseOrderProduct> = {
+export const QUANTITY_STATUS_COLUMN: ColumnMapping<ModelEnum.PurchaseOrderProduct> = {
   type: ColumnTypeEnum.String,
   format: StringFormat.Select,
   title: 'DELIVERY_STATUS',
   options: QUANTITY_STATUS_OPTIONS
-}
+};
 const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
   modelName: ModelEnum.PurchaseOrderProduct,
   columnDef: {
@@ -301,7 +304,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           'is-valid',
           'VALIDATION.PURCHASE_ORDER_PRODUCT.QUANTITY',
           (quantity, context) => {
-            const {desiredProducts} = context.parent as PurchaseOrderProductModel
+            const {desiredProducts} = context.parent as PurchaseOrderProductModel;
             const count = desiredProducts.reduce(
               (count, desiredProduct) => count + desiredProduct.quantity,
               0

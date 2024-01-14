@@ -34,7 +34,7 @@ const HeaderUserMenu: FC<{show?: boolean}> = ({show}) => {
         <div className='menu-content d-flex align-items-center px-3'>
           <div className='symbol symbol-60px me-5'>
             <div className='symbol-label fs-3 bg-light-primary text-primary'>
-              {user.firstName[0] + user.lastName[0]}
+              {(user.firstName[0] || '') + (user.lastName[0] || '')}
             </div>
             {/*{user.contentUrl ?*/}
             {/*  <img src={toAbsoluteApi(user.contentUrl)} alt='' />:*/}

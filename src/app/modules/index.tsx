@@ -35,9 +35,9 @@ import {DESIRED_PRODUCT_MAPPING} from './DesiredProduct';
 import {RECEIPT_MAPPING} from './Receipt';
 import {RECEIPT_PRODUCT_MAPPING} from './ReceiptProduct';
 import {PURCHASE_ORDER_CATEGORY_MAPPING} from './PurchaseOrderCategory';
-import {PURCHASE_ORDER_ATTACHMENT_MAPPING} from "./PurchaseOrderAttachment";
-import {COMPONENT_MAPPING} from "./Component";
-import {PAYMENT_MODALITY_MAPPING} from "./PaymentModality";
+import {PURCHASE_ORDER_ATTACHMENT_MAPPING} from './PurchaseOrderAttachment';
+import {COMPONENT_MAPPING} from './Component';
+import {PAYMENT_MODALITY_MAPPING} from './PaymentModality';
 
 
 export const MODEL_MAPPINGS: Mapping = {

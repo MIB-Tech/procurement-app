@@ -1,6 +1,6 @@
 import {AbstractModel} from '../../../_custom/types/types';
-import {VendorModel} from "../Vendor";
-import {PurchaseOrderModel} from "../PurchaseOrder";
+import {VendorModel} from '../Vendor';
+import {PurchaseOrderModel} from '../PurchaseOrder';
 
 
 type Model = {

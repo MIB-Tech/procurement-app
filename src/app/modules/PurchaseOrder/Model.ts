@@ -20,7 +20,7 @@ export const QUANTITY_STATUS_OPTIONS: Array<StringSelectOption> = [
   {id: QuantityStatusEnum.Unreceived, color: 'warning'},
   {id: QuantityStatusEnum.PartiallyReceived, color: 'primary'},
   {id: QuantityStatusEnum.FullyReceived, color: 'success'},
-]
+];
 
 type Model = {
   orderNumber: string

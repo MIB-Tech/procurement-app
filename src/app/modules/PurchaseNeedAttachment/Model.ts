@@ -1,4 +1,4 @@
-import { PurchaseNeedAttachmentModel } from './index';
+import {PurchaseNeedAttachmentModel} from './index';
 import {AbstractModel} from '../../../_custom/types/types';
 
 export type AbstractFileModel = {

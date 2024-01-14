@@ -24,12 +24,12 @@ const mapping: ModelMapping<ModelEnum.Component> = {
         positive: true
       }
     },
-    product: {
-      type: ModelEnum.Product,
-    },
     parentProduct: {
       type: ModelEnum.Product,
-      title:'PRODUCT'
+      title: 'PRODUCT'
+    },
+    product: {
+      type: ModelEnum.Product,
     }
   },
   views: [

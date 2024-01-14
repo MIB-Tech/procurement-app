@@ -1,17 +1,17 @@
 import {AbstractModel} from '../../../_custom/types/types';
-import {VendorOfferProductModel} from "../VendorOfferProduct";
-import {VendorModel} from "../Vendor";
+import {VendorOfferProductModel} from '../VendorOfferProduct';
+import {VendorModel} from '../Vendor';
 
 
 type Model = {
   status: boolean
   receiveAt: string
-  quoteDate:string
-  VATIncluded:boolean
-  quoteNumber:string
-  note:string
+  quoteDate: string
+  VATIncluded: boolean
+  quoteNumber: string
+  note: string
   vendorOfferProducts: Array<VendorOfferProductModel>
-  vendor:VendorModel
+  vendor: VendorModel
 } & AbstractModel
 
 export default Model;

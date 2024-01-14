@@ -7,10 +7,10 @@ type Model = {
   name: string
   purchaseNeeds: Array<PurchaseNeedModel>
   purchaseOrders: Array<PurchaseOrderModel>
-  amount:number
-  startAt:string
-  endAt:string
-  purchaseOrderAllowed:boolean
+  amount: number
+  startAt: string
+  endAt: string
+  purchaseOrderAllowed: boolean
 } & AbstractModel
 
 export default Model;

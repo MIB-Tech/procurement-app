@@ -29,8 +29,8 @@ import {ReceiptModel} from './Receipt';
 import {ReceiptProductModel} from './ReceiptProduct';
 import {PurchaseOrderCategoryModel} from './PurchaseOrderCategory';
 import {PurchaseOrderAttachmentModel} from './PurchaseOrderAttachment';
-import {ComponentModel} from "./Component";
-import {PaymentModalityModel} from "./PaymentModality";
+import {ComponentModel} from './Component';
+import {PaymentModalityModel} from './PaymentModality';
 
 
 export enum ModelEnum {

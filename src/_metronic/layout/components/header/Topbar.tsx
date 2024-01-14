@@ -188,7 +188,10 @@ const Topbar: FC = () => {
                 </div>
                 <div className='symbol symbol-40px ms-5'>
                   <div
-                    className='symbol-label fs-3 bg-light-primary text-primary'>{user.firstName[0] + user.lastName[0]}</div>
+                    className='symbol-label fs-3 bg-light-primary text-primary'
+                  >
+                    {(user.firstName[0] || '') + (user.lastName[0] || '')}
+                  </div>
                   {/*{user.contentUrl ?*/}
                   {/*  <img src={toAbsoluteApi(user.contentUrl)} alt='' />:*/}
                   {/*  <div className="symbol-label fs-3 bg-light-primary text-primary">{user.firstName[0] + user.lastName[0]}</div>*/}
