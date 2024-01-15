@@ -31,26 +31,37 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
       totalExclTax: getNumberUnit({value: item.totalExclTax, precision: 2, unit}),
       totalInclTax: getNumberUnit({value: item.totalInclTax, precision: 2}),
       totalVatTax: getNumberUnit({value: item.totalVatTax, precision: 2}),
-      totalDiscount: getNumberUnit({value: item.totalDiscount, precision: 2}), // TODO
+      totalDiscount: getNumberUnit({value: item.totalDiscount, precision: 2}),
       createdAt: moment(item.createdAt).format('L'),
       desiredDeliveryDate: moment(item.desiredDeliveryDate).format('L'),
       purchaseOrderProducts: item.purchaseOrderProducts.map(purchaseOrderProduct => {
         const precision = 2;
-        const isPercentCentDiscount = purchaseOrderProduct.discountType === DiscountType.Percent;
+        const {
+          designation,
+          note,
+          discountType,
+          discountValue,
+          netPriceExclTax,
+          vatRate,
+          grossPrice,
+          netPrice
+        } = purchaseOrderProduct;
+        const isPercentCentDiscount = discountType === DiscountType.Percent;
 
         return {
           ...purchaseOrderProduct,
-          netPriceExclTax: getNumberUnit({value: purchaseOrderProduct.netPriceExclTax, precision}),
+          designation: `${designation}${note ? `\n\n${note}` : ''}`,
+          netPriceExclTax: getNumberUnit({value: netPriceExclTax, precision}),
           discount: getNumberUnit({
             value: isPercentCentDiscount ?
-              purchaseOrderProduct.discountValue * 100 :
-              purchaseOrderProduct.discountValue,
+              discountValue * 100 :
+              discountValue,
             unit: isPercentCentDiscount ? '%' : unit,
             precision: isPercentCentDiscount ? 2 : precision,
           }),
-          vatRate: getNumberUnit({value: purchaseOrderProduct.vatRate, unit: '%', precision}),
-          grossPrice: getNumberUnit({value: purchaseOrderProduct.grossPrice, precision}),
-          netPrice: getNumberUnit({value: purchaseOrderProduct.netPrice, precision}),
+          vatRate: getNumberUnit({value: vatRate, unit: '%', precision}),
+          grossPrice: getNumberUnit({value: grossPrice, precision}),
+          netPrice: getNumberUnit({value: netPrice, precision}),
         };
       })
     };

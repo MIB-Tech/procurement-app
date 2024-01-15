@@ -121,11 +121,12 @@ const PrintReceiptButton: FC<CustomItemActionProps<ModelEnum.Receipt>> = ({...pr
       lines: item.receiptProducts.map(receiptProduct => {
         const {desiredProduct} = receiptProduct;
         const {designation, purchaseOrderProduct, quantity} = desiredProduct;
+        const {product, note} = purchaseOrderProduct;
 
         return {
           ...receiptProduct,
-          reference: purchaseOrderProduct.product.code,
-          name: designation,
+          reference: product.code,
+          name: `${designation}${note ? `\n\n${note}`: ''}`,
           desiredProductQuantity: quantity,
         };
       })
