@@ -138,10 +138,10 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
   const {location} = useAuth();
   const {name} = props;
   const {values} = useFormikContext<Partial<PurchaseOrderModel>>();
-  const {taxIncluded, vendor} = values
+  const {taxIncluded, vendor} = values;
   const [, {touched}] = useField({name});
   const [{value: purchaseOrderProduct}] = useField({name: name.replace('.product', '')});
-  const [{value: product}] = useField<HydraItem | null>({name});
+  const {product} = purchaseOrderProduct;
   const [, , {setValue: setNote}] = useField<HydraItem | null>({name: name.replace('product', 'note')});
   const [, , {setValue: setVatRate}] = useField<HydraItem | null>({name: name.replace('product', 'vatRate')});
   const [, , {setValue: setDesignation}] = useField({name: name.replace('product', 'designation')});
@@ -156,7 +156,7 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
     enabled: !!productURI && touched,
     refetchOnWindowFocus: false
   });
-  const {collection: pricing, isFetching: isPricingFetching} = useCollectionQuery<ModelEnum.ProductPricing>({
+  const pricingQuery = useCollectionQuery<ModelEnum.ProductPricing>({
     modelName: ModelEnum.ProductPricing,
     options: {
       enabled: !!(product && vendor)
@@ -184,20 +184,20 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
     }
   });
 
-  const _pricing = pricing.at(0)
-  useEffect(()=> {
-    if (_pricing) {
-      setGrossPrice(taxIncluded ? _pricing.purchasePriceInclTax: _pricing.purchasePriceExclTax)
-      setDiscountValue(_pricing.discountValue)
+  const pricing = pricingQuery.collection.at(0);
+  useEffect(() => {
+    if (pricing) {
+      setGrossPrice(taxIncluded ? pricing.purchasePriceInclTax : pricing.purchasePriceExclTax);
+      setDiscountValue(pricing.discountValue);
     }
-  }, [taxIncluded, _pricing])
+  }, [taxIncluded, pricing]);
 
   useEffect(() => {
     if (detailedProduct) {
       const designation = product['@title'];
       setDesignation(detailedProduct.name);
       setNote(detailedProduct.note);
-      setVatRate(detailedProduct.vatRate || 0.2);
+      setVatRate(detailedProduct.vatRate);
       const desiredProduct: Partial<DesiredProductModel> = {
         designation,
         quantity,
