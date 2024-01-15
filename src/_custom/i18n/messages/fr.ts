@@ -269,7 +269,7 @@ export const fr: I18nLanguage = {
   WITHOUT_CONTRACT: 'Sans contrat',
   SERVICES: 'Services',
   WORK_ORDER_ID: 'ID Ordre',
-  CATEGORY: 'Famille',
+  CATEGORY: 'Nature d\'achat',
   SUBCATEGORY: 'Sous-famille',
   SUBCATEGORIES: 'Sous-familles',
   ACTIVITY: 'Fonction',
