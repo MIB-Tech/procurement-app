@@ -47,11 +47,11 @@ const mapping: ModelMapping<ModelEnum.VendorOffer> = {
       columns: {
         vendor: true,
         note: true,
-        devisNumber: true,
-        devisDate: true,
+        quoteDate: true,
+        quoteNumber: true,
         receiveAt: true,
-        vatIncluded: true,
         status: true,
+        VATIncluded: true,
       }
     },
     {
@@ -59,11 +59,11 @@ const mapping: ModelMapping<ModelEnum.VendorOffer> = {
       fields: {
         vendor: true,
         note: true,
-        devisNumber: true,
-        devisDate: true,
+        quoteDate: true,
+        quoteNumber: true,
         receiveAt: true,
-        vatIncluded: true,
         status: true,
+        VATIncluded: true,
       }
     },
     {

@@ -1,5 +1,4 @@
-import {ModelMapping} from '../../../_custom/types/ModelMapping';
-import React from 'react';
+import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
@@ -26,7 +25,40 @@ const mapping: ModelMapping<ModelEnum.Resource> = {
       type: ModelEnum.Operation,
       multiple: true
     }
-  }
+  },
+  views:[
+    {
+      type:ViewEnum.Listing,
+      columns:{
+        operations:true,
+      }
+    },
+    {
+      type:ViewEnum.Create,
+      fields:{
+        name:true,
+        icon:true,
+        operations:true,
+        sortIndex:true
+      }
+    },
+    {
+      type:ViewEnum.Update,
+      fields:{
+        name:true,
+        icon:true,
+        operations:true,
+        sortIndex:true
+      }
+    },
+    {
+      type:ViewEnum.Detail,
+      columns:{
+        icon:true,
+        operations:true,
+        sortIndex:true
+      }
+    }
+  ]
 };
-
 export default mapping;
