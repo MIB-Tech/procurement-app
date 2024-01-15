@@ -7,9 +7,9 @@ import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/Rad
 import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum} from './Model';
 import moment from 'moment/moment';
 import React from 'react';
-import {PrintInvoiceButton} from './components/PrintInvoiceButton';
 import {PrintPurchaseOrderButton} from './components/PrintPurchaseOrderButton';
 import {GenerateReceiptButton} from './components/GenerateReceiptButton';
+import {GenerateInvoiceButton} from './components/GenerateInvoiceButton';
 
 const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   vendor: true,
@@ -213,17 +213,18 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalInclTax: true,
       },
       customActions: [
+        {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},
         {
           render: ({item}) => {
-            if (item.status !== QuantityStatusEnum.FullyReceived) {
-              return <></>;
+            const {status, invoice} = item
+            if (status !== QuantityStatusEnum.FullyReceived || invoice) {
+              return
             }
 
-            return <PrintInvoiceButton item={item}/>;
+            return <GenerateInvoiceButton item={item}/>
           }
         },
-        {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},
-        {render: ({item}) => <GenerateReceiptButton item={item}/>},
+        {render: ({item}) => item.status !== QuantityStatusEnum.FullyReceived  && <GenerateReceiptButton item={item}/>},
       ],
       itemOperationRoutes: ({operations, item}) => operations.filter(({operationType}) => {
         switch (operationType) {

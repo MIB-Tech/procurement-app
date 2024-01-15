@@ -1,40 +1,57 @@
 import React, {FC, useMemo, useState} from 'react';
-import {CustomItemActionProps} from '../../../../_custom/types/ModelMapping';
-import {ModelEnum} from '../../types';
-import {useUri} from '../../../../_custom/hooks/UseUri';
-import {useItemQuery} from '../../../../_custom/hooks/UseItemQuery';
-import {PurchaseOrderPrint} from '../Model';
-import {getNumberUnit} from '../../../../_custom/components/NumberUnit';
+import {CustomItemActionProps} from '../../../_custom/types/ModelMapping';
+import {ModelEnum} from '../types';
+import {useUri} from '../../../_custom/hooks/UseUri';
+import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
+import {getNumberUnit} from '../../../_custom/components/NumberUnit';
 import moment from 'moment';
-import {DiscountType} from '../../PurchaseOrderProduct/Model';
-import {Button} from '../../../../_custom/components/Button';
-import {Trans} from '../../../../_custom/components/Trans';
+import {Button} from '../../../_custom/components/Button';
+import {Trans} from '../../../_custom/components/Trans';
 import {Modal} from 'react-bootstrap';
-import ReportViewer from './ReportViewer';
+import ReportViewer from '../PurchaseOrder/components/ReportViewer';
+import {DiscountType} from '../PurchaseOrderProduct/Model';
+import {PurchaseOrderProductModel} from '../PurchaseOrderProduct';
+import {VendorModel} from '../Vendor';
+import {InvoicePrint} from './Model';
 
-export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder>> = ({...props}) => {
+export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = ({...props}) => {
   const [open, setOpen] = useState<boolean>();
-  const modelName = ModelEnum.PurchaseOrder;
+  const modelName = ModelEnum.Invoice;
   const uri = useUri({modelName});
-  const {item, isLoading} = useItemQuery<ModelEnum.PurchaseOrder>({
+  const {item, isLoading} = useItemQuery<ModelEnum.Invoice>({
     modelName,
     path: `/print${uri}`,
     enabled: open
   });
-  const params = useMemo<PurchaseOrderPrint | undefined>(() => {
+  const params = useMemo<InvoicePrint | undefined>(() => {
     if (!item) return undefined;
+    const {purchaseOrders} = item;
 
-    const unit = item?.currency?.code || 'DH';
-
-    return {
+    const unit = /*item.currency?.code || */'DH'; // TODO
+    const totalExclTax = purchaseOrders.reduce((a, b) => a + b.totalInclTax, 0);
+    const totalInclTax = purchaseOrders.reduce((a, b) => a + b.totalInclTax, 0);
+    const totalVatTax = purchaseOrders.reduce((a, b) => a + b.totalVatTax, 0);
+    const totalDiscount = purchaseOrders.reduce((a, b) => a + b.totalDiscount, 0);
+    const purchaseOrderProducts = purchaseOrders.reduce((a, b) => [...a, ...b.purchaseOrderProducts], [] as PurchaseOrderProductModel[]);
+    // @ts-ignore
+    const paymentModalities = purchaseOrders.map(({paymentModality}) => paymentModality['@title']).join(', ');
+    const orderNumber = purchaseOrders.map(({orderNumber}) => orderNumber).join(', ');
+    const vendor = purchaseOrders.at(0)?.vendor as VendorModel;
+    console.log(vendor)
+    const result: InvoicePrint = {
       ...item,
-      totalExclTax: getNumberUnit({value: item.totalExclTax, precision: 2, unit}),
-      totalInclTax: getNumberUnit({value: item.totalInclTax, precision: 2}),
-      totalVatTax: getNumberUnit({value: item.totalVatTax, precision: 2}),
-      totalDiscount: getNumberUnit({value: item.totalDiscount, precision: 2}), // TODO
+      bill: item.invoiceNumber,
+      orderNumber,
+      paymentModality: {
+        name: paymentModalities
+      },
+      vendor,
+      totalExclTax: getNumberUnit({value: totalExclTax, precision: 2, unit}),
+      totalInclTax: getNumberUnit({value: totalInclTax, precision: 2}),
+      totalVatTax: getNumberUnit({value: totalVatTax, precision: 2}),
+      totalDiscount: getNumberUnit({value: totalDiscount, precision: 2}),
       createdAt: moment(item.createdAt).format('L'),
-      desiredDeliveryDate: moment(item.desiredDeliveryDate).format('L'),
-      purchaseOrderProducts: item.purchaseOrderProducts.map(purchaseOrderProduct => {
+      purchaseOrderProducts: purchaseOrderProducts.map(purchaseOrderProduct => {
         const precision = 2;
         const {
           designation,
@@ -61,12 +78,14 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrde
             unit: isPercentCentDiscount ? '%' : unit,
             precision: isPercentCentDiscount ? 2 : precision,
           }),
-          vatRate: getNumberUnit({value: vatRate, unit: '%', precision}),
+          vatRate: getNumberUnit({value: vatRate * 100, unit: '%', precision}),
           grossPrice: getNumberUnit({value: grossPrice, precision}),
           netPrice: getNumberUnit({value: netPrice, precision}),
         };
       })
-    };
+    }
+
+    return result;
   }, [item]);
 
   return (
@@ -78,7 +97,7 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrde
           className='bg-white'
           onClick={() => setOpen(true)}
         >
-          <Trans id='GENERATE_INVOICE'/>
+          <Trans id='PRINT'/>
         </Button>
       </div>
       <Modal
@@ -91,10 +110,11 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrde
           {isLoading && <Trans id='LOADING'/>}
           {item && params && (
             <ReportViewer
-              fileName={item.taxIncluded ?
-                'purchase-order-invoice-tax-included.mrt' :
-                'purchase-order-invoice.mrt'
-              }
+              fileName='purchase-order-invoice-tax-included.mrt'
+              // fileName={item.taxIncluded ?
+              //   'purchase-order-invoice-tax-included.mrt' :
+              //   'purchase-order-invoice.mrt'
+              // }
               // params={example}
               params={params}
             />

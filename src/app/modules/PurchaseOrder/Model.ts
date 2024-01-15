@@ -65,7 +65,7 @@ export type PurchaseOrderPrint = {
   comment?: string
   groupement1?: string
   groupement2?: string
-} & Pick<Model, 'orderNumber' | 'createdAt' | 'desiredDeliveryDate' | 'ref'>
+} & Pick<Model, 'orderNumber' | 'createdAt' | 'ref'>
 
 
 export default Model;

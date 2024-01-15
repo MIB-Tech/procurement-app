@@ -73,7 +73,7 @@ const getNetPriceExclTax = ({quantity, ...item}: NetPriceExclTaxProps) => getNet
 type PriceInclTaxProps = NetPriceProps & Pick<Model, 'quantity'>
 const getPriceInclTax = (item: PriceInclTaxProps) => {
   const {taxIncluded, grossPrice, vatRate, quantity} = item;
-  if (!vatRate) return 0;
+  if (!vatRate) return getNetPriceExclTax(item);
 
   const netPriceExclTax = getNetPriceExclTax(item);
 

@@ -3,26 +3,26 @@ import {CustomItemActionProps, ViewEnum} from '../../../../_custom/types/ModelMa
 import {ModelEnum} from '../../types';
 import {useTrans} from '../../../../_custom/components/Trans';
 import {useAuth} from '../../../../_custom/hooks/UseAuth';
-import {ReceiptModel} from '../../Receipt';
+import {InvoiceModel} from '../../Invoice';
 import {RouteLinks} from '../../../../_custom/components/RouteAction/RouteLinks';
 
-export const GenerateReceiptButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder>> = ({item}) => {
+export const GenerateInvoiceButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder>> = ({item}) => {
   const {trans} = useTrans();
   const {operations} = useAuth();
   const createOperation = operations.find(({resource, operationType}) => {
-    return resource.name === ModelEnum.Receipt && operationType === ViewEnum.Create;
+    return resource.name === ModelEnum.Invoice && operationType === ViewEnum.Create;
   });
   if (!createOperation) {
     return <></>;
   }
-  const state: Partial<ReceiptModel> = {
+  const state: Partial<InvoiceModel> = {
     vendor: item.vendor,
     purchaseOrders: [item]
   };
 
   return (
     <RouteLinks
-      operations={[{...createOperation, title: trans({id: 'GENERATE_RECEIPT'})}]}
+      operations={[{...createOperation, title: trans({id: 'GENERATE_INVOICE'})}]}
       linkProps={{state}}
     />
   );

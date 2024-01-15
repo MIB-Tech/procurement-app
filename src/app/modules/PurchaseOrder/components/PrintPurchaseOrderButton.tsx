@@ -59,7 +59,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
             unit: isPercentCentDiscount ? '%' : unit,
             precision: isPercentCentDiscount ? 2 : precision,
           }),
-          vatRate: getNumberUnit({value: vatRate, unit: '%', precision}),
+          vatRate: getNumberUnit({value: vatRate * 100, unit: '%', precision}),
           grossPrice: getNumberUnit({value: grossPrice, precision}),
           netPrice: getNumberUnit({value: netPrice, precision}),
         };
