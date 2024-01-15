@@ -2,6 +2,9 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  INVOICE: "Facture",
+  INVOICES: "Factures",
+  INVOICE_NUMBER: "N° Facture",
   TOTAL_DISCOUNT: 'Mnt de remise',
   REST_QUANTITY: "Reste à livré",
   VALIDATED: 'Validé',
