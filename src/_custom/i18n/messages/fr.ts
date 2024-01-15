@@ -142,7 +142,7 @@ export const fr: I18nLanguage = {
   DESIRED_DELIVERY_DATE: 'Livraison souhaitée le',
   IS_REGULARIZED: 'Régularisé',
   ORDERED_FOR: 'Demandeur',
-  ORDER_NUMBER: 'N° DA',
+  ORDER_NUMBER: 'N° BC',
   PRIORITY: 'Priorité',
   PROJECT: 'Projet',
   RECEPTION_MANAGER: 'Responsable de réception',
