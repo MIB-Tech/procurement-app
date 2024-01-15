@@ -54,6 +54,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
       columns: {
         code: true,
         ice: true,
+        phoneNumber: true
       }
     },
     {
