@@ -453,6 +453,7 @@ type I18nMessageKey =
   | 'INVOICE_NUMBER'
   | 'INVOICE'
   | 'INVOICES'
+  | 'DESIRED_PRODUCT_QUANTITY'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};
