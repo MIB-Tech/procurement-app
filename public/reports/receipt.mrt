@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.2.0",
-  "ReportGuid": "ed311f4eda6f4a11bb9aeb3409a94c56",
+  "ReportGuid": "1efca6fb2db54bbc87188ba34c087bcd",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1704900405249+0100)/",
+  "ReportChanged": "/Date(1705326062947+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -370,7 +370,8 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text23",
-              "ClientRectangle": "0,6.8,19,0.6",
+              "CanGrow": true,
+              "ClientRectangle": "0,7,19,0.6",
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
@@ -389,7 +390,7 @@
                 "Value": "{root.comment}"
               },
               "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "TextOptions": {
@@ -400,7 +401,8 @@
             "3": {
               "Ident": "StiText",
               "Name": "Text28",
-              "ClientRectangle": "5.8,3.6,5.8,0.8",
+              "CanGrow": true,
+              "ClientRectangle": "3.6,3.6,5.8,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -409,7 +411,7 @@
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
@@ -423,7 +425,8 @@
             "4": {
               "Ident": "StiText",
               "Name": "Text38",
-              "ClientRectangle": "5.8,4.4,5.8,0.8",
+              "CanGrow": true,
+              "ClientRectangle": "3.6,4.4,5.8,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -432,7 +435,7 @@
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
@@ -447,7 +450,7 @@
               "Ident": "StiText",
               "Name": "Text46",
               "CanGrow": true,
-              "ClientRectangle": "5.8,5.2,5.8,0.8",
+              "ClientRectangle": "3.6,5.2,5.8,1",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -456,7 +459,7 @@
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "TextOptions": {
@@ -473,7 +476,8 @@
             "6": {
               "Ident": "StiText",
               "Name": "Text47",
-              "ClientRectangle": "0,3.6,5.8,0.8",
+              "CanGrow": true,
+              "ClientRectangle": "0,3.6,3.6,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -482,7 +486,7 @@
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
@@ -496,7 +500,8 @@
             "7": {
               "Ident": "StiText",
               "Name": "Text48",
-              "ClientRectangle": "0,4.4,5.8,0.8",
+              "CanGrow": true,
+              "ClientRectangle": "0,4.4,3.6,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -505,7 +510,7 @@
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
@@ -519,7 +524,8 @@
             "8": {
               "Ident": "StiText",
               "Name": "Text52",
-              "ClientRectangle": "0,5.2,5.8,0.8",
+              "CanGrow": true,
+              "ClientRectangle": "0,5.2,3.6,1",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -528,7 +534,7 @@
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Margins": {
@@ -543,7 +549,7 @@
               "Ident": "StiText",
               "Name": "Text53",
               "CanGrow": true,
-              "ClientRectangle": "0,6,5.8,0.8",
+              "ClientRectangle": "0,6.2,3.6,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -552,7 +558,7 @@
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "TextOptions": {
@@ -569,7 +575,8 @@
             "10": {
               "Ident": "StiText",
               "Name": "Text54",
-              "ClientRectangle": "11.6,3.6,7.4,2.4",
+              "CanGrow": true,
+              "ClientRectangle": "11.6,3.6,7.4,2.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -578,7 +585,7 @@
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "TextOptions": {
@@ -597,7 +604,7 @@
               "Ident": "StiText",
               "Name": "Text55",
               "CanGrow": true,
-              "ClientRectangle": "5.8,6,13.2,0.8",
+              "ClientRectangle": "3.6,6.2,5.8,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -606,7 +613,7 @@
               },
               "VertAlignment": "Center",
               "Font": ";9;Bold;",
-              "Border": "All;;;;;;;solid:Black",
+              "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "TextOptions": {
