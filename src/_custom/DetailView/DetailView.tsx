@@ -71,9 +71,9 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {modelN
             />
           )}
           {item?.['@icon'] && (
-            <div className='symbol symbol-75px me-3'>
+            <div className='symbol -symbol-75px me-3'>
               <div className='symbol-label bg-light-primary'>
-                <SVG path={item['@icon']} size='5x' variant='primary'/>
+                <SVG path={item['@icon']} size='3x' variant='primary'/>
               </div>
             </div>
           )}
@@ -85,26 +85,26 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {modelN
                     {item?.['@title']}
                   </a>
                 </div>
-                <div className='d-flex flex-wrap fw-semibold fs-5 text-gray-500'>
-                  {uid !== item?.['@subTitle'] && item?.['@subTitle']}
-                </div>
-                <Help overlay='Copier' placement='right' className='mt-1 d-flex'>
-                  <a
-                    href='#'
-                    className='d-flex align-items-center bg-gray-200 rounded ps-2 text-muted text-hover-primary'
-                    onClick={e => {
-                      e.preventDefault();
-                      if (uid) {
-                        navigator.clipboard.writeText(uid);
-                      }
-                    }}
-                  >
-                    <small className='fw-bold fs-8'>
-                      {uid}
-                    </small>
-                    <IconButton path='/general/gen054.svg' size='2'/>
-                  </a>
-                </Help>
+                {/*<div className='d-flex flex-wrap fw-semibold fs-5 text-gray-500'>*/}
+                {/*  {uid !== item?.['@subTitle'] && item?.['@subTitle']}*/}
+                {/*</div>*/}
+                {/*<Help overlay='Copier' placement='right' className='mt-1 d-flex'>*/}
+                {/*  <a*/}
+                {/*    href='#'*/}
+                {/*    className='d-flex align-items-center bg-gray-200 rounded ps-2 text-muted text-hover-primary'*/}
+                {/*    onClick={e => {*/}
+                {/*      e.preventDefault();*/}
+                {/*      if (uid) {*/}
+                {/*        navigator.clipboard.writeText(uid);*/}
+                {/*      }*/}
+                {/*    }}*/}
+                {/*  >*/}
+                {/*    <small className='fw-bold fs-8'>*/}
+                {/*      {uid}*/}
+                {/*    </small>*/}
+                {/*    <IconButton path='/general/gen054.svg' size='2'/>*/}
+                {/*  </a>*/}
+                {/*</Help>*/}
               </div>
               <div className='d-flex gap-3'>
                 {item && customActions?.map(({render}, index) => (

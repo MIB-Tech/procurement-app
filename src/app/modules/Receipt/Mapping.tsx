@@ -340,7 +340,8 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        receivedAt: true
+        receivedAt: true,
+        purchaseOrders: true
       }
     },
     {

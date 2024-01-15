@@ -15,7 +15,7 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
     },
     applicatedAt: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Datetime
+      format: StringFormat.Date
     },
     bidPriceInclTax: {
       type: ColumnTypeEnum.Number
@@ -41,7 +41,7 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
       type: ViewEnum.Listing,
       columns: {
         product: true,
-        //vendor: true,
+        vendor: true,
         purchasePriceExclTax: true,
         purchasePriceInclTax: true,
         bidPriceInclTax: true,
@@ -53,6 +53,7 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
       type: ViewEnum.Create,
       fields: {
         product: true,
+        vendor: true,
         purchasePriceExclTax: true,
         purchasePriceInclTax: true,
         bidPriceInclTax: true,
@@ -63,6 +64,8 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
     {
       type: ViewEnum.Update,
       fields: {
+        product: true,
+        vendor: true,
         purchasePriceExclTax: true,
         purchasePriceInclTax: true,
         bidPriceInclTax: true,
@@ -73,12 +76,13 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
     {
       type: ViewEnum.Detail,
       columns: {
+        product: true,
+        vendor: true,
         purchasePriceExclTax: true,
         purchasePriceInclTax: true,
         bidPriceInclTax: true,
         discountValue: true,
         applicatedAt: true,
-        product: true,
       }
     }
 
