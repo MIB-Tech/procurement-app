@@ -62,6 +62,7 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
         bidPriceInclTax: true,
         applicatedAt: true,
         discountValue: true,
+
       }
     },
     {
