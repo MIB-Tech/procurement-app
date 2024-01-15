@@ -14,7 +14,7 @@ const mapping: ModelMapping<ModelEnum.VendorOffer> = {
       type: ColumnTypeEnum.String
     },
     status: {
-      type: ColumnTypeEnum.Boolean,
+      type: ColumnTypeEnum.String,
     },
     receiveAt: {
       type: ColumnTypeEnum.String,

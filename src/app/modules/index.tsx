@@ -35,10 +35,10 @@ import {DESIRED_PRODUCT_MAPPING} from './DesiredProduct';
 import {RECEIPT_MAPPING} from './Receipt';
 import {RECEIPT_PRODUCT_MAPPING} from './ReceiptProduct';
 import {PURCHASE_ORDER_CATEGORY_MAPPING} from './PurchaseOrderCategory';
-import {PURCHASE_ORDER_ATTACHMENT_MAPPING} from './PurchaseOrderAttachment';
-import {COMPONENT_MAPPING} from './Component';
-import {PAYMENT_MODALITY_MAPPING} from './PaymentModality';
-
+import {PURCHASE_ORDER_ATTACHMENT_MAPPING} from "./PurchaseOrderAttachment";
+import {COMPONENT_MAPPING} from "./Component";
+import {PAYMENT_MODALITY_MAPPING} from "./PaymentModality";
+import {INVOICE_MAPPING} from "./Invoice";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
@@ -75,8 +75,7 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.purchaseOrderAttachment]: PURCHASE_ORDER_ATTACHMENT_MAPPING,
   [ModelEnum.Component]: COMPONENT_MAPPING,
   [ModelEnum.PaymentModality]: PAYMENT_MODALITY_MAPPING,
-
-
+  [ModelEnum.Invoice]: INVOICE_MAPPING,
 };
 
 type ListingState = {
