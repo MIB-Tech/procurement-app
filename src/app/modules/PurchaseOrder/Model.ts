@@ -36,7 +36,7 @@ type Model = {
   purchaseOrderProducts: Array<PurchaseOrderProductModel>
   purchaseOrderAttachments: Array<PurchaseOrderAttachmentModel>
   paymentModality: PaymentModalityModel
-  invoice:InvoiceModel
+  invoice: InvoiceModel
   readonly totalExclTax: number
   readonly totalVatTax: number
   readonly totalInclTax: number
