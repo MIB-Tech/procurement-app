@@ -115,7 +115,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     category: {
       type: ModelEnum.PurchaseOrderCategory,
-      nullable: true
+      nullable: true,
+      title:'NATURE'
     },
     project: {
       type: ModelEnum.Project
