@@ -9,6 +9,7 @@ import {StringSelectOption} from '../../../_custom/Column/String/StringColumn';
 import {VendorAddressModel} from '../VendorAddress';
 import {ProductModel} from '../Product';
 import {PaymentModalityModel} from '../PaymentModality';
+import {InvoiceModel} from "../Invoice";
 
 export enum QuantityStatusEnum {
   Unreceived = 'UNRECEIVED',
@@ -35,6 +36,7 @@ type Model = {
   purchaseOrderProducts: Array<PurchaseOrderProductModel>
   purchaseOrderAttachments: Array<PurchaseOrderAttachmentModel>
   paymentModality: PaymentModalityModel
+  invoice:InvoiceModel
   readonly totalExclTax: number
   readonly totalVatTax: number
   readonly totalInclTax: number

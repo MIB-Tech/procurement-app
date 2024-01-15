@@ -242,6 +242,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       embeddedForm: true,
       min: 1
     },
+    invoice: {
+      type: ModelEnum.Invoice
+    }
   },
   views: [
     {
