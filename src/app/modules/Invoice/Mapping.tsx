@@ -39,6 +39,14 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
         purchaseOrders: true
       }
     },
+    {
+      type:ViewEnum.Detail,
+      columns:{
+        invoiceNumber:true,
+        createdAt: true,
+        purchaseOrders: true
+      }
+    }
   ]
 
 };
