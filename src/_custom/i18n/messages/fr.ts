@@ -2,7 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
- TOTAL_DISCOUNT:'Mnt de remise',
+  TOTAL_DISCOUNT: 'Mnt de remise',
   REST_QUANTITY: "Reste à livré",
   VALIDATED: 'Validé',
   SHOW: 'Afficher',
