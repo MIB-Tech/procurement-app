@@ -34,7 +34,7 @@ type Model = {
   project: ProjectModel
   category: PurchaseOrderCategoryModel
   purchaseOrderProducts: Array<PurchaseOrderProductModel>
-  purchaseOrderAttachments: Array<PurchaseOrderAttachmentModel>
+  attachments: Array<PurchaseOrderAttachmentModel>
   paymentModality: PaymentModalityModel
   invoice: InvoiceModel
   readonly totalExclTax: number

@@ -24,9 +24,10 @@ import {useAuth} from '../../../_custom/hooks/UseAuth';
 import {ArrayHelpers} from 'formik/dist/FieldArray';
 import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
 import {ComponentModel} from '../Component';
+import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery';
+import {CompoundFilterOperator, PropertyFilterOperator} from '../../../_custom/ListingView/Filter/Filter.types';
 
-type NetPriceProps =
-  Pick<Model, 'grossPrice' | 'vatRate' | 'discountType' | 'discountValue'>
+type NetPriceProps = Pick<Model, 'grossPrice' | 'vatRate' | 'discountType' | 'discountValue'>
   & Pick<PurchaseOrderModel, 'taxIncluded'>
 
 const getNetPrice = (item: NetPriceProps) => {
@@ -136,14 +137,17 @@ const Helper: FC<ArrayHelpers & {
 const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
   const {location} = useAuth();
   const {name} = props;
+  const {values} = useFormikContext<Partial<PurchaseOrderModel>>();
+  const {taxIncluded, vendor} = values
   const [, {touched}] = useField({name});
   const [{value: purchaseOrderProduct}] = useField({name: name.replace('.product', '')});
   const [{value: product}] = useField<HydraItem | null>({name});
   const [, , {setValue: setNote}] = useField<HydraItem | null>({name: name.replace('product', 'note')});
   const [, , {setValue: setVatRate}] = useField<HydraItem | null>({name: name.replace('product', 'vatRate')});
   const [, , {setValue: setDesignation}] = useField({name: name.replace('product', 'designation')});
+  const [, , {setValue: setGrossPrice}] = useField({name: name.replace('product', 'grossPrice')});
+  const [, , {setValue: setDiscountValue}] = useField({name: name.replace('product', 'discountValue')});
   const [{value: desiredProducts}, , {setValue: setDesiredProducts}] = useField<Array<Partial<DesiredProductModel>>>({name: name.replace('product', 'desiredProducts')});
-  //
   const [{value: quantity = 0}, , {setValue: setQuantity}] = useField<number>({name: name.replace('product', 'quantity')});
   const productURI = product?.['@id'];
   const {item: detailedProduct, isFetching: isdDetailedProductFetching} = useItemQuery<ModelEnum.Product>({
@@ -152,13 +156,48 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
     enabled: !!productURI && touched,
     refetchOnWindowFocus: false
   });
+  const {collection: pricing, isFetching: isPricingFetching} = useCollectionQuery<ModelEnum.ProductPricing>({
+    modelName: ModelEnum.ProductPricing,
+    options: {
+      enabled: !!(product && vendor)
+    },
+    params: {
+      sort: {
+        applicatedAt: 'desc'
+      },
+      itemsPerPage: 1,
+      filter: {
+        operator: CompoundFilterOperator.And,
+        filters: [
+          {
+            property: 'product',
+            operator: PropertyFilterOperator.Equal,
+            value: product?.id
+          },
+          {
+            property: 'vendor',
+            operator: PropertyFilterOperator.Equal,
+            value: vendor?.id
+          }
+        ]
+      }
+    }
+  });
+
+  const _pricing = pricing.at(0)
+  useEffect(()=> {
+    if (_pricing) {
+      setGrossPrice(taxIncluded ? _pricing.purchasePriceInclTax: _pricing.purchasePriceExclTax)
+      setDiscountValue(_pricing.discountValue)
+    }
+  }, [taxIncluded, _pricing])
 
   useEffect(() => {
     if (detailedProduct) {
       const designation = product['@title'];
       setDesignation(detailedProduct.name);
       setNote(detailedProduct.note);
-      setVatRate(detailedProduct.vatRate);
+      setVatRate(detailedProduct.vatRate || 0.2);
       const desiredProduct: Partial<DesiredProductModel> = {
         designation,
         quantity,

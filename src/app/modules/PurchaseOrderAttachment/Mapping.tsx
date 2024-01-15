@@ -1,41 +1,13 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
+import {ModelMapping} from '../../../_custom/types/ModelMapping';
 import {ModelEnum} from '../types';
+import {ABSTRACT_FILE_LISTING_VIEW, ABSTRACT_FILE_MAPPING} from '../columns';
 
 
 const mapping: ModelMapping<ModelEnum.purchaseOrderAttachment> = {
+  ...ABSTRACT_FILE_MAPPING,
   modelName: ModelEnum.purchaseOrderAttachment,
-  columnDef: {
-    id: {
-      type: ColumnTypeEnum.Number
-    },
-    uid: {
-      type: ColumnTypeEnum.String
-    },
-    fileName: {
-      type: ColumnTypeEnum.String
-    },
-    purchaseOrder: {
-      type: ModelEnum.PurchaseOrder
-    },
-  },
   views: [
-    {
-      type: ViewEnum.Listing,
-      columns: {}
-    },
-    {
-      type: ViewEnum.Create,
-      fields: {
-        fileName: true
-      }
-    },
-    {
-      type: ViewEnum.Update,
-      fields: {
-        fileName: true
-      }
-    }
+    ABSTRACT_FILE_LISTING_VIEW
   ]
 };
 

@@ -1,10 +1,9 @@
-import {AbstractModel} from '../../../_custom/types/types';
 import {PurchaseOrderModel} from '../PurchaseOrder';
+import {AbstractFileModel} from '../PurchaseNeedAttachment/Model';
 
 
 type Model = {
-  fileName: string
   purchaseOrder: PurchaseOrderModel
-} & AbstractModel
+} & AbstractFileModel
 
 export default Model;

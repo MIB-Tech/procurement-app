@@ -2,6 +2,7 @@ import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
+import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 
 
 const mapping: ModelMapping<ModelEnum.ProductPricing> = {
@@ -18,16 +19,30 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
       format: StringFormat.Date
     },
     bidPriceInclTax: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
+      validation: {
+        min: 0
+      }
     },
     discountValue: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Percent,
+      precision: 2
     },
     purchasePriceExclTax: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
+      validation: {
+        min: 0
+      }
     },
     purchasePriceInclTax: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
+      validation: {
+        min: 0
+      }
     },
     vendor: {
       type: ModelEnum.Vendor

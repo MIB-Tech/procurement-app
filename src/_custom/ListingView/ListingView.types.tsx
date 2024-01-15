@@ -1,10 +1,10 @@
-import { UseQueryOptions } from 'react-query';
-import { DateField, Model } from '../types/ModelMapping';
-import { CompoundFilter, Filter } from './Filter/Filter.types';
-import { PaginationInput } from './Pagination/Pagination.types';
-import { ModelEnum } from '../../app/modules/types';
-import { DatesSetArg } from '@fullcalendar/core';
-import { HydraItem } from '../types/hydra.types';
+import {UseQueryOptions} from 'react-query';
+import {DateField, Model} from '../types/ModelMapping';
+import {Filter} from './Filter/Filter.types';
+import {PaginationInput} from './Pagination/Pagination.types';
+import {ModelEnum} from '../../app/modules/types';
+import {DatesSetArg} from '@fullcalendar/core';
+import {HydraItem} from '../types/hydra.types';
 
 
 export type ListingQueryProps<M extends ModelEnum> = {
