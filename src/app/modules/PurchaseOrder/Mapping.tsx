@@ -46,6 +46,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   category: true,
   project: true,
   paymentModality: true,
+  purchaseOrderAttachments:true,
   purchaseOrderProducts: {
     slotProps: {
       root: {
@@ -56,7 +57,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
       }
     },
     display: ({item}) => typeof item.taxIncluded === 'boolean'
-  }
+  },
 };
 
 
@@ -379,7 +380,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     {
       type: ViewEnum.Detail,
       columns: {
-        purchaseOrderProducts: true
+        purchaseOrderAttachments: true
       },
       customActions: [
         {
