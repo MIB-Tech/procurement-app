@@ -2,7 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
-  TOTAL_DISCOUNT: "Mnt réduit",
+ TOTAL_DISCOUNT:'Mnt de remise',
   REST_QUANTITY: "Reste à livré",
   VALIDATED: 'Validé',
   SHOW: 'Afficher',
@@ -98,7 +98,7 @@ export const fr: I18nLanguage = {
   POSTAL_CODE: "Code postal",
   PURCHASE_NEED_NUMBER: "Numéro de besoin d'achat",
   PURCHASE_PRICE_INCL_TAX: "Prix d'achat incl. taxes",
-  RECEIVE_AT: "Reçu le",
+  RECEIVE_AT: "Date de réception",
   RECOMENDED_VENDORS: "Fournisseurs recommandés",
   RECOMMENDED_PRICE: "Prix recommandé",
   REF: "Référence",
