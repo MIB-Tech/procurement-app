@@ -85,7 +85,7 @@ export const fr: I18nLanguage = {
   ICE: "ICE",
   IS_CONFORME: "Conforme",
   IS_MAIN: "Principal",
-  TAX_INCLUDED: "Taxe incluse",
+  TAX_INCLUDED: "Prix en",
   IS_MOBILISED: "Immobilisé",
   IS_VAT_INCLUDED: "TVA incluse",
   MEASUREMENT_UNIT: "Unité",
