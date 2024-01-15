@@ -373,7 +373,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalExclTax: true,
         // totalVatTax: true,
         totalInclTax: true,
-        status: true
+        status: true,
       }
     },
     {
