@@ -378,6 +378,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Detail,
+      columns: {
+        purchaseOrderProducts: true
+      },
       customActions: [
         {
           render: ({item}) => {
