@@ -32,7 +32,7 @@ export const fr: I18nLanguage = {
   AMOUNT: '$',
   CURRENCY: 'Devise',
   PERCENT: '%',
-  RECEIVED_AT: "Date de reçu",
+  RECEIVED_AT: "Date de réception",
   RECEIPT_NUMBER: "Numéro de reçu",
   NET_PRICE_EXCL_TAX: "Prix HT",
   PRICE_INCL_TAX: "PRIX TTC",
