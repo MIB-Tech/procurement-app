@@ -140,6 +140,13 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
   });
   const rootColumnNames = columnNames.filter(columnName => !nestedColumnNames.some(nestedColumnName => columnName === nestedColumnName));
   const items = useMemo(()=>[...baseItems].map((item, _index)=>({...item, _index })).reverse(), [baseItems])
+  const mapping = rootColumnNames.reduce(
+    (previousValue, columnName) => ({
+      ...previousValue,
+      [columnName]: trans({id: stringToI18nMessageKey(columnName.toString())})
+    }),
+    {} as Record<keyof Model<M>, string>
+  )
 
   return (
     <Field name={name} feedbackLabel={feedbackLabel}>
@@ -161,18 +168,10 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
                           const file = event.target.files?.[0];
 
                           if (file) {
+                            console.log(mapping)
                             file.arrayBuffer().then(file => {
                               const workbook = read(file/*, { dateNF: 'yyyy-mm-dd' }*/);
-                              const data = getData<M>({
-                                workbook,
-                                mapping: rootColumnNames.reduce(
-                                  (previousValue, columnName) => ({
-                                    ...previousValue,
-                                    [columnName]: trans({id: stringToI18nMessageKey(columnName.toString())})
-                                  }),
-                                  {} as Record<keyof Model<M>, string>
-                                )
-                              });
+                              const data = getData<M>({workbook, mapping});
                               // @ts-ignore
                               setValue([...data, ...items]);
                             });
@@ -183,9 +182,10 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
                         path='/general/gen035.svg'
                         variant='primary'
                         size='2x'
-                        onClick={() => {
-                          push({...getInitialValues({columnDef, fields}), ...extraAttribute});
-                        }}
+                        onClick={() => push({
+                          ...getInitialValues({columnDef, fields}),
+                          ...extraAttribute
+                        })}
                       />
                       <IconButton
                         path='/files/fil010.svg'

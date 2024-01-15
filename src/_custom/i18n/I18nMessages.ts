@@ -449,6 +449,7 @@ type I18nMessageKey =
   | 'PAYMENT_MODALITY'
   | 'PURCHASE_ORDER_ALLOWED'
   | 'REST_QUANTITY'
+  | 'TOTAL_DISCOUNT'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 

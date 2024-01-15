@@ -6,10 +6,7 @@ import {OperationModel} from '../Operation';
 export enum RoleKeyEnum {
   SuperAdmin = 'ROLE_SUPER_ADMIN',
   Responsible = 'ROLE_RESPONSIBLE',
-  Supervisor = 'ROLE_SUPERVISOR',
-  ParamedicalServiceDS = 'ROLE_PARAMEDICAL_SERVICE_DS',
-  ServiceMajor = 'ROLE_SERVICE_MAJOR',
-  BiomedicalTechnician = 'ROLE_BIOMEDICAL_TECHNICIAN',
+  Buyer = 'ROLE_BUYER',
 }
 
 type Model = {
