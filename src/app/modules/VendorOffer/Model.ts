@@ -4,7 +4,7 @@ import {VendorModel} from "../Vendor";
 
 
 type Model = {
-  status: boolean
+  status: string
   receiveAt: string
   quoteDate:string
   VATIncluded:boolean
