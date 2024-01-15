@@ -1,8 +1,8 @@
-import React, { FC, forwardRef } from 'react';
-import { Input, InputProps } from '../../String/InputBase/Input';
-import { KTSVG } from '../../../../_metronic/helpers';
-import { Button, ButtonProps } from '../../../components/Button';
-import { makeStyles } from '@mui/styles';
+import React, {FC, forwardRef} from 'react';
+import {Input, InputProps} from '../../String/InputBase/Input';
+import {KTSVG} from '../../../../_metronic/helpers';
+import {Button, ButtonProps} from '../../../components/Button';
+import {makeStyles} from '@mui/styles';
 import clsx from 'clsx';
 
 
@@ -19,112 +19,36 @@ export const toPrecision = (value: number, precision: number) => parseFloat(valu
 
 
 export type InputNumberProps = {
-  min?: number,
-  max?: number,
-  value?: number,
-  step?: number,
-  precision?: number,
-  onChange?: (value: number) => void
-  hideAdornment?: boolean
-} & Omit<InputProps, 'onChange' | 'min' | 'max' | 'step' | 'value'>
+  precision?: number
+} & InputProps
 
 
-export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({ className, hideAdornment, ...props }, ref) => {
-  const classes = useStyles();
-  const {
-    value = 0,
-    step = 1,
-    min = Number.MIN_SAFE_INTEGER,
-    max = Number.MAX_SAFE_INTEGER,
-    precision,
-    onChange = () => {
-    }
-  } = props;
-
-
-  const handlePrecise = (newValue: number) => {
-    onChange(precision ? toPrecision(newValue, precision) : newValue);
-  };
-
-  const handleChange = (newValue: number, type?: '+' | '-') => {
-
-    switch (type) {
-      case '-':
-        switch (true) {
-          case newValue < min:
-            handlePrecise(min);
-            break;
-          case value > max:
-            handlePrecise(max);
-            break;
-          default:
-            handlePrecise(newValue);
-        }
-        break;
-      case '+':
-        switch (true) {
-          case newValue > max:
-            handlePrecise(max);
-            break;
-          case value < min:
-            handlePrecise(min);
-            break;
-          default:
-            handlePrecise(newValue);
-        }
-        break;
-      default:
-        switch (true) {
-          case newValue < min:
-            handlePrecise(min);
-            break;
-          case value > max:
-            handlePrecise(max);
-            break;
-          default:
-            handlePrecise(newValue);
-        }
-    }
-
-  };
+export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({precision, ...props}, ref) => {
 
   return (
-    <div className={clsx(!hideAdornment && 'position-relative')}>
-      {!hideAdornment && (
-        <InputNumberButton
-          className='start-0'
-          path='/media/icons/duotune/general/gen036.svg'
-          onClick={() => {
-            handleChange(value - step);
-          }}
-          disabled={value <= min}
-        />
-      )}
-      <Input
-        className={clsx(
-          !hideAdornment && clsx('px-12', classes.input),
-          className
-          // 'border-left-0 border-right-0'
-        )}
-        {...props}
-        onChange={event => {
-          console.log(event.target.value, event.target.valueAsNumber)
-          return handleChange(event.target.valueAsNumber)
-        }}
-        ref={ref}
-        type='number'
-      />
-      {!hideAdornment && (
-        <InputNumberButton
-          className='end-0'
-          path='/media/icons/duotune/general/gen035.svg'
-          onClick={() => {
-            handleChange(value + step);
-          }}
-          disabled={value >= max}
-        />
-      )}
-    </div>
+    <Input
+      {...props}
+      onChange={event => {
+        const parsedValue = parseFloat(event.target.value);
+        const roundedValue = isNaN(parsedValue) ?
+          '' :
+          precision === undefined ? parsedValue.toString() : parsedValue.toFixed(precision)
+        ;
+
+        props.onChange?.({
+          ...event,
+          target: {
+            ...event.target,
+            name: props.name || '',
+            value: roundedValue === '' ?
+              '':
+              parseFloat(roundedValue) as unknown as string
+          }
+        });
+      }}
+      ref={ref}
+      type='number'
+    />
   );
 });
 

@@ -15,29 +15,29 @@ const mapping: ModelMapping<ModelEnum.VendorOfferProduct> = {
     description: {
       type: ColumnTypeEnum.String,
     },
-    vendorOffer:{
-      type:ModelEnum.VendorOffer
+    vendorOffer: {
+      type: ModelEnum.VendorOffer
     },
-    vendorProductCode :{
-      type:ColumnTypeEnum.String
+    vendorProductCode: {
+      type: ColumnTypeEnum.String
     },
-    desination :{
-      type:ColumnTypeEnum.String,
+    desination: {
+      type: ColumnTypeEnum.String,
     },
-    quantity:{
-      type:ColumnTypeEnum.Number,
+    quantity: {
+      type: ColumnTypeEnum.Number,
     },
     unitPrice: {
       type: ColumnTypeEnum.Number
     },
-    vatRate:{
-      type:ColumnTypeEnum.Number,
+    vatRate: {
+      type: ColumnTypeEnum.Number,
     },
     isConform: {
       type: ColumnTypeEnum.Boolean
     },
     score: {
-      type:ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number
     },
     purchaseFileProduct: {
       type: ModelEnum.PurchaseFileProduct

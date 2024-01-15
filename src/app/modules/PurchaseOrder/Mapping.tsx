@@ -57,7 +57,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
     },
     display: ({item}) => typeof item.taxIncluded === 'boolean'
   }
-}
+};
 
 
 const GenerateReceiptButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder>> = ({item}) => {
@@ -101,7 +101,7 @@ const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder
       totalExclTax: getNumberUnit({value: item.totalExclTax, precision: 2, unit}),
       totalInclTax: getNumberUnit({value: item.totalInclTax, precision: 2}),
       totalVatTax: getNumberUnit({value: item.totalVatTax, precision: 2}),
-      totalDiscount: getNumberUnit({value: 0, precision: 2}), // TODO
+      totalDiscount: getNumberUnit({value: item.totalDiscount, precision: 2}), // TODO
       createdAt: moment(item.createdAt).format('L'),
       desiredDeliveryDate: moment(item.desiredDeliveryDate).format('L'),
       purchaseOrderProducts: item.purchaseOrderProducts.map(purchaseOrderProduct => {
@@ -159,6 +159,87 @@ const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder
   );
 };
 
+const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder>> = ({...props}) => {
+  const [open, setOpen] = useState<boolean>();
+  const modelName = ModelEnum.PurchaseOrder;
+  const uri = useUri({modelName});
+  const {item, isLoading} = useItemQuery<ModelEnum.PurchaseOrder>({
+    modelName,
+    path: `/print${uri}`,
+    enabled: open
+  });
+  const params = useMemo<PurchaseOrderPrint | undefined>(() => {
+    if (!item) return undefined;
+
+    const unit = item?.currency?.code || 'DH';
+
+    return {
+      ...item,
+      totalExclTax: getNumberUnit({value: item.totalExclTax, precision: 2, unit}),
+      totalInclTax: getNumberUnit({value: item.totalInclTax, precision: 2}),
+      totalVatTax: getNumberUnit({value: item.totalVatTax, precision: 2}),
+      totalDiscount: getNumberUnit({value: item.totalDiscount, precision: 2}), // TODO
+      createdAt: moment(item.createdAt).format('L'),
+      desiredDeliveryDate: moment(item.desiredDeliveryDate).format('L'),
+      purchaseOrderProducts: item.purchaseOrderProducts.map(purchaseOrderProduct => {
+        const precision = 2;
+        const isPercentCentDiscount = purchaseOrderProduct.discountType === DiscountType.Percent;
+
+        return {
+          ...purchaseOrderProduct,
+          netPriceExclTax: getNumberUnit({value: purchaseOrderProduct.netPriceExclTax, precision}),
+          netPriceInclTax: getNumberUnit({value: purchaseOrderProduct.priceInclTax, precision}),
+          discount: getNumberUnit({
+            value: isPercentCentDiscount ?
+              purchaseOrderProduct.discountValue * 100 :
+              purchaseOrderProduct.discountValue,
+            unit: isPercentCentDiscount ? '%' : unit,
+            precision: isPercentCentDiscount ? 2 : precision,
+          }),
+          vatRate: getNumberUnit({value: purchaseOrderProduct.vatRate, unit: '%', precision}),
+          grossPrice: getNumberUnit({value: purchaseOrderProduct.grossPrice, precision}),
+          netPrice: getNumberUnit({value: purchaseOrderProduct.netPrice, precision}),
+        };
+      })
+    };
+  }, [item]);
+
+  return (
+    <div>
+      <div className='position-relative'>
+        <Button
+          size='sm'
+          variant='outline-default'
+          className='bg-white'
+          onClick={() => setOpen(true)}
+        >
+          <Trans id='GENERATE_INVOICE'/>
+        </Button>
+      </div>
+      <Modal
+        fullscreen
+        show={open}
+        onHide={() => setOpen(false)}
+      >
+        <Modal.Header closeButton/>
+        <Modal.Body>
+          {isLoading && <Trans id='LOADING'/>}
+          {item && params && (
+            <ReportViewer
+              fileName={item.taxIncluded ?
+                'purchase-order-invoice-tax-included.mrt' :
+                'purchase-order-invoice.mrt'
+              }
+              // params={example}
+              params={params}
+            />
+          )}
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
+};
+
 
 const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
   modelName: ModelEnum.PurchaseOrder,
@@ -199,6 +280,11 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       precision: 2
     },
     totalVatTax: {
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
+      precision: 2
+    },
+    totalDiscount: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       precision: 2
@@ -293,6 +379,15 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     {
       type: ViewEnum.Detail,
       customActions: [
+        {
+          render: ({item}) => {
+            if (item.status !== QuantityStatusEnum.FullyReceived) {
+              return <></>;
+            }
+
+            return <PrintInvoiceButton item={item}/>;
+          }
+        },
         {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},
         {render: ({item}) => <GenerateReceiptButton item={item}/>},
       ],

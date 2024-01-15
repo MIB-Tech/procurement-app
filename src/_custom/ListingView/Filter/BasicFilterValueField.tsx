@@ -1,16 +1,15 @@
-import { PropertyFilterOperator } from './Filter.types';
-import { InputBackground } from '../../Column/String/InputBase/Input.types';
+import {PropertyFilterOperator} from './Filter.types';
+import {InputBackground} from '../../Column/String/InputBase/Input.types';
 import React from 'react';
-import { ValueFieldProps } from '../../Column/ValueField';
-import { StringFormat } from '../../Column/String/StringColumn';
-import { ColumnTypeEnum } from '../../types/types';
-import { ModelEnum } from '../../../app/modules/types';
-import { AdvancedFilterValueField } from './AdvancedFilterValueField';
-import { StringField } from '../../Column/String/StringField';
+import {ValueFieldProps} from '../../Column/ValueField';
+import {StringFormat} from '../../Column/String/StringColumn';
+import {ColumnTypeEnum} from '../../types/types';
+import {AdvancedFilterValueField} from './AdvancedFilterValueField';
+import {StringField} from '../../Column/String/StringField';
 
 
-export const BasicFilterValueField = <M extends ModelEnum>(props: ValueFieldProps) => {
-  const { name, size = 'sm', column, className } = props;
+export const BasicFilterValueField = (props: ValueFieldProps) => {
+  const {name, size = 'sm', column, className} = props;
   const rest = {
     size,
     className,

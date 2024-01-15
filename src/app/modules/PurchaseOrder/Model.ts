@@ -21,7 +21,7 @@ export const QUANTITY_STATUS_OPTIONS: Array<StringSelectOption> = [
   {id: QuantityStatusEnum.Unreceived, color: 'warning'},
   {id: QuantityStatusEnum.PartiallyReceived, color: 'primary'},
   {id: QuantityStatusEnum.FullyReceived, color: 'success'},
-]
+];
 
 type Model = {
   orderNumber: string
@@ -39,6 +39,7 @@ type Model = {
   invoice: InvoiceModel
   readonly totalExclTax: number
   readonly totalVatTax: number
+  readonly totalDiscount: number
   readonly totalInclTax: number
   readonly status: QuantityStatusEnum
 } & AbstractModel & CreateTimestamp

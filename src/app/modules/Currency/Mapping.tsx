@@ -28,13 +28,13 @@ const mapping: ModelMapping<ModelEnum.Currency> = {
     {
       type: ViewEnum.Create,
       fields: {
-        code:true
+        code: true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
-        code:true
+        code: true
       }
     }
   ]

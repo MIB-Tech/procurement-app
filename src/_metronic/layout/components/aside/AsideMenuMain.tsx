@@ -1,19 +1,50 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React from 'react';
-import { AsideMenuItem } from './AsideMenuItem';
-import { useAuth } from '../../../../_custom/hooks/UseAuth';
-import { ViewEnum } from '../../../../_custom/types/ModelMapping';
+import React, {Fragment} from 'react';
+import {AsideMenuItem} from './AsideMenuItem';
+import {useAuth} from '../../../../_custom/hooks/UseAuth';
+import {ViewEnum} from '../../../../_custom/types/ModelMapping';
+import {ModelEnum} from '../../../../app/modules/types';
 
+const GROUPS = [
+  {
+    title: 'Gestion des utilisateurs',
+    operations: [
+      ModelEnum.Resource,
+      ModelEnum.Operation,
+      ModelEnum.Role,
+      ModelEnum.User,
+    ]
+  }
+];
 
 export function AsideMenuMain() {
-  const { operations } = useAuth();
+  const auth = useAuth();
+  const operations = auth.operations
+    .filter(({operationType, isMenuItem}) => isMenuItem && operationType === ViewEnum.Listing)
+    .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex);
 
   return (
     <>
-      {operations
-      .filter(({ operationType, isMenuItem }) => isMenuItem && operationType === ViewEnum.Listing)
-      .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
-      .map(operation => <AsideMenuItem key={operation.id} {...operation} />)}
+      {/*{GROUPS.map(group => {*/}
+      {/*  const _ope = operations.filter(({resource}) => group.operations.includes(resource.name));*/}
+      {/*  if (_ope.length === 0) return <Fragment key={group.title} />*/}
+
+      {/*  return (*/}
+      {/*    <>*/}
+      {/*      <div className='menu-item'>*/}
+      {/*        <div className='menu-content pt-8 pb-2'>*/}
+      {/*          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>*/}
+      {/*            {group.title}*/}
+      {/*          </span>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*      {_ope.map(operation => <AsideMenuItem key={operation.id} {...operation} />)}*/}
+      {/*    </>*/}
+      {/*  );*/}
+      {/*})}*/}
+      {operations.filter(({operationType, isMenuItem}) => isMenuItem && operationType === ViewEnum.Listing)
+        .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
+        .map(operation => <AsideMenuItem key={operation.id} {...operation} />)}
       {/*....................*/}
       {/*{*/}
       {/*  menuRoutes.map(route => {*/}

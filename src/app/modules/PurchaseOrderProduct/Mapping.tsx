@@ -6,13 +6,13 @@ import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 import Model, {DiscountType} from './Model';
 import {CellContent} from '../../../_custom/ListingView/views/Table/BodyCell';
 import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/SelectField';
-import {useField, useFormikContext} from 'formik';
+import {FieldArray, useField, useFormikContext} from 'formik';
 import {PurchaseOrderModel} from '../PurchaseOrder';
 import {Bullet} from '../../../_custom/components/Bullet';
 import {NumberUnit} from '../../../_custom/components/NumberUnit';
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
 import {FieldProps} from '../../../_custom/Column/controls/fields';
-import {useEffect} from 'react';
+import {FC, useEffect} from 'react';
 import {HydraItem} from '../../../_custom/types/hydra.types';
 import {NumberColumnField} from '../../../_custom/Column/Number/NumberColumnField';
 import {QUANTITY_STATUS_OPTIONS} from '../PurchaseOrder/Model';
@@ -21,6 +21,9 @@ import {PurchaseOrderProductModel} from './index';
 import {DesiredProductModel} from '../DesiredProduct';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
 import {useAuth} from '../../../_custom/hooks/UseAuth';
+import {ArrayHelpers} from 'formik/dist/FieldArray';
+import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
+import {ComponentModel} from '../Component';
 
 type NetPriceProps =
   Pick<Model, 'grossPrice' | 'vatRate' | 'discountType' | 'discountValue'>
@@ -43,7 +46,10 @@ const getNetPrice = (item: NetPriceProps) => {
   return amount - discountAmount;
 };
 
-const AmountUnit = ({getValue, defaultValue = 0}: { defaultValue?: number, getValue: (taxIncluded: boolean) => number }) => {
+const AmountUnit = ({getValue, defaultValue = 0}: {
+  defaultValue?: number,
+  getValue: (taxIncluded: boolean) => number
+}) => {
   const formik = useFormikContext<Partial<PurchaseOrderModel>>();
   if (!formik) {
     return <NumberUnit value={defaultValue}/>;
@@ -92,37 +98,80 @@ const DesiredProductsField = ({...fieldProps}: FieldProps) => {
         designation: index && formik.values.purchaseOrderProducts?.[parseInt(index)].designation
       }}
     />
-  )
-}
+  );
+};
+
+const Helper: FC<ArrayHelpers & {
+  initialValues: Record<any, any>,
+  components: Array<ComponentModel>
+}> = ({push, initialValues, components}) => {
+  const {location} = useAuth();
+  useEffect(() => {
+    components.forEach(component => {
+      const {product, quantity, price} = component;
+      const {name: designation, note, vatRate} = product;
+      const desiredProduct: Partial<DesiredProductModel> = {
+        designation,
+        quantity,
+        address: location?.['@title'] || 'AKDITAL HOLDING'
+      };
+
+      push({
+        ...initialValues,
+        id: null,
+        quantity: quantity,
+        grossPrice: price,
+        product,
+        designation,
+        note,
+        vatRate,
+        desiredProducts: [desiredProduct]
+      });
+    });
+  }, [components]);
+
+
+  return <></>;
+};
 const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
   const {location} = useAuth();
   const {name} = props;
-  const [{value: id}] = useField({name: name.replace('product', 'id')});
+  const [, {touched}] = useField({name});
+  const [{value: purchaseOrderProduct}] = useField({name: name.replace('.product', '')});
   const [{value: product}] = useField<HydraItem | null>({name});
+  const [, , {setValue: setNote}] = useField<HydraItem | null>({name: name.replace('product', 'note')});
+  const [, , {setValue: setVatRate}] = useField<HydraItem | null>({name: name.replace('product', 'vatRate')});
   const [, , {setValue: setDesignation}] = useField({name: name.replace('product', 'designation')});
   const [{value: desiredProducts}, , {setValue: setDesiredProducts}] = useField<Array<Partial<DesiredProductModel>>>({name: name.replace('product', 'desiredProducts')});
   //
-  const [{value: quantity},, {setValue: setQuantity}] = useField<number>({name: name.replace('product', 'quantity')});
+  const [{value: quantity = 0}, , {setValue: setQuantity}] = useField<number>({name: name.replace('product', 'quantity')});
+  const productURI = product?.['@id'];
+  const {item: detailedProduct, isFetching: isdDetailedProductFetching} = useItemQuery<ModelEnum.Product>({
+    modelName: ModelEnum.Product,
+    path: productURI,
+    enabled: !!productURI && touched,
+    refetchOnWindowFocus: false
+  });
 
-  const productName = product?.['@title'];
   useEffect(() => {
-    if (!id) {
-      const designation = productName || '';
-      setDesignation(designation);
-      if (productName) {
-        const desiredProduct: Partial<DesiredProductModel> = {
-          designation,
-          quantity: 0,
-          address: location?.['@title'] || 'AKDITAL HOLDING'
-        };
-        setDesiredProducts([desiredProduct]);
+    if (detailedProduct) {
+      const designation = product['@title'];
+      setDesignation(detailedProduct.name);
+      setNote(detailedProduct.note);
+      setVatRate(detailedProduct.vatRate);
+      const desiredProduct: Partial<DesiredProductModel> = {
+        designation,
+        quantity,
+        address: location?.['@title'] || 'AKDITAL HOLDING'
+      };
+      setDesiredProducts([desiredProduct]);
+      if (!quantity) {
         setQuantity(0);
-      } else {
-        setDesiredProducts([]);
       }
+    } else {
+      setDesiredProducts([]);
     }
-
-  }, [productName, id]);
+  }, [detailedProduct]);
 
   useEffect(() => {
     if (desiredProducts.length === 1) {
@@ -133,12 +182,39 @@ const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
     }
   }, [quantity]);
 
+  // useEffect(() => {
+  //   if (!componentCollectionQuery.isFetching) {
+  //     setPurchaseOrderProducts([
+  //       ...componentCollectionQuery.collection.map(component=>({
+  //         ...purchaseOrderProduct,
+  //         id: undefined,
+  //         quantity: component.quantity,
+  //         price: component.price,
+  //       })),
+  //       ...purchaseOrderProducts
+  //     ])
+  //   }
+  // }, [componentCollectionQuery.collection, componentCollectionQuery.isFetching, purchaseOrderProducts]);
   return (
-    <ModelAutocompleteField
-      modelName={ModelEnum.Product}
-      size='sm'
-      {...props}
-    />
+    <>
+      <ModelAutocompleteField
+        modelName={ModelEnum.Product}
+        size='sm'
+        {...props}
+      />
+      {!isdDetailedProductFetching && detailedProduct && touched && (
+        <FieldArray
+          name='purchaseOrderProducts'
+          render={formikArrayRenderProps => (
+            <Helper
+              components={detailedProduct.components}
+              initialValues={purchaseOrderProduct}
+              {...formikArrayRenderProps}
+            />
+          )}
+        />
+      )}
+    </>
   );
 };
 
@@ -159,7 +235,6 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
         format={item.discountType === DiscountType.Percent ? NumberFormat.Percent : NumberFormat.Amount}
         {...fieldProps}
         size='sm'
-        hideAdornment
         min={0}
       />
     )
@@ -201,14 +276,14 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
     display: ({item}) => !!item.product,
     render: ({fieldProps}) => <DesiredProductsField {...fieldProps}/>
   },
-}
+};
 
-export const QUANTITY_STATUS_COLUMN:ColumnMapping<ModelEnum.PurchaseOrderProduct> = {
+export const QUANTITY_STATUS_COLUMN: ColumnMapping<ModelEnum.PurchaseOrderProduct> = {
   type: ColumnTypeEnum.String,
   format: StringFormat.Select,
   title: 'DELIVERY_STATUS',
   options: QUANTITY_STATUS_OPTIONS
-}
+};
 const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
   modelName: ModelEnum.PurchaseOrderProduct,
   columnDef: {
@@ -229,7 +304,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           'is-valid',
           'VALIDATION.PURCHASE_ORDER_PRODUCT.QUANTITY',
           (quantity, context) => {
-            const {desiredProducts} = context.parent as PurchaseOrderProductModel
+            const {desiredProducts} = context.parent as PurchaseOrderProductModel;
             const count = desiredProducts.reduce(
               (count, desiredProduct) => count + desiredProduct.quantity,
               0

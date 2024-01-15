@@ -1,28 +1,33 @@
-import { Model, MutationMode } from '../types/ModelMapping';
-import { useTrans } from '../components/Trans';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { FormikErrors } from 'formik/dist/types';
-import { useUri } from './UseUri';
-import { useMutation } from 'react-query';
-import { ErrorResponse, Input, SuccessResponse } from '../FormView/FormView.types';
+import {FormViewType, Model, MutationMode} from '../types/ModelMapping';
+import {useTrans} from '../components/Trans';
+import {useNavigate} from 'react-router-dom';
+import {useState} from 'react';
+import {FormikErrors} from 'formik/dist/types';
+import {useUri} from './UseUri';
+import {useMutation} from 'react-query';
+import {ErrorResponse, Input, SuccessResponse} from '../FormView/FormView.types';
 import axios from 'axios';
-import { getRoutePrefix } from '../utils';
-import { queryClient } from '../../index';
-import { getListingQueryKey } from '../ListingView/ListingView.utils';
-import { useToastr } from '../Toastr/UseToastr';
-import { ModelEnum } from '../../app/modules/types';
+import {getRoutePrefix} from '../utils';
+import {queryClient} from '../../index';
+import {getListingQueryKey} from '../ListingView/ListingView.utils';
+import {useToastr} from '../Toastr/UseToastr';
+import {ModelEnum} from '../../app/modules/types';
 
 
-export const useCustomMutation = <M extends ModelEnum>({
-  modelName,
-  mode = MutationMode.Post
-}: { modelName: M, mode?: MutationMode }) => {
-  const { createMutationError, error } = useToastr();
-  const { trans } = useTrans();
+export const useCustomMutation = <M extends ModelEnum>(
+  {
+    modelName,
+    mode = MutationMode.Post,
+    navigateTo = item => item['@id'] + '/update'
+  }: {
+    modelName: M,
+    mode?: MutationMode
+  } & Pick<FormViewType<M>, 'navigateTo'>) => {
+  const {createMutationError, error} = useToastr();
+  const {trans} = useTrans();
   const navigate = useNavigate();
   const [validationErrors, setValidationErrors] = useState<FormikErrors<Model<M>>>();
-  const uri = useUri({ modelName });
+  const uri = useUri({modelName});
   const isCreate = mode === MutationMode.Post;
 
   const mutation = useMutation<SuccessResponse<M>, ErrorResponse<M>, Input<M>>(
@@ -33,7 +38,7 @@ export const useCustomMutation = <M extends ModelEnum>({
     }),
     {
       onSuccess: ({ data }) => {
-        navigate(`${data['@id']}/update`);
+        navigate(navigateTo(data));
         queryClient.invalidateQueries({ queryKey: [getListingQueryKey(modelName)] });
       },
       onError: ({ response }) => {

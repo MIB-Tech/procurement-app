@@ -20,12 +20,12 @@ const AutocompleteField = <T,
       <AutocompleteBase
         {...field}
         {...props}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        onBlur={() => {
-          setTouched(true);
-        }}
+        onChange={(_, newValue) => setValue(newValue)}
+        // onBlur={() => setTouched(true)}
+        // onFocus={e => {
+        //   props.onFocus?.(e)
+        //   setTouched(true)
+        // }}
         className={clsx(className, error && 'is-invalid')}
       />
     </Field>

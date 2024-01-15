@@ -18,7 +18,7 @@ type Model = {
 
 export type ReceiptPrint = {
   lines: Array<{
-    ref: string
+    reference: string
     name: string
   } & Pick<ReceiptProductModel, 'quantity' | 'desiredProductQuantity'>>
 } & Pick<Model, 'receiptNumber' | 'receivedAt'>
@@ -44,19 +44,19 @@ const EXAMPLE: ReceiptPrint = {
   },
   'lines': [
     {
-      'ref': '01',
+      'reference': '01',
       'name': 'PORTOIR PIPETTE ESR',
       'quantity': 18,
       'desiredProductQuantity': 18,
     },
     {
-      'ref': '01',
+      'reference': '01',
       'name': 'PORTOIR PIPETTE ESR',
       'quantity': 18,
       'desiredProductQuantity': 18,
     },
     {
-      'ref': '01',
+      'reference': '01',
       'name': 'PORTOIR PIPETTE ESR',
       'quantity': 18,
       'desiredProductQuantity': 18,

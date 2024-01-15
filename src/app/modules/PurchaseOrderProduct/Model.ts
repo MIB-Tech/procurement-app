@@ -19,8 +19,8 @@ type Model = {
   readonly netPrice: number
   readonly netPriceExclTax: number
   readonly priceInclTax: number
-  readonly status:boolean
-  readonly vatTax:boolean
+  readonly status: boolean
+  readonly vatTax: boolean
   product: ProductModel
   purchaseOrder: PurchaseOrderModel
   desiredProducts: Array<DesiredProductModel>

@@ -110,7 +110,7 @@ export type FormField<M extends ModelEnum> = {
   helperText?: I18nMessageKey
   slotProps?: {
     root?: Omit<GridProps, 'item'>
-  }
+  },
 }
 
 export type FormFields<M extends ModelEnum> = Partial<Record<keyof Model<M> | string, boolean | FormField<M>>>
@@ -131,6 +131,7 @@ export type FormViewType<M extends ModelEnum> = {
     item?: Omit<GridProps, 'item'>
   }
   getMutateInput?: (input: Input<M>) => Input<M>
+  navigateTo?: (item: HydraItem<M>) => string
 }
 export type CreateViewType<M extends ModelEnum> = {
   type: ViewEnum.Create

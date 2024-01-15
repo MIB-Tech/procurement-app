@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.2.0",
-  "ReportGuid": "89b13e292226487d962c8a5b1b14b34e",
+  "ReportGuid": "bb608443333d46b8999fabf158a34ed6",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1704454021617+0100)/",
+  "ReportChanged": "/Date(1704900351212+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -323,7 +323,7 @@
         "NameInSource": "DATA_TEST.root_vendor_defaultAddress"
       }
     },
-    "_Databases": {
+    "Databases": {
       "0": {
         "Ident": "StiJsonDatabase",
         "Name": "DATA_TEST",
@@ -438,13 +438,15 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text29",
-              "ClientRectangle": "5.8,2.6,5.6,0.8",
+              "ClientRectangle": "0,2.6,19,0.8",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
               "Text": {
                 "Value": "Bon de commande d’achat"
               },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
               "Font": ";12;Bold;",
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
@@ -587,6 +589,7 @@
             "7": {
               "Ident": "StiText",
               "Name": "Text46",
+              "CanGrow": true,
               "ClientRectangle": "5.8,6,13.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -599,6 +602,9 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Margins": {
                 "Left": 6.0,
                 "Right": 6.0,
@@ -702,6 +708,7 @@
             "12": {
               "Ident": "StiText",
               "Name": "Text52",
+              "CanGrow": true,
               "ClientRectangle": "0,6,5.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -714,6 +721,9 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Margins": {
                 "Left": 6.0,
                 "Right": 6.0,
@@ -775,6 +785,7 @@
             "15": {
               "Ident": "StiText",
               "Name": "Text55",
+              "CanGrow": true,
               "ClientRectangle": "5.8,6.6,13.2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
@@ -787,6 +798,9 @@
               "Border": "All;;;;;;;solid:Black",
               "Brush": "solid:",
               "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
               "Margins": {
                 "Left": 6.0,
                 "Right": 6.0,
@@ -857,7 +871,7 @@
         "3": {
           "Ident": "StiHeaderBand",
           "Name": "HeaderBand1",
-          "ClientRectangle": "0,8.6,19,0.6",
+          "ClientRectangle": "0,8.6,19,1.8",
           "Interaction": {
             "Ident": "StiInteraction"
           },
@@ -867,7 +881,7 @@
             "0": {
               "Ident": "StiText",
               "Name": "Text24",
-              "ClientRectangle": "0,0,2,0.6",
+              "ClientRectangle": "0,1.4,2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -885,7 +899,7 @@
             "1": {
               "Ident": "StiText",
               "Name": "Text25",
-              "ClientRectangle": "2,0,8.8,0.6",
+              "ClientRectangle": "2,1.4,8.6,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -903,7 +917,7 @@
             "2": {
               "Ident": "StiText",
               "Name": "Text26",
-              "ClientRectangle": "10.6,0,1.8,0.6",
+              "ClientRectangle": "10.6,1.4,1.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -921,7 +935,7 @@
             "3": {
               "Ident": "StiText",
               "Name": "Text27",
-              "ClientRectangle": "12.4,0,2,0.6",
+              "ClientRectangle": "12.4,1.4,2,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -939,7 +953,7 @@
             "4": {
               "Ident": "StiText",
               "Name": "Text31",
-              "ClientRectangle": "14.4,0,1.8,0.6",
+              "ClientRectangle": "14.4,1.4,1.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -957,7 +971,7 @@
             "5": {
               "Ident": "StiText",
               "Name": "Text35",
-              "ClientRectangle": "16.2,0,2.8,0.6",
+              "ClientRectangle": "16.2,1.4,2.8,0.6",
               "Interaction": {
                 "Ident": "StiInteraction"
               },
@@ -977,7 +991,7 @@
         "4": {
           "Ident": "StiChildBand",
           "Name": "ChildBand1",
-          "ClientRectangle": "0,10,19,0",
+          "ClientRectangle": "0,11.2,19,0",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -1026,7 +1040,7 @@
         "5": {
           "Ident": "StiChildBand",
           "Name": "ChildBand2",
-          "ClientRectangle": "0,10.8,19,0",
+          "ClientRectangle": "0,12,19,0",
           "Conditions": {
             "0": {
               "Ident": "StiCondition",
@@ -1076,7 +1090,7 @@
         "6": {
           "Ident": "StiTable",
           "Name": "Table5",
-          "ClientRectangle": "0,11.6,19,0.8",
+          "ClientRectangle": "0,12.8,19,0.8",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -1303,7 +1317,7 @@
         "7": {
           "Ident": "StiDataBand",
           "Name": "DataBand1",
-          "ClientRectangle": "0,13.2,19,4.2",
+          "ClientRectangle": "0,14.4,19,4.2",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },

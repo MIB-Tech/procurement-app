@@ -28,22 +28,22 @@ const mapping: ModelMapping<ModelEnum.Company> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        name:true,
-        code:true
+        name: true,
+        code: true
       }
     },
     {
       type: ViewEnum.Create,
       fields: {
-        name:true,
-        code:true
+        name: true,
+        code: true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
-        name:true,
-        code:true
+        name: true,
+        code: true
       }
     }
   ]

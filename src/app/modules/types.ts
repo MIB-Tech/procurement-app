@@ -33,7 +33,6 @@ import {ComponentModel} from "./Component";
 import {PaymentModalityModel} from "./PaymentModality";
 import {InvoiceModel} from "./Invoice";
 
-
 export enum ModelEnum {
   ApplicantService = 'ApplicantService',
   Category = 'Category',
@@ -106,5 +105,4 @@ export type Models = {
   [ModelEnum.PaymentModality]: PaymentModalityModel,
   [ModelEnum.Component]: ComponentModel,
   [ModelEnum.Invoice]: InvoiceModel
-
 }

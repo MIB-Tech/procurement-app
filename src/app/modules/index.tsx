@@ -40,7 +40,6 @@ import {COMPONENT_MAPPING} from "./Component";
 import {PAYMENT_MODALITY_MAPPING} from "./PaymentModality";
 import {INVOICE_MAPPING} from "./Invoice";
 
-
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
   [ModelEnum.ProductPricing]: PRODUCT_PRICING_MAPPING,
@@ -77,8 +76,6 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Component]: COMPONENT_MAPPING,
   [ModelEnum.PaymentModality]: PAYMENT_MODALITY_MAPPING,
   [ModelEnum.Invoice]: INVOICE_MAPPING,
-
-
 };
 
 type ListingState = {

@@ -24,19 +24,19 @@ const mapping: ModelMapping<ModelEnum.PurchaseFileType> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        name:true,
+        name: true,
       }
     },
     {
       type: ViewEnum.Create,
       fields: {
-        name:true,
+        name: true,
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
-        name:true,
+        name: true,
       }
     }
   ]

@@ -14,16 +14,22 @@ const mapping: ModelMapping<ModelEnum.Component> = {
     },
     price: {
       type: ColumnTypeEnum.Number,
+      validation: {
+        min: 0
+      }
     },
     quantity: {
-      type: ColumnTypeEnum.Number
-    },
-    product: {
-      type: ModelEnum.Product,
+      type: ColumnTypeEnum.Number,
+      validation: {
+        positive: true
+      }
     },
     parentProduct: {
       type: ModelEnum.Product,
-      title:'PRODUCT'
+      title: 'PRODUCT'
+    },
+    product: {
+      type: ModelEnum.Product,
     }
   },
   views: [
@@ -37,7 +43,7 @@ const mapping: ModelMapping<ModelEnum.Component> = {
     {
       type: ViewEnum.Create,
       fields: {
-        parentProduct: true,
+        product: true,
         price: true,
         quantity: true,
       }

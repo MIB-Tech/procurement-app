@@ -1,4 +1,4 @@
-import {CustomItemActionProps, Model, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {CustomItemActionProps, FormFields, Model, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
@@ -124,14 +124,13 @@ const PrintReceiptButton: FC<CustomItemActionProps<ModelEnum.Receipt>> = ({...pr
 
         return {
           ...receiptProduct,
-          ref: purchaseOrderProduct.product.code,
+          reference: purchaseOrderProduct.product.code,
           name: designation,
           desiredProductQuantity: quantity,
         };
       })
     };
   }, [item]);
-  console.log(params);
 
   return (
     <div>
@@ -217,7 +216,7 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
           loadingLabel='SHOW'
           onClick={() => {
             refetch().then(r => {
-              const desiredProducts = r.data?.data['hydra:member'] as Array<HydraItem<ModelEnum.DesiredProduct>>
+              const desiredProducts = r.data?.data['hydra:member'] as Array<HydraItem<ModelEnum.DesiredProduct>>;
               const receiptProducts: Array<Partial<ReceiptProductModel>> = desiredProducts.map(desiredProduct => ({
                 desiredProduct,
                 quantity: desiredProduct.restQuantity,
@@ -237,35 +236,51 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
   );
 };
 
-const GenerateInvoiceButton: FC<CustomItemActionProps<ModelEnum.Receipt>> = ({...props}) => {
-  const [open, setOpen] = useState<boolean>();
-
-  return (
-    <div>
-      <div className='position-relative'>
-        <Button
-          size='sm'
-          variant='outline-default'
-          className='bg-white'
-          onClick={() => setOpen(true)}
-        >
-          <Trans id='GENERATE_INVOICE'/>
-        </Button>
-      </div>
-      <Modal
-        fullscreen
-        show={open}
-        onHide={() => setOpen(false)}
-      >
-        <Modal.Header closeButton/>
-        <Modal.Body>
-          {/*{isLoading && <Trans id='LOADING'/>}*/}
-
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
-};
+const formFields: FormFields<ModelEnum.Receipt> = {
+  externalRef: true,
+  receivedAt: {
+    defaultValue: moment().format()
+  },
+  vendor: {
+    slotProps: {
+      root: {
+        sm: 3
+      }
+    },
+    render: ({fieldProps, item}) => (
+      <ModelAutocompleteField
+        size='sm'
+        modelName={ModelEnum.Vendor}
+        {...fieldProps}
+        disabled={item.purchaseOrders.length > 0}
+      />
+    )
+  },
+  purchaseOrders: {
+    slotProps: {
+      root: {
+        sm: 9
+      }
+    },
+    render: ({fieldProps}) => <PurchaseOrdersField {...fieldProps}/>
+  },
+  receiptProducts: {
+    slotProps: {
+      root: {
+        sm: 12
+      }
+    },
+    // display: ({item}) => item.purchaseOrders.length > 0,
+    render: ({item, fieldProps}) => (
+      <NestedArrayField
+        modelName={ModelEnum.ReceiptProduct}
+        disableInsert
+        disableDelete
+        {...fieldProps}
+      />
+    )
+  }
+}
 
 const mapping: ModelMapping<ModelEnum.Receipt> = {
   modelName: ModelEnum.Receipt,
@@ -332,7 +347,6 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
       type: ViewEnum.Detail,
       customActions: [
         {render: ({item}) => <PrintReceiptButton item={item}/>},
-        {render: ({item}) => <GenerateInvoiceButton item={item}/>},
       ],
       columns: {
         receiptNumber: true,
@@ -347,54 +361,19 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
         ...item,
         receiptProducts: item.receiptProducts?.filter(({validated}) => validated)
       }),
+      navigateTo: item => item['@id'],
       slotProps: {
         item: {
           sm: 6
         }
       },
-      fields: {
-        externalRef: true,
-        receivedAt: {
-          defaultValue: moment().format()
-        },
-        vendor: {
-          slotProps: {
-            root: {
-              sm: 3
-            }
-          },
-          render: ({fieldProps, item}) => (
-            <ModelAutocompleteField
-              size='sm'
-              modelName={ModelEnum.Vendor}
-              {...fieldProps}
-              disabled={item.purchaseOrders.length > 0}
-            />
-          )
-        },
-        purchaseOrders: {
-          slotProps: {
-            root: {
-              sm: 9
-            }
-          },
-          render: ({fieldProps}) => <PurchaseOrdersField {...fieldProps}/>
-        },
-        receiptProducts: {
-          slotProps: {
-            root: {
-              sm: 12
-            }
-          },
-          // display: ({item}) => item.purchaseOrders.length > 0,
-          render: ({item, fieldProps}) => (
-            <NestedArrayField
-              modelName={ModelEnum.ReceiptProduct}
-              disableInsert
-              disableDelete
-              {...fieldProps}
-            />
-          )
+      fields: formFields
+    },
+    {
+      type: ViewEnum.Update,
+      slotProps: {
+        item: {
+          sm: 6
         }
       }
     }
