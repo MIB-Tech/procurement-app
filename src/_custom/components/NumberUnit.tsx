@@ -7,7 +7,7 @@ type CurrencyProps = {
   unit?: string,
   precision?: number
 } & HTMLAttributes<HTMLDivElement>
-export const getFormattedNumber = ({value, unit = 'DH', precision}: Omit<CurrencyProps, 'className'>) => {
+export const getFormattedNumber = ({value, precision = 2}: Omit<CurrencyProps, 'unit' | 'className'>) => {
   const numberFormat = new Intl.NumberFormat(
     'fr-MA', {
       style: 'decimal',

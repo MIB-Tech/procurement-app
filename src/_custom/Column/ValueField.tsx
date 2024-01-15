@@ -7,7 +7,6 @@ import {ArrayField} from './Array/ArrayField';
 import {ModelField} from './Model/ModelField';
 import {NumberColumnField} from './Number/NumberColumnField';
 import {ColumnTypeEnum} from '../types/types';
-import {InputNumberProps} from './Number/InputNumber/InputNumber';
 import {FieldProps} from './controls/fields';
 
 
@@ -17,7 +16,7 @@ export type ValueFieldProps = {
   placeholder?: string
   icon?: boolean
 } & FieldProps & FormControlProps
-export const ValueField = ({ column, name, size, className, placeholder, icon, feedbackLabel }: ValueFieldProps) => {
+export const ValueField = ({column, name, size, className, placeholder, icon, feedbackLabel}: ValueFieldProps) => {
   const _props = {
     size,
     className,
@@ -27,11 +26,11 @@ export const ValueField = ({ column, name, size, className, placeholder, icon, f
     icon,
     feedbackLabel
   };
-  const { type } = column;
+  const {type} = column;
 
   switch (type) {
     case ColumnTypeEnum.Number:
-      return <NumberColumnField format={column.format} {..._props} />;
+      return <NumberColumnField format={column.format} {..._props} precision={column.precision}/>;
     case ColumnTypeEnum.Boolean:
       return <BooleanField {..._props} />;
     case ColumnTypeEnum.String:

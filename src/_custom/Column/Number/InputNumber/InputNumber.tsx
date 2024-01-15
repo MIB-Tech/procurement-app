@@ -29,7 +29,12 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({prec
     <Input
       {...props}
       onChange={event => {
+        if (precision && (event.target.value.split('.')[1] || '').length > precision) {
+          return
+        }
+        // const parsedValue = parseFloat(event.target.value);
         const parsedValue = parseFloat(event.target.value);
+        console.log(parsedValue)
         const roundedValue = isNaN(parsedValue) ?
           '' :
           precision === undefined ? parsedValue.toString() : parsedValue.toFixed(precision)
@@ -48,6 +53,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({prec
       }}
       ref={ref}
       type='number'
+
     />
   );
 });
