@@ -28,6 +28,7 @@ const formFields: FormFields<ModelEnum.Product> = {
   children: true,
   isMobilised: true,
   stockable: true,
+  pruductSection:true,
   note: {
     slotProps: {
       root: {
@@ -118,6 +119,10 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ModelEnum.PurchaseOrder,
       multiple: true
     },
+    pruductSection:{
+      type:ModelEnum.ProductSection,
+      nullable:true
+    }
   },
   views: [
     {
@@ -128,6 +133,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         vatRate: true,
         isMobilised: true,
         stockable: true,
+        pruductSection:true
       }
     },
     {

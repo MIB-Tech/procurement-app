@@ -4,6 +4,7 @@ import {CategoryModel} from '../Category';
 import {ProductPricingModel} from '../ProductPricing';
 import {PurchaseOrderModel} from '../PurchaseOrder';
 import {ComponentModel} from '../Component';
+import {ProductSectionModel} from "../ProductSection";
 
 
 type Model = {
@@ -22,6 +23,7 @@ type Model = {
   purchaseNeedProducts: Array<PurchaseNeedProductModel>
   pricing: Array<ProductPricingModel>
   purchaseOrders: Array<PurchaseOrderModel>
+  pruductSection:ProductSectionModel
 } & AbstractModel
 
 export default Model;

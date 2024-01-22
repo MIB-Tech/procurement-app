@@ -2,6 +2,8 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  PRUDUCT_SECTION: "Section produit",
+  PRUDUCT_SECTIONS: "Sections produit",
   DESIRED_PRODUCT_QUANTITY: "Qte désirée",
   INVOICE: "Facture",
   INVOICES: "Factures",
