@@ -81,6 +81,16 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       type: ColumnTypeEnum.String,
       format: StringFormat.Date
     },
+    validationStatus: {
+      type: ColumnTypeEnum.String
+    },
+    validatedAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Datetime
+    },
+    validatedBy: {
+      type: ColumnTypeEnum.String
+    },
     totalExclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
@@ -116,7 +126,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     category: {
       type: ModelEnum.PurchaseOrderCategory,
       nullable: true,
-      title:'NATURE'
+      title: 'NATURE'
     },
     project: {
       type: ModelEnum.Project
@@ -182,6 +192,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         ref: true,
         externalRef: true,
         desiredDeliveryDate: true,
+        validationStatus:true,
+        validatedBy:true,
+        validatedAt:true,
         totalExclTax: true,
         // totalVatTax: true,
         totalInclTax: true,
@@ -199,6 +212,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         ref: true,
         externalRef: true,
         desiredDeliveryDate: true,
+        validationStatus:true,
+        validatedBy:true,
+        validatedAt:true,
         vendor: true,
         currency: true,
         project: true,
