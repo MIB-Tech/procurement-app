@@ -162,6 +162,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ViewEnum.Detail,
       columns: {
         category: true,
+        pruductSection:true,
         measurementUnit: true,
         vatRate: true,
         isMobilised: true,
