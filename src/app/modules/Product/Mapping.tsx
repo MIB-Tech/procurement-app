@@ -26,9 +26,9 @@ const formFields: FormFields<ModelEnum.Product> = {
   },
   category: true,
   children: true,
+  pruductSection:true,
   isMobilised: true,
   stockable: true,
-  pruductSection:true,
   note: {
     slotProps: {
       root: {
