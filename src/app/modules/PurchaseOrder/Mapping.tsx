@@ -82,14 +82,17 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       format: StringFormat.Date
     },
     validationStatus: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable: true
     },
     validatedAt: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Datetime
+      format: StringFormat.Datetime,
+      nullable: true
     },
     validatedBy: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable: true
     },
     totalExclTax: {
       type: ColumnTypeEnum.Number,
