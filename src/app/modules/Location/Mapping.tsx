@@ -36,7 +36,9 @@ const mapping: ModelMapping<ModelEnum.Location> = {
   views: [
     {
       type: ViewEnum.Listing,
+
       columns: {
+
         name: true,
         abbreviation: true,
         parent: true
@@ -58,7 +60,6 @@ const mapping: ModelMapping<ModelEnum.Location> = {
         parent: true
       }
     },
-
   ]
 };
 
