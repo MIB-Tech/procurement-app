@@ -274,7 +274,46 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         }
       },
-      fields: formFields
+      fields: {
+        vendor: true,
+        createdAt: {
+          defaultValue: moment().format()
+        },
+        taxIncluded: {
+          defaultValue: false,
+          render: ({item: {purchaseOrderProducts}}) => (
+            <RadioField
+              size='sm'
+              name='taxIncluded'
+              options={[true, false]}
+              getOptionLabel={taxIncluded => taxIncluded ? 'TTC' : 'HT'}
+              disabled={purchaseOrderProducts.length > 0}
+              scrollDisabled
+            />
+          )
+        },
+        ref: true,
+        externalRef: true,
+        desiredDeliveryDate: true,
+        currency: true,
+        category: true,
+        project: true,
+        paymentModality: true,
+        validatedBy:true,
+        validatedAt:true,
+        purchaseOrderProducts: {
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              lg: 12,
+              xl: 12,
+            }
+          },
+          display: ({item}) => typeof item.taxIncluded === 'boolean'
+        },
+        attachments: true,
+      }
     }
   ]
 };

@@ -25,14 +25,12 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
       type:ViewEnum.Create,
       fields:{
         name:true,
-        products:true
       }
     },
     {
       type:ViewEnum.Update,
       fields:{
         name: true,
-        products: true
       }
     },
     {
