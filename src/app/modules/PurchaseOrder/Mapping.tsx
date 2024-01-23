@@ -32,9 +32,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   ref: true,
   externalRef: true,
   desiredDeliveryDate: true,
-  currency: {
-    helperText: 'MAD_BY_DEFAULT'
-  },
+  currency: true,
   category: true,
   project: true,
   paymentModality: true,
