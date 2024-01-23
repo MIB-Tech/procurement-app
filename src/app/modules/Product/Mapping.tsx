@@ -26,7 +26,7 @@ const formFields: FormFields<ModelEnum.Product> = {
   },
   category: true,
   children: true,
-  pruductSection:true,
+  pruductSection: true,
   isMobilised: true,
   stockable: true,
   note: {
@@ -119,9 +119,9 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ModelEnum.PurchaseOrder,
       multiple: true
     },
-    pruductSection:{
-      type:ModelEnum.ProductSection,
-      nullable:true
+    pruductSection: {
+      type: ModelEnum.ProductSection,
+      nullable: true
     }
   },
   views: [
@@ -133,7 +133,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         vatRate: true,
         isMobilised: true,
         stockable: true,
-        pruductSection:true
+        pruductSection: true
       }
     },
     {
@@ -162,7 +162,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ViewEnum.Detail,
       columns: {
         category: true,
-        pruductSection:true,
+        pruductSection: true,
         measurementUnit: true,
         vatRate: true,
         isMobilised: true,

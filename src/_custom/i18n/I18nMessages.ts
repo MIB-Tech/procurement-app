@@ -456,6 +456,9 @@ type I18nMessageKey =
   | 'DESIRED_PRODUCT_QUANTITY'
   | 'PRUDUCT_SECTION'
   | 'PRUDUCT_SECTIONS'
+  | 'VALIDATION_STATUS'
+  | 'VALIDATED_BY'
+  | 'VALIDATED_AT'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};

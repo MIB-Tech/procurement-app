@@ -2,6 +2,9 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  VALIDATED_AT: "Validé à",
+  VALIDATED_BY: "Validé par",
+  VALIDATION_STATUS: "État de validation",
   PRUDUCT_SECTION: "Section produit",
   PRUDUCT_SECTIONS: "Sections produit",
   DESIRED_PRODUCT_QUANTITY: "Qte désirée",
