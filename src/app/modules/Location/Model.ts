@@ -8,6 +8,10 @@ type Model = {
   users: Array<UserModel>
   parent?: Model
   children: Array<Model>
+  address?:string
+  ice:string
+  if:string
+  cnss:string
 } & AbstractModel
 
 export default Model;

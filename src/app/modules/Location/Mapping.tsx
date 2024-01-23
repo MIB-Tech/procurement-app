@@ -20,6 +20,19 @@ const mapping: ModelMapping<ModelEnum.Location> = {
       length: 3,
       uppercase: true
     },
+    address: {
+      type: ColumnTypeEnum.String,
+      nullable: true
+    },
+    ice: {
+      type: ColumnTypeEnum.String
+    },
+    if: {
+      type: ColumnTypeEnum.String
+    },
+    cnss: {
+      type: ColumnTypeEnum.String
+    },
     users: {
       type: ModelEnum.User,
       multiple: true
@@ -38,10 +51,13 @@ const mapping: ModelMapping<ModelEnum.Location> = {
       type: ViewEnum.Listing,
 
       columns: {
-
         name: true,
         abbreviation: true,
-        parent: true
+        parent: true,
+        address: true,
+        ice: true,
+        if: true,
+        cnss: true
       }
     },
     {
@@ -49,7 +65,11 @@ const mapping: ModelMapping<ModelEnum.Location> = {
       fields: {
         name: true,
         abbreviation: true,
-        parent: true
+        parent: true,
+        address: true,
+        ice: true,
+        if: true,
+        cnss: true
       }
     },
     {
@@ -57,7 +77,11 @@ const mapping: ModelMapping<ModelEnum.Location> = {
       fields: {
         name: true,
         abbreviation: true,
-        parent: true
+        parent: true,
+        address: true,
+        ice: true,
+        if: true,
+        cnss: true
       }
     },
   ]
