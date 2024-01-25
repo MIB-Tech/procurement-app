@@ -459,6 +459,8 @@ type I18nMessageKey =
   | 'VALIDATION_STATUS'
   | 'VALIDATED_BY'
   | 'VALIDATED_AT'
+|'PENDING'
+
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};

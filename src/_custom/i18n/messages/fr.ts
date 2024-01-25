@@ -2,6 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  PENDING: "En cours",
   VALIDATED_AT: "Validé à",
   VALIDATED_BY: "Validé par",
   VALIDATION_STATUS: "État de validation",

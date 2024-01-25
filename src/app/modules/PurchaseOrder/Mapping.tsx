@@ -4,12 +4,13 @@ import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField';
-import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum} from './Model';
+import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum, VALIDATION_STATUS_OPTIONS} from './Model';
 import moment from 'moment/moment';
 import React from 'react';
 import {PrintPurchaseOrderButton} from './components/PrintPurchaseOrderButton';
 import {GenerateReceiptButton} from './components/GenerateReceiptButton';
 import {GenerateInvoiceButton} from './components/GenerateInvoiceButton';
+import {RoleKeyEnum} from "../Role/Model";
 
 const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   vendor: true,
@@ -81,7 +82,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     validationStatus: {
       type: ColumnTypeEnum.String,
-      nullable: true
+      format: StringFormat.Select,
+      options: VALIDATION_STATUS_OPTIONS,
+      nullable: true,
     },
     validatedAt: {
       type: ColumnTypeEnum.String,
@@ -193,9 +196,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         ref: true,
         externalRef: true,
         desiredDeliveryDate: true,
-        validationStatus:true,
-        validatedBy:true,
-        validatedAt:true,
+        validationStatus: true,
+        validatedBy: true,
+        validatedAt: true,
         totalExclTax: true,
         // totalVatTax: true,
         totalInclTax: true,
@@ -213,9 +216,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         ref: true,
         externalRef: true,
         desiredDeliveryDate: true,
-        validationStatus:true,
-        validatedBy:true,
-        validatedAt:true,
+        validationStatus: true,
+        validatedBy: true,
+        validatedAt: true,
         vendor: true,
         currency: true,
         project: true,
@@ -241,7 +244,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
             return <GenerateInvoiceButton item={item}/>
           }
         },
-        {render: ({item}) => item.status !== QuantityStatusEnum.FullyReceived  && <GenerateReceiptButton item={item}/>},
+        {render: ({item}) => item.status !== QuantityStatusEnum.FullyReceived && <GenerateReceiptButton item={item}/>},
       ],
       itemOperationRoutes: ({operations, item}) => operations.filter(({operationType}) => {
         switch (operationType) {
@@ -299,8 +302,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         category: true,
         project: true,
         paymentModality: true,
-        validatedBy:true,
-        validatedAt:true,
+        validationStatus: {grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible]},
         purchaseOrderProducts: {
           slotProps: {
             root: {
