@@ -196,19 +196,21 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         ref: true,
         externalRef: true,
         desiredDeliveryDate: true,
-        validationStatus: true,
-        validatedBy: true,
-        validatedAt: true,
         totalExclTax: true,
         // totalVatTax: true,
         totalInclTax: true,
         status: true,
+        validationStatus: true,
+        //  validatedBy: true,
+        // validatedAt: true,
       }
     },
     {
       type: ViewEnum.Detail,
       columns: {
         orderNumber: true,
+        validationStatus: true,
+        validatedBy: true,
         status: true,
         taxIncluded: {
           render: ({item: {taxIncluded}}) => taxIncluded ? 'TTC' : 'HT'
@@ -216,8 +218,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         ref: true,
         externalRef: true,
         desiredDeliveryDate: true,
-        validationStatus: true,
-        validatedBy: true,
         validatedAt: true,
         vendor: true,
         currency: true,

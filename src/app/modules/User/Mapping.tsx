@@ -70,11 +70,11 @@ const mapping: ModelMapping<ModelEnum.User> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        username: true,
+        //username: true,
+        role: true,
+        location: true,
         phoneNumber: true,
         email: true,
-        // role: true,
-        location: true
       }
     },
     {
