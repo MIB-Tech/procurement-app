@@ -24,12 +24,12 @@ export const QUANTITY_STATUS_OPTIONS: Array<StringSelectOption> = [
 ];
 
 export enum ValidationEnum {
-  Valide = 'VALIDE',
+  Validated = 'VALIDATED',
   Panding = 'PENDING'
 }
 
 export const VALIDATION_STATUS_OPTIONS: Array<StringSelectOption> = [
-  {id: ValidationEnum.Valide, color: 'success'},
+  {id: ValidationEnum.Validated, color: 'success'},
   {id: ValidationEnum.Panding, color: 'warning'},
 ];
 type Model = {

@@ -23,7 +23,7 @@ type Model = {
   purchaseNeedProducts: Array<PurchaseNeedProductModel>
   pricing: Array<ProductPricingModel>
   purchaseOrders: Array<PurchaseOrderModel>
-  pruductSection:ProductSectionModel
+  section: ProductSectionModel
 } & AbstractModel
 
 export default Model;
