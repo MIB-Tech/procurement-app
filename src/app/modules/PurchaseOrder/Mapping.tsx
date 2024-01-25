@@ -4,12 +4,13 @@ import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField';
-import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum} from './Model';
+import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum, VALIDATION_STATUS_OPTIONS} from './Model';
 import moment from 'moment/moment';
 import React from 'react';
-import {PrintInvoiceButton} from './components/PrintInvoiceButton';
 import {PrintPurchaseOrderButton} from './components/PrintPurchaseOrderButton';
 import {GenerateReceiptButton} from './components/GenerateReceiptButton';
+import {GenerateInvoiceButton} from './components/GenerateInvoiceButton';
+import {RoleKeyEnum} from "../Role/Model";
 
 const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   vendor: true,
@@ -32,9 +33,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   ref: true,
   externalRef: true,
   desiredDeliveryDate: true,
-  currency: {
-    helperText: 'MAD_BY_DEFAULT'
-  },
+  currency: true,
   category: true,
   project: true,
   paymentModality: true,
@@ -81,6 +80,21 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       type: ColumnTypeEnum.String,
       format: StringFormat.Date
     },
+    validationStatus: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Select,
+      options: VALIDATION_STATUS_OPTIONS,
+      nullable: true,
+    },
+    validatedAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Datetime,
+      nullable: true
+    },
+    validatedBy: {
+      type: ColumnTypeEnum.String,
+      nullable: true
+    },
     totalExclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
@@ -116,7 +130,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     category: {
       type: ModelEnum.PurchaseOrderCategory,
       nullable: true,
-      title:'NATURE'
+      title: 'NATURE'
     },
     project: {
       type: ModelEnum.Project
@@ -186,12 +200,17 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         // totalVatTax: true,
         totalInclTax: true,
         status: true,
+        validationStatus: true,
+        //  validatedBy: true,
+        // validatedAt: true,
       }
     },
     {
       type: ViewEnum.Detail,
       columns: {
         orderNumber: true,
+        validationStatus: true,
+        validatedBy: true,
         status: true,
         taxIncluded: {
           render: ({item: {taxIncluded}}) => taxIncluded ? 'TTC' : 'HT'
@@ -199,6 +218,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         ref: true,
         externalRef: true,
         desiredDeliveryDate: true,
+        validatedAt: true,
         vendor: true,
         currency: true,
         project: true,
@@ -213,17 +233,18 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalInclTax: true,
       },
       customActions: [
+        {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},
         {
           render: ({item}) => {
-            if (item.status !== QuantityStatusEnum.FullyReceived) {
-              return <></>;
+            const {status, invoice} = item
+            if (status !== QuantityStatusEnum.FullyReceived || invoice) {
+              return
             }
 
-            return <PrintInvoiceButton item={item}/>;
+            return <GenerateInvoiceButton item={item}/>
           }
         },
-        {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},
-        {render: ({item}) => <GenerateReceiptButton item={item}/>},
+        {render: ({item}) => item.status !== QuantityStatusEnum.FullyReceived && <GenerateReceiptButton item={item}/>},
       ],
       itemOperationRoutes: ({operations, item}) => operations.filter(({operationType}) => {
         switch (operationType) {
@@ -256,7 +277,45 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         }
       },
-      fields: formFields
+      fields: {
+        vendor: true,
+        createdAt: {
+          defaultValue: moment().format()
+        },
+        taxIncluded: {
+          defaultValue: false,
+          render: ({item: {purchaseOrderProducts}}) => (
+            <RadioField
+              size='sm'
+              name='taxIncluded'
+              options={[true, false]}
+              getOptionLabel={taxIncluded => taxIncluded ? 'TTC' : 'HT'}
+              disabled={purchaseOrderProducts.length > 0}
+              scrollDisabled
+            />
+          )
+        },
+        ref: true,
+        externalRef: true,
+        desiredDeliveryDate: true,
+        currency: true,
+        category: true,
+        project: true,
+        paymentModality: true,
+        validationStatus: {grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible]},
+        purchaseOrderProducts: {
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              lg: 12,
+              xl: 12,
+            }
+          },
+          display: ({item}) => typeof item.taxIncluded === 'boolean'
+        },
+        attachments: true,
+      }
     }
   ]
 };

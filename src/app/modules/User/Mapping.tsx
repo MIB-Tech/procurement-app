@@ -1,5 +1,4 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import React from 'react';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {ref, string} from 'yup';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
@@ -70,7 +69,9 @@ const mapping: ModelMapping<ModelEnum.User> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        username: true,
+        //username: true,
+        role: true,
+        location: true,
         phoneNumber: true,
         email: true,
         // role: true,
