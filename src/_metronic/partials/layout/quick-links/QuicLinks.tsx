@@ -18,7 +18,7 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
   const modelName = ModelEnum.Location;
   const { collection, isLoading } = useCollectionQuery<ModelEnum.Location>({
     options: {
-      enabled: !user.location
+      enabled: !user.locations
     },
     modelName,
     path: '/base' + getRoutePrefix(modelName)

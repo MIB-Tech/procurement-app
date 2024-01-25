@@ -12,7 +12,7 @@ type Model = {
   passwordConfirm: string
   phoneNumber: string
   role?: RoleModel
-  location?: LocationModel
+  locations: Array<LocationModel>
 } & Timestamp & AbstractModel
 
 export default Model;
