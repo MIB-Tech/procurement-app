@@ -85,5 +85,4 @@ const mapping: ModelMapping<ModelEnum.Location> = {
     },
   ]
 };
-
 export default mapping;
