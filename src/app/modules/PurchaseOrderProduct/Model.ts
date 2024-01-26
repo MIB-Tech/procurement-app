@@ -2,6 +2,7 @@ import {AbstractModel} from '../../../_custom/types/types';
 import {DesiredProductModel} from '../DesiredProduct';
 import {PurchaseOrderModel} from '../PurchaseOrder';
 import {ProductModel} from '../Product';
+import {PurchaseOrderProductComponentModel} from '../PurchaseOrderProductComponent';
 
 export enum DiscountType {
   Percent = 'PERCENT',
@@ -16,14 +17,15 @@ type Model = {
   vatRate: number
   discountType: DiscountType
   discountValue: number
+  product: ProductModel
+  purchaseOrder: PurchaseOrderModel
+  desiredProducts: Array<DesiredProductModel>
+  components: Array<PurchaseOrderProductComponentModel>
   readonly netPrice: number
   readonly netPriceExclTax: number
   readonly priceInclTax: number
   readonly status: boolean
   readonly vatTax: boolean
-  product: ProductModel
-  purchaseOrder: PurchaseOrderModel
-  desiredProducts: Array<DesiredProductModel>
 } & AbstractModel
 
 export default Model;

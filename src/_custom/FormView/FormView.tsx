@@ -17,7 +17,7 @@ import {isLocationColumn} from '../ListingView/ListingView.utils';
 export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormViewProps<M>) => {
   const {trans} = useTrans();
   const {columnDef,} = useMapping({modelName});
-  const {type, submittable, getMutateInput, navigateTo,} = view;
+  const {type, submittable, getMutateInput, navigateTo} = view;
   const isCreateMode = type === ViewEnum.Create;
   const mutation = useCustomMutation<M>({
     modelName,
@@ -95,6 +95,7 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
       formik.setErrors(mutation.validationErrors);
     }
   }, [mutation.validationErrors]);
+
 
   const _operations = useMemo(() => {
     if (!initialValues) {

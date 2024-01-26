@@ -32,6 +32,7 @@ import {PurchaseOrderAttachmentModel} from './PurchaseOrderAttachment';
 import {ComponentModel} from "./Component";
 import {PaymentModalityModel} from "./PaymentModality";
 import {InvoiceModel} from "./Invoice";
+import {PurchaseOrderProductComponentModel} from './PurchaseOrderProductComponent';
 
 export enum ModelEnum {
   ApplicantService = 'ApplicantService',
@@ -51,6 +52,7 @@ export enum ModelEnum {
   PurchaseNeedProduct = 'PurchaseNeedProduct',
   PurchaseOrder = 'PurchaseOrder',
   PurchaseOrderProduct = 'PurchaseOrderProduct',
+  PurchaseOrderProductComponent = 'PurchaseOrderProductComponent',
   PurchaseOrderCategory = 'PurchaseOrderCategory',
   purchaseOrderAttachment = 'PurchaseOrderAttachment',
   Receipt = 'Receipt',
@@ -93,6 +95,7 @@ export type Models = {
   [ModelEnum.PurchaseFileType]: PurchaseFileTypeModel,
   [ModelEnum.PurchaseOrder]: PurchaseOrderModel,
   [ModelEnum.PurchaseOrderProduct]: PurchaseOrderProductModel,
+  [ModelEnum.PurchaseOrderProductComponent]: PurchaseOrderProductComponentModel,
   [ModelEnum.PurchaseOrderCategory]: PurchaseOrderCategoryModel,
   [ModelEnum.Receipt]: ReceiptModel,
   [ModelEnum.ReceiptProduct]: ReceiptProductModel,

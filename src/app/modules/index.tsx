@@ -39,6 +39,7 @@ import {PURCHASE_ORDER_ATTACHMENT_MAPPING} from "./PurchaseOrderAttachment";
 import {COMPONENT_MAPPING} from "./Component";
 import {PAYMENT_MODALITY_MAPPING} from "./PaymentModality";
 import {INVOICE_MAPPING} from "./Invoice";
+import {PURCHASE_ORDER_PRODUCT_COMPONENT_MAPPING} from './PurchaseOrderProductComponent';
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
@@ -49,6 +50,7 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.PurchaseFileType]: PURCHASEFILETYPE_MAPPING,
   [ModelEnum.PurchaseOrder]: PURCHASE_ORDER_MAPPING,
   [ModelEnum.PurchaseOrderProduct]: PURCHASE_ORDER_PRODUCT_MAPPING,
+  [ModelEnum.PurchaseOrderProductComponent]: PURCHASE_ORDER_PRODUCT_COMPONENT_MAPPING,
   [ModelEnum.PurchaseOrderCategory]: PURCHASE_ORDER_CATEGORY_MAPPING,
   [ModelEnum.Receipt]: RECEIPT_MAPPING,
   [ModelEnum.ReceiptProduct]: RECEIPT_PRODUCT_MAPPING,

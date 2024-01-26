@@ -19,14 +19,14 @@ const AutocompleteField = <T,
     <Field name={name} feedbackLabel={feedbackLabel}>
       <AutocompleteBase
         {...field}
-        {...props}
         onChange={(_, newValue) => setValue(newValue)}
+        className={clsx(className, error && 'is-invalid')}
+        {...props}
         // onBlur={() => setTouched(true)}
         // onFocus={e => {
         //   props.onFocus?.(e)
         //   setTouched(true)
         // }}
-        className={clsx(className, error && 'is-invalid')}
       />
     </Field>
   );

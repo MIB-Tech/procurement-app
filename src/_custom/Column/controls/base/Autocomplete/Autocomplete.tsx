@@ -76,7 +76,7 @@ const Autocomplete = <T,
               size={size}
               className={clsx(
                 inputProps.className,
-                'w-100 min-w-50px px-0',
+                'w-100 min-w-100px px-0',
                 multiple && 'py-0',
                 size === 'sm' && 'mh-0'
               )}

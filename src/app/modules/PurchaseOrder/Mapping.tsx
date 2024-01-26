@@ -10,9 +10,19 @@ import React from 'react';
 import {PrintPurchaseOrderButton} from './components/PrintPurchaseOrderButton';
 import {GenerateReceiptButton} from './components/GenerateReceiptButton';
 import {GenerateInvoiceButton} from './components/GenerateInvoiceButton';
+import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
 
 const formFields: FormFields<ModelEnum.PurchaseOrder> = {
-  vendor: true,
+  vendor: {
+    render: ({fieldProps, item}) => (
+      <ModelAutocompleteField
+        modelName={ModelEnum.Vendor}
+        {...fieldProps}
+        size='sm'
+        disabled={item.purchaseOrderProducts.length > 0}
+      />
+    )
+  },
   createdAt: {
     defaultValue: moment().format()
   },
@@ -47,7 +57,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
         xl: 12,
       }
     },
-    display: ({item}) => typeof item.taxIncluded === 'boolean'
+    display: ({item}) => typeof item.taxIncluded === 'boolean' && !!item.vendor
   },
   attachments: true,
 };
@@ -116,7 +126,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     category: {
       type: ModelEnum.PurchaseOrderCategory,
       nullable: true,
-      title:'NATURE'
+      title: 'NATURE'
     },
     project: {
       type: ModelEnum.Project
@@ -216,15 +226,15 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},
         {
           render: ({item}) => {
-            const {status, invoice} = item
+            const {status, invoice} = item;
             if (status !== QuantityStatusEnum.FullyReceived || invoice) {
-              return
+              return;
             }
 
-            return <GenerateInvoiceButton item={item}/>
+            return <GenerateInvoiceButton item={item}/>;
           }
         },
-        {render: ({item}) => item.status !== QuantityStatusEnum.FullyReceived  && <GenerateReceiptButton item={item}/>},
+        {render: ({item}) => item.status !== QuantityStatusEnum.FullyReceived && <GenerateReceiptButton item={item}/>},
       ],
       itemOperationRoutes: ({operations, item}) => operations.filter(({operationType}) => {
         switch (operationType) {
@@ -245,6 +255,17 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         }
       },
+      getMutateInput: purchaseOrder => ({
+        ...purchaseOrder,
+        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(purchaseOrderProduct=>({
+          ...purchaseOrderProduct,
+          components: purchaseOrderProduct.components.map(component=>({
+            ...component,
+            // @ts-ignore
+            product: component.product['@id']
+          }))
+        }))
+      }),
       fields: formFields
     },
     {
@@ -257,6 +278,17 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         }
       },
+      getMutateInput: purchaseOrder => ({
+        ...purchaseOrder,
+        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(purchaseOrderProduct=>({
+          ...purchaseOrderProduct,
+          components: purchaseOrderProduct.components.map(component=>({
+            ...component,
+            // @ts-ignore
+            product: component.product['@id']
+          }))
+        }))
+      }),
       fields: formFields
     }
   ]

@@ -25,7 +25,6 @@ export const useCollectionQuery = <M extends ModelEnum>({
       _params = { ..._params, ...serializeSort(sort) };
     }
 
-
     let _filter: Filter<M> = {
       operator: CompoundFilterOperator.And,
       filters: []

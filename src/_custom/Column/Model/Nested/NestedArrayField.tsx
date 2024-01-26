@@ -1,9 +1,9 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useMemo, useRef} from 'react';
 import {Field, FieldProps} from '../../controls/fields';
 import {ColumnMapping, CreateViewType, Model, UpdateViewType, ViewEnum} from '../../../types/ModelMapping';
 import {FieldArray, useField, useFormikContext} from 'formik';
 import {useMapping} from '../../../hooks/UseMapping';
-import {getDefaultFields, getInitialValues, stringToI18nMessageKey} from '../../../utils';
+import {getDefaultFields, getInitialValues, getRoutePrefix, stringToI18nMessageKey} from '../../../utils';
 import {ValueField} from '../../ValueField';
 import {AbstractModel, ColumnTypeEnum} from '../../../types/types';
 import {ModelEnum} from '../../../../app/modules/types';
@@ -11,114 +11,41 @@ import {TitleContent} from '../../../ListingView/views/Table/HeaderCell';
 import {DEFAULT_CREATE_VIEW} from '../../../CreateView/CreateView';
 import {DEFAULT_UPDATE_VIEW} from '../../../UpdateView/UpdateView';
 import {IconButton} from '../../../components/Button/IconButton';
-import {read} from 'xlsx';
+import {read, utils, writeFile} from 'xlsx';
 import {getData} from '../../../ImportView/ImportView';
 import {useTrans} from '../../../components/Trans';
 import {CellContent} from '../../../ListingView/views/Table/BodyCell';
-import {HydraItem} from '../../../types/hydra.types';
-import {Modal} from 'react-bootstrap';
+import {HydraItem, JsonldCollectionResponse} from '../../../types/hydra.types';
 import clsx from 'clsx';
 import {StringFormat} from '../../String/StringColumn';
+import {NestedColumnsButton} from './NestedColumnsButton';
+import {plural} from 'pluralize';
+import axios from 'axios';
+import {CompoundFilter, CompoundFilterOperator, PropertyFilterOperator} from '../../../ListingView/Filter/Filter.types';
+import {filterToParams} from '../../../ListingView/Filter/Filter.utils';
 
-const NestedColumnsButton = <M extends ModelEnum>({name, modelName, item, index}: FieldProps & {
-  modelName: M,
-  item: HydraItem,
-  index: number
-}) => {
-  const [, {error},] = useField<Array<HydraItem<M>>>({name});
-  const [open, setOpen] = useState<boolean>();
-  const {views, columnDef} = useMapping<M>({modelName});
-  const {values: {id}} = useFormikContext<AbstractModel>();
-  const view = useMemo<CreateViewType<M> | UpdateViewType<M>>(() => {
-    if (id) {
-      return (views?.find(view => view.type === ViewEnum.Update) || DEFAULT_UPDATE_VIEW) as UpdateViewType<M>;
-    }
-
-    return (views?.find(view => view.type === ViewEnum.Create) || DEFAULT_CREATE_VIEW) as CreateViewType<M>;
-  }, [id, views]);
-  const {fields = getDefaultFields(columnDef)} = view;
-  const _columnNames = Object.keys(fields) as Array<keyof Model<M>>;
-  const columnNames = _columnNames.filter(columnName => {
-    const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
-    if (!columnMapping) return false;
-    switch (columnMapping.type) {
-      case ColumnTypeEnum.String:
-        return columnMapping.format === StringFormat.Text;
-      default:
-        return 'embeddedForm' in columnMapping;
-    }
-  });
-
-  return (
-    <>
-      <IconButton
-        path='/general/gen023.svg'
-        variant='primary'
-        size='2x'
-        onClick={() => setOpen(true)}
-        pulse={!!error}
-        pulseVariant='danger'
-      />
-      <Modal
-        size='xl'
-        show={open}
-        onHide={() => setOpen(o => !o)}
-      >
-        <Modal.Header closeButton/>
-        <Modal.Body className='d-flex flex-column gap-5'>
-          {columnNames.map(columnName => {
-            const field = fields[columnName];
-            const render = typeof field === 'object' && field?.render;
-
-            const nestedName = `${name}.${index}.${columnName.toString()}`;
-            const fieldProps = {
-              name: nestedName,
-              className: 'border-1'
-            };
-
-            const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
-            if (!field || !columnMapping) {
-              return <></>;
-            }
-
-            return (
-              <div key={nestedName}>
-                <label
-                  className={clsx(
-                    'd-flex fw-semibold text-truncate text-muted',
-                    !('multiple' in columnMapping) && !columnMapping.nullable && 'required'
-                  )}
-                >
-                  <TitleContent columnName={columnName} {...columnMapping} />
-                </label>
-                {render ?
-                  render({item, fieldProps}) :
-                  <ValueField
-                    {...fieldProps}
-                    column={columnDef[columnName]}
-                    size='sm'
-                  />
-                }
-              </div>
-            );
-          })}
-        </Modal.Body>
-      </Modal>
-    </>
-  );
-};
-
-export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, modelName, disableInsert, disableDelete, extraAttribute}: FieldProps & {
-  modelName: M,
-  disableInsert?: boolean
-  disableDelete?: boolean
-  extraAttribute?: Record<any, any>
-}) => {
+export const NestedArrayField = <M extends ModelEnum>(
+  {
+    name,
+    feedbackLabel,
+    modelName,
+    disableInsert,
+    disableDelete,
+    extraAttribute,
+    ...props
+  }: FieldProps & {
+    modelName: M,
+    disableInsert?: boolean
+    disableDelete?: boolean
+    extraAttribute?: Record<any, any>,
+    view?: CreateViewType<M> | UpdateViewType<M>
+  }) => {
   const {trans} = useTrans();
   const {values: {id}} = useFormikContext<AbstractModel>();
   const [{value: baseItems}, , {setValue}] = useField<Array<HydraItem<M>>>({name});
   const {views, columnDef} = useMapping<M>({modelName});
   const view = useMemo<CreateViewType<M> | UpdateViewType<M>>(() => {
+    if (props.view) return props.view
     if (id) {
       return (views?.find(view => view.type === ViewEnum.Update) || DEFAULT_UPDATE_VIEW) as UpdateViewType<M>;
     }
@@ -139,14 +66,53 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
     }
   });
   const rootColumnNames = columnNames.filter(columnName => !nestedColumnNames.some(nestedColumnName => columnName === nestedColumnName));
-  const items = useMemo(()=>[...baseItems].map((item, _index)=>({...item, _index })).reverse(), [baseItems])
-  const mapping = rootColumnNames.reduce(
+  const items = useMemo(() => [...baseItems].map((item, _index) => ({...item, _index})).reverse(), [baseItems]);
+  const mapping = rootColumnNames.filter(columnName => {
+    const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
+
+    return !columnMapping?.readOnly;
+  }).reduce(
     (previousValue, columnName) => ({
       ...previousValue,
       [columnName]: trans({id: stringToI18nMessageKey(columnName.toString())})
     }),
     {} as Record<keyof Model<M>, string>
-  )
+  );
+
+  // const [_queries, set_Queries] = useState<Partial<Record<ModelEnum, string[]>>>({
+  //   [ModelEnum.Product]: ['PR-000121'],
+  // })
+  // const queries = useQueries(
+  //   (Object.keys(_queries) as ModelEnum[])
+  //     .filter(modelName => !!_queries[modelName]?.length)
+  //     .map(modelName => {
+  //       const path = `/base` + getRoutePrefix(modelName);
+  //       const values = _queries[modelName] as string[];
+  //       // TODO BUILD SEARCH QUERY
+  //       const searchableColumnNames:string[] = ['code']
+  //       const filter:CompoundFilter<any> = {
+  //         operator: CompoundFilterOperator.Or,
+  //         filters: searchableColumnNames.map(columnName => ({
+  //           property: columnName,
+  //           operator: PropertyFilterOperator.In,
+  //           value: values
+  //         }))
+  //       }
+  //       const params = filterToParams(filter, 'filter', modelName)
+  //
+  //       return {
+  //         queryKey: [modelName],
+  //         queryFn: () => axios.get<JsonldCollectionResponse<M>>(path, {params}),
+  //       };
+  //     })
+  // );
+  // const products = queries[0].data?.data['hydra:member'] || [];
+  // console.log(products);
+
+  const initialValues = {
+    ...getInitialValues({columnDef, fields}),
+    ...extraAttribute
+  };
 
   return (
     <Field name={name} feedbackLabel={feedbackLabel}>
@@ -156,7 +122,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
             <table className='table table-hover table-row-bordered table-row-dark g-1 mb-0 align-middle'>
               <thead className='fs-7 text-gray-400 text-uppercase'>
               <tr className='align-middle'>
-                <th>
+                <th style={{width: '1%'}}>
                   {!disableInsert && (
                     <div className='d-flex'>
                       <input
@@ -164,48 +130,99 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
                         accept='.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
                         style={{display: 'none'}} // Hide the file input
                         ref={fileInputRef}
-                        onChange={event => {
-                          const file = event.target.files?.[0];
+                        onChange={async e => {
+                          const file = await e.target.files?.[0]?.arrayBuffer();
+                          const workbook = read(file/*, { dateNF: 'yyyy-mm-dd' }*/);
+                          let data: Array<Partial<Model<M>>> = [];
+                          for (const row of getData<M>({workbook, mapping})) {
+                            let _item: Partial<Model<M>> = initialValues;
+                            for (const columnName of Object.keys(mapping) as Array<keyof Model<M>>) {
+                              const columnMapping = columnDef[columnName] as ColumnMapping<M>;
+                              const value = row[columnName];
+                              switch (columnMapping.type) {
+                                case undefined:
+                                case ColumnTypeEnum.String:
+                                  _item[columnName] = value;
+                                  break;
+                                case ColumnTypeEnum.Number:
+                                  // @ts-ignore
+                                  _item[columnName] = parseFloat(value);
+                                  break;
+                                case ColumnTypeEnum.Array:
+                                case ColumnTypeEnum.Boolean:
+                                  // TODO
+                                  break;
+                                default:
+                                  const path = `/base` + getRoutePrefix(columnMapping.type);
+                                  // TODO searchableColumnNames.
+                                  const searchableColumnNames: string[] = ['code'];
+                                  const filter: CompoundFilter<any> = {
+                                    operator: CompoundFilterOperator.Or,
+                                    filters: searchableColumnNames.map(columnName => ({
+                                      property: columnName,
+                                      operator: PropertyFilterOperator.Equal,
+                                      value: value
+                                    }))
+                                  };
+                                  const params = filterToParams(filter, 'filter', columnMapping.type);
+                                  const response = await axios.get<JsonldCollectionResponse<M>>(path, {params});
+                                  // @ts-ignore
+                                  _item[columnName] = response.data['hydra:member'].at(0);
+                              }
+                            }
 
-                          if (file) {
-                            console.log(mapping)
-                            file.arrayBuffer().then(file => {
-                              const workbook = read(file/*, { dateNF: 'yyyy-mm-dd' }*/);
-                              const data = getData<M>({workbook, mapping});
-                              // @ts-ignore
-                              setValue([...data, ...items]);
-                            });
+                            data.push(_item);
                           }
+                          console.log(data);
+                          // @ts-ignore
+                          setValue([...data, ...items]);
                         }}
                       />
                       <IconButton
                         path='/general/gen035.svg'
                         variant='primary'
                         size='2x'
-                        onClick={() => push({
-                          ...getInitialValues({columnDef, fields}),
-                          ...extraAttribute
-                        })}
+                        onClick={() => push(initialValues)}
                       />
                       <IconButton
                         path='/files/fil010.svg'
                         variant='primary'
                         size='2x'
+                        onClick={() => fileInputRef.current?.click()}
+                      />
+                      <IconButton
+                        path='/files/fil009.svg'
+                        variant='primary'
+                        size='2x'
                         onClick={() => {
-                          fileInputRef.current?.click();
+                          const data: string[][] = [Object.values(mapping)];
+                          const workSheet = utils.aoa_to_sheet(data);
+                          const workBook = utils.book_new();
+                          utils.book_append_sheet(workBook, workSheet, 'Sheet1');
+
+                          const fileName = `${trans({id: stringToI18nMessageKey(plural(modelName))})}.xlsx`;
+                          writeFile(workBook, fileName);
                         }}
                       />
                     </div>
                   )}
                 </th>
-                {rootColumnNames.map(columnName => (
-                  <th key={columnName.toString()}>
-                    <TitleContent
-                      columnName={columnName}
-                      {...columnDef[columnName]}
-                    />
-                  </th>
-                ))}
+                {rootColumnNames.map(columnName => {
+                  const column = columnDef[columnName];
+
+                  return (
+                    <th
+                      key={columnName.toString()}
+                      className={clsx('text-truncate', column.type === ColumnTypeEnum.Number && 'w-75px')}
+                      style={{width: (column.type === ColumnTypeEnum.String && column.format !== StringFormat.Select) ? undefined : '1%'}}
+                    >
+                      <TitleContent
+                        columnName={columnName}
+                        {...columnDef[columnName]}
+                      />
+                    </th>
+                  );
+                })}
               </tr>
               </thead>
               <tbody>
@@ -215,7 +232,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
                     <td className='align-middle'>
                       <div className='d-flex align-items-center'>
                         <div className='badge badge-secondary badge-square rounded'>
-                          #{itemIndex + 1}
+                          {itemIndex + 1}
                         </div>
                         {!disableDelete && (
                           <IconButton
@@ -239,11 +256,14 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
                     {rootColumnNames.map(columnName => {
                       const field = fields[columnName];
                       const render = typeof field === 'object' && field?.render;
+                      const column = columnDef[columnName];
 
                       const nestedName = `${name}.${item._index}.${columnName.toString()}`;
                       const fieldProps = {
                         name: nestedName,
-                        className: 'border-1'
+                        className: clsx(
+                          'border-1'
+                        )
                       };
 
                       return (
@@ -252,7 +272,7 @@ export const NestedArrayField = <M extends ModelEnum>({name, feedbackLabel, mode
                             render({item, fieldProps}) :
                             <ValueField
                               {...fieldProps}
-                              column={columnDef[columnName]}
+                              column={column}
                               size='sm'
                             />
                           }

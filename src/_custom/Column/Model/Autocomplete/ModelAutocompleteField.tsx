@@ -25,7 +25,7 @@ type ModelAutocomplete<M extends ModelEnum, Multiple extends UndefinedBool> =
     name: string
     getParams?: (filter: CompoundFilter<M>) => CompoundFilter<M>
   }
-  & Pick<AutocompleteFieldProps<Model<M>, Multiple, false, false>, 'size' | 'className' | 'bg' | 'placeholder' | 'multiple' | 'autoSelect' | 'disabled'>
+  & Pick<AutocompleteFieldProps<HydraItem<M>, Multiple, false, false>, 'size' | 'className' | 'bg' | 'placeholder' | 'multiple' | 'autoSelect' | 'disabled' | 'onChange'>
 export const ModelAutocompleteField = <
   M extends ModelEnum,
   Multiple extends UndefinedBool

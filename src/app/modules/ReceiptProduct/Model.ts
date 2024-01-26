@@ -8,6 +8,8 @@ type Model = {
   note: string
   desiredProduct: DesiredProductModel
   receipt: ReceiptModel
+  parent?: Model
+  children: Array<Model>
   readonly desiredProductQuantity: number
   readonly restQuantity: number
   readonly validated: number

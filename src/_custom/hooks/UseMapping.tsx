@@ -3,7 +3,6 @@ import { StringFormat } from '../Column/String/StringColumn';
 import { useAuth } from './UseAuth';
 import { MODEL_MAPPINGS } from '../../app/modules';
 import { getRoutePrefix } from '../utils';
-import React from 'react';
 import { ColumnTypeEnum } from '../types/types';
 import { ModelEnum } from '../../app/modules/types';
 
@@ -11,7 +10,7 @@ import { ModelEnum } from '../../app/modules/types';
 export const useMapping = <M extends ModelEnum>({ modelName }: { modelName: M }) => {
   const { isGranted } = useAuth();
   const modelMapping = MODEL_MAPPINGS[modelName];
-  const { columnDef, views } = modelMapping;
+  const { columnDef } = modelMapping;
   const columNames = Object.keys(columnDef) as Array<keyof Model<M>>;
   const searchableColumnNames = columNames.filter(columnName => {
     const def = columnDef[columnName];
