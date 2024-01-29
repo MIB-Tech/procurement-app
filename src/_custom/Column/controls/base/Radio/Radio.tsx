@@ -1,8 +1,8 @@
-import React, { ForwardedRef, forwardRef, InputHTMLAttributes, ReactNode } from 'react';
+import React, {ForwardedRef, forwardRef, InputHTMLAttributes, ReactNode} from 'react';
 import clsx from 'clsx';
-import { FormControlProps } from '../../../String/InputBase/Input.types';
-import { Button } from '../../../../components/Button';
-import { Variant } from 'react-bootstrap/types';
+import {FormControlProps} from '../../../String/InputBase/Input.types';
+import {Button} from '../../../../components/Button';
+import {Variant} from 'react-bootstrap/types';
 
 
 const defaultVariant = 'primary';
@@ -60,7 +60,7 @@ const RadioInner = <T extends {} | undefined>(
 
           return (
             <div key={index} className='d-flex align-items-center'>
-              {isVertical && !!index && <div className='bullet bg-gray-500 w-1px h-15px mx-2' />}
+              {isVertical && !!index && <div className={clsx('bullet bg-gray-500 w-1px h-15px', size === 'sm' ? 'mx-1' : 'mx-2')} />}
               <Button
                 size={size}
                 disabled={disabled || getOptionDisabled(option)}
@@ -68,7 +68,12 @@ const RadioInner = <T extends {} | undefined>(
                 className={clsx(
                   'text-truncate py-1 px-2 rounded-1',
                   isActive && `btn-active-${variant} active`,
-                  isVertical ? (size === 'sm' ? 'min-w-60px mw-100px' : 'min-w-100px mw-120px') : 'w-100'
+                  isVertical ?
+                    size === 'sm' ?
+                      'min-w-30px mw-100px' :
+                      'min-w-100px mw-120px'
+                    :
+                    'w-100'
                 )}
                 onClick={() => {
                   if (onChange) {

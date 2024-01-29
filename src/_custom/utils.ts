@@ -135,7 +135,7 @@ export const getValidationSchema = <M extends ModelEnum>({columnDef, trans, fiel
             relationSchema = getValidationSchema({
               columnDef: embeddedModelMapping.columnDef as ValidationSchemaDef<M>,
               trans,
-              fields: embeddedFields,
+              fields: embeddedFields
             });
           }
           if ('multiple' in columnMapping) {

@@ -29,8 +29,9 @@ import { DivToggle } from '../../ListingView/Filter/DivToggle';
 type StringFieldProps = {
   className?: string
   column: StringColumn
+  hideIcon?: boolean
 } & FieldProps
-export const StringField: FC<StringFieldProps> = ({ column, name, feedbackLabel, className, ...props }) => {
+export const StringField: FC<StringFieldProps> = ({ column, name, feedbackLabel, hideIcon, className, ...props }) => {
   const { values } = useFormikContext();
   const [field, { error }, { setValue, setTouched }] = useField({ name });
   const { value } = field;
@@ -39,7 +40,7 @@ export const StringField: FC<StringFieldProps> = ({ column, name, feedbackLabel,
   const { trans } = useTrans();
   let children: ReactNode;
   const { format } = column;
-  const icon: boolean | undefined = !(format && [StringFormat.Password, StringFormat.Icon, StringFormat.Select].includes(format));
+  const icon: boolean | undefined = !hideIcon && !(format && [StringFormat.Password, StringFormat.Icon, StringFormat.Select].includes(format));
 
   switch (format) {
     case StringFormat.Text:
@@ -47,7 +48,7 @@ export const StringField: FC<StringFieldProps> = ({ column, name, feedbackLabel,
         <Textarea 
           {...field}
           {...props}
-          className={clsx('pe-10', error && 'is-invalid', className)}
+          className={clsx(!!icon && 'pe-10', error && 'is-invalid', className)}
         />
       );
       break;
@@ -169,6 +170,7 @@ export const StringField: FC<StringFieldProps> = ({ column, name, feedbackLabel,
             getOptionDisabled={getOptionDisabled}
             onChange={setValue}
             className={clsx(className, error && 'border-danger')}
+            scrollDisabled
           />
         );
       } else {

@@ -11,7 +11,8 @@ export type ValidationSchemaDef<M extends ModelEnum> = Record<keyof Model<M> | s
 export type ValidationSchemaProps<M extends ModelEnum> = {
   columnDef: ColumnDef<M>,
   trans: ({ values, ...descriptor }: FormattedMessageProps) => string
-  fields: FormFields<M>
+  fields: FormFields<M>,
+  depth?: number
 }
 
 export enum ColumnTypeEnum {

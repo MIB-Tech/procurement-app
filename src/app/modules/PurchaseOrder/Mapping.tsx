@@ -10,10 +10,20 @@ import React from 'react';
 import {PrintPurchaseOrderButton} from './components/PrintPurchaseOrderButton';
 import {GenerateReceiptButton} from './components/GenerateReceiptButton';
 import {GenerateInvoiceButton} from './components/GenerateInvoiceButton';
-import {RoleKeyEnum} from "../Role/Model";
+import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
+import {RoleKeyEnum} from '../Role/Model';
 
 const formFields: FormFields<ModelEnum.PurchaseOrder> = {
-  vendor: true,
+  vendor: {
+    render: ({fieldProps, item}) => (
+      <ModelAutocompleteField
+        modelName={ModelEnum.Vendor}
+        {...fieldProps}
+        size='sm'
+        disabled={item.purchaseOrderProducts.length > 0}
+      />
+    )
+  },
   createdAt: {
     defaultValue: moment().format()
   },
@@ -37,6 +47,11 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   category: true,
   project: true,
   paymentModality: true,
+  validationStatus: {
+    grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
+    defaultValue: ValidationEnum.Panding,
+    display: props => !!props.item.id
+  },
   purchaseOrderProducts: {
     slotProps: {
       root: {
@@ -46,9 +61,18 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
         xl: 12,
       }
     },
-    display: ({item}) => typeof item.taxIncluded === 'boolean'
+    display: ({item}) => typeof item.taxIncluded === 'boolean' && !!item.vendor
   },
-  attachments: true,
+  attachments: {
+    slotProps: {
+      root: {
+        sm: 12,
+        md: 12,
+        lg: 12,
+        xl: 12,
+      }
+    },
+  },
 };
 
 
@@ -238,18 +262,19 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},
         {
           render: ({item}) => {
-            const {status, invoice} = item
+            const {status, invoice} = item;
             if (status !== QuantityStatusEnum.FullyReceived || invoice) {
-              return
+              return;
             }
-            return <GenerateInvoiceButton item={item}/>
+
+            return <GenerateInvoiceButton item={item}/>;
           }
         },
         {
           render: ({item}) => {
-            const {status, validationStatus} = item
+            const {status, validationStatus} = item;
             return status !== QuantityStatusEnum.FullyReceived && validationStatus === ValidationEnum.Validated &&
-                <GenerateReceiptButton item={item}/>
+                <GenerateReceiptButton item={item}/>;
           }
         },
       ],
@@ -272,12 +297,22 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         }
       },
+      getMutateInput: purchaseOrder => ({
+        ...purchaseOrder,
+        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(purchaseOrderProduct=>({
+          ...purchaseOrderProduct,
+          components: purchaseOrderProduct.components.map(component=>({
+            ...component,
+            // @ts-ignore
+            product: component.product['@id']
+          }))
+        }))
+      }),
       fields: formFields
     },
     {
       type: ViewEnum.Update,
-      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived &&
-        item.validationStatus != ValidationEnum.Validated,
+      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived && item.validationStatus !== ValidationEnum.Validated,
       slotProps: {
         item: {
           sm: 4,
@@ -285,48 +320,18 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         }
       },
-      fields: {
-        vendor: true,
-        createdAt: {
-          defaultValue: moment().format()
-        },
-        taxIncluded: {
-          defaultValue: false,
-          render: ({item: {purchaseOrderProducts}}) => (
-            <RadioField
-              size='sm'
-              name='taxIncluded'
-              options={[true, false]}
-              getOptionLabel={taxIncluded => taxIncluded ? 'TTC' : 'HT'}
-              disabled={purchaseOrderProducts.length > 0}
-              scrollDisabled
-            />
-          )
-        },
-        ref: true,
-        externalRef: true,
-        desiredDeliveryDate: true,
-        currency: true,
-        category: true,
-        project: true,
-        paymentModality: true,
-        validationStatus: {
-          grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
-          defaultValue: ValidationEnum.Panding
-        },
-        purchaseOrderProducts: {
-          slotProps: {
-            root: {
-              sm: 12,
-              md: 12,
-              lg: 12,
-              xl: 12,
-            }
-          },
-          display: ({item}) => typeof item.taxIncluded === 'boolean'
-        },
-        attachments: true,
-      }
+      getMutateInput: purchaseOrder => ({
+        ...purchaseOrder,
+        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(purchaseOrderProduct => ({
+          ...purchaseOrderProduct,
+          components: purchaseOrderProduct.components.map(component => ({
+            ...component,
+            // @ts-ignore
+            product: component.product['@id']
+          }))
+        }))
+      }),
+      fields: formFields
     }
   ]
 };

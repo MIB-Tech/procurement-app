@@ -30,6 +30,7 @@ export type FormViewBaseColumn<M extends ModelEnum> = {
 export type ViewColumn<M extends ModelEnum> = {
   title?: I18nMessageKey
   nullable?: boolean
+  readOnly?: boolean
   footer?: (props: { value?: any, collection: Array<HydraItem<M>> }) => ReactNode
 }
 export type TypeColum<M extends ModelEnum = any> =

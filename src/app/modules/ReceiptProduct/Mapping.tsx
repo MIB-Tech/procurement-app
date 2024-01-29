@@ -45,7 +45,11 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     },
     desiredProduct: {
       type: ModelEnum.DesiredProduct
-    }
+    },
+    components: {
+      type: ModelEnum.ReceiptProductComponent,
+      multiple: true
+    },
   },
   views: [
     {
@@ -60,7 +64,11 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
       type: ViewEnum.Create,
       fields: {
         designation: {
-          render: ({item}) => item.desiredProduct.designation
+          render: ({item}) => (
+            <div className='w-400px'>
+              {item.desiredProduct.designation}
+            </div>
+          )
         },
         desiredProductQuantity: {
           render: ({item}) => item.desiredProduct.quantity
