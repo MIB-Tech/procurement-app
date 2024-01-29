@@ -215,7 +215,7 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
           disabled={purchaseOrders.length === 0}
           loading={isLoading}
           loadingLabel='SHOW'
-          onClick={() => {
+          onClick={async () => {
             refetch().then(r => {
               const desiredProducts = r.data?.data['hydra:member'] as Array<HydraItem<ModelEnum.DesiredProduct>>;
               const receiptProducts: Array<Partial<ReceiptProductModel>> = desiredProducts.map(desiredProduct => ({
@@ -227,7 +227,6 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
               }));
               setFieldValue('receiptProducts', receiptProducts);
             });
-
           }}
         >
           <Trans id='SHOW'/>

@@ -54,7 +54,7 @@ export const NestedArrayField = <M extends ModelEnum>(
   }, [id, views]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const {fields = getDefaultFields(columnDef)} = view;
-  const columnNames = Object.keys(fields) as Array<keyof Model<M>>;
+  const columnNames = Object.keys(fields) as Array<keyof Model<M> | string>;
   const nestedColumnNames = columnNames.filter(columnName => {
     const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
     if (!columnMapping) return false;
@@ -65,7 +65,10 @@ export const NestedArrayField = <M extends ModelEnum>(
         return 'embeddedForm' in columnMapping;
     }
   });
-  const rootColumnNames = columnNames.filter(columnName => !nestedColumnNames.some(nestedColumnName => columnName === nestedColumnName));
+  const rootColumnNames = columnNames.filter(columnName => {
+
+    return !nestedColumnNames.some(nestedColumnName => columnName === nestedColumnName)
+  });
   const items = useMemo(() => [...baseItems].map((item, _index) => ({...item, _index})).reverse(), [baseItems]);
   const mapping = rootColumnNames.filter(columnName => {
     const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
@@ -208,17 +211,17 @@ export const NestedArrayField = <M extends ModelEnum>(
                   )}
                 </th>
                 {rootColumnNames.map(columnName => {
-                  const column = columnDef[columnName];
+                  const column = columnDef[columnName] as ColumnMapping<M> | undefined;
 
                   return (
                     <th
                       key={columnName.toString()}
-                      className={clsx('text-truncate', column.type === ColumnTypeEnum.Number && 'w-75px')}
-                      style={{width: (column.type === ColumnTypeEnum.String && column.format !== StringFormat.Select) ? undefined : '1%'}}
+                      className={clsx('text-truncate', column?.type === ColumnTypeEnum.Number && 'w-75px')}
+                      style={{width: (column?.type === ColumnTypeEnum.String && column.format !== StringFormat.Select) ? undefined : '1%'}}
                     >
                       <TitleContent
-                        columnName={columnName}
-                        {...columnDef[columnName]}
+                        columnName={columnName.toString()}
+                        {...column}
                       />
                     </th>
                   );
@@ -256,7 +259,7 @@ export const NestedArrayField = <M extends ModelEnum>(
                     {rootColumnNames.map(columnName => {
                       const field = fields[columnName];
                       const render = typeof field === 'object' && field?.render;
-                      const column = columnDef[columnName];
+                      const column = columnDef[columnName] as ColumnMapping<M> | undefined;
 
                       const nestedName = `${name}.${item._index}.${columnName.toString()}`;
                       const fieldProps = {
@@ -270,11 +273,13 @@ export const NestedArrayField = <M extends ModelEnum>(
                         <td key={nestedName} className={clsx(!render && '-align-top')}>
                           {render ?
                             render({item, fieldProps}) :
-                            <ValueField
-                              {...fieldProps}
-                              column={column}
-                              size='sm'
-                            />
+                            column && (
+                              <ValueField
+                                {...fieldProps}
+                                column={column}
+                                size='sm'
+                              />
+                            )
                           }
                         </td>
                       );
@@ -288,17 +293,15 @@ export const NestedArrayField = <M extends ModelEnum>(
                 <tr className='fs-7 text-gray-400 text-uppercase'>
                   <td/>
                   {rootColumnNames.map(columnName => {
-                    const columnMapping = columnDef[columnName];
+                    const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
                     if (!columnMapping) return <td key={columnName.toString()}/>;
                     let value: any = '';
                     switch (columnMapping.type) {
                       case ColumnTypeEnum.Number:
                         value = items.reduce(
                           (count, currentValue) => {
-                            const _value = currentValue[columnName];
-                            if (typeof _value !== 'number') {
-                              return count;
-                            }
+                            const _value = currentValue[columnName as keyof Model<M>];
+                            if (typeof _value !== 'number') return count
 
                             return count + _value;
                           }, 0);
