@@ -24,7 +24,7 @@ import {useUri} from '../../../_custom/hooks/UseUri';
 import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
 import ReportViewer from '../PurchaseOrder/components/ReportViewer';
 import {ReceiptPrint} from './Model';
-import {QuantityStatusEnum} from "../PurchaseOrder/Model";
+import {QuantityStatusEnum, ValidationStatusEnum} from "../PurchaseOrder/Model";
 import {GenerateInvoiceButton} from "../PurchaseOrder/components/GenerateInvoiceButton";
 
 // const ReceiptProducts = ({item}: { item: Model<ModelEnum.Receipt> }) => {
@@ -202,10 +202,18 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
                   property: 'vendor',
                   operator: PropertyFilterOperator.Equal,
                   value: vendor
+                },
+                {
+                  property: 'validationStatus',
+                  operator: PropertyFilterOperator.Equal,
+                  value: ValidationStatusEnum.Validated
+                },
+                {
+                  property: 'invoice',
+                  operator: PropertyFilterOperator.IsNull
                 }
               ]
             };
-
             return newFilter;
           }}
         />

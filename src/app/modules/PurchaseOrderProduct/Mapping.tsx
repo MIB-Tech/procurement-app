@@ -422,5 +422,4 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
     }
   ]
 };
-
 export default mapping;

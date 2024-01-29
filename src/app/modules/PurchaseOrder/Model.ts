@@ -23,14 +23,14 @@ export const QUANTITY_STATUS_OPTIONS: Array<StringSelectOption> = [
   {id: QuantityStatusEnum.FullyReceived, color: 'success'},
 ];
 
-export enum ValidationEnum {
+export enum ValidationStatusEnum {
   Validated = 'VALIDATED',
   Panding = 'PENDING'
 }
 
 export const VALIDATION_STATUS_OPTIONS: Array<StringSelectOption> = [
-  {id: ValidationEnum.Validated, color: 'success'},
-  {id: ValidationEnum.Panding, color: 'warning'},
+  {id: ValidationStatusEnum.Validated, color: 'success'},
+  {id: ValidationStatusEnum.Panding, color: 'warning'},
 ];
 type Model = {
   orderNumber: string
@@ -38,7 +38,7 @@ type Model = {
   ref?: string
   externalRef?: string
   desiredDeliveryDate: string
-  validationStatus: ValidationEnum
+  validationStatus: ValidationStatusEnum
   validatedBy: string
   validatedAt: string
   vendor: VendorModel
