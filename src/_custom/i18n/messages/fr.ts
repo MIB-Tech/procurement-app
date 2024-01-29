@@ -472,7 +472,7 @@ export const fr: I18nLanguage = {
   TREE_PATH_SOURCE: 'Source de chemin',
   TYPES: 'Types',
   UNIT_PRICE: 'Prix unitaire',
-  UPDATE: 'Mise à jour',
+  UPDATE: 'Modifier',
   UPDATED_AT: 'Modifié Le',
   USER: 'Utilisateur',
   USERNAME: 'Nom d\'utilisateur',
