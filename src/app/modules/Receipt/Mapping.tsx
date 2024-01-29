@@ -24,6 +24,8 @@ import {useUri} from '../../../_custom/hooks/UseUri';
 import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
 import ReportViewer from '../PurchaseOrder/components/ReportViewer';
 import {ReceiptPrint} from './Model';
+import {QuantityStatusEnum} from "../PurchaseOrder/Model";
+import {GenerateInvoiceButton} from "../PurchaseOrder/components/GenerateInvoiceButton";
 
 // const ReceiptProducts = ({item}: { item: Model<ModelEnum.Receipt> }) => {
 //   const {collection} = useCollectionQuery({
