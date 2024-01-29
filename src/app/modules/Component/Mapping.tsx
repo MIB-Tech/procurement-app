@@ -12,12 +12,6 @@ const mapping: ModelMapping<ModelEnum.Component> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    price: {
-      type: ColumnTypeEnum.Number,
-      validation: {
-        min: 0
-      }
-    },
     quantity: {
       type: ColumnTypeEnum.Number,
       validation: {

@@ -210,7 +210,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       columns: {
         orderNumber: true,
         validationStatus: true,
-        validatedBy: true,
+        validatedBy: {
+          grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Buyer]
+        },
+        validatedAt: true,
         status: true,
         taxIncluded: {
           render: ({item: {taxIncluded}}) => taxIncluded ? 'TTC' : 'HT'
@@ -218,7 +221,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         ref: true,
         externalRef: true,
         desiredDeliveryDate: true,
-        validatedAt: true,
         vendor: true,
         currency: true,
         project: true,
@@ -240,7 +242,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
             if (status !== QuantityStatusEnum.FullyReceived || invoice) {
               return
             }
-
             return <GenerateInvoiceButton item={item}/>
           }
         },
