@@ -270,8 +270,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Update,
-      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived &&
-      item.validationStatus != ValidationEnum.Validated,
+      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived,
       slotProps: {
         item: {
           sm: 4,
