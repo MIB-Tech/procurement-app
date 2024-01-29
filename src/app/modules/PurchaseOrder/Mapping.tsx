@@ -4,7 +4,7 @@ import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField';
-import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum, VALIDATION_STATUS_OPTIONS, ValidationEnum} from './Model';
+import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum, VALIDATION_STATUS_OPTIONS, ValidationStatusEnum} from './Model';
 import moment from 'moment/moment';
 import React from 'react';
 import {PrintPurchaseOrderButton} from './components/PrintPurchaseOrderButton';
@@ -49,7 +49,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   paymentModality: true,
   validationStatus: {
     grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
-    defaultValue: ValidationEnum.Panding,
+    defaultValue: ValidationStatusEnum.Panding,
     display: props => !!props.item.id
   },
   purchaseOrderProducts: {
@@ -273,7 +273,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {
           render: ({item}) => {
             const {status, validationStatus} = item;
-            return status !== QuantityStatusEnum.FullyReceived && validationStatus === ValidationEnum.Validated &&
+            return status !== QuantityStatusEnum.FullyReceived && validationStatus === ValidationStatusEnum.Validated &&
                 <GenerateReceiptButton item={item}/>;
           }
         },
@@ -312,7 +312,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Update,
-      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived && item.validationStatus !== ValidationEnum.Validated,
+      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived && item.validationStatus !== ValidationStatusEnum.Validated,
       slotProps: {
         item: {
           sm: 4,
