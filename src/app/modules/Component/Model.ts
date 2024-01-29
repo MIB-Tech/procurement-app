@@ -3,7 +3,6 @@ import {ProductModel} from '../Product';
 
 
 type Model = {
-  price: number
   quantity: number
   product: ProductModel
   parentProduct: ProductModel
