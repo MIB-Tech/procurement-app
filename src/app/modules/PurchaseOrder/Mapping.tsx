@@ -4,13 +4,14 @@ import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField';
-import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum} from './Model';
+import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum, VALIDATION_STATUS_OPTIONS, ValidationEnum} from './Model';
 import moment from 'moment/moment';
 import React from 'react';
 import {PrintPurchaseOrderButton} from './components/PrintPurchaseOrderButton';
 import {GenerateReceiptButton} from './components/GenerateReceiptButton';
 import {GenerateInvoiceButton} from './components/GenerateInvoiceButton';
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
+import {RoleKeyEnum} from '../Role/Model';
 
 const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   vendor: {
@@ -42,12 +43,15 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   ref: true,
   externalRef: true,
   desiredDeliveryDate: true,
-  currency: {
-    helperText: 'MAD_BY_DEFAULT'
-  },
+  currency: true,
   category: true,
   project: true,
   paymentModality: true,
+  validationStatus: {
+    grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
+    defaultValue: ValidationEnum.Panding,
+    display: props => !!props.item.id
+  },
   purchaseOrderProducts: {
     slotProps: {
       root: {
@@ -59,7 +63,16 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
     },
     display: ({item}) => typeof item.taxIncluded === 'boolean' && !!item.vendor
   },
-  attachments: true,
+  attachments: {
+    slotProps: {
+      root: {
+        sm: 12,
+        md: 12,
+        lg: 12,
+        xl: 12,
+      }
+    },
+  },
 };
 
 
@@ -90,6 +103,21 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     desiredDeliveryDate: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Date
+    },
+    validationStatus: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Select,
+      options: VALIDATION_STATUS_OPTIONS,
+      nullable: true,
+    },
+    validatedAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Datetime,
+      nullable: true
+    },
+    validatedBy: {
+      type: ColumnTypeEnum.String,
+      nullable: true
     },
     totalExclTax: {
       type: ColumnTypeEnum.Number,
@@ -196,12 +224,20 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         // totalVatTax: true,
         totalInclTax: true,
         status: true,
+        validationStatus: true,
+        //  validatedBy: true,
+        // validatedAt: true,
       }
     },
     {
       type: ViewEnum.Detail,
       columns: {
         orderNumber: true,
+        validationStatus: true,
+        validatedBy: {
+          grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Buyer]
+        },
+        validatedAt: true,
         status: true,
         taxIncluded: {
           render: ({item: {taxIncluded}}) => taxIncluded ? 'TTC' : 'HT'
@@ -234,7 +270,13 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
             return <GenerateInvoiceButton item={item}/>;
           }
         },
-        {render: ({item}) => item.status !== QuantityStatusEnum.FullyReceived && <GenerateReceiptButton item={item}/>},
+        {
+          render: ({item}) => {
+            const {status, validationStatus} = item;
+            return status !== QuantityStatusEnum.FullyReceived && validationStatus === ValidationEnum.Validated &&
+                <GenerateReceiptButton item={item}/>;
+          }
+        },
       ],
       itemOperationRoutes: ({operations, item}) => operations.filter(({operationType}) => {
         switch (operationType) {
@@ -270,7 +312,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Update,
-      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived,
+      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived && item.validationStatus !== ValidationEnum.Validated,
       slotProps: {
         item: {
           sm: 4,
@@ -280,9 +322,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       },
       getMutateInput: purchaseOrder => ({
         ...purchaseOrder,
-        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(purchaseOrderProduct=>({
+        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(purchaseOrderProduct => ({
           ...purchaseOrderProduct,
-          components: purchaseOrderProduct.components.map(component=>({
+          components: purchaseOrderProduct.components.map(component => ({
             ...component,
             // @ts-ignore
             product: component.product['@id']

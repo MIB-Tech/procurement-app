@@ -46,14 +46,9 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     desiredProduct: {
       type: ModelEnum.DesiredProduct
     },
-    parent: {
-      type: ModelEnum.ReceiptProduct,
-      nullable: true
-    },
-    children: {
-      type: ModelEnum.ReceiptProduct,
-      multiple: true,
-      embeddedForm: true,
+    components: {
+      type: ModelEnum.ReceiptProductComponent,
+      multiple: true
     },
   },
   views: [

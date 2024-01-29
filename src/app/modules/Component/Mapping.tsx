@@ -12,12 +12,6 @@ const mapping: ModelMapping<ModelEnum.Component> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    price: {
-      type: ColumnTypeEnum.Number,
-      validation: {
-        min: 0
-      }
-    },
     quantity: {
       type: ColumnTypeEnum.Number,
       validation: {
@@ -36,7 +30,6 @@ const mapping: ModelMapping<ModelEnum.Component> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        price: true,
         quantity: true
       }
     },
@@ -44,7 +37,6 @@ const mapping: ModelMapping<ModelEnum.Component> = {
       type: ViewEnum.Create,
       fields: {
         product: true,
-        // price: true,
         quantity: true,
       }
     },
@@ -52,7 +44,6 @@ const mapping: ModelMapping<ModelEnum.Component> = {
       type: ViewEnum.Update,
       fields: {
         product: true,
-        // price: true,
         quantity: true,
       }
     },
@@ -60,7 +51,6 @@ const mapping: ModelMapping<ModelEnum.Component> = {
       type: ViewEnum.Detail,
       columns: {
         product: true,
-        price: true,
       }
     },
 

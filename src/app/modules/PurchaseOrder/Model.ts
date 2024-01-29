@@ -23,12 +23,24 @@ export const QUANTITY_STATUS_OPTIONS: Array<StringSelectOption> = [
   {id: QuantityStatusEnum.FullyReceived, color: 'success'},
 ];
 
+export enum ValidationEnum {
+  Validated = 'VALIDATED',
+  Panding = 'PENDING'
+}
+
+export const VALIDATION_STATUS_OPTIONS: Array<StringSelectOption> = [
+  {id: ValidationEnum.Validated, color: 'success'},
+  {id: ValidationEnum.Panding, color: 'warning'},
+];
 type Model = {
   orderNumber: string
   taxIncluded: boolean
   ref?: string
   externalRef?: string
   desiredDeliveryDate: string
+  validationStatus: ValidationEnum
+  validatedBy: string
+  validatedAt: string
   vendor: VendorModel
   currency?: CurrencyModel
   project: ProjectModel

@@ -1,5 +1,4 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import React from 'react';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {ref, string} from 'yup';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
@@ -61,20 +60,20 @@ const mapping: ModelMapping<ModelEnum.User> = {
       type: ModelEnum.Role,
       nullable: true
     },
-    location: {
+    locations: {
       type: ModelEnum.Location,
-      nullable: true
+      multiple: true
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
-        username: true,
+        role: true,
+        location: true,
         phoneNumber: true,
         email: true,
-        // role: true,
-        location: true
+        locations: true
       }
     },
     {
@@ -88,7 +87,7 @@ const mapping: ModelMapping<ModelEnum.User> = {
         password: true,
         passwordConfirm: true,
         role: true,
-        location: true,
+        locations: true,
         teams: true
       }
     },
@@ -100,7 +99,7 @@ const mapping: ModelMapping<ModelEnum.User> = {
         phoneNumber: true,
         email: true,
         role: true,
-        location: true,
+        locations: true,
         teams: true
       }
     }

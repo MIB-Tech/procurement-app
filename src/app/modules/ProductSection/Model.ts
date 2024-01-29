@@ -1,11 +1,10 @@
 import {AbstractModel} from '../../../_custom/types/types';
-import {ProductModel} from '../Product';
+import {ProductModel} from "../Product";
 
 
 type Model = {
-  quantity: number
-  product: ProductModel
-  parentProduct: ProductModel
+  name: string
+  products:Array<ProductModel>
 } & AbstractModel
 
 export default Model;

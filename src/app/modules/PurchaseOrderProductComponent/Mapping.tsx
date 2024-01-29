@@ -38,6 +38,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProductComponent> = {
     product: {
       type: ModelEnum.PurchaseOrderProduct
     },
+    receiptProductComponents: {
+      type: ModelEnum.ReceiptProductComponent,
+      multiple: true
+    },
   },
   views: [
     {

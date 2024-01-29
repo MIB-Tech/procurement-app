@@ -68,8 +68,14 @@ const Topbar: FC = () => {
               // 'w-100px text-truncate fw-boldest text-hover-primary'
               // activeLocation && 'text-primary'
             )}
+            //Pour le cas de un achteur peut etre lié a plusieurs cliniques !!!!!!!!!
+            //   if (user.locations && user.locations.length > 0) {
+            // Code à exécuter si user.locations contient une location ou plus
+            //   } else {
+            // Code à exécuter si user.locations est null, undefined, ou un tableau vide
+            //   }
             onClick={() => {
-              if (!user.location) {
+              if (!user.locations) {
                 setLocationLinkOpen(!locationLinkOpen);
               }
             }}

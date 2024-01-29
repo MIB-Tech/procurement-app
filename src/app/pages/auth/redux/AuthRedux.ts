@@ -53,7 +53,7 @@ export const reducer = persistReducer(
         return initialAuthState;
       case actionTypes.UserLoaded:
         const user = action.payload?.user;
-        const location = user?.location as HydraItem<ModelEnum.Location> | undefined;
+        const location = user?.locations as HydraItem<ModelEnum.Location> | undefined;
 
         return { ...state, user, location };
       case actionTypes.SetLocation:
