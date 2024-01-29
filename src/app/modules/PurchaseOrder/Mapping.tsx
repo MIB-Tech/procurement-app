@@ -247,7 +247,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {
           render: ({item}) => {
             const {status, validationStatus} = item
-            return status !== QuantityStatusEnum.FullyReceived && validationStatus === ValidationEnum.Validated && <GenerateReceiptButton item={item}/>
+            return status !== QuantityStatusEnum.FullyReceived && validationStatus === ValidationEnum.Validated &&
+                <GenerateReceiptButton item={item}/>
           }
         },
       ],
@@ -274,7 +275,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Update,
-      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived,
+      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived &&
+        item.validationStatus != ValidationEnum.Validated,
       slotProps: {
         item: {
           sm: 4,
