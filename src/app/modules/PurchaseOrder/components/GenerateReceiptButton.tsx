@@ -19,7 +19,6 @@ export const GenerateReceiptButton: FC<CustomItemActionProps<ModelEnum.PurchaseO
     vendor: item.vendor,
     purchaseOrders: [item]
   };
-
   return (
     <RouteLinks
       operations={[{...createOperation, title: trans({id: 'GENERATE_RECEIPT'})}]}

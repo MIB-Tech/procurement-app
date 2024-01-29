@@ -245,7 +245,13 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
             return <GenerateInvoiceButton item={item}/>
           }
         },
-        {render: ({item}) => item.status !== QuantityStatusEnum.FullyReceived && <GenerateReceiptButton item={item}/>},
+        {
+          render: ({item}) => {
+            const {status, validationStatus} = item
+            return status !== QuantityStatusEnum.FullyReceived && validationStatus === ValidationEnum.Validated &&
+                <GenerateReceiptButton item={item}/>
+          }
+        },
       ],
       itemOperationRoutes: ({operations, item}) => operations.filter(({operationType}) => {
         switch (operationType) {
@@ -270,7 +276,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Update,
-      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived,
+      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived &&
+        item.validationStatus != ValidationEnum.Validated,
       slotProps: {
         item: {
           sm: 4,
@@ -303,7 +310,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         category: true,
         project: true,
         paymentModality: true,
-        validationStatus: {grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible]},
+        validationStatus: {
+          grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
+          defaultValue: ValidationEnum.Panding
+        },
         purchaseOrderProducts: {
           slotProps: {
             root: {
