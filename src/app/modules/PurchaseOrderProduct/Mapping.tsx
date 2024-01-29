@@ -109,7 +109,7 @@ const Helper: FC<ArrayHelpers & {
   const {location} = useAuth();
   useEffect(() => {
     components.forEach(component => {
-      const {product, quantity, price} = component;
+      const {product, quantity} = component;
       const {name: designation, note, vatRate} = product;
       const desiredProduct: Partial<DesiredProductModel> = {
         designation,
@@ -121,7 +121,7 @@ const Helper: FC<ArrayHelpers & {
         ...initialValues,
         id: null,
         quantity: quantity,
-        grossPrice: price,
+        grossPrice: 0,
         product,
         designation,
         note,
