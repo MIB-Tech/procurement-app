@@ -2,6 +2,8 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  PURCHASE_ORDER_PRODUCT_COMPONENT: "Composante  BC",
+  RECEIPT_ORDER_PRODUCT_COMPONENT: "Composante  BR ",
   PENDING: "En cours",
   VALIDATED_AT: "Validé à",
   VALIDATED_BY: "Validé par",
@@ -472,7 +474,7 @@ export const fr: I18nLanguage = {
   TREE_PATH_SOURCE: 'Source de chemin',
   TYPES: 'Types',
   UNIT_PRICE: 'Prix unitaire',
-  UPDATE: 'Mise à jour',
+  UPDATE: 'Modifier',
   UPDATED_AT: 'Modifié Le',
   USER: 'Utilisateur',
   USERNAME: 'Nom d\'utilisateur',
