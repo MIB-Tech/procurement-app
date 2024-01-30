@@ -2,6 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  RECEIVED: "Réceptionné",
   PURCHASE_ORDER_PRODUCT_COMPONENT: "Composante  BC",
   RECEIPT_ORDER_PRODUCT_COMPONENT: "Composante  BR ",
   PENDING: "En cours",
