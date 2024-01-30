@@ -10,7 +10,7 @@ import {ProductSectionModel} from "../ProductSection";
 type Model = {
   name: string
   code: string
-  reference?: string
+  ref?: string
   note?: string
   measurementUnit: string
   accountingAccount: string
@@ -18,12 +18,12 @@ type Model = {
   isMobilised: boolean
   stockable: boolean
   category: CategoryModel
+  section?: ProductSectionModel
   components: Array<ComponentModel>
   parentComponents: Array<ComponentModel>
   purchaseNeedProducts: Array<PurchaseNeedProductModel>
   pricing: Array<ProductPricingModel>
   purchaseOrders: Array<PurchaseOrderModel>
-  section: ProductSectionModel
 } & AbstractModel
 
 export default Model;

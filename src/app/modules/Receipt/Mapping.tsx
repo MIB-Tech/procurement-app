@@ -166,6 +166,9 @@ const PrintReceiptButton: FC<CustomItemActionProps<ModelEnum.Receipt>> = ({...pr
   );
 };
 
+type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};
 
 const PurchaseOrdersField = ({name}: FieldProps) => {
   const {values, setFieldValue} = useFormikContext<Model<ModelEnum.Receipt>>();
@@ -216,17 +219,21 @@ const PurchaseOrdersField = ({name}: FieldProps) => {
           loading={isLoading}
           loadingLabel='SHOW'
           onClick={async () => {
-            refetch().then(r => {
-              const desiredProducts = r.data?.data['hydra:member'] as Array<HydraItem<ModelEnum.DesiredProduct>>;
-              const receiptProducts: Array<Partial<ReceiptProductModel>> = desiredProducts.map(desiredProduct => ({
-                desiredProduct,
-                quantity: desiredProduct.restQuantity,
-                restQuantity: desiredProduct.restQuantity,
-                note: '',
-                desiredProductQuantity: desiredProduct.quantity,
-              }));
-              setFieldValue('receiptProducts', receiptProducts);
-            });
+            const r = await refetch();
+            const desiredProducts = r.data?.data['hydra:member'] as Array<HydraItem<ModelEnum.DesiredProduct>>;
+            const receiptProducts: Array<RecursivePartial<ReceiptProductModel>> = desiredProducts.map(desiredProduct => ({
+              desiredProduct,
+              quantity: desiredProduct.restQuantity,
+              restQuantity: desiredProduct.restQuantity,
+              note: '',
+              desiredProductQuantity: desiredProduct.quantity,
+              components: desiredProduct.purchaseOrderProduct.components.map(component => ({
+                quantity: component.restQuantity,
+                restQuantity: component.restQuantity,
+                purchaseOrderProductComponent: component
+              }))
+            }));
+            await setFieldValue('receiptProducts', receiptProducts);
           }}
         >
           <Trans id='SHOW'/>
@@ -324,7 +331,7 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
         'VALIDATION.RECEIPT.RECEIPT_PRODUCTS',
         (receiptProducts: any) => {
 
-          return (receiptProducts as ReceiptProductModel[]).some(({validated}) => validated);
+          return (receiptProducts as ReceiptProductModel[]).some(({received}) => received);
           // const {desiredProducts} = context.parent as PurchaseOrderProductModel
           // const validatedDesiredProducts = desiredProducts.filter(({}) => false)
           // const count = desiredProducts.reduce(
@@ -360,7 +367,7 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
       type: ViewEnum.Create,
       getMutateInput: item => ({
         ...item,
-        receiptProducts: item.receiptProducts?.filter(({validated}) => validated)
+        receiptProducts: item.receiptProducts?.filter(({received}) => received)
       }),
       navigateTo: item => item['@id'],
       slotProps: {

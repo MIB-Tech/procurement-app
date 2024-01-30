@@ -49,7 +49,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   paymentModality: true,
   validationStatus: {
     grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
-    defaultValue: ValidationEnum.Panding,
+    defaultValue: ValidationEnum.Pending,
     display: props => !!props.item.id
   },
   purchaseOrderProducts: {
@@ -109,6 +109,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       format: StringFormat.Select,
       options: VALIDATION_STATUS_OPTIONS,
       nullable: true,
+      inline: true,
     },
     validatedAt: {
       type: ColumnTypeEnum.String,
@@ -116,7 +117,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       nullable: true
     },
     validatedBy: {
-      type: ColumnTypeEnum.String,
+      type: ModelEnum.User,
       nullable: true
     },
     totalExclTax: {
@@ -312,7 +313,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Update,
-      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived && item.validationStatus !== ValidationEnum.Validated,
+      submittable: props => props.initialValues.validationStatus === ValidationEnum.Pending,
       slotProps: {
         item: {
           sm: 4,

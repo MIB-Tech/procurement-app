@@ -10,6 +10,7 @@ import {VendorAddressModel} from '../VendorAddress';
 import {ProductModel} from '../Product';
 import {PaymentModalityModel} from '../PaymentModality';
 import {InvoiceModel} from "../Invoice";
+import {UserModel} from '../User';
 
 export enum QuantityStatusEnum {
   Unreceived = 'UNRECEIVED',
@@ -25,13 +26,14 @@ export const QUANTITY_STATUS_OPTIONS: Array<StringSelectOption> = [
 
 export enum ValidationEnum {
   Validated = 'VALIDATED',
-  Panding = 'PENDING'
+  Pending = 'PENDING'
 }
 
 export const VALIDATION_STATUS_OPTIONS: Array<StringSelectOption> = [
+  {id: ValidationEnum.Pending, color: 'warning'},
   {id: ValidationEnum.Validated, color: 'success'},
-  {id: ValidationEnum.Panding, color: 'warning'},
 ];
+
 type Model = {
   orderNumber: string
   taxIncluded: boolean
@@ -39,8 +41,8 @@ type Model = {
   externalRef?: string
   desiredDeliveryDate: string
   validationStatus: ValidationEnum
-  validatedBy: string
-  validatedAt: string
+  validatedBy?: UserModel
+  validatedAt?: string
   vendor: VendorModel
   currency?: CurrencyModel
   project: ProjectModel

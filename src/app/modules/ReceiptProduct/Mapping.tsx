@@ -1,4 +1,4 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {CreateViewType, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {CellContent} from '../../../_custom/ListingView/views/Table/BodyCell';
@@ -7,6 +7,7 @@ import {BooleanField} from '../../../_custom/Column/Boolean/BooleanField';
 import React from 'react';
 import {QuantityStatusEnum} from '../PurchaseOrder/Model';
 import {ref} from 'yup';
+import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
 
 
 const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
@@ -36,7 +37,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
       type: ColumnTypeEnum.String,
       nullable: true
     },
-    validated: {
+    received: {
       type: ColumnTypeEnum.Boolean,
       nullable: true
     },
@@ -48,7 +49,8 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     },
     components: {
       type: ModelEnum.ReceiptProductComponent,
-      multiple: true
+      multiple: true,
+      embeddedForm: true
     },
   },
   views: [
@@ -88,13 +90,59 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
             );
           }
         },
-        validated: {
+        received: {
           render: ({fieldProps, item}) => (
             <BooleanField
               {...fieldProps}
               disabled={item.desiredProduct.status === QuantityStatusEnum.FullyReceived}
             />
           )
+        },
+        components: {
+          render: ({fieldProps}) => {
+            const view: CreateViewType<ModelEnum.ReceiptProductComponent> = {
+              type: ViewEnum.Create,
+              fields: {
+                purchaseOrderProductComponent: {
+                  /** @ts-ignore */
+                  render: props => props.item.purchaseOrderProductComponent['@title']
+                },
+                orderedQuantity: {
+                  render: ({item}) => item.purchaseOrderProductComponent.quantity
+                },
+                restQuantity: {
+                  render: ({item}) => item.restQuantity
+                },
+                quantity: true,
+                status: {
+                  render: ({item}) => {
+                    return (
+                      <CellContent
+                        {...QUANTITY_STATUS_COLUMN}
+                        value={item.purchaseOrderProductComponent.status}
+                      />
+                    );
+                  }
+                },
+                received: {
+                  render: ({fieldProps, item}) => (
+                    <BooleanField
+                      {...fieldProps}
+                      disabled={item.purchaseOrderProductComponent.status === QuantityStatusEnum.FullyReceived}
+                    />
+                  )
+                },
+              }
+            };
+
+            return (
+              <NestedArrayField
+                modelName={ModelEnum.ReceiptProductComponent}
+                view={view}
+                {...fieldProps}
+              />
+            );
+          }
         }
       }
     }

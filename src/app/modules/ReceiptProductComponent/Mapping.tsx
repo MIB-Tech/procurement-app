@@ -18,6 +18,13 @@ const mapping: ModelMapping<ModelEnum.ReceiptProductComponent> = {
         positive: true
       }
     },
+    restQuantity: {
+      type: ColumnTypeEnum.Number,
+    },
+    received: {
+      type: ColumnTypeEnum.Boolean,
+      nullable: true
+    },
     receiptProduct: {
       type: ModelEnum.ReceiptProduct
     },

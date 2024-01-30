@@ -12,7 +12,7 @@ type Model = {
   components: Array<ReceiptProductComponentModel>
   readonly desiredProductQuantity: number
   readonly restQuantity: number
-  readonly validated: number
+  readonly received: number
 } & AbstractModel
 
 export default Model;

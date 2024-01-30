@@ -14,6 +14,7 @@ import {OperationModel} from '../../app/modules/Operation';
 import {GridProps} from '@mui/material';
 import {FieldProps} from '../Column/controls/fields';
 import {Input} from '../FormView/FormView.types';
+import {FormikComputedProps, FormikProps, FormikState} from 'formik';
 
 
 export type Model<M extends ModelEnum> = Models[M]
@@ -123,8 +124,7 @@ export enum MutationMode {
 
 export type FormViewType<M extends ModelEnum> = {
   inlineForm?: boolean
-  /** @deprecated */
-  submittable?: DisplayCallback<M>
+  submittable?: (props: FormikState<Model<M> | HydraItem<M>> & FormikComputedProps<Model<M> | HydraItem<M>>) => boolean | undefined
   className?: string
   fields?: FormFields<M>
   slotProps?: {
@@ -136,17 +136,11 @@ export type FormViewType<M extends ModelEnum> = {
 }
 export type CreateViewType<M extends ModelEnum> = {
   type: ViewEnum.Create
-  /** @deprecated */
-  submittable?: DisplayCallback<M>
-  fields?: FormFields<M>
 } & Omit<FormViewType<M>, 'mode'>
 export type UpdateViewType<M extends ModelEnum> = {
   type: ViewEnum.Update
-  /** @deprecated */
-  submittable?: DisplayCallback<M>
-  fields?: FormFields<M>
 } & Omit<FormViewType<M>, 'mode'>
-export type DeleteViewType<M extends ModelEnum> = {
+export type DeleteViewType = {
   type: ViewEnum.Delete
 }
 export type View<M extends ModelEnum> =
@@ -154,7 +148,7 @@ export type View<M extends ModelEnum> =
   DetailViewType<M> |
   CreateViewType<M> |
   UpdateViewType<M> |
-  DeleteViewType<M>
+  DeleteViewType
 
 export type ModelMapping<M extends ModelEnum> = {
   modelName: M

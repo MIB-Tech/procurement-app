@@ -32,6 +32,15 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProductComponent> = {
         positive: true
       }
     },
+    restQuantity: {
+      type: ColumnTypeEnum.Number,
+    },
+    status: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Select,
+      title: 'DELIVERY_STATUS',
+      options: QUANTITY_STATUS_OPTIONS
+    },
     purchaseOrderProduct: {
       type: ModelEnum.PurchaseOrderProduct
     },
