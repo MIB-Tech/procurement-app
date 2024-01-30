@@ -462,7 +462,7 @@ type I18nMessageKey =
   | 'PENDING'
   | 'PURCHASE_ORDER_PRODUCT_COMPONENT'
   | 'RECEIPT_ORDER_PRODUCT_COMPONENT'
-
+  | 'RECEIVED'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 
