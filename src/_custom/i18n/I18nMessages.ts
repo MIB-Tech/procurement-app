@@ -459,7 +459,10 @@ type I18nMessageKey =
   | 'VALIDATION_STATUS'
   | 'VALIDATED_BY'
   | 'VALIDATED_AT'
-|'PENDING'
+  | 'PENDING'
+  | 'PURCHASE_ORDER_PRODUCT_COMPONENT'
+  | 'RECEIPT_ORDER_PRODUCT_COMPONENT'
+  | 'RECEIVED'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 

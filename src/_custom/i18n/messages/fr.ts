@@ -2,6 +2,9 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  RECEIVED: "Réceptionné",
+  PURCHASE_ORDER_PRODUCT_COMPONENT: "Composante",
+  RECEIPT_ORDER_PRODUCT_COMPONENT: "Composante",
   PENDING: "En cours",
   VALIDATED_AT: "Validé à",
   VALIDATED_BY: "Validé par",
@@ -13,7 +16,7 @@ export const fr: I18nLanguage = {
   INVOICES: "Factures",
   INVOICE_NUMBER: "N° Facture",
   TOTAL_DISCOUNT: 'Mnt de remise',
-  REST_QUANTITY: "Reste à livré",
+  REST_QUANTITY: "Reste",
   VALIDATED: 'Validé',
   SHOW: 'Afficher',
   PURCHASE_ORDER_ALLOWED: "Bon de commande autorisé",
@@ -472,7 +475,7 @@ export const fr: I18nLanguage = {
   TREE_PATH_SOURCE: 'Source de chemin',
   TYPES: 'Types',
   UNIT_PRICE: 'Prix unitaire',
-  UPDATE: 'Mise à jour',
+  UPDATE: 'Modifier',
   UPDATED_AT: 'Modifié Le',
   USER: 'Utilisateur',
   USERNAME: 'Nom d\'utilisateur',

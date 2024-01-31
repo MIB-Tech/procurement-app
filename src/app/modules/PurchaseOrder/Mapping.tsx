@@ -4,7 +4,7 @@ import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField';
-import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum, VALIDATION_STATUS_OPTIONS, ValidationEnum} from './Model';
+import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum, VALIDATION_STATUS_OPTIONS, ValidationStatusEnum} from './Model';
 import moment from 'moment/moment';
 import React from 'react';
 import {PrintPurchaseOrderButton} from './components/PrintPurchaseOrderButton';
@@ -49,7 +49,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   paymentModality: true,
   validationStatus: {
     grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
-    defaultValue: ValidationEnum.Pending,
+    defaultValue: ValidationStatusEnum.Pending,
     display: props => !!props.item.id
   },
   purchaseOrderProducts: {
@@ -264,9 +264,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {
           render: ({item}) => {
             const {status, invoice} = item;
-            if (status !== QuantityStatusEnum.FullyReceived || invoice) {
-              return;
-            }
+            if (status !== QuantityStatusEnum.FullyReceived || invoice) return;
 
             return <GenerateInvoiceButton item={item}/>;
           }
@@ -274,8 +272,11 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {
           render: ({item}) => {
             const {status, validationStatus} = item;
-            return status !== QuantityStatusEnum.FullyReceived && validationStatus === ValidationEnum.Validated &&
-                <GenerateReceiptButton item={item}/>;
+
+            return status !== QuantityStatusEnum.FullyReceived &&
+              validationStatus === ValidationStatusEnum.Validated &&
+                <GenerateReceiptButton item={item}/>
+              ;
           }
         },
       ],
@@ -313,7 +314,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Update,
-      submittable: props => props.initialValues.validationStatus === ValidationEnum.Pending,
+      submittable: props => props.initialValues.validationStatus === ValidationStatusEnum.Pending,
       slotProps: {
         item: {
           sm: 4,

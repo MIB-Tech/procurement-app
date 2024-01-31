@@ -1,6 +1,10 @@
 import {ModelMapping} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import {ref} from 'yup';
+import {DesiredProductModel} from '../DesiredProduct';
+import {QuantityStatusEnum} from '../PurchaseOrder/Model';
+import {PurchaseOrderProductComponentModel} from '../PurchaseOrderProductComponent';
 
 
 const mapping: ModelMapping<ModelEnum.ReceiptProductComponent> = {
@@ -14,9 +18,12 @@ const mapping: ModelMapping<ModelEnum.ReceiptProductComponent> = {
     },
     quantity: {
       type: ColumnTypeEnum.Number,
-      validation: {
-        positive: true
-      }
+      schema: schema => schema.when(['restQuantity', 'purchaseOrderProductComponent'], {
+        is: (restQuantity: number, purchaseOrderProductComponent: PurchaseOrderProductComponentModel) =>  {
+          return purchaseOrderProductComponent.status !== QuantityStatusEnum.FullyReceived && restQuantity > 0
+        },
+        then: schema => schema.positive().max(ref('restQuantity')),
+      })
     },
     restQuantity: {
       type: ColumnTypeEnum.Number,

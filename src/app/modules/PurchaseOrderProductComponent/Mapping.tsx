@@ -1,11 +1,8 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
-import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {QUANTITY_STATUS_OPTIONS} from '../PurchaseOrder/Model';
-import {number} from 'yup';
-import React from 'react';
-import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/SelectField';
+import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 
 
 const mapping: ModelMapping<ModelEnum.PurchaseOrderProductComponent> = {

@@ -8,6 +8,7 @@ import React from 'react';
 import {QuantityStatusEnum} from '../PurchaseOrder/Model';
 import {ref} from 'yup';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
+import {DesiredProductModel} from '../DesiredProduct';
 
 
 const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
@@ -21,8 +22,10 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     },
     quantity: {
       type: ColumnTypeEnum.Number,
-      schema: schema => schema.when('restQuantity', {
-        is: (restQuantity: number) => restQuantity > 0,
+      schema: schema => schema.when(['restQuantity', 'desiredProduct'], {
+        is: (restQuantity: number, desiredProduct: DesiredProductModel) =>  {
+          return desiredProduct.status !== QuantityStatusEnum.FullyReceived && restQuantity > 0
+        },
         then: schema => schema.positive().max(ref('restQuantity')),
       })
     },
@@ -50,7 +53,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     components: {
       type: ModelEnum.ReceiptProductComponent,
       multiple: true,
-      embeddedForm: true
+      embeddedForm: true,
     },
   },
   views: [
@@ -104,8 +107,12 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
               type: ViewEnum.Create,
               fields: {
                 purchaseOrderProductComponent: {
-                  /** @ts-ignore */
-                  render: props => props.item.purchaseOrderProductComponent['@title']
+                  render: ({item}) => (
+                    <div className='text-truncate'>
+                      {/*@ts-ignore*/}
+                      {item.purchaseOrderProductComponent['@title']}
+                    </div>
+                  )
                 },
                 orderedQuantity: {
                   render: ({item}) => item.purchaseOrderProductComponent.quantity
@@ -139,6 +146,8 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
               <NestedArrayField
                 modelName={ModelEnum.ReceiptProductComponent}
                 view={view}
+                disableDelete
+                disableInsert
                 {...fieldProps}
               />
             );

@@ -1,29 +1,15 @@
-import {CustomItemActionProps, FormFields, Model, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
-import React, {FC, useMemo, useState} from 'react';
-import {
-  CompoundFilter,
-  CompoundFilterOperator,
-  PropertyFilterOperator
-} from '../../../_custom/ListingView/Filter/Filter.types';
+import React from 'react';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
-import {FieldProps} from '../../../_custom/Column/controls/fields';
-import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery';
-import {useFormikContext} from 'formik';
 import {ReceiptProductModel} from '../ReceiptProduct';
-import {Button} from '../../../_custom/components/Button';
-import {HydraItem} from '../../../_custom/types/hydra.types';
-import {Trans} from '../../../_custom/components/Trans';
 import moment from 'moment';
 import {ArraySchema} from 'yup';
-import {Modal} from 'react-bootstrap';
-import {useUri} from '../../../_custom/hooks/UseUri';
-import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
-import ReportViewer from '../PurchaseOrder/components/ReportViewer';
-import {ReceiptPrint} from './Model';
+import {PrintReceiptButton} from './PrintReceiptButton';
+import {PurchaseOrdersField} from './PurchaseOrdersField';
 
 // const ReceiptProducts = ({item}: { item: Model<ModelEnum.Receipt> }) => {
 //   const {collection} = useCollectionQuery({
@@ -102,146 +88,6 @@ import {ReceiptPrint} from './Model';
 //     </div>
 //   );
 // };
-
-const PrintReceiptButton: FC<CustomItemActionProps<ModelEnum.Receipt>> = ({...props}) => {
-  const [open, setOpen] = useState<boolean>();
-  const modelName = ModelEnum.Receipt;
-  const uri = useUri({modelName});
-  const {item, isLoading} = useItemQuery<ModelEnum.Receipt>({
-    modelName,
-    path: `/print${uri}`,
-    enabled: open
-  });
-  const params = useMemo<ReceiptPrint | undefined>(() => {
-    if (!item) return undefined;
-
-    return {
-      ...item,
-      receivedAt: moment(item.receivedAt).format('L'),
-      lines: item.receiptProducts.map(receiptProduct => {
-        const {desiredProduct} = receiptProduct;
-        const {designation, purchaseOrderProduct, quantity} = desiredProduct;
-        const {product, note} = purchaseOrderProduct;
-
-        return {
-          ...receiptProduct,
-          reference: product.code,
-          name: `${designation}${note ? `\n\n${note}`: ''}`,
-          desiredProductQuantity: quantity,
-        };
-      })
-    };
-  }, [item]);
-
-  return (
-    <div>
-      <div className='position-relative'>
-        <Button
-          size='sm'
-          variant='outline-default'
-          className='bg-white'
-          onClick={() => setOpen(true)}
-        >
-          <Trans id='PRINT'/>
-        </Button>
-      </div>
-      <Modal
-        fullscreen
-        show={open}
-        onHide={() => setOpen(false)}
-      >
-        <Modal.Header closeButton/>
-        <Modal.Body>
-          {isLoading && <Trans id='LOADING'/>}
-          {params && (
-            <ReportViewer
-              fileName='receipt.mrt'
-              // params={example}
-              params={params}
-            />
-          )}
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
-};
-
-type RecursivePartial<T> = {
-  [P in keyof T]?: RecursivePartial<T[P]>;
-};
-
-const PurchaseOrdersField = ({name}: FieldProps) => {
-  const {values, setFieldValue} = useFormikContext<Model<ModelEnum.Receipt>>();
-  const {vendor, purchaseOrders} = values;
-  const {isLoading, refetch} = useCollectionQuery<ModelEnum.DesiredProduct>({
-    modelName: ModelEnum.DesiredProduct,
-    params: {
-      filter: {
-        property: 'purchaseOrderProduct.purchaseOrder',
-        operator: PropertyFilterOperator.In,
-        value: purchaseOrders
-      }
-    },
-    options: {enabled: false}
-  });
-
-  return (
-    <div className='d-flex gap-3'>
-      <div className='flex-grow-1'>
-        <ModelAutocompleteField
-          size='sm'
-          modelName={ModelEnum.PurchaseOrder}
-          multiple
-          disabled={!vendor && purchaseOrders.length === 0}
-          name={name}
-          getParams={filter => {
-            const newFilter: CompoundFilter<ModelEnum.PurchaseOrder> = {
-              operator: CompoundFilterOperator.And,
-              filters: [
-                filter,
-                {
-                  property: 'vendor',
-                  operator: PropertyFilterOperator.Equal,
-                  value: vendor
-                }
-              ]
-            };
-
-            return newFilter;
-          }}
-        />
-      </div>
-      <div>
-        <Button
-          size='sm'
-          variant='primary'
-          disabled={purchaseOrders.length === 0}
-          loading={isLoading}
-          loadingLabel='SHOW'
-          onClick={async () => {
-            const r = await refetch();
-            const desiredProducts = r.data?.data['hydra:member'] as Array<HydraItem<ModelEnum.DesiredProduct>>;
-            const receiptProducts: Array<RecursivePartial<ReceiptProductModel>> = desiredProducts.map(desiredProduct => ({
-              desiredProduct,
-              quantity: desiredProduct.restQuantity,
-              restQuantity: desiredProduct.restQuantity,
-              note: '',
-              desiredProductQuantity: desiredProduct.quantity,
-              components: desiredProduct.purchaseOrderProduct.components.map(component => ({
-                quantity: component.restQuantity,
-                restQuantity: component.restQuantity,
-                purchaseOrderProductComponent: component
-              }))
-            }));
-            await setFieldValue('receiptProducts', receiptProducts);
-          }}
-        >
-          <Trans id='SHOW'/>
-        </Button>
-      </div>
-    </div>
-  );
-};
 
 const formFields: FormFields<ModelEnum.Receipt> = {
   externalRef: true,
@@ -329,16 +175,12 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
       schema: (schema: ArraySchema<any>) => schema.test(
         'VALIDATION.RECEIPT.RECEIPT_PRODUCTS',
         'VALIDATION.RECEIPT.RECEIPT_PRODUCTS',
-        (receiptProducts: any) => {
+        (value: any) => {
+          const receiptProducts = value as ReceiptProductModel[]
 
-          return (receiptProducts as ReceiptProductModel[]).some(({received}) => received);
-          // const {desiredProducts} = context.parent as PurchaseOrderProductModel
-          // const validatedDesiredProducts = desiredProducts.filter(({}) => false)
-          // const count = desiredProducts.reduce(
-          //   (count, desiredProduct) => count + desiredProduct.quantity,
-          //   0
-          // );
-          // return count === quantity;
+          return receiptProducts.some(({received, components}) => {
+            return received || components.some(component => component.received)
+          });
         }
       )
     }
@@ -365,9 +207,24 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     },
     {
       type: ViewEnum.Create,
-      getMutateInput: item => ({
+      getMutateInput: ({vendor, purchaseOrders, ...item}) => ({
         ...item,
-        receiptProducts: item.receiptProducts?.filter(({received}) => received)
+        receiptProducts: item.receiptProducts?.map(receiptProduct => ({
+          ...receiptProduct,
+          // @ts-ignore
+          desiredProduct: receiptProduct.desiredProduct['@id'],
+          quantity: receiptProduct.received ? receiptProduct.quantity : 0,
+          note: receiptProduct.received ? receiptProduct.note : '',
+          components: receiptProduct.components
+            .filter(component => component.received)
+            .map(component=>({
+              ...component,
+              // @ts-ignore
+              purchaseOrderProductComponent: component.purchaseOrderProductComponent['@id']
+            }))
+        })).filter(receiptProduct => {
+          return receiptProduct.received || receiptProduct.components.length > 0;
+        })
       }),
       navigateTo: item => item['@id'],
       slotProps: {

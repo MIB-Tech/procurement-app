@@ -95,6 +95,7 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
     }
   }, [mutation.validationErrors]);
 
+  console.log(formik.errors)
 
   // const _operations = useMemo(() => {
   //   if (!initialValues) {
