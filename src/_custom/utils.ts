@@ -115,7 +115,7 @@ export const getValidationSchema = <M extends ModelEnum>({columnDef, trans, fiel
             const view = embeddedModelMapping.views?.find(view => view.type === ViewEnum.Create) as FormViewType<M> | undefined;
             const embeddedFields = view?.fields ||
               (Object.keys(embeddedModelMapping.columnDef) as Array<keyof Model<M>>).filter(columnName => {
-                if (columnName === 'id') {
+                if (['id', 'uid'].includes(columnName.toString())) {
                   return false;
                 }
                 const columnMapping = embeddedModelMapping.columnDef[columnName];

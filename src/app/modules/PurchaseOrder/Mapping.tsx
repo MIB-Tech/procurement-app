@@ -49,7 +49,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   paymentModality: true,
   validationStatus: {
     grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
-    defaultValue: ValidationStatusEnum.Panding,
+    defaultValue: ValidationStatusEnum.Pending,
     display: props => !!props.item.id
   },
   purchaseOrderProducts: {
@@ -109,6 +109,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       format: StringFormat.Select,
       options: VALIDATION_STATUS_OPTIONS,
       nullable: true,
+      inline: true,
     },
     validatedAt: {
       type: ColumnTypeEnum.String,
@@ -116,7 +117,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       nullable: true
     },
     validatedBy: {
-      type: ColumnTypeEnum.String,
+      type: ModelEnum.User,
       nullable: true
     },
     totalExclTax: {
@@ -263,9 +264,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {
           render: ({item}) => {
             const {status, invoice} = item;
-            if (status !== QuantityStatusEnum.FullyReceived || invoice) {
-              return;
-            }
+            if (status !== QuantityStatusEnum.FullyReceived || invoice) return;
 
             return <GenerateInvoiceButton item={item}/>;
           }
@@ -273,8 +272,11 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {
           render: ({item}) => {
             const {status, validationStatus} = item;
-            return status !== QuantityStatusEnum.FullyReceived && validationStatus === ValidationStatusEnum.Validated &&
-                <GenerateReceiptButton item={item}/>;
+
+            return status !== QuantityStatusEnum.FullyReceived &&
+              validationStatus === ValidationStatusEnum.Validated &&
+                <GenerateReceiptButton item={item}/>
+              ;
           }
         },
       ],
@@ -312,7 +314,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Update,
-      submittable: ({item}) => item.status === QuantityStatusEnum.Unreceived && item.validationStatus !== ValidationStatusEnum.Validated,
+      submittable: props => props.initialValues.validationStatus === ValidationStatusEnum.Pending,
       slotProps: {
         item: {
           sm: 4,

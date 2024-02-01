@@ -1,8 +1,8 @@
-import { ColumnDef, FormFields, FormViewBaseColumn, Model, ModelMapping, TypeColum } from './ModelMapping';
-import { AxiosError, AxiosResponse } from 'axios';
-import { JsonldErrorCreateResponse, JsonldSuccessCreateResponse } from './hydra.types';
-import { FormattedMessageProps } from '../components/Trans';
-import { ModelEnum } from '../../app/modules/types';
+import {ColumnDef, FormFields, FormViewBaseColumn, Model, ModelMapping, TypeColum} from './ModelMapping';
+import {AxiosError, AxiosResponse} from 'axios';
+import {JsonldErrorCreateResponse, JsonldSuccessCreateResponse} from './hydra.types';
+import {FormattedMessageProps} from '../components/Trans';
+import {ModelEnum} from '../../app/modules/types';
 
 
 export type SuccessResponse = AxiosResponse<JsonldSuccessCreateResponse>
@@ -35,4 +35,7 @@ export type UpdateTimestamp = {
 export type Timestamp = CreateTimestamp & UpdateTimestamp
 export type Mapping = {
   [M in ModelEnum]: ModelMapping<M>;
+};
+export type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
 };

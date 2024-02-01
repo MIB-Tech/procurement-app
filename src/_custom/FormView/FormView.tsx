@@ -67,10 +67,9 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
     enableReinitialize: true,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: (item, formikHelpers) => {
-      formikHelpers.setTouched({});
+    onSubmit: async (item, formikHelpers) => {
+      await formikHelpers.setTouched({});
       const columnNames = (Object.keys(fields) as Array<keyof Model<M>>).filter(columnName => {
-
         const field = fields[columnName];
         if (typeof field === 'boolean') {
           return field;
@@ -81,12 +80,12 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
         return !grantedRoles || isGranted(grantedRoles);
       });
 
-
       const input = columnNames.reduce((input, columnName) => ({
         ...input,
         [columnName]: item[columnName]
       }), {} as Input<M>);
-      mutation.mutate(getMutateInput?.(input) || input)
+      await mutation.mutateAsync(getMutateInput?.(input) || input)
+      formikHelpers.resetForm({values: item})
     }
   });
 
@@ -96,18 +95,19 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
     }
   }, [mutation.validationErrors]);
 
+  console.log(formik.errors)
 
-  const _operations = useMemo(() => {
-    if (!initialValues) {
-      return [];
-    }
-
-    const itemOperations = operations.filter(({resource, operationType}) => {
-      return resource.name === modelName && [ViewEnum.Listing, ViewEnum.Detail, ViewEnum.Delete].includes(operationType);
-    });
-
-    return /*itemOperationRoutes?.({ item, operations: itemOperations }) ||*/ itemOperations;
-  }, [initialValues]);
+  // const _operations = useMemo(() => {
+  //   if (!initialValues) {
+  //     return [];
+  //   }
+  //
+  //   const itemOperations = operations.filter(({resource, operationType}) => {
+  //     return resource.name === modelName && [ViewEnum.Listing, ViewEnum.Detail, ViewEnum.Delete].includes(operationType);
+  //   });
+  //
+  //   return /*itemOperationRoutes?.({ item, operations: itemOperations }) ||*/ itemOperations;
+  // }, [initialValues]);
 
   return (
     <FormikProvider value={formik}>
@@ -122,7 +122,7 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
             onClick={() => formik.handleSubmit()}
             loading={mutation.isLoading || query.isLoading}
             loadingLabel={query.isLoading ? 'LOADING' : undefined}
-            disabled={submittable && !submittable({item: formik.values})}
+            disabled={submittable && !submittable(formik)}
           >
             <Trans id='SAVE'/>
           </Button>

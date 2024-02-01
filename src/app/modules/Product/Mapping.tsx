@@ -69,7 +69,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     code: {
       type: ColumnTypeEnum.String
     },
-    reference: {
+    ref: {
       type: ColumnTypeEnum.String,
       nullable: true
     },
@@ -121,8 +121,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     },
     section: {
       type: ModelEnum.ProductSection,
-      nullable: true,
-      title:'PRUDUCT_SECTION'
+      nullable: true
     }
   },
   views: [
