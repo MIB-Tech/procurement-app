@@ -6,8 +6,8 @@ import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 
 const formFields: FormFields<ModelEnum.Product> = {
-  ref: true,
-  name: true,
+  reference: true,
+  designation: true,
   measurementUnit: {
     defaultValue: 'U'
   },
@@ -63,7 +63,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     uid: {
       type: ColumnTypeEnum.String
     },
-    name: {
+    designation: {
       type: ColumnTypeEnum.String,
     },
     code: {

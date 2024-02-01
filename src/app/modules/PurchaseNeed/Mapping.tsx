@@ -29,7 +29,7 @@ const LinesField = () => {
       filter: {
         operator: CompoundFilterOperator.Or,
         filters: data.map(row => ({
-          property: 'name',
+          property: 'designation',
           operator: PropertyFilterOperator.Equal,
           value: row.product
         }))

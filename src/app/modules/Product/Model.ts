@@ -8,7 +8,7 @@ import {ProductSectionModel} from "../ProductSection";
 
 
 type Model = {
-  name: string
+  designation: string
   code: string
   ref?: string
   note?: string
