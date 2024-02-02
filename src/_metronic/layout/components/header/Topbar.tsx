@@ -13,8 +13,8 @@ import { Trans } from '../../../../_custom/components/Trans';
 import * as auth from '../../../../app/pages/auth/redux/AuthRedux';
 
 
-export const locationState = atom<HydraItem<ModelEnum.Location> | null>({
-  key: 'LOCATION_STATE',
+export const locationState = atom<HydraItem<ModelEnum.location> | null>({
+  key: 'location_STATE',
   default: null
 });
 
@@ -26,7 +26,7 @@ const toolbarButtonMarginClass = 'ms-1 ms-lg-3',
 const Topbar: FC = () => {
   const { config } = useLayout();
   const [userToolbarOpen, setUserToolbarOpen] = useState<boolean>();
-  const [locationLinkOpen, setLocationLinkOpen] = useState<boolean>();
+  const [locationLinkOpen, setlocationLinkOpen] = useState<boolean>();
   const { user, location } = useAuth();
 
 
@@ -52,13 +52,13 @@ const Topbar: FC = () => {
       {/* Quick links */}
       <ClickAwayListener onClickAway={() => {
         if (locationLinkOpen) {
-          setLocationLinkOpen(false);
+          setlocationLinkOpen(false);
         }
       }}>
         <div className={clsx('d-flex align-items-center', toolbarButtonMarginClass)}>
-          {/*{activeLocation ?*/}
-          {/*  <ModelCell item={activeLocation} />:*/}
-          {/*  <Trans id='LOCATION' />*/}
+          {/*{activelocation ?*/}
+          {/*  <ModelCell item={activelocation} />:*/}
+          {/*  <Trans id='location' />*/}
           {/*}*/}
           {/* begin::Menu wrapper */}
           <Button
@@ -66,7 +66,7 @@ const Topbar: FC = () => {
             // size='sm'
             className={clsx(
               // 'w-100px text-truncate fw-boldest text-hover-primary'
-              // activeLocation && 'text-primary'
+              // activelocation && 'text-primary'
             )}
             //Pour le cas de un achteur peut etre lié a plusieurs cliniques !!!!!!!!!
             //   if (user.locations && user.locations.length > 0) {
@@ -76,7 +76,7 @@ const Topbar: FC = () => {
             //   }
             onClick={() => {
               if (!user.locations) {
-                setLocationLinkOpen(!locationLinkOpen);
+                setlocationLinkOpen(!locationLinkOpen);
               }
             }}
           >
@@ -106,7 +106,7 @@ const Topbar: FC = () => {
                   </div>
                 </div>*/ :
                 <span className='w-100px text-truncate fw-boldest text-hover-primary'>
-                  <Trans id='LOCATION' />
+                  <Trans id='location' />
                 </span>
               }
             </div>

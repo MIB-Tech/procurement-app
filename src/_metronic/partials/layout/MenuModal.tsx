@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useEffect, useRef} from 'react'
 import {Modal} from 'react-bootstrap'
-import {Link, useLocation} from 'react-router-dom'
+import {Link, uselocation} from 'react-router-dom'
 import {KTSVG, toAbsoluteUrl} from '../../helpers'
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 }
 
 const MenuModal: React.FC<Props> = ({show, handleClose, children}) => {
-  const location = useLocation()
+  const location = uselocation()
   const isFirstRef = useRef(true)
   useEffect(() => {
     if (isFirstRef.current) {

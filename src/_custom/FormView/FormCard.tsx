@@ -5,12 +5,12 @@ import clsx from 'clsx';
 import {TitleContent} from '../ListingView/views/Table/HeaderCell';
 import {ValueField} from '../Column/ValueField';
 import React, {useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import {uselocation} from 'react-router-dom';
 import {useCustomQuery} from '../hooks/UseCustomQuery';
 import {getDefaultFields} from '../utils';
 import {ModelEnum} from '../../app/modules/types';
 import {Grid} from '@mui/material';
-import {isLocationColumn} from '../ListingView/ListingView.utils';
+import {islocationColumn} from '../ListingView/ListingView.utils';
 
 
 export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, view, className }: {
@@ -25,7 +25,7 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
   const { isGranted, location } = useAuth();
   const {inlineForm, fields = getDefaultFields(columnDef)} = view
   const columnNames = (Object.keys(fields) as Array<keyof Model<M> | string>).filter(columnName => {
-    if (location && isLocationColumn({ modelName, columnName })) {
+    if (location && islocationColumn({ modelName, columnName })) {
       return false;
     }
 
@@ -44,7 +44,7 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
     return !grantedRoles || isGranted(grantedRoles);
   });
 
-  const { pathname } = useLocation();
+  const { pathname } = uselocation();
   // const url = '/update' + pathname.split('/').slice(0, 3).join('/');
   const query = useCustomQuery({
     modelName,

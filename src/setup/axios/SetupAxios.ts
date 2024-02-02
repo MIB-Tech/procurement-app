@@ -29,7 +29,7 @@ export default function setupAxios(axios: AxiosInstance, store: Store<{ auth: Au
           config.headers.Authorization = `Bearer ${token}`;
         }
         // if (location) {
-        //   config.headers['Tenant-Location'] = location.id;
+        //   config.headers['Tenant-location'] = location.id;
         // }
       }
 

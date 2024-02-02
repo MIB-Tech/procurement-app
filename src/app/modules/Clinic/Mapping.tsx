@@ -3,8 +3,8 @@ import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
 
-const mapping: ModelMapping<ModelEnum.Location> = {
-  modelName: ModelEnum.Location,
+const mapping: ModelMapping<ModelEnum.Clinic> = {
+  modelName: ModelEnum.Clinic,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number
@@ -37,12 +37,11 @@ const mapping: ModelMapping<ModelEnum.Location> = {
       type: ModelEnum.User,
       multiple: true
     },
-    parent: {
-      type: ModelEnum.Location,
-      nullable: true
+    city: {
+      type: ModelEnum.City
     },
-    children: {
-      type: ModelEnum.Location,
+    services: {
+      type: ModelEnum.Service,
       multiple: true
     }
   },

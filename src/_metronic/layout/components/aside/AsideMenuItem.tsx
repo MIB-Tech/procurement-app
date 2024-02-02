@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router';
+import { uselocation } from 'react-router';
 import { useLayout } from '../../core';
 import { SVG } from '../../../../_custom/components/SVG/SVG';
 import { OperationModel } from '../../../../app/modules/Operation';
@@ -15,7 +15,7 @@ type Props = {
 
 const AsideMenuItem: React.FC<Props> = ({ fontIcon, group, children, resource, title, icon }) => {
   const treePath = getRoutePrefix(resource.name);
-  const { pathname } = useLocation();
+  const { pathname } = uselocation();
   const { config } = useLayout();
   const { aside } = config;
   // const isActive = useMatch(treePath);

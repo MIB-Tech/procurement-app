@@ -14,9 +14,9 @@ import * as auth from '../../../../app/pages/auth/redux/AuthRedux';
 
 const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
   const dispatch = useDispatch();
-  const { location: activeLocation, user } = useAuth();
-  const modelName = ModelEnum.Location;
-  const { collection, isLoading } = useCollectionQuery<ModelEnum.Location>({
+  const { location: activelocation, user } = useAuth();
+  const modelName = ModelEnum.location;
+  const { collection, isLoading } = useCollectionQuery<ModelEnum.location>({
     options: {
       enabled: !user.locations
     },
@@ -51,7 +51,7 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
 
       <div className='row g-2'>
         {collection.map(location => {
-          const active = location.id === activeLocation?.id;
+          const active = location.id === activelocation?.id;
 
           return (
             <div
@@ -66,7 +66,7 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
                 )}
                 onClick={e => {
                   e.preventDefault()
-                  dispatch(auth.actions.setLocation(active ? undefined : location));
+                  dispatch(auth.actions.setlocation(active ? undefined : location));
                 }}
               >
                 {location['@title']}

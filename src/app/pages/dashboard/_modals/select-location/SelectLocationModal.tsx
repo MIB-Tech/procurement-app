@@ -3,23 +3,23 @@ import {Modal} from 'react-bootstrap'
 import {KTSVG} from '../../../../../_metronic/helpers'
 
 type Props = {
-  data: {location: string; setLocation: Dispatch<SetStateAction<string>>}
+  data: {location: string; setlocation: Dispatch<SetStateAction<string>>}
   show: boolean
   handleClose: () => void
 }
 
-const SelectLocationModal: React.FC<Props> = ({show, handleClose, data}) => {
+const SelectlocationModal: React.FC<Props> = ({show, handleClose, data}) => {
   useEffect(() => {
     initMap()
   }, [])
 
-  const [location, setLocation] = useState(data.location)
-  const dissmissLocation = () => {
-    setLocation(data.location)
+  const [location, setlocation] = useState(data.location)
+  const dissmisslocation = () => {
+    setlocation(data.location)
     handleClose()
   }
-  const applyLocation = () => {
-    data.setLocation(location)
+  const applylocation = () => {
+    data.setlocation(location)
     handleClose()
   }
   const initMap = () => {}
@@ -34,28 +34,28 @@ const SelectLocationModal: React.FC<Props> = ({show, handleClose, data}) => {
       show={show}
       dialogClassName='modal-xl'
       aria-hidden='true'
-      onHide={dissmissLocation}
+      onHide={dissmisslocation}
     >
       <div className='modal-content'>
         <div className='modal-header'>
-          <h5 className='modal-title'>Select Location</h5>
+          <h5 className='modal-title'>Select location</h5>
 
           <div
             className='btn btn-icon btn-sm btn-active-light-primary ms-2'
-            onClick={dissmissLocation}
+            onClick={dissmisslocation}
           >
             <KTSVG path='/media/icons/duotune/arrows/arr061.svg' className='svg-icon-2x' />
           </div>
         </div>
         <div className='modal-body'>
-          <input type='text' value={location} onChange={(e) => setLocation(e.target.value)} />
+          <input type='text' value={location} onChange={(e) => setlocation(e.target.value)} />
           <div id='kt_modal_select_location_map' className='map h-450px'></div>
         </div>
         <div className='modal-footer'>
-          <button type='button' className='btn btn-light-primary' onClick={dissmissLocation}>
+          <button type='button' className='btn btn-light-primary' onClick={dissmisslocation}>
             Cancel
           </button>
-          <button id='submit' type='button' className='btn btn-primary' onClick={applyLocation}>
+          <button id='submit' type='button' className='btn btn-primary' onClick={applylocation}>
             Apply
           </button>
         </div>
@@ -64,4 +64,4 @@ const SelectLocationModal: React.FC<Props> = ({show, handleClose, data}) => {
   )
 }
 
-export {SelectLocationModal}
+export {SelectlocationModal}

@@ -22,7 +22,7 @@ import {SVG} from '../components/SVG/SVG';
 import {IconButton} from '../components/Button/IconButton';
 import {Help} from '../components/Help';
 import {ModelCellSkeleton} from '../ListingView/views/Table/ModelCell';
-import {isLocationColumn} from '../ListingView/ListingView.utils';
+import {islocationColumn} from '../ListingView/ListingView.utils';
 import {useCurrentOperation} from '../../_metronic/layout/components/header/page-title/DefaultTitle';
 import {Button} from '../components/Button';
 
@@ -166,7 +166,7 @@ export const DetailView = <M extends ModelEnum>({modelName}: { modelName: M }) =
   const columnNames = (Object.keys(columns) as Array<keyof typeof columns>).filter(columnName => {
     const column = property && columns[columnName];
 
-    if (location && isLocationColumn({ modelName, columnName })) {
+    if (location && islocationColumn({ modelName, columnName })) {
       return false;
     }
 

@@ -5,7 +5,7 @@ import {Toolbar} from './components/toolbar/Toolbar'
 import {ScrollTop} from './components/ScrollTop'
 import {Content} from './components/Content'
 import { usePageData } from './core';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, uselocation } from 'react-router-dom';
 import {
   DrawerMessenger,
   ActivityDrawer,
@@ -18,7 +18,7 @@ import { LinearProgress } from '@mui/material';
 
 const MasterLayout: React.FC = ({children}) => {
   const {pageLoading} = usePageData()
-  const location = useLocation()
+  const location = uselocation()
   useEffect(() => {
     setTimeout(() => {
       MenuComponent.reinitialization()

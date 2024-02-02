@@ -20,9 +20,9 @@ type Permission = OperationPermission | RoleKeyEnum
 
 export const useAuth = () => {
   const navigate = useNavigate();
-  const { user, location } = useSelector<RootState>(({ auth }) => {
+  const { user, clinic } = useSelector<RootState>(({ auth }) => {
     return auth;
-  }, shallowEqual) as Required<Pick<AuthState, 'user'>> & Pick<AuthState, 'location'>;
+  }, shallowEqual) as Required<Pick<AuthState, 'user'>> & Pick<AuthState, 'clinic'>;
   const { role } = user;
   const operations = (role?.operations || []) ;
 

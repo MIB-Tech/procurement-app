@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {useLocation} from 'react-router'
+import {uselocation} from 'react-router'
 import clsx from 'clsx'
 import {checkIsActive, KTSVG} from '../../../helpers'
 
@@ -21,7 +21,7 @@ const MenuItem: React.FC<Props> = ({
   hasArrow = false,
   hasBullet = false,
 }) => {
-  const {pathname} = useLocation()
+  const {pathname} = uselocation()
 
   return (
     <div className='menu-item me-lg-1'>

@@ -30,7 +30,7 @@ import {GridView} from './views/Grid/GridView';
 import {Help} from '../components/Help';
 import {DetailViewColumnContent} from '../DetailView/DetailViewColumnContent';
 import {ItemView} from '../components/ItemView';
-import {DEFAULT_VIEW, isLocationColumn, RELATED_MODELS} from './ListingView.utils';
+import {DEFAULT_VIEW, islocationColumn, RELATED_MODELS} from './ListingView.utils';
 import {BasicFilterToolbar} from './Filter/BasicFilterToolbar';
 import {getAdvancedPropertyFilter, getColumnMapping} from './Filter/Filter.utils';
 import {ItemAction} from './ItemAction';
@@ -206,7 +206,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
       return true;
     }
 
-    return location && isLocationColumn({modelName, columnName});
+    return location && islocationColumn({modelName, columnName});
   };
 
   const sortColumNames = (Object.keys(sortColumns || columnDef) as Array<keyof Model<M>>).filter(columnName => {

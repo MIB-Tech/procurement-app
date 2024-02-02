@@ -12,7 +12,7 @@ import {getDefaultFields, getInitialValues, getValidationSchema} from '../utils'
 import {useCustomMutation} from '../hooks/UseCustomMutation';
 import {useCustomQuery} from '../hooks/UseCustomQuery';
 import {ModelEnum} from '../../app/modules/types';
-import {isLocationColumn} from '../ListingView/ListingView.utils';
+import {islocationColumn} from '../ListingView/ListingView.utils';
 
 export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormViewProps<M>) => {
   const {trans} = useTrans();
@@ -29,7 +29,7 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
   const _fields = view?.fields || getDefaultFields(columnDef);
   const fields = (Object.keys(_fields) as Array<keyof Model<M> | string>)
     .filter(columnName => {
-      return !location || !isLocationColumn({modelName, columnName});
+      return !location || !islocationColumn({modelName, columnName});
     })
     .reduce(
     (obj, columnName) => {

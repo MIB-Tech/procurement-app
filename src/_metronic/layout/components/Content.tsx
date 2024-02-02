@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react'
-import {useLocation} from 'react-router'
+import {uselocation} from 'react-router'
 import clsx from 'clsx'
 import {useLayout} from '../core'
 import {DrawerComponent} from '../../assets/ts/components'
 
 const Content: React.FC = ({children}) => {
   const {classes} = useLayout()
-  const location = useLocation()
+  const location = uselocation()
   useEffect(() => {
     DrawerComponent.hideAll()
   }, [location])
