@@ -3,7 +3,13 @@ import {CustomItemActionProps} from '../../../../_custom/types/ModelMapping';
 import {ModelEnum} from '../../types';
 import {useUri} from '../../../../_custom/hooks/UseUri';
 import {useItemQuery} from '../../../../_custom/hooks/UseItemQuery';
-import {PurchaseOrderPrint} from '../Model';
+import {
+  LineType,
+  PurchaseOrderComponentPrint,
+  PurchaseOrderLinePrint,
+  PurchaseOrderPrint,
+  PurchaseOrderProductPrint
+} from '../Model';
 import {getNumberUnit} from '../../../../_custom/components/NumberUnit';
 import moment from 'moment';
 import {DiscountType} from '../../PurchaseOrderProduct/Model';
@@ -28,13 +34,14 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
 
     return {
       ...item,
+      totalInclTaxNumber: item.totalInclTax,
       totalExclTax: getNumberUnit({value: item.totalExclTax, precision: 2, unit}),
       totalInclTax: getNumberUnit({value: item.totalInclTax, precision: 2}),
       totalVatTax: getNumberUnit({value: item.totalVatTax, precision: 2}),
       totalDiscount: getNumberUnit({value: item.totalDiscount, precision: 2}),
       createdAt: moment(item.createdAt).format('L'),
       desiredDeliveryDate: moment(item.desiredDeliveryDate).format('L'),
-      purchaseOrderProducts: item.purchaseOrderProducts.map(purchaseOrderProduct => {
+      lines: item.purchaseOrderProducts.reduce((lines, purchaseOrderProduct) => {
         const precision = 2;
         const {
           designation,
@@ -44,26 +51,37 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
           netPriceExclTax,
           vatRate,
           grossPrice,
-          netPrice
+          netPrice,
+          components
         } = purchaseOrderProduct;
         const isPercentCentDiscount = discountType === DiscountType.Percent;
 
-        return {
-          ...purchaseOrderProduct,
-          designation: `${designation}${note ? `\n\n${note}` : ''}`,
-          netPriceExclTax: getNumberUnit({value: netPriceExclTax, precision}),
-          discount: getNumberUnit({
-            value: isPercentCentDiscount ?
-              discountValue * 100 :
-              discountValue,
-            unit: isPercentCentDiscount ? '%' : unit,
-            precision: isPercentCentDiscount ? 2 : precision,
-          }),
-          vatRate: getNumberUnit({value: vatRate * 100, unit: '%', precision}),
-          grossPrice: getNumberUnit({value: grossPrice, precision}),
-          netPrice: getNumberUnit({value: netPrice, precision}),
-        };
-      })
+        return [
+          ...lines,
+          {
+            ...purchaseOrderProduct,
+            type: LineType.Product,
+            designation: `${designation}${note ? `\n\n${note}` : ''}`,
+            netPriceExclTax: getNumberUnit({value: netPriceExclTax, precision}),
+            discount: getNumberUnit({
+              value: isPercentCentDiscount ?
+                discountValue * 100 :
+                discountValue,
+              unit: isPercentCentDiscount ? '%' : unit,
+              precision: isPercentCentDiscount ? 2 : precision,
+            }),
+            vatRate: getNumberUnit({value: vatRate * 100, unit: '%', precision}),
+            grossPrice: getNumberUnit({value: grossPrice, precision}),
+            netPrice: getNumberUnit({value: netPrice, precision}),
+          } as PurchaseOrderProductPrint,
+          ...components.map(component => ({
+            type: LineType.Component,
+            product: component.product,
+            quantity: component.quantity,
+            designation: component.designation
+          } as PurchaseOrderComponentPrint))
+        ];
+      }, [] as Array<PurchaseOrderLinePrint>)
     };
   }, [item]);
 

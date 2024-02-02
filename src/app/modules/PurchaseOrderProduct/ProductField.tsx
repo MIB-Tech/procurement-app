@@ -64,7 +64,7 @@ export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
           const productId = value.id;
           const productUri = value['@id'];
           const detailedProduct = await axios.get<HydraItem<ModelEnum.Product>>(productUri).then(r => r.data);
-          const designation = detailedProduct.name;
+          const designation = detailedProduct.designation;
           await setValue('designation', designation);
           await setValue('note', detailedProduct.note);
           await setValue('vatRate', detailedProduct.vatRate);
@@ -123,7 +123,7 @@ export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
               product: component.product,
               quantity: 0,
               componentQuantity: component.quantity,
-              designation: component.product.name,
+              designation: component.product.designation,
             };
 
             return result;
