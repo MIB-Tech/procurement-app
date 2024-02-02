@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.3.0",
-  "ReportGuid": "ce1a0dca347b4ddaa1492122f2476196",
+  "ReportGuid": "242719476be34df89c398f9ed4a3941d",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1706886872865+0100)/",
+  "ReportChanged": "/Date(1706890670804+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -792,7 +792,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root_vendor_defaultAddress.address}"
+                "Value": "{root.adresse}"
               },
               "VertAlignment": "Center",
               "Border": "All;;;;;;;solid:Black",
@@ -807,7 +807,7 @@
                 "Top": 0.0,
                 "Bottom": 0.0
               },
-              "Type": "Expression"
+              "Type": "DataColumn"
             },
             "16": {
               "Ident": "StiText",
@@ -1367,6 +1367,7 @@
                   },
                   "TextColor": "0,0,0",
                   "BackColor": "242,242,242",
+                  "Font": ";7;;",
                   "BorderSides": "Left, Right"
                 }
               },
@@ -1430,6 +1431,7 @@
                   },
                   "TextColor": "0,0,0",
                   "BackColor": "242,242,242",
+                  "Font": ";7;;",
                   "BorderSides": "Left"
                 }
               },
@@ -1540,6 +1542,7 @@
                   },
                   "TextColor": "0,0,0",
                   "BackColor": "216,216,216",
+                  "Font": ";9;;",
                   "BorderSides": "All"
                 },
                 "1": {
@@ -1598,6 +1601,7 @@
                   },
                   "TextColor": "0,0,0",
                   "BackColor": "216,216,216",
+                  "Font": ";9;;",
                   "BorderSides": "All"
                 },
                 "1": {
@@ -1656,6 +1660,7 @@
                   },
                   "TextColor": "0,0,0",
                   "BackColor": "216,216,216",
+                  "Font": ";9;;",
                   "BorderSides": "All"
                 },
                 "1": {
