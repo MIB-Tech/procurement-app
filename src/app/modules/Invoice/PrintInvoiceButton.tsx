@@ -13,6 +13,7 @@ import {DiscountType} from '../PurchaseOrderProduct/Model';
 import {PurchaseOrderProductModel} from '../PurchaseOrderProduct';
 import {VendorModel} from '../Vendor';
 import {InvoicePrint} from './Model';
+import {LineType} from '../PurchaseOrder/Model';
 
 export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = ({...props}) => {
   const [open, setOpen] = useState<boolean>();
@@ -51,7 +52,7 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
       totalVatTax: getNumberUnit({value: totalVatTax, precision: 2}),
       totalDiscount: getNumberUnit({value: totalDiscount, precision: 2}),
       createdAt: moment(item.createdAt).format('L'),
-      purchaseOrderProducts: purchaseOrderProducts.map(purchaseOrderProduct => {
+      lines: purchaseOrderProducts.map(purchaseOrderProduct => {
         const precision = 2;
         const {
           designation,
@@ -68,6 +69,7 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
 
         return {
           ...purchaseOrderProduct,
+          type: LineType.Product,
           designation: `${designation}${note ? `\n\n${note}` : ''}`,
           netPriceExclTax: getNumberUnit({value: netPriceExclTax, precision}),
           netPriceInclTax: getNumberUnit({value: priceInclTax, precision}),

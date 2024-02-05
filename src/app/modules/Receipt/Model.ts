@@ -2,7 +2,7 @@ import {AbstractModel} from '../../../_custom/types/types';
 import {ReceiptProductModel} from '../ReceiptProduct';
 import {VendorModel} from '../Vendor';
 import {PurchaseOrderModel} from '../PurchaseOrder';
-import {PurchaseOrderPrint} from '../PurchaseOrder/Model';
+import {LineType, PurchaseOrderPrint} from '../PurchaseOrder/Model';
 import {PaymentModalityModel} from '../PaymentModality';
 
 
@@ -16,52 +16,56 @@ type Model = {
   readonly purchaseOrders: Array<PurchaseOrderModel>
 } & AbstractModel
 
+export type ReceiptLineProductPrint = {
+  type: LineType.Product
+  reference: string
+  name: string
+} & Pick<ReceiptProductModel, 'quantity' | 'desiredProductQuantity'>
+export type ReceiptLineComponentPrint = {
+  type: LineType.Component
+} & Omit<ReceiptLineProductPrint, 'type'>
+export type ReceiptPrintLine = ReceiptLineProductPrint | ReceiptLineComponentPrint
 export type ReceiptPrint = {
-  lines: Array<{
-    reference: string
-    name: string
-  } & Pick<ReceiptProductModel, 'quantity' | 'desiredProductQuantity'>>
+  lines: Array<ReceiptPrintLine>
 } & Pick<Model, 'receiptNumber' | 'receivedAt'>
-  & Pick<PurchaseOrderPrint, 'vendor' | 'address' | 'paymentModality' | 'comment' | 'groupement1' | 'groupement2'>
+  & Pick<PurchaseOrderPrint, 'vendor' | 'address' | 'paymentModality' | 'comment'>
 
-const EXAMPLE: ReceiptPrint = {
-  'address': '',
-  'comment': '',
-  'groupement1': '',
-  'groupement2': '',
-  'paymentModality': {
-    'name': 'Example'
-  },
-  'receiptNumber': 'BR-2023/000001',
-  'receivedAt': '07/01/2024',
-  'vendor': {
-    'name': 'ULTRANET MULTIMEDIA',
-    'phoneNumber': '',
-    'defaultAddress': {
-      'postalCode': '',
-      'address': 'MARRAKECH-MAROC',
-    }
-  },
-  'lines': [
-    {
-      'reference': '01',
-      'name': 'PORTOIR PIPETTE ESR',
-      'quantity': 18,
-      'desiredProductQuantity': 18,
-    },
-    {
-      'reference': '01',
-      'name': 'PORTOIR PIPETTE ESR',
-      'quantity': 18,
-      'desiredProductQuantity': 18,
-    },
-    {
-      'reference': '01',
-      'name': 'PORTOIR PIPETTE ESR',
-      'quantity': 18,
-      'desiredProductQuantity': 18,
-    },
-  ]
-};
+// const EXAMPLE: ReceiptPrint = {
+//   'address': '',
+//   'comment': '',
+//   'paymentModality': {
+//     'name': 'Example'
+//   },
+//   'receiptNumber': 'BR-2023/000001',
+//   'receivedAt': '07/01/2024',
+//   'vendor': {
+//     'name': 'ULTRANET MULTIMEDIA',
+//     'phoneNumber': '',
+//     'defaultAddress': {
+//       'postalCode': '',
+//       'address': 'MARRAKECH-MAROC',
+//     }
+//   },
+//   'lines': [
+//     {
+//       'reference': '01',
+//       'name': 'PORTOIR PIPETTE ESR',
+//       'quantity': 18,
+//       'desiredProductQuantity': 18,
+//     },
+//     {
+//       'reference': '01',
+//       'name': 'PORTOIR PIPETTE ESR',
+//       'quantity': 18,
+//       'desiredProductQuantity': 18,
+//     },
+//     {
+//       'reference': '01',
+//       'name': 'PORTOIR PIPETTE ESR',
+//       'quantity': 18,
+//       'desiredProductQuantity': 18,
+//     },
+//   ]
+// };
 
 export default Model;

@@ -58,6 +58,22 @@ type Model = {
   readonly status: QuantityStatusEnum
 } & AbstractModel & CreateTimestamp
 
+export enum LineType {
+  Product = 'PRODUCT',
+  Component = 'COMPONENT',
+}
+export type PurchaseOrderProductPrint = {
+  type: LineType.Product
+  product: Pick<ProductModel, 'code'>
+  grossPrice?: string
+  netPriceExclTax: string
+  discount: string
+} & Pick<PurchaseOrderProductModel, 'designation' | 'quantity'>
+export type PurchaseOrderComponentPrint = {
+  type: LineType.Component
+} & Pick<PurchaseOrderProductPrint, 'product' | 'designation' | 'quantity'>
+export type PurchaseOrderLinePrint = PurchaseOrderProductPrint | PurchaseOrderComponentPrint
+
 export type PurchaseOrderPrint = {
   totalExclTax: string
   totalInclTax: string
@@ -67,18 +83,11 @@ export type PurchaseOrderPrint = {
   paymentModality: Pick<PaymentModalityModel, 'name'>
   vendor: {
     defaultAddress: Pick<VendorAddressModel, 'address' | 'postalCode'>
-  } & Pick<VendorModel, 'name' | 'phoneNumber'>
+  } & Pick<VendorModel, 'name' | 'phoneNumber' | 'ice'>
   //
-  purchaseOrderProducts: Array<{
-    product: Pick<ProductModel, 'code'>
-    grossPrice?: string
-    netPriceExclTax: string
-    discount: string
-  } & Pick<PurchaseOrderProductModel, 'designation' | 'quantity'>>
+  lines: Array<PurchaseOrderLinePrint>
   // FIXME
   comment?: string
-  groupement1?: string
-  groupement2?: string
 } & Pick<Model, 'orderNumber' | 'createdAt' | 'ref'>
 
 
