@@ -10,7 +10,6 @@ import {CompanyModel} from './Company';
 import {StepModel} from './Step';
 import {ValidationPathModel} from './ValidationPath';
 import {OperationModel} from './Operation';
-import {LocationModel} from './Location';
 import {ResourceModel} from './Resource';
 import {PurchaseNeedAttachmentModel} from './PurchaseNeedAttachment';
 import {VendorAddressModel} from './VendorAddress';
@@ -35,6 +34,10 @@ import {InvoiceModel} from "./Invoice";
 import {PurchaseOrderProductComponentModel} from './PurchaseOrderProductComponent';
 import {ProductSectionModel} from "./ProductSection";
 import {ReceiptProductComponentModel} from './ReceiptProductComponent';
+import {CityModel} from "./City";
+import {BlocModel} from "./Bloc";
+import {ServiceModel} from "./Service";
+import {ClinicModel} from "./Clinic";
 
 export enum ModelEnum {
   ApplicantService = 'ApplicantService',
@@ -42,7 +45,7 @@ export enum ModelEnum {
   Company = 'Company',
   Currency = 'Currency',
   DesiredProduct = 'DesiredProduct',
-  Location = 'Location',
+  Clinic = 'Clinic',
   Operation = 'Operation',
   Product = 'Product',
   Project = 'Project',
@@ -73,7 +76,10 @@ export enum ModelEnum {
   Component = 'Component',
   PaymentModality = 'PaymentModality',
   Invoice = 'Invoice',
-  ProductSection='ProductSection'
+  ProductSection = 'ProductSection',
+  City = 'City',
+  Service = 'Service',
+  Bloc = 'Bloc',
 }
 
 export type Models = {
@@ -89,7 +95,6 @@ export type Models = {
   [ModelEnum.Project]: ProjectModel,
   [ModelEnum.Step]: StepModel,
   [ModelEnum.ValidationPath]: ValidationPathModel,
-  [ModelEnum.Location]: LocationModel,
   [ModelEnum.Operation]: OperationModel,
   [ModelEnum.Resource]: ResourceModel,
   [ModelEnum.Currency]: CurrencyModel,
@@ -112,6 +117,12 @@ export type Models = {
   [ModelEnum.purchaseOrderAttachment]: PurchaseOrderAttachmentModel,
   [ModelEnum.PaymentModality]: PaymentModalityModel,
   [ModelEnum.Component]: ComponentModel,
-  [ModelEnum.Invoice]: InvoiceModel
-  [ModelEnum.ProductSection]:ProductSectionModel
+  [ModelEnum.Invoice]: InvoiceModel,
+  [ModelEnum.ProductSection]: ProductSectionModel,
+  [ModelEnum.City]: CityModel,
+  [ModelEnum.Bloc]: BlocModel,
+  [ModelEnum.Service]: ServiceModel,
+  [ModelEnum.Clinic]: ClinicModel,
+
+
 }

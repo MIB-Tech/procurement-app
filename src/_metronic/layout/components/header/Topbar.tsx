@@ -1,20 +1,19 @@
 import clsx from 'clsx';
-import React, { FC, useState } from 'react';
-import { KTSVG } from '../../../helpers';
-import { HeaderUserMenu, QuickLinks } from '../../../partials';
-import { useLayout } from '../../core';
-import { ClickAwayListener } from '@mui/material';
-import { useAuth } from '../../../../_custom/hooks/UseAuth';
-import { Button } from '../../../../_custom/components/Button';
-import { atom } from 'recoil';
-import { HydraItem } from '../../../../_custom/types/hydra.types';
-import { ModelEnum } from '../../../../app/modules/types';
-import { Trans } from '../../../../_custom/components/Trans';
-import * as auth from '../../../../app/pages/auth/redux/AuthRedux';
+import React, {FC, useState} from 'react';
+import {KTSVG} from '../../../helpers';
+import {HeaderUserMenu, QuickLinks} from '../../../partials';
+import {useLayout} from '../../core';
+import {ClickAwayListener} from '@mui/material';
+import {useAuth} from '../../../../_custom/hooks/UseAuth';
+import {Button} from '../../../../_custom/components/Button';
+import {atom} from 'recoil';
+import {HydraItem} from '../../../../_custom/types/hydra.types';
+import {ModelEnum} from '../../../../app/modules/types';
+import {Trans} from '../../../../_custom/components/Trans';
 
 
-export const locationState = atom<HydraItem<ModelEnum.Location> | null>({
-  key: 'LOCATION_STATE',
+export const locationState = atom<HydraItem<ModelEnum.Clinic> | null>({
+  key: 'location_STATE',
   default: null
 });
 
@@ -24,10 +23,10 @@ const toolbarButtonMarginClass = 'ms-1 ms-lg-3',
   toolbarButtonIconSizeClass = 'svg-icon-1';
 
 const Topbar: FC = () => {
-  const { config } = useLayout();
+  const {config} = useLayout();
   const [userToolbarOpen, setUserToolbarOpen] = useState<boolean>();
-  const [locationLinkOpen, setLocationLinkOpen] = useState<boolean>();
-  const { user, location } = useAuth();
+  const [clinicLinkOpen, setClinicLinkOpen] = useState<boolean>();
+  const {user, clinic} = useAuth();
 
 
   return (
@@ -51,14 +50,14 @@ const Topbar: FC = () => {
       {/*</div>*/}
       {/* Quick links */}
       <ClickAwayListener onClickAway={() => {
-        if (locationLinkOpen) {
-          setLocationLinkOpen(false);
+        if (clinicLinkOpen) {
+          setClinicLinkOpen(false);
         }
       }}>
         <div className={clsx('d-flex align-items-center', toolbarButtonMarginClass)}>
-          {/*{activeLocation ?*/}
-          {/*  <ModelCell item={activeLocation} />:*/}
-          {/*  <Trans id='LOCATION' />*/}
+          {/*{activelocation ?*/}
+          {/*  <ModelCell item={activelocation} />:*/}
+          {/*  <Trans id='location' />*/}
           {/*}*/}
           {/* begin::Menu wrapper */}
           <Button
@@ -66,7 +65,7 @@ const Topbar: FC = () => {
             // size='sm'
             className={clsx(
               // 'w-100px text-truncate fw-boldest text-hover-primary'
-              // activeLocation && 'text-primary'
+              // activelocation && 'text-primary'
             )}
             //Pour le cas de un achteur peut etre lié a plusieurs cliniques !!!!!!!!!
             //   if (user.locations && user.locations.length > 0) {
@@ -74,15 +73,11 @@ const Topbar: FC = () => {
             //   } else {
             // Code à exécuter si user.locations est null, undefined, ou un tableau vide
             //   }
-            onClick={() => {
-              if (!user.locations) {
-                setLocationLinkOpen(!locationLinkOpen);
-              }
-            }}
+            onClick={() => setClinicLinkOpen(!clinicLinkOpen)}
           >
             {/*<SVG path='/ecommerce/ecm008.svg' size='1'/>*/}
             <div>
-              {location ?
+              {clinic ?
                 <a
                   href="#"
                   className={clsx(
@@ -93,8 +88,8 @@ const Topbar: FC = () => {
                     e.preventDefault()
                   }}
                 >
-                  <div className='d-sm-none'>{location['@title']}</div>
-                  <div className='d-none d-sm-block'>{location['@subTitle']}</div>
+                  <div className='d-sm-none'>{clinic['@title']}</div>
+                  <div className='d-none d-sm-block'>{clinic['@subTitle']}</div>
                   {/*<div className='d-sm-none'>{location['@subTitle']}</div>*/}
                 </a>
                 /*<div className='text-end w-125px'>
@@ -106,12 +101,12 @@ const Topbar: FC = () => {
                   </div>
                 </div>*/ :
                 <span className='w-100px text-truncate fw-boldest text-hover-primary'>
-                  <Trans id='LOCATION' />
+                  <Trans id='CLINIC'/>
                 </span>
               }
             </div>
           </Button>
-          <QuickLinks show={locationLinkOpen} />
+          <QuickLinks show={clinicLinkOpen}/>
           {/* end::Menu wrapper */}
         </div>
       </ClickAwayListener>
@@ -205,7 +200,7 @@ const Topbar: FC = () => {
                 </div>
               </div>
             </div>
-            <HeaderUserMenu show={userToolbarOpen} />
+            <HeaderUserMenu show={userToolbarOpen}/>
           </div>
         </ClickAwayListener>
       </div>
@@ -218,7 +213,7 @@ const Topbar: FC = () => {
             className='btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px'
             id='kt_header_menu_mobile_toggle'
           >
-            <KTSVG path='/media/icons/duotune/text/txt001.svg' className='svg-icon-1' />
+            <KTSVG path='/media/icons/duotune/text/txt001.svg' className='svg-icon-1'/>
           </div>
         </div>
       )}

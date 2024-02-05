@@ -10,7 +10,7 @@ import {useCustomQuery} from '../hooks/UseCustomQuery';
 import {getDefaultFields} from '../utils';
 import {ModelEnum} from '../../app/modules/types';
 import {Grid} from '@mui/material';
-import {isLocationColumn} from '../ListingView/ListingView.utils';
+import {isClinicColumn} from '../ListingView/ListingView.utils';
 
 
 export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, view, className }: {
@@ -22,10 +22,10 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
   className?: string
 }) => {
   const { columnDef } = useMapping<M>({ modelName });
-  const { isGranted, location } = useAuth();
+  const { isGranted, clinic } = useAuth();
   const {inlineForm, fields = getDefaultFields(columnDef)} = view
   const columnNames = (Object.keys(fields) as Array<keyof Model<M> | string>).filter(columnName => {
-    if (location && isLocationColumn({ modelName, columnName })) {
+    if (clinic && isClinicColumn({ modelName, columnName })) {
       return false;
     }
 
