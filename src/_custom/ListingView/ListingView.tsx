@@ -30,7 +30,7 @@ import {GridView} from './views/Grid/GridView';
 import {Help} from '../components/Help';
 import {DetailViewColumnContent} from '../DetailView/DetailViewColumnContent';
 import {ItemView} from '../components/ItemView';
-import {DEFAULT_VIEW, isLocationColumn, RELATED_MODELS} from './ListingView.utils';
+import {DEFAULT_VIEW, isClinicColumn, RELATED_MODELS} from './ListingView.utils';
 import {BasicFilterToolbar} from './Filter/BasicFilterToolbar';
 import {getAdvancedPropertyFilter, getColumnMapping} from './Filter/Filter.utils';
 import {ItemAction} from './ItemAction';
@@ -41,7 +41,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
     end: moment().endOf('month').toDate()
   });
   const {id} = useParams<{ id?: string }>();
-  const {user, operations, location, navigate} = useAuth();
+  const {user, operations, clinic, navigate} = useAuth();
   const {searchable, columnDef, views} = useMapping({modelName});
   const view = (views?.find(view => view.type === ViewEnum.Listing) || DEFAULT_VIEW) as ListingViewType<M>;
   const {
@@ -192,7 +192,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
 
   const {collection, totalCount, isLoading} = useCollectionQuery<M>({
     modelName,
-    queryKey: RELATED_MODELS.includes(modelName) && location,
+    queryKey: RELATED_MODELS.includes(modelName) && clinic,
     params: {
       ...params,
       filter,
@@ -206,7 +206,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
       return true;
     }
 
-    return location && isLocationColumn({modelName, columnName});
+    return clinic && isClinicColumn({modelName, columnName});
   };
 
   const sortColumNames = (Object.keys(sortColumns || columnDef) as Array<keyof Model<M>>).filter(columnName => {

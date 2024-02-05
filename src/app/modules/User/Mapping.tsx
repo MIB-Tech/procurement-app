@@ -60,8 +60,8 @@ const mapping: ModelMapping<ModelEnum.User> = {
       type: ModelEnum.Role,
       nullable: true
     },
-    locations: {
-      type: ModelEnum.Location,
+    clinics: {
+      type: ModelEnum.Clinic,
       multiple: true
     }
   },

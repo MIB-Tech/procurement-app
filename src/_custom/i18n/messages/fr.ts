@@ -2,6 +2,8 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  CLINIC: "Clinique",
+  CLINICS: "Cliniques",
   RECEIVED: "Réceptionné",
   PURCHASE_ORDER_PRODUCT_COMPONENT: "Composante",
   RECEIPT_ORDER_PRODUCT_COMPONENT: "Composante",
@@ -385,7 +387,7 @@ export const fr: I18nLanguage = {
   CATEGORIES: 'Familles',
   CHILDREN: 'Enfants',
   CHILD_ASSETS: 'Sous-équipement',
-  CHILD_LOCATIONS: 'Sous-emplacements',
+  CHILD_locationS: 'Sous-emplacements',
   COLOR_KEY: 'Clé de couleur',
   CONFIRM: 'Confirmer',
   CONTACTS: 'Contacts',
@@ -418,8 +420,8 @@ export const fr: I18nLanguage = {
   LABEL: 'Label',
   LAST_NAME: 'Nom',
   LOCALE: 'Emplacement',
-  LOCATION: 'Clinique/Hopital',
-  LOCATIONS: 'Cliniques/Hopitaux',
+  clinic: 'Clinique/Hopital',
+  locationS: 'Cliniques/Hopitaux',
   LOGGED_AT: 'Connecté à',
   MANUFACTURER: 'Marque',
   MATERIALIZED_PATH_TREE: 'Materialized path tree',
