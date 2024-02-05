@@ -36,6 +36,14 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
       type: ModelEnum.User,
       multiple: true
     },
+    services: {
+      type: ModelEnum.Service,
+      multiple: true
+    },
+    city: {
+      type: ModelEnum.City
+    },
+
   },
   views: [
     {

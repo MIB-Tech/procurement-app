@@ -24,7 +24,7 @@ type PartialNullable<T> = {
 };
 
 export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
-  const {location} = useAuth();
+  const {clinic} = useAuth();
   const {name} = props;
   const {values: purchaseOrder, setFieldValue} = useFormikContext<Partial<PurchaseOrderModel>>();
   const {taxIncluded, vendor} = purchaseOrder;
@@ -71,7 +71,7 @@ export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
           const desiredProduct: Partial<DesiredProductModel> = {
             designation,
             quantity: 0,
-            address: location?.['@title'] || 'AKDITAL HOLDING'
+            address: clinic?.['@title'] || 'AKDITAL HOLDING'
           };
           await setValue('desiredProducts', [desiredProduct]);
           // pricing
