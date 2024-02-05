@@ -3,6 +3,7 @@ import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
 
+
 const mapping: ModelMapping<ModelEnum.Clinic> = {
   modelName: ModelEnum.Clinic,
   columnDef: {
@@ -43,7 +44,7 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     services: {
       type: ModelEnum.Service,
       multiple: true
-    }
+    },
   },
   views: [
     {
