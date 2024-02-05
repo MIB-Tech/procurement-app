@@ -2,7 +2,6 @@ import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 
-
 const mapping: ModelMapping<ModelEnum.Location> = {
   modelName: ModelEnum.Location,
   columnDef: {

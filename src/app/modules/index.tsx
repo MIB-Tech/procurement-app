@@ -16,7 +16,6 @@ import {PRODUCT_MAPPING} from './Product';
 import {PROJECT_MAPPING} from './Project';
 import {STEP_MAPPING} from './Step';
 import {VALIDATION_PATH_MAPPING} from './ValidationPath';
-import {LOCATION_MAPPING} from './Location';
 import {RESOURCE_MAPPING} from './Resource';
 import {OPERATION_MAPPING} from './Operation';
 import {HydraItem} from '../../_custom/types/hydra.types';
@@ -42,6 +41,7 @@ import {INVOICE_MAPPING} from "./Invoice";
 import {PRODUCT_SECTION_MAPPING} from "./ProductSection";
 import {PURCHASE_ORDER_PRODUCT_COMPONENT_MAPPING} from './PurchaseOrderProductComponent';
 import {RECEIPT_PRODUCT_COMPONENT_MAPPING} from './ReceiptProductComponent';
+import {LOCATION_MAPPING} from "./Location";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
