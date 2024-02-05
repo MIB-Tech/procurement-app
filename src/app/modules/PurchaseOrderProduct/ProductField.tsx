@@ -24,7 +24,7 @@ type PartialNullable<T> = {
 };
 
 export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
-  const {location} = useAuth();
+  const {clinic} = useAuth();
   const {name} = props;
   const {values: purchaseOrder, setFieldValue} = useFormikContext<Partial<PurchaseOrderModel>>();
   const {taxIncluded, vendor} = purchaseOrder;
@@ -64,14 +64,15 @@ export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
           const productId = value.id;
           const productUri = value['@id'];
           const detailedProduct = await axios.get<HydraItem<ModelEnum.Product>>(productUri).then(r => r.data);
-          const designation = detailedProduct.designation;
+
+          const {designation} = detailedProduct;
           await setValue('designation', designation);
           await setValue('note', detailedProduct.note);
           await setValue('vatRate', detailedProduct.vatRate);
           const desiredProduct: Partial<DesiredProductModel> = {
             designation,
             quantity: 0,
-            address: location?.['@title'] || 'AKDITAL HOLDING'
+            address: clinic?.['@title'] || 'AKDITAL HOLDING'
           };
           await setValue('desiredProducts', [desiredProduct]);
           // pricing
