@@ -9,7 +9,7 @@ type Model = {
   abbreviation: string
   address?: string
   ice: string
-  if: string
+  taxId: string
   cnss: string
   users: Array<UserModel>
   services: Array<ServiceModel>
