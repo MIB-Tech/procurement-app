@@ -41,7 +41,10 @@ import {INVOICE_MAPPING} from "./Invoice";
 import {PRODUCT_SECTION_MAPPING} from "./ProductSection";
 import {PURCHASE_ORDER_PRODUCT_COMPONENT_MAPPING} from './PurchaseOrderProductComponent';
 import {RECEIPT_PRODUCT_COMPONENT_MAPPING} from './ReceiptProductComponent';
-import {LOCATION_MAPPING} from "./Location";
+import {CITY_MAPPING} from "./City";
+import {BLOC_MAPPING} from "./Bloc";
+import {SERVICE_MAPPING} from "./Service";
+import {CLINIC_MAPPING} from "./Clinic";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
@@ -72,7 +75,6 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Project]: PROJECT_MAPPING,
   [ModelEnum.Step]: STEP_MAPPING,
   [ModelEnum.ValidationPath]: VALIDATION_PATH_MAPPING,
-  [ModelEnum.Location]: LOCATION_MAPPING,
   [ModelEnum.Resource]: RESOURCE_MAPPING,
   [ModelEnum.Operation]: OPERATION_MAPPING,
   [ModelEnum.PurchaseOrderCategory]: PURCHASE_ORDER_CATEGORY_MAPPING,
@@ -82,6 +84,11 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Invoice]: INVOICE_MAPPING,
   [ModelEnum.ProductSection]: PRODUCT_SECTION_MAPPING,
   [ModelEnum.ReceiptProductComponent]: RECEIPT_PRODUCT_COMPONENT_MAPPING,
+  [ModelEnum.City]: CITY_MAPPING,
+  [ModelEnum.Bloc]: BLOC_MAPPING,
+  [ModelEnum.Service]: SERVICE_MAPPING,
+  [ModelEnum.Clinic]: CLINIC_MAPPING,
+
 };
 
 type ListingState = {
