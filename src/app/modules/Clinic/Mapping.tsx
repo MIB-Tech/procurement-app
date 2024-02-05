@@ -28,7 +28,7 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     ice: {
       type: ColumnTypeEnum.String
     },
-    if: {
+    taxId: {
       type: ColumnTypeEnum.String
     },
     cnss: {
@@ -55,7 +55,7 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
         parent: true,
         address: true,
         ice: true,
-        if: true,
+        taxId: true,
         cnss: true
       }
     },
@@ -67,7 +67,7 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
         parent: true,
         address: true,
         ice: true,
-        if: true,
+        taxId: true,
         cnss: true
       }
     },
@@ -79,7 +79,7 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
         parent: true,
         address: true,
         ice: true,
-        if: true,
+        taxId: true,
         cnss: true
       }
     },
