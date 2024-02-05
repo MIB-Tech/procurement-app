@@ -12,7 +12,7 @@ import {getDefaultFields, getInitialValues, getValidationSchema} from '../utils'
 import {useCustomMutation} from '../hooks/UseCustomMutation';
 import {useCustomQuery} from '../hooks/UseCustomQuery';
 import {ModelEnum} from '../../app/modules/types';
-import {islocationColumn} from '../ListingView/ListingView.utils';
+import {isClinicColumn} from '../ListingView/ListingView.utils';
 
 export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormViewProps<M>) => {
   const {trans} = useTrans();
@@ -25,11 +25,11 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
     navigateTo
   });
   const query = useCustomQuery({modelName, enabled: !isCreateMode});
-  const {isGranted, location, operations} = useAuth();
+  const {isGranted, clinic, operations} = useAuth();
   const _fields = view?.fields || getDefaultFields(columnDef);
   const fields = (Object.keys(_fields) as Array<keyof Model<M> | string>)
     .filter(columnName => {
-      return !location || !islocationColumn({modelName, columnName});
+      return !clinic || !isClinicColumn({modelName, columnName});
     })
     .reduce(
     (obj, columnName) => {

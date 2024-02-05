@@ -4,8 +4,8 @@ import {ServiceModel} from "../Service";
 
 type Model = {
   name: string
-  floor: string
-  service:ServiceModel
+  floor: number
+  service: ServiceModel
 } & AbstractModel
 
 

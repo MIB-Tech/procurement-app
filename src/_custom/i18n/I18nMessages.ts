@@ -90,7 +90,7 @@ type I18nMessageKey =
   | 'IMAGES'
   | 'INTERVAL'
   | 'IS_MODULE'
-  | 'location'
+  | 'clinic'
   | 'locationS'
   | 'LOGGED_AT'
   | 'MANUFACTURER'
@@ -463,6 +463,8 @@ type I18nMessageKey =
   | 'PURCHASE_ORDER_PRODUCT_COMPONENT'
   | 'RECEIPT_ORDER_PRODUCT_COMPONENT'
   | 'RECEIVED'
+  | 'CLINIC'
+  | 'CLINICS'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 

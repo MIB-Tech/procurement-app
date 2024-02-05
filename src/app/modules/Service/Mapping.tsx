@@ -17,10 +17,10 @@ const mapping: ModelMapping<ModelEnum.Service> = {
     },
     blocs: {
       type: ModelEnum.Bloc,
-      multiple:true
+      multiple: true
     },
     clinic: {
-      type:ModelEnum.Clinic
+      type: ModelEnum.Clinic
     }
   },
   views: [
@@ -28,6 +28,7 @@ const mapping: ModelMapping<ModelEnum.Service> = {
       type: ViewEnum.Create,
       fields: {
         name: true,
+        clinic: true,
         blocs: true
       }
     },
@@ -35,6 +36,7 @@ const mapping: ModelMapping<ModelEnum.Service> = {
       type: ViewEnum.Update,
       fields: {
         name: true,
+        clinic: true,
         blocs: true
       }
     }

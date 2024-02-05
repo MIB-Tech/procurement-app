@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { uselocation } from 'react-router';
+import { useLocation } from 'react-router';
 import { checkIsActive, KTSVG } from '../../../helpers';
 import { useLayout } from '../../core';
 import { OperationModel } from '../../../../app/modules/Operation';
@@ -16,7 +16,7 @@ const AsideMenuItemWithSub: React.FC<Props> = ({
   icon,
   fontIcon,
 }) => {
-  const { pathname } = uselocation();
+  const { pathname } = useLocation();
   const treePath = 'TODO';
   const isActive = treePath && checkIsActive(pathname, treePath);
   const { config } = useLayout();

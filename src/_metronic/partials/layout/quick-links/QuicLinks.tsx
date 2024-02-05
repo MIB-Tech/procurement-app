@@ -1,32 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import clsx from 'clsx';
-import { getRoutePrefix } from '../../../../_custom/utils';
-import { Button } from '../../../../_custom/components/Button';
-import { ModelCell } from '../../../../_custom/ListingView/views/Table/ModelCell';
-import { SVG } from '../../../../_custom/components/SVG/SVG';
-import { useCollectionQuery } from '../../../../_custom/hooks/UseCollectionQuery';
-import { ModelEnum } from '../../../../app/modules/types';
-import { useAuth } from '../../../../_custom/hooks/UseAuth';
-import { useDispatch } from 'react-redux';
+import {useAuth} from '../../../../_custom/hooks/UseAuth';
+import {useDispatch} from 'react-redux';
 import * as auth from '../../../../app/pages/auth/redux/AuthRedux';
+import {HydraItem} from "../../../../_custom/types/hydra.types";
 
 
-const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
+const QuickLinks: FC<{ show?: boolean }> = ({show}) => {
   const dispatch = useDispatch();
-  const { location: activelocation, user } = useAuth();
-  const modelName = ModelEnum.location;
-  const { collection, isLoading } = useCollectionQuery<ModelEnum.location>({
-    options: {
-      enabled: !user.locations
-    },
-    modelName,
-    path: '/base' + getRoutePrefix(modelName)
-  });
+  const {clinic: activeClinic, user} = useAuth();
 
   return (
     <div
-      className={clsx('menu menu-sub menu-sub-dropdown menu-column w-250px -w-lg-325px p-2', { show })}
+      className={clsx('menu menu-sub menu-sub-dropdown menu-column w-250px -w-lg-325px p-2', {show})}
       style={{
         zIndex: 107,
         position: 'fixed',
@@ -50,12 +37,12 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
       {/*</div>*/}
 
       <div className='row g-2'>
-        {collection.map(location => {
-          const active = location.id === activelocation?.id;
+        {(user.clinics as Array<HydraItem>).map(clinic => {
+          const active = clinic.id === activeClinic?.id;
 
           return (
             <div
-              key={location['@id']}
+              key={clinic['@id']}
               className='col-4'
             >
               <a
@@ -66,10 +53,10 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
                 )}
                 onClick={e => {
                   e.preventDefault()
-                  dispatch(auth.actions.setlocation(active ? undefined : location));
+                  dispatch(auth.actions.setlocation(active ? undefined : clinic));
                 }}
               >
-                {location['@title']}
+                {clinic['@title']}
               </a>
             </div>
           )

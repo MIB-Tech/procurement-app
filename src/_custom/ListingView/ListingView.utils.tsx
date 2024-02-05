@@ -4,13 +4,13 @@ import {getColumnMapping} from './Filter/Filter.utils';
 
 
 export const getListingQueryKey = (modelName: string) => `${modelName}.LISTING`;
-export const islocationColumn = <M extends ModelEnum>({modelName, columnName}: {
+export const isClinicColumn = <M extends ModelEnum>({modelName, columnName}: {
   modelName: M,
   columnName: keyof Model<M> | string
 }) => {
   const columnMapping = getColumnMapping({modelName, columnName});
 
-  return columnMapping?.type === ModelEnum.location;
+  return columnMapping?.type === ModelEnum.Clinic;
 };
 export const RELATED_MODELS = [
   ModelEnum.User

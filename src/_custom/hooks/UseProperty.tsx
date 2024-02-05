@@ -1,11 +1,11 @@
 import { Model } from '../types/ModelMapping';
-import { uselocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { dashToCamelCase } from '../utils';
 import { ModelEnum } from '../../app/modules/types';
 
 
 export const useProperty = <M extends ModelEnum>() => {
-  const { pathname } = uselocation();
+  const { pathname } = useLocation();
   const suffix = pathname.split('/').pop();
 
   return {

@@ -2,6 +2,8 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  CLINIC: "Clinique",
+  CLINICS: "Cliniques",
   RECEIVED: "Réceptionné",
   PURCHASE_ORDER_PRODUCT_COMPONENT: "Composante",
   RECEIPT_ORDER_PRODUCT_COMPONENT: "Composante",
@@ -418,7 +420,7 @@ export const fr: I18nLanguage = {
   LABEL: 'Label',
   LAST_NAME: 'Nom',
   LOCALE: 'Emplacement',
-  location: 'Clinique/Hopital',
+  clinic: 'Clinique/Hopital',
   locationS: 'Cliniques/Hopitaux',
   LOGGED_AT: 'Connecté à',
   MANUFACTURER: 'Marque',

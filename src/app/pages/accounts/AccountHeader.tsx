@@ -3,10 +3,10 @@ import React from 'react'
 import {KTSVG, toAbsoluteUrl} from '../../../_metronic/helpers'
 import {Link} from 'react-router-dom'
 import {Dropdown1} from '../../../_metronic/partials'
-import {uselocation} from 'react-router'
+import {useLocation} from 'react-router'
 
 const AccountHeader: React.FC = () => {
-  const location = uselocation()
+  const location = useLocation()
 
   return (
     <div className='card mb-5 mb-xl-10'>

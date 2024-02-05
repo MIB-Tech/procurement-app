@@ -109,7 +109,7 @@ export const en: I18nLanguage = {
   LABEL: 'Label',
   LAST_NAME: 'Last Name',
   LOCALE: 'Local',
-  location: 'location',
+  clinic: 'location',
   locationS: 'locations',
   LOGGED_AT: 'Logged at',
   MANUFACTURER: 'Manufacturer',

@@ -1,10 +1,10 @@
-import { Store } from 'redux';
-import { actions, AuthState } from '../../app/pages/auth';
-import { AxiosError, AxiosInstance } from 'axios';
-import { API_URL } from '../../app/modules/utils';
+import {Store} from 'redux';
+import {actions, AuthState} from '../../app/pages/auth';
+import {AxiosError, AxiosInstance} from 'axios';
+import {API_URL} from '../../app/modules/utils';
 import * as api from '../../app/pages/auth/redux/AuthCRUD';
 
-import { PRINTER_API_URL } from '../../_custom/hooks/UseZebraPrinter';
+import {PRINTER_API_URL} from '../../_custom/hooks/UseZebraPrinter';
 
 
 export enum JWTResponseMessage {
@@ -23,14 +23,14 @@ export default function setupAxios(axios: AxiosInstance, store: Store<{ auth: Au
   axios.defaults.baseURL = API_URL;
   axios.interceptors.request.use(
     config => {
-      const { token/*, location*/ } = store.getState().auth;
+      const {token, clinic} = store.getState().auth;
       if (!config.url?.startsWith(PRINTER_API_URL)) {
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
-        // if (location) {
-        //   config.headers['Tenant-location'] = location.id;
-        // }
+        if (clinic) {
+          config.headers['Tenant-clinic'] = clinic.id;
+        }
       }
 
       return config;
@@ -40,16 +40,16 @@ export default function setupAxios(axios: AxiosInstance, store: Store<{ auth: Au
   axios.interceptors.response.use(
     response => response,
     async (error: AxiosError<JWTResponse>) => {
-      const { response, config } = error;
+      const {response, config} = error;
       if (response) {
-        const { dispatch, getState } = store;
-        const { refreshToken } = getState().auth;
+        const {dispatch, getState} = store;
+        const {refreshToken} = getState().auth;
         switch (response?.status) {
           case 401:
             switch (response.data.message) {
               case JWTResponseMessage.Expired:
                 if (refreshToken) {
-                  const { data } = await api.refreshToken(refreshToken);
+                  const {data} = await api.refreshToken(refreshToken);
                   dispatch(actions.login(data));
 
                   return axios(config);

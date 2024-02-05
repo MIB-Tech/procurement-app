@@ -22,7 +22,7 @@ import {SVG} from '../components/SVG/SVG';
 import {IconButton} from '../components/Button/IconButton';
 import {Help} from '../components/Help';
 import {ModelCellSkeleton} from '../ListingView/views/Table/ModelCell';
-import {islocationColumn} from '../ListingView/ListingView.utils';
+import {isClinicColumn} from '../ListingView/ListingView.utils';
 import {useCurrentOperation} from '../../_metronic/layout/components/header/page-title/DefaultTitle';
 import {Button} from '../components/Button';
 
@@ -131,7 +131,7 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {modelN
 
 export const DetailView = <M extends ModelEnum>({modelName}: { modelName: M }) => {
   const {columnDef, views} = useMapping<M>({modelName});
-  const {isGranted, location,} = useAuth();
+  const {isGranted, clinic,} = useAuth();
   const view = (views?.find(view => view.type === ViewEnum.Detail) || DEFAULT_DETAIL_VIEW) as DetailViewType<M>;
   const {property} = useProperty<M>();
   const isOverview = !property || property.toString().includes('_');
@@ -166,7 +166,7 @@ export const DetailView = <M extends ModelEnum>({modelName}: { modelName: M }) =
   const columnNames = (Object.keys(columns) as Array<keyof typeof columns>).filter(columnName => {
     const column = property && columns[columnName];
 
-    if (location && islocationColumn({ modelName, columnName })) {
+    if (clinic && isClinicColumn({ modelName, columnName })) {
       return false;
     }
 

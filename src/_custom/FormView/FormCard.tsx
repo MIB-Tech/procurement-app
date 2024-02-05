@@ -5,12 +5,12 @@ import clsx from 'clsx';
 import {TitleContent} from '../ListingView/views/Table/HeaderCell';
 import {ValueField} from '../Column/ValueField';
 import React, {useEffect} from 'react';
-import {uselocation} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import {useCustomQuery} from '../hooks/UseCustomQuery';
 import {getDefaultFields} from '../utils';
 import {ModelEnum} from '../../app/modules/types';
 import {Grid} from '@mui/material';
-import {islocationColumn} from '../ListingView/ListingView.utils';
+import {isClinicColumn} from '../ListingView/ListingView.utils';
 
 
 export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, view, className }: {
@@ -22,10 +22,10 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
   className?: string
 }) => {
   const { columnDef } = useMapping<M>({ modelName });
-  const { isGranted, location } = useAuth();
+  const { isGranted, clinic } = useAuth();
   const {inlineForm, fields = getDefaultFields(columnDef)} = view
   const columnNames = (Object.keys(fields) as Array<keyof Model<M> | string>).filter(columnName => {
-    if (location && islocationColumn({ modelName, columnName })) {
+    if (clinic && isClinicColumn({ modelName, columnName })) {
       return false;
     }
 
@@ -44,7 +44,7 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
     return !grantedRoles || isGranted(grantedRoles);
   });
 
-  const { pathname } = uselocation();
+  const { pathname } = useLocation();
   // const url = '/update' + pathname.split('/').slice(0, 3).join('/');
   const query = useCustomQuery({
     modelName,

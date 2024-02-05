@@ -45,7 +45,7 @@ export enum ModelEnum {
   Company = 'Company',
   Currency = 'Currency',
   DesiredProduct = 'DesiredProduct',
-  Location = 'Location',
+  Clinic = 'Clinic',
   Operation = 'Operation',
   Product = 'Product',
   Project = 'Project',
@@ -80,8 +80,6 @@ export enum ModelEnum {
   City = 'City',
   Service = 'Service',
   Bloc = 'Bloc',
-  Clinic = 'Clinic',
-
 }
 
 export type Models = {

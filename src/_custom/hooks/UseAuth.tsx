@@ -59,11 +59,11 @@ export const useAuth = () => {
 
   return {
     user,
-    location,
+    clinic,
     operations,
     isGranted,
     getPath,
-    navigate
+    navigate,
   };
 };
 

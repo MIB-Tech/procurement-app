@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react'
-import {uselocation} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
 import {
   ScrollTopComponent,
   DrawerComponent,
@@ -9,7 +9,7 @@ import {
 import {KTSVG} from '../../helpers'
 
 export function ScrollTop() {
-  const {pathname} = uselocation()
+  const {pathname} = useLocation()
   const isFirstRun = useRef(true)
 
   const pluginsReinitialization = () => {

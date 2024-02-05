@@ -1,5 +1,5 @@
 import React, {useRef, useEffect} from 'react'
-import {uselocation} from 'react-router'
+import {useLocation} from 'react-router'
 import clsx from 'clsx'
 import {checkIsActive, KTSVG} from '../../../helpers'
 
@@ -28,7 +28,7 @@ const MenuInnerWithSub: React.FC<Props> = ({
   isMega = false,
 }) => {
   const menuItemRef = useRef<HTMLDivElement>(null)
-  const {pathname} = uselocation()
+  const {pathname} = useLocation()
 
   useEffect(() => {
     if (menuItemRef.current && menuTrigger && menuPlacement) {
