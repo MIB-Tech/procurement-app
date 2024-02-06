@@ -5,6 +5,7 @@ import {CategoryModel} from '../Category';
 import {CompanyModel} from '../Company';
 import {ApplicantServiceModel} from '../ApplicantService';
 import {PurchaseNeedModel} from './index';
+import {ClinicModel} from "../Clinic";
 
 
 export enum PurchaseNeedStatusEnum {
@@ -35,6 +36,7 @@ type Model = {
   applicantService: ApplicantServiceModel
   lines: Array<PurchaseNeedModel>
   attachments?: Array<PurchaseNeedAttachmentModel>
+  clinic:ClinicModel
   readonly category: CategoryModel
   // readonly validationPath: string
 } & CreateTimestamp & AbstractModel

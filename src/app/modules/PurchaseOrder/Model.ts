@@ -10,6 +10,7 @@ import {ProductModel} from '../Product';
 import {PaymentModalityModel} from '../PaymentModality';
 import {InvoiceModel} from "../Invoice";
 import {UserModel} from '../User';
+import {ClinicModel} from "../Clinic";
 
 export enum QuantityStatusEnum {
   Unreceived = 'UNRECEIVED',
@@ -33,6 +34,15 @@ export const VALIDATION_STATUS_OPTIONS: Array<StringSelectOption> = [
   {id: ValidationStatusEnum.Validated, color: 'success'},
 ];
 
+export enum ClinicStatusEnum {
+  UnderConstruction = 'UnderConstruction',
+  Operationel = 'Operationel'
+}
+
+export const CLINIC_STATUS_OPTIONS: Array<StringSelectOption> = [
+  {id: ClinicStatusEnum.UnderConstruction},
+  {id: ClinicStatusEnum.Operationel},
+];
 type Model = {
   orderNumber: string
   taxIncluded: boolean
@@ -42,6 +52,7 @@ type Model = {
   validationStatus: ValidationStatusEnum
   validatedBy?: UserModel
   validatedAt?: string
+  clinicStatus: ClinicStatusEnum
   vendor: VendorModel
   currency?: CurrencyModel
   category: PurchaseOrderCategoryModel
@@ -49,6 +60,7 @@ type Model = {
   attachments: Array<PurchaseOrderAttachmentModel>
   paymentModality: PaymentModalityModel
   invoice: InvoiceModel
+  clinic: ClinicModel
   readonly totalExclTax: number
   readonly totalVatTax: number
   readonly totalDiscount: number

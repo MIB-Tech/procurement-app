@@ -5,7 +5,6 @@ import {CategoryModel} from './Category';
 import {ApplicantServiceModel} from './ApplicantService';
 import {PurchaseNeedProductModel} from './PurchaseNeedProduct';
 import {ProductModel} from './Product';
-import {ProjectModel} from './Project';
 import {CompanyModel} from './Company';
 import {StepModel} from './Step';
 import {ValidationPathModel} from './ValidationPath';
@@ -92,7 +91,6 @@ export type Models = {
   [ModelEnum.Company]: CompanyModel,
   [ModelEnum.PurchaseNeedProduct]: PurchaseNeedProductModel,
   [ModelEnum.Product]: ProductModel,
-  [ModelEnum.Project]: ProjectModel,
   [ModelEnum.Step]: StepModel,
   [ModelEnum.ValidationPath]: ValidationPathModel,
   [ModelEnum.Operation]: OperationModel,
