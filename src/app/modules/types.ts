@@ -47,7 +47,6 @@ export enum ModelEnum {
   Clinic = 'Clinic',
   Operation = 'Operation',
   Product = 'Product',
-  Project = 'Project',
   PurchaseFile = 'PurchaseFile',
   PurchaseFileProduct = 'PurchaseFileProduct',
   PurchaseFileType = 'PurchaseFileType',
