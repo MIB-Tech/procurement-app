@@ -2,7 +2,6 @@ import {AbstractModel, CreateTimestamp} from '../../../_custom/types/types';
 import {PurchaseOrderProductModel} from '../PurchaseOrderProduct';
 import {VendorModel} from '../Vendor';
 import {CurrencyModel} from '../Currency';
-import {ProjectModel} from '../Project';
 import {PurchaseOrderCategoryModel} from '../PurchaseOrderCategory';
 import {PurchaseOrderAttachmentModel} from '../PurchaseOrderAttachment';
 import {StringSelectOption} from '../../../_custom/Column/String/StringColumn';
@@ -11,6 +10,7 @@ import {ProductModel} from '../Product';
 import {PaymentModalityModel} from '../PaymentModality';
 import {InvoiceModel} from "../Invoice";
 import {UserModel} from '../User';
+import {ClinicModel} from "../Clinic";
 
 export enum QuantityStatusEnum {
   Unreceived = 'UNRECEIVED',
@@ -30,10 +30,19 @@ export enum ValidationStatusEnum {
 }
 
 export const VALIDATION_STATUS_OPTIONS: Array<StringSelectOption> = [
- {id: ValidationStatusEnum.Pending, color: 'warning'},
+  {id: ValidationStatusEnum.Pending, color: 'warning'},
   {id: ValidationStatusEnum.Validated, color: 'success'},
 ];
 
+export enum ClinicStatusEnum {
+  UnderConstruction = 'UnderConstruction',
+  Operationel = 'Operationel'
+}
+
+export const CLINIC_STATUS_OPTIONS: Array<StringSelectOption> = [
+  {id: ClinicStatusEnum.UnderConstruction},
+  {id: ClinicStatusEnum.Operationel},
+];
 type Model = {
   orderNumber: string
   taxIncluded: boolean
@@ -43,14 +52,15 @@ type Model = {
   validationStatus: ValidationStatusEnum
   validatedBy?: UserModel
   validatedAt?: string
+  clinicStatus: ClinicStatusEnum
   vendor: VendorModel
   currency?: CurrencyModel
-  project: ProjectModel
   category: PurchaseOrderCategoryModel
   purchaseOrderProducts: Array<PurchaseOrderProductModel>
   attachments: Array<PurchaseOrderAttachmentModel>
   paymentModality: PaymentModalityModel
   invoice: InvoiceModel
+  clinic: ClinicModel
   readonly totalExclTax: number
   readonly totalVatTax: number
   readonly totalDiscount: number
@@ -62,6 +72,7 @@ export enum LineType {
   Product = 'PRODUCT',
   Component = 'COMPONENT',
 }
+
 export type PurchaseOrderProductPrint = {
   type: LineType.Product
   product: Pick<ProductModel, 'code'>

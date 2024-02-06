@@ -1,7 +1,7 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
-
+import {StringFormat} from "../../../_custom/Column/String/StringColumn";
 
 
 const mapping: ModelMapping<ModelEnum.Clinic> = {
@@ -34,6 +34,22 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     cnss: {
       type: ColumnTypeEnum.String
     },
+    amount:{
+      type:ColumnTypeEnum.Number
+    },
+    constructionStartAt:{
+      type:ColumnTypeEnum.String,
+      format:StringFormat.Date,
+      nullable:true
+    },
+    constructionEndAt:{
+      type:ColumnTypeEnum.String,
+      format:StringFormat.Date,
+      nullable:true
+    },
+    purchaseOrderAllowed:{
+      type:ColumnTypeEnum.Boolean
+    },
     users: {
       type: ModelEnum.User,
       multiple: true
@@ -45,6 +61,14 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
       type: ModelEnum.Service,
       multiple: true
     },
+    purchaseOrders:{
+      type:ModelEnum.PurchaseOrder,
+      multiple:true
+    },
+    purchaseNeeds:{
+      type:ModelEnum.PurchaseNeedProduct,
+      multiple:true
+    }
   },
   views: [
     {
