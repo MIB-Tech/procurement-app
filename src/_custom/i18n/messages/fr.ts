@@ -2,6 +2,8 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  OPERATIONEL: "Opérationel",
+  UNDERCONSTRUCTION: "Sous-construction",
   CLINIC: "Clinique",
   CLINICS: "Cliniques",
   RECEIVED: "Réceptionné",
