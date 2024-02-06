@@ -211,6 +211,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseNeed> = {
       type: ModelEnum.PurchaseNeedAttachment,
       multiple: true,
     },
+    clinic: {
+      type: ModelEnum.Clinic
+    }
   },
   views: [
     {
