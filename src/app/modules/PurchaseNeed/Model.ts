@@ -2,7 +2,6 @@ import {AbstractModel, CreateTimestamp} from '../../../_custom/types/types';
 import {UserModel} from '../User';
 import {PurchaseNeedAttachmentModel} from '../PurchaseNeedAttachment';
 import {CategoryModel} from '../Category';
-import {ProjectModel} from '../Project';
 import {CompanyModel} from '../Company';
 import {ApplicantServiceModel} from '../ApplicantService';
 import {PurchaseNeedModel} from './index';
@@ -31,7 +30,6 @@ type Model = {
   orderedFor?: string
   recommendedVendors: string[]
   buyerFullName?: string
-  project?: ProjectModel
   company: CompanyModel
   receptionManager: UserModel
   applicantService: ApplicantServiceModel

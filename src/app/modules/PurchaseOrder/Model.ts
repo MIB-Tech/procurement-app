@@ -2,7 +2,6 @@ import {AbstractModel, CreateTimestamp} from '../../../_custom/types/types';
 import {PurchaseOrderProductModel} from '../PurchaseOrderProduct';
 import {VendorModel} from '../Vendor';
 import {CurrencyModel} from '../Currency';
-import {ProjectModel} from '../Project';
 import {PurchaseOrderCategoryModel} from '../PurchaseOrderCategory';
 import {PurchaseOrderAttachmentModel} from '../PurchaseOrderAttachment';
 import {StringSelectOption} from '../../../_custom/Column/String/StringColumn';
@@ -30,7 +29,7 @@ export enum ValidationStatusEnum {
 }
 
 export const VALIDATION_STATUS_OPTIONS: Array<StringSelectOption> = [
- {id: ValidationStatusEnum.Pending, color: 'warning'},
+  {id: ValidationStatusEnum.Pending, color: 'warning'},
   {id: ValidationStatusEnum.Validated, color: 'success'},
 ];
 
@@ -45,7 +44,6 @@ type Model = {
   validatedAt?: string
   vendor: VendorModel
   currency?: CurrencyModel
-  project: ProjectModel
   category: PurchaseOrderCategoryModel
   purchaseOrderProducts: Array<PurchaseOrderProductModel>
   attachments: Array<PurchaseOrderAttachmentModel>
@@ -62,6 +60,7 @@ export enum LineType {
   Product = 'PRODUCT',
   Component = 'COMPONENT',
 }
+
 export type PurchaseOrderProductPrint = {
   type: LineType.Product
   product: Pick<ProductModel, 'code'>

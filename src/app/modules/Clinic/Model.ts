@@ -11,6 +11,10 @@ type Model = {
   ice: string
   taxId: string
   cnss: string
+  amount: number
+  startAt: string
+  endAt: string
+  purchaseOrderAllowed: boolean
   users: Array<UserModel>
   services: Array<ServiceModel>
   city: CityModel

@@ -45,7 +45,6 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   desiredDeliveryDate: true,
   currency: true,
   category: true,
-  project: true,
   paymentModality: true,
   validationStatus: {
     grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
@@ -157,9 +156,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       nullable: true,
       title: 'NATURE'
     },
-    project: {
-      type: ModelEnum.Project
-    },
     status: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Select,
@@ -249,7 +245,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         desiredDeliveryDate: true,
         vendor: true,
         currency: true,
-        project: true,
         category: true,
         purchaseOrderProducts: true,
         attachments: true,
