@@ -189,10 +189,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseNeed> = {
     createdBy: {
       type: ModelEnum.User,
     },
-    project: {
-      type: ModelEnum.Project,
-      nullable: true
-    },
     company: {
       type: ModelEnum.Company,
     },
@@ -215,6 +211,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseNeed> = {
       type: ModelEnum.PurchaseNeedAttachment,
       multiple: true,
     },
+    clinic: {
+      type: ModelEnum.Clinic
+    }
   },
   views: [
     {
@@ -253,7 +252,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseNeed> = {
         orderedFor: true,
         applicantService: true,
         buyerFullName: true,
-        project: true,
         receptionManager: true,
         isRegularized: true,
         attachments: true,
@@ -276,7 +274,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseNeed> = {
         orderedFor: true,
         applicantService: true,
         buyerFullName: true,
-        project: true,
         isRegularized: true,
         attachments: true,
         receptionManager: true,

@@ -13,7 +13,6 @@ import {APPLICANT_SERVICE_MAPPING} from './ApplicantService';
 import {COMPANY_MAPPING} from './Company';
 import {PURCHASE_NEED_PRODUCT_MAPPING} from './PurchaseNeedProduct';
 import {PRODUCT_MAPPING} from './Product';
-import {PROJECT_MAPPING} from './Project';
 import {STEP_MAPPING} from './Step';
 import {VALIDATION_PATH_MAPPING} from './ValidationPath';
 import {RESOURCE_MAPPING} from './Resource';
@@ -72,7 +71,6 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Company]: COMPANY_MAPPING,
   [ModelEnum.PurchaseNeedProduct]: PURCHASE_NEED_PRODUCT_MAPPING,
   [ModelEnum.Product]: PRODUCT_MAPPING,
-  [ModelEnum.Project]: PROJECT_MAPPING,
   [ModelEnum.Step]: STEP_MAPPING,
   [ModelEnum.ValidationPath]: VALIDATION_PATH_MAPPING,
   [ModelEnum.Resource]: RESOURCE_MAPPING,

@@ -4,7 +4,13 @@ import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
 import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField';
-import {QUANTITY_STATUS_OPTIONS, QuantityStatusEnum, VALIDATION_STATUS_OPTIONS, ValidationStatusEnum} from './Model';
+import {
+  CLINIC_STATUS_OPTIONS,
+  QUANTITY_STATUS_OPTIONS,
+  QuantityStatusEnum,
+  VALIDATION_STATUS_OPTIONS,
+  ValidationStatusEnum
+} from './Model';
 import moment from 'moment/moment';
 import React from 'react';
 import {PrintPurchaseOrderButton} from './components/PrintPurchaseOrderButton';
@@ -45,7 +51,6 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   desiredDeliveryDate: true,
   currency: true,
   category: true,
-  project: true,
   paymentModality: true,
   validationStatus: {
     grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
@@ -104,6 +109,13 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       type: ColumnTypeEnum.String,
       format: StringFormat.Date
     },
+    clinicStatus:{
+      type:ColumnTypeEnum.String,
+      format: StringFormat.Select,
+      options: CLINIC_STATUS_OPTIONS,
+      nullable: true,
+      inline: true,
+    },
     validationStatus: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Select,
@@ -157,9 +169,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       nullable: true,
       title: 'NATURE'
     },
-    project: {
-      type: ModelEnum.Project
-    },
     status: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Select,
@@ -181,6 +190,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     invoice: {
       type: ModelEnum.Invoice
+    },
+    clinic:{
+      type:ModelEnum.Clinic
     }
   },
   views: [
@@ -249,7 +261,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         desiredDeliveryDate: true,
         vendor: true,
         currency: true,
-        project: true,
         category: true,
         purchaseOrderProducts: true,
         attachments: true,
@@ -259,6 +270,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalVatTax: true,
         totalDiscount: true,
         totalInclTax: true,
+        clinic:true,
+        clinicStatus:true
       },
       customActions: [
         {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},

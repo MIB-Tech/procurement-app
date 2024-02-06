@@ -2,10 +2,10 @@ import {AbstractModel, CreateTimestamp} from '../../../_custom/types/types';
 import {UserModel} from '../User';
 import {PurchaseNeedAttachmentModel} from '../PurchaseNeedAttachment';
 import {CategoryModel} from '../Category';
-import {ProjectModel} from '../Project';
 import {CompanyModel} from '../Company';
 import {ApplicantServiceModel} from '../ApplicantService';
 import {PurchaseNeedModel} from './index';
+import {ClinicModel} from "../Clinic";
 
 
 export enum PurchaseNeedStatusEnum {
@@ -31,12 +31,12 @@ type Model = {
   orderedFor?: string
   recommendedVendors: string[]
   buyerFullName?: string
-  project?: ProjectModel
   company: CompanyModel
   receptionManager: UserModel
   applicantService: ApplicantServiceModel
   lines: Array<PurchaseNeedModel>
   attachments?: Array<PurchaseNeedAttachmentModel>
+  clinic:ClinicModel
   readonly category: CategoryModel
   // readonly validationPath: string
 } & CreateTimestamp & AbstractModel
