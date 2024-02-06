@@ -9,6 +9,7 @@ import { ModelEnum } from '../../app/modules/types';
 import { getRoutePrefix } from '../utils';
 import { ViewEnum } from '../types/ModelMapping';
 import {OperationModel} from '../../app/modules/Operation';
+import {RESOURCE_MAPPING} from "../../app/modules/Resource";
 
 
 export type OperationPermission = {
