@@ -4,6 +4,7 @@ import {ServiceModel} from "../Service";
 import {CityModel} from "../City";
 import {PurchaseNeedModel} from "../PurchaseNeed";
 import {PurchaseOrderModel} from "../PurchaseOrder";
+import {ClinicStatusEnum} from "../PurchaseOrder/Model";
 
 
 type Model = {
@@ -14,6 +15,7 @@ type Model = {
   taxId: string
   cnss: string
   amount: number
+  status:ClinicStatusEnum
   constructionStartAt: string
   constructionEndAt: string
   purchaseOrderAllowed: boolean

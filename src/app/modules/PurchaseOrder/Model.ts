@@ -40,8 +40,8 @@ export enum ClinicStatusEnum {
 }
 
 export const CLINIC_STATUS_OPTIONS: Array<StringSelectOption> = [
-  {id: ClinicStatusEnum.UnderConstruction},
-  {id: ClinicStatusEnum.Operationel},
+  {id: ClinicStatusEnum.UnderConstruction, color: 'primary'},
+  {id: ClinicStatusEnum.Operationel, color: 'warning'},
 ];
 type Model = {
   orderNumber: string
