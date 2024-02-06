@@ -12,8 +12,8 @@ import {ModelEnum} from '../../../../app/modules/types';
 import {Trans} from '../../../../_custom/components/Trans';
 
 
-export const locationState = atom<HydraItem<ModelEnum.Clinic> | null>({
-  key: 'location_STATE',
+export const CLINIC_STATE = atom<HydraItem<ModelEnum.Clinic> | null>({
+  key: 'CLINIC_STATE',
   default: null
 });
 
@@ -49,11 +49,7 @@ const Topbar: FC = () => {
       {/*  /!* end::Drawer toggle *!/*/}
       {/*</div>*/}
       {/* Quick links */}
-      <ClickAwayListener onClickAway={() => {
-        if (clinicLinkOpen) {
-          setClinicLinkOpen(false);
-        }
-      }}>
+      <ClickAwayListener onClickAway={() => clinicLinkOpen &&  setClinicLinkOpen(false)}>
         <div className={clsx('d-flex align-items-center', toolbarButtonMarginClass)}>
           {/*{activelocation ?*/}
           {/*  <ModelCell item={activelocation} />:*/}

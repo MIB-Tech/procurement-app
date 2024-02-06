@@ -13,7 +13,8 @@ export const isClinicColumn = <M extends ModelEnum>({modelName, columnName}: {
   return columnMapping?.type === ModelEnum.Clinic;
 };
 export const RELATED_MODELS = [
-  ModelEnum.User
+  ModelEnum.User,
+  ModelEnum.PurchaseOrder,
 ];
 export const DEFAULT_VIEW: ListingViewType<any> = {
   type: ViewEnum.Listing

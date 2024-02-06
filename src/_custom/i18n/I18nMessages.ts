@@ -90,8 +90,8 @@ type I18nMessageKey =
   | 'IMAGES'
   | 'INTERVAL'
   | 'IS_MODULE'
-  | 'clinic'
-  | 'locationS'
+  | 'CLINIC'
+  | 'CLINICS'
   | 'LOGGED_AT'
   | 'MANUFACTURER'
   | 'MIN_QUANTITY'
@@ -194,7 +194,7 @@ type I18nMessageKey =
   | 'VALIDATION.STRING.PASSWORD_CONFIRM'
   | 'MEMBERS'
   | 'ITEM.NOT.FOUND'
-  | 'CHILD_locationS'
+  | 'CHILD_LOCATIONS'
   | 'OPTION'
   | 'OPTIONS'
   | 'ENTER_OPTION'
@@ -463,8 +463,6 @@ type I18nMessageKey =
   | 'PURCHASE_ORDER_PRODUCT_COMPONENT'
   | 'RECEIPT_ORDER_PRODUCT_COMPONENT'
   | 'RECEIVED'
-  | 'CLINIC'
-  | 'CLINICS'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 

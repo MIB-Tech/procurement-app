@@ -18,7 +18,7 @@ export const actionTypes = {
   Register: '[Register] Action',
   UserRequested: '[Request User] Action',
   UserLoaded: '[Load User] Auth API',
-  Setlocation: '[Set location] Action',
+  SetClinic: '[Set Clinic] Action',
 }
 
 const initialAuthState: AuthState = {
@@ -40,7 +40,7 @@ export type AuthState = {
 
 
 export const reducer = persistReducer(
-  { storage, key: 'v100-demo1-auth', whitelist: ['user', 'location', 'token', 'refreshToken'] },
+  { storage, key: 'v100-demo1-auth', whitelist: ['user', 'clinic', 'token', 'refreshToken'] },
   (state: AuthState = initialAuthState, action: ActionWithPayload<AuthState>) => {
     switch (action.type) {
       case actionTypes.Login:
@@ -53,12 +53,12 @@ export const reducer = persistReducer(
         return initialAuthState;
       case actionTypes.UserLoaded:
         const user = action.payload?.user;
-        const location = user?.clinics as HydraItem<ModelEnum.Clinic> | undefined;
+        // const clinics = user?.clinics as HydraItem<ModelEnum.Clinic> | undefined;
 
-        return { ...state, user, location };
-      case actionTypes.Setlocation:
+        return { ...state, user };
+      case actionTypes.SetClinic:
 
-        return { ...state, location: action.payload?.clinic };
+        return { ...state, clinic: action.payload?.clinic };
       default:
         return state;
     }
@@ -76,7 +76,7 @@ export const actions = {
     type: actionTypes.UserRequested
   }),
   fulfillUser: (user: UserModel) => ({ type: actionTypes.UserLoaded, payload: { user } }),
-  setlocation: (location: HydraItem<ModelEnum.Clinic> | undefined) => ({ type: actionTypes.Setlocation, payload: { location } }),
+  setClinic: (clinic: HydraItem<ModelEnum.Clinic> | undefined) => ({ type: actionTypes.SetClinic, payload: { clinic } }),
 }
 
 // function* requestUser() {

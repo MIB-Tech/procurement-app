@@ -19,7 +19,7 @@ const QuickLinks: FC<{ show?: boolean }> = ({show}) => {
         position: 'fixed',
         inset: '0px 0px auto auto',
         margin: 0,
-        transform: 'translate(-129px, 70px)'
+        transform: 'translate(-50px, 50px)'
       }}
       data-kt-menu='true'
     >
@@ -53,7 +53,7 @@ const QuickLinks: FC<{ show?: boolean }> = ({show}) => {
                 )}
                 onClick={e => {
                   e.preventDefault()
-                  dispatch(auth.actions.setlocation(active ? undefined : clinic));
+                  dispatch(auth.actions.setClinic(active ? undefined : clinic));
                 }}
               >
                 {clinic['@title']}
