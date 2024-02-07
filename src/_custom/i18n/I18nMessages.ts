@@ -467,6 +467,11 @@ type I18nMessageKey =
   | 'CLINICS'
   | 'UNDER_CONSTRUCTION'
   | 'OPERATIONEL'
+  | 'CONSTRUCTION_START_AT'
+  | 'CONSTRUCTION_END_AT'
+  | 'CITY'
+  | 'TAX_ID'
+  | 'FLOOR'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 
