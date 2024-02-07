@@ -2,13 +2,15 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  OPERATIONAL: "Opérationel",
+  UNDER_CONSTRUCTION: "Sous-construction",
   RECEIVED: "Réceptionné",
   PURCHASE_ORDER_PRODUCT_COMPONENT: "Composante",
   RECEIPT_ORDER_PRODUCT_COMPONENT: "Composante",
   PENDING: "En cours",
   VALIDATED_AT: "Validé à",
   VALIDATED_BY: "Validé par",
-  VALIDATION_STATUS: "État de validation",
+  VALIDATION_STATUS: "Validation",
   SECTION: "Section",
   SECTIONS: "Sections",
   DESIRED_PRODUCT_QUANTITY: "Qte désirée",
@@ -27,7 +29,7 @@ export const fr: I18nLanguage = {
   GENERATE_INVOICE: 'Générer une facture',
   GENERATE_RECEIPT: 'Génerer un BR',
   PURCHASE_ORDER_ATTACHMENTS: 'Attachments',
-  DELIVERY_STATUS: 'Statut livr.',
+  DELIVERY_STATUS: 'Livraison',
   FULLY_RECEIVED: 'Livré',
   PARTIALLY_RECEIVED: 'Partiellement',
   UNRECEIVED: 'Non livré',

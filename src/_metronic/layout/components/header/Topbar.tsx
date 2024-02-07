@@ -6,16 +6,13 @@ import {useLayout} from '../../core';
 import {ClickAwayListener} from '@mui/material';
 import {useAuth} from '../../../../_custom/hooks/UseAuth';
 import {Button} from '../../../../_custom/components/Button';
-import {atom} from 'recoil';
-import {HydraItem} from '../../../../_custom/types/hydra.types';
-import {ModelEnum} from '../../../../app/modules/types';
 import {Trans} from '../../../../_custom/components/Trans';
 
 
-export const CLINIC_STATE = atom<HydraItem<ModelEnum.Clinic> | null>({
-  key: 'CLINIC_STATE',
-  default: null
-});
+// export const CLINIC_STATE = atom<HydraItem<ModelEnum.Clinic> | null>({
+//   key: 'CLINIC_STATE',
+//   default: null
+// });
 
 
 const toolbarButtonMarginClass = 'ms-1 ms-lg-3',

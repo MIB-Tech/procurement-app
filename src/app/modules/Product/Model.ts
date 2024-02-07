@@ -15,7 +15,7 @@ type Model = {
   measurementUnit: string
   accountingAccount: string
   vatRate: number
-  isMobilised: boolean
+  mobilised: boolean
   stockable: boolean
   category: CategoryModel
   section?: ProductSectionModel
