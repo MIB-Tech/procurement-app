@@ -51,6 +51,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   desiredDeliveryDate: true,
   currency: true,
   category: true,
+  clinic: true,
   paymentModality: true,
   validationStatus: {
     grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
@@ -109,8 +110,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       type: ColumnTypeEnum.String,
       format: StringFormat.Date
     },
-    clinicStatus:{
-      type:ColumnTypeEnum.String,
+    clinicStatus: {
+      type: ColumnTypeEnum.String,
       format: StringFormat.Select,
       options: CLINIC_STATUS_OPTIONS,
       nullable: true,
@@ -191,8 +192,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     invoice: {
       type: ModelEnum.Invoice
     },
-    clinic:{
-      type:ModelEnum.Clinic
+    clinic: {
+      type: ModelEnum.Clinic
     }
   },
   views: [
@@ -237,8 +238,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         // totalVatTax: true,
         totalInclTax: true,
         status: true,
-        validationStatus: {
-        },
+        validationStatus: {},
         //  validatedBy: true,
         // validatedAt: true,
       }
@@ -270,8 +270,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalVatTax: true,
         totalDiscount: true,
         totalInclTax: true,
-        clinic:true,
-        clinicStatus:true
+        clinic: true,
+        clinicStatus: true
       },
       customActions: [
         {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},
@@ -315,9 +315,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       },
       getMutateInput: purchaseOrder => ({
         ...purchaseOrder,
-        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(purchaseOrderProduct=>({
+        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(purchaseOrderProduct => ({
           ...purchaseOrderProduct,
-          components: purchaseOrderProduct.components.map(component=>({
+          components: purchaseOrderProduct.components.map(component => ({
             ...component,
             // @ts-ignore
             product: component.product['@id']

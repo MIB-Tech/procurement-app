@@ -35,13 +35,9 @@ export const FormCard = <M extends ModelEnum>({ modelName, item, setItem, name, 
     }
 
     const display = field?.display;
-    if (display) {
-      return display({ item })
-    }
-
     const grantedRoles = field?.grantedRoles;
 
-    return !grantedRoles || isGranted(grantedRoles);
+    return (!display || display({ item })) && (!grantedRoles || isGranted(grantedRoles));
   });
 
   const { pathname } = useLocation();

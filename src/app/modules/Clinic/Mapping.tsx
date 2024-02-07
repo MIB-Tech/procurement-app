@@ -34,21 +34,24 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     cnss: {
       type: ColumnTypeEnum.String
     },
-    amount:{
-      type:ColumnTypeEnum.Number
+    amount: {
+      type: ColumnTypeEnum.Number
     },
-    constructionStartAt:{
-      type:ColumnTypeEnum.String,
-      format:StringFormat.Date,
-      nullable:true
+    status: {
+      type: ColumnTypeEnum.String
     },
-    constructionEndAt:{
-      type:ColumnTypeEnum.String,
-      format:StringFormat.Date,
-      nullable:true
+    constructionStartAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Date,
+      nullable: true
     },
-    purchaseOrderAllowed:{
-      type:ColumnTypeEnum.Boolean
+    constructionEndAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Date,
+      nullable: true
+    },
+    purchaseOrderAllowed: {
+      type: ColumnTypeEnum.Boolean
     },
     users: {
       type: ModelEnum.User,
@@ -61,26 +64,23 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
       type: ModelEnum.Service,
       multiple: true
     },
-    purchaseOrders:{
-      type:ModelEnum.PurchaseOrder,
-      multiple:true
+    purchaseOrders: {
+      type: ModelEnum.PurchaseOrder,
+      multiple: true
     },
-    purchaseNeeds:{
-      type:ModelEnum.PurchaseNeedProduct,
-      multiple:true
+    purchaseNeeds: {
+      type: ModelEnum.PurchaseNeedProduct,
+      multiple: true
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
-        name: true,
         abbreviation: true,
-        parent: true,
-        address: true,
-        ice: true,
-        taxId: true,
-        cnss: true
+        status: true,
+        city: true,
+        purchaseOrderAllowed: true
       }
     },
     {
@@ -88,11 +88,15 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
       fields: {
         name: true,
         abbreviation: true,
-        parent: true,
         address: true,
+        city: true,
         ice: true,
         taxId: true,
-        cnss: true
+        cnss: true,
+        amount: true,
+        constructionStartAt: true,
+        constructionEndAt: true,
+        purchaseOrderAllowed: true,
       }
     },
     {
@@ -100,13 +104,25 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
       fields: {
         name: true,
         abbreviation: true,
-        parent: true,
+        address: true,
+        amount: true,
+        constructionEndAt: true,
+        purchaseOrderAllowed: true,
+      }
+    },
+    {
+      type: ViewEnum.Detail,
+      columns: {
         address: true,
         ice: true,
         taxId: true,
-        cnss: true
+        cnss: true,
+        amount: true,
+        constructionStartAt: true,
+        constructionEndAt: true,
+        purchaseOrderAllowed: true,
       }
-    },
+    }
   ]
 };
 export default mapping;

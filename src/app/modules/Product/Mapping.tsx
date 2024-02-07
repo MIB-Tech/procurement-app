@@ -27,7 +27,7 @@ const formFields: FormFields<ModelEnum.Product> = {
   category: true,
   children: true,
   section: true,
-  isMobilised: true,
+  mobilised: true,
   stockable: true,
   note: {
     slotProps: {
@@ -84,7 +84,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     accountingAccount: {
       type: ColumnTypeEnum.String
     },
-    isMobilised: {
+    mobilised: {
       type: ColumnTypeEnum.Boolean,
     },
     stockable: {
@@ -131,7 +131,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         category: true,
         measurementUnit: true,
         vatRate: true,
-        isMobilised: true,
+        mobilised: true,
         stockable: true,
         section: true
       }
@@ -165,7 +165,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         section: true,
         measurementUnit: true,
         vatRate: true,
-        isMobilised: true,
+        mobilised: true,
         stockable: true,
         pricing: true,
         components: true

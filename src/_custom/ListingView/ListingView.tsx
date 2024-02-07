@@ -192,7 +192,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
 
   const {collection, totalCount, isLoading} = useCollectionQuery<M>({
     modelName,
-    queryKey: RELATED_MODELS.includes(modelName) && clinic,
+    queryKey: RELATED_MODELS.includes(modelName) && clinic?.id,
     params: {
       ...params,
       filter,
