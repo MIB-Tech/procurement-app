@@ -108,7 +108,7 @@ export const fr: I18nLanguage = {
   IS_CONFORME: "Conforme",
   IS_MAIN: "Principal",
   TAX_INCLUDED: "Prix en",
-  IS_MOBILISED: "Immobilisé",
+  MOBILISED: "Immobilisé",
   IS_VAT_INCLUDED: "TVA incluse",
   MEASUREMENT_UNIT: "Unité",
   NET_PRICE: "P.U net",
