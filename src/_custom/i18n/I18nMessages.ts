@@ -5,7 +5,7 @@ import {CompoundFilterOperator, PropertyFilterOperator} from '../ListingView/Fil
 import {PriorityEnum, PurchaseNeedStatusEnum} from '../../app/modules/PurchaseNeed/Model';
 import {ListingModeEnum} from '../ListingView/ListingView.types';
 import {ViewEnum} from '../types/ModelMapping';
-import {QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model';
+import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model';
 
 
 type Lang = 'en' | 'ar' | 'fr'
@@ -17,6 +17,7 @@ type I18nMessageKey =
   | ListingModeEnum
   | ViewEnum
   | QuantityStatusEnum
+  | ClinicStatusEnum
   | 'GENERATE_INVOICE'
   | 'VALIDATED'
   | 'SHOW'
@@ -463,8 +464,6 @@ type I18nMessageKey =
   | 'PURCHASE_ORDER_PRODUCT_COMPONENT'
   | 'RECEIPT_ORDER_PRODUCT_COMPONENT'
   | 'RECEIVED'
-  | 'UNDER_CONSTRUCTION'
-  | 'OPERATIONAL'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 
