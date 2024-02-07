@@ -35,13 +35,13 @@ export const VALIDATION_STATUS_OPTIONS: Array<StringSelectOption> = [
 ];
 
 export enum ClinicStatusEnum {
-  UnderConstruction = 'UnderConstruction',
-  Operationel = 'Operationel'
+  UnderConstruction = 'UNDER_CONSTRUCTION',
+  Operational = 'OPERATIONAL'
 }
 
 export const CLINIC_STATUS_OPTIONS: Array<StringSelectOption> = [
-  {id: ClinicStatusEnum.UnderConstruction},
-  {id: ClinicStatusEnum.Operationel},
+  {id: ClinicStatusEnum.UnderConstruction, color: 'primary'},
+  {id: ClinicStatusEnum.Operational, color: 'warning'},
 ];
 type Model = {
   orderNumber: string

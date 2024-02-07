@@ -5,7 +5,7 @@ import {CompoundFilterOperator, PropertyFilterOperator} from '../ListingView/Fil
 import {PriorityEnum, PurchaseNeedStatusEnum} from '../../app/modules/PurchaseNeed/Model';
 import {ListingModeEnum} from '../ListingView/ListingView.types';
 import {ViewEnum} from '../types/ModelMapping';
-import {QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model';
+import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model';
 
 
 type Lang = 'en' | 'ar' | 'fr'
@@ -17,6 +17,7 @@ type I18nMessageKey =
   | ListingModeEnum
   | ViewEnum
   | QuantityStatusEnum
+  | ClinicStatusEnum
   | 'GENERATE_INVOICE'
   | 'VALIDATED'
   | 'SHOW'
@@ -90,8 +91,8 @@ type I18nMessageKey =
   | 'IMAGES'
   | 'INTERVAL'
   | 'IS_MODULE'
-  | 'clinic'
-  | 'locationS'
+  | 'CLINIC'
+  | 'CLINICS'
   | 'LOGGED_AT'
   | 'MANUFACTURER'
   | 'MIN_QUANTITY'
@@ -194,7 +195,7 @@ type I18nMessageKey =
   | 'VALIDATION.STRING.PASSWORD_CONFIRM'
   | 'MEMBERS'
   | 'ITEM.NOT.FOUND'
-  | 'CHILD_locationS'
+  | 'CHILD_LOCATIONS'
   | 'OPTION'
   | 'OPTIONS'
   | 'ENTER_OPTION'
