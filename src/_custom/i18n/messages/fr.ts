@@ -2,7 +2,12 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
-  OPERATIONAL: "Opérationel",
+  FLOOR: "Étage",
+  CITY: "Ville",
+  CONSTRUCTION_END_AT: "Fin de construction à",
+  CONSTRUCTION_START_AT: "Début de la construction",
+  TAX_ID: "IF",
+  OPERATIONEL: "Opérationel",
   UNDER_CONSTRUCTION: "Sous-construction",
   RECEIVED: "Réceptionné",
   PURCHASE_ORDER_PRODUCT_COMPONENT: "Composante",

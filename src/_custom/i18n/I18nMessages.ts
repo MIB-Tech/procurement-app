@@ -464,6 +464,15 @@ type I18nMessageKey =
   | 'PURCHASE_ORDER_PRODUCT_COMPONENT'
   | 'RECEIPT_ORDER_PRODUCT_COMPONENT'
   | 'RECEIVED'
+  | 'CLINIC'
+  | 'CLINICS'
+  | 'UNDER_CONSTRUCTION'
+  | 'OPERATIONEL'
+  | 'CONSTRUCTION_START_AT'
+  | 'CONSTRUCTION_END_AT'
+  | 'CITY'
+  | 'TAX_ID'
+  | 'FLOOR'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 
