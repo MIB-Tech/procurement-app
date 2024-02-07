@@ -19,7 +19,33 @@ const mapping: ModelMapping<ModelEnum.City> = {
       type: ModelEnum.Clinic,
       multiple: true
     }
-  }
+  },
+  views: [
+    {
+      type: ViewEnum.Listing,
+      columns: {
+        clinics: true
+      }
+    },
+    {
+      type: ViewEnum.Create,
+      fields: {
+        name: true,
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        name: true
+      }
+    },
+    {
+      type: ViewEnum.Detail,
+      columns: {
+        clinics: true
+      }
+    }
+  ]
 };
 
 export default mapping;

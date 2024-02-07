@@ -25,6 +25,14 @@ const mapping: ModelMapping<ModelEnum.Service> = {
   },
   views: [
     {
+      type: ViewEnum.Listing,
+      columns: {
+        name: true,
+        clinic: true,
+        blocs: true
+      }
+    },
+    {
       type: ViewEnum.Create,
       fields: {
         name: true,
@@ -39,7 +47,16 @@ const mapping: ModelMapping<ModelEnum.Service> = {
         clinic: true,
         blocs: true
       }
+    },
+    {
+      type:ViewEnum.Detail,
+      columns:{
+        name:true,
+        clinic:true,
+        blocs:true
+      }
     }
+
   ]
 };
 
