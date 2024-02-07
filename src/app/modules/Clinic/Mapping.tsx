@@ -89,6 +89,7 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
         name: true,
         abbreviation: true,
         address: true,
+        city: true,
         ice: true,
         taxId: true,
         cnss: true,
@@ -96,7 +97,6 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
         constructionStartAt: true,
         constructionEndAt: true,
         purchaseOrderAllowed: true,
-        city: true,
       }
     },
     {
