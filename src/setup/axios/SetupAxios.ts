@@ -28,8 +28,9 @@ export default function setupAxios(axios: AxiosInstance, store: Store<{ auth: Au
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
+        console.log(clinic)
         if (clinic) {
-          config.headers['Tenant-clinic'] = clinic.id;
+          config.headers['Tenant-Clinic'] = clinic.id;
         }
       }
 
