@@ -23,7 +23,7 @@ export const fr: I18nLanguage = {
   REST_QUANTITY: "Reste",
   VALIDATED: 'Validé',
   SHOW: 'Afficher',
-  PURCHASE_ORDER_ALLOWED: "Bon de commande autorisé",
+  PURCHASE_ORDER_ALLOWED: "BC autorisé",
   PAYMENT_MODALITY: "Modalité de paiement",
   'VALIDATION.PURCHASE_ORDER_PRODUCT.QUANTITY': 'Doit être égale à la somme des quantités livrées',
   'VALIDATION.RECEIPT.RECEIPT_PRODUCTS': 'Au moins 1 doit être valide',
