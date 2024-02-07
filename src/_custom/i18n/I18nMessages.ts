@@ -465,7 +465,7 @@ type I18nMessageKey =
   | 'RECEIVED'
   | 'CLINIC'
   | 'CLINICS'
-  | 'UNDERCONSTRUCTION'
+  | 'UNDER_CONSTRUCTION'
   | 'OPERATIONEL'
 
 type I18nLanguage = Record<I18nMessageKey, string>
