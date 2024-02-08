@@ -24,10 +24,6 @@ const mapping: ModelMapping<ModelEnum.User> = {
     lastName: {
       type: ColumnTypeEnum.String
     },
-    phoneNumber: {
-      type: ColumnTypeEnum.String,
-      format: StringFormat.PhoneNumber
-    },
     email: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Email,
@@ -70,9 +66,7 @@ const mapping: ModelMapping<ModelEnum.User> = {
       type: ViewEnum.Listing,
       columns: {
         role: true,
-        phoneNumber: true,
         email: true,
-        clinics: true,
       }
     },
     {
@@ -81,13 +75,11 @@ const mapping: ModelMapping<ModelEnum.User> = {
         username: true,
         firstName: true,
         lastName: true,
-        phoneNumber: true,
         email: true,
         password: true,
         passwordConfirm: true,
         role: true,
         clinics: true,
-        teams: true
       }
     },
     {
@@ -95,11 +87,9 @@ const mapping: ModelMapping<ModelEnum.User> = {
       fields: {
         firstName: true,
         lastName: true,
-        phoneNumber: true,
         email: true,
         role: true,
         clinics: true,
-        teams: true
       }
     }
   ]
