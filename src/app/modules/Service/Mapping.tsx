@@ -29,7 +29,6 @@ const mapping: ModelMapping<ModelEnum.Service> = {
       fields: {
         name: true,
         clinic: true,
-        blocs: true
       }
     },
     {
@@ -37,7 +36,6 @@ const mapping: ModelMapping<ModelEnum.Service> = {
       fields: {
         name: true,
         clinic: true,
-        blocs: true
       }
     }
   ]
