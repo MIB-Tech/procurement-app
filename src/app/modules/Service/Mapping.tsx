@@ -29,6 +29,7 @@ const mapping: ModelMapping<ModelEnum.Service> = {
       fields: {
         name: true,
         clinic: true,
+
       }
     },
     {
