@@ -8,7 +8,7 @@ export const fr: I18nLanguage = {
   CONSTRUCTION_START_AT: "Début de la construction",
   TAX_ID: "IF",
   OPERATIONAL: "Opérationel",
-  UNDER_CONSTRUCTION: "Sous-construction",
+  UNDER_CONSTRUCTION: "Construction",
   RECEIVED: "Réceptionné",
   PURCHASE_ORDER_PRODUCT_COMPONENT: "Composante",
   RECEIPT_ORDER_PRODUCT_COMPONENT: "Composante",
