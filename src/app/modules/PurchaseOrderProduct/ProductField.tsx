@@ -121,6 +121,7 @@ export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
             }
           ).then(r => r.data['hydra:member']);
           const components = productComponents.map(component => {
+          //  console.log("composants du produit :", productComponents);
             const result: Partial<PurchaseOrderProductComponentModel> = {
               product: component.product,
               quantity: 0,
@@ -129,7 +130,6 @@ export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
             };
             return result;
           });
-
           await setValue('components', components);
         }}
         {...props}
