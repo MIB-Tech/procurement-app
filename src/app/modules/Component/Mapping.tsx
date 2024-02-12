@@ -30,7 +30,6 @@ const mapping: ModelMapping<ModelEnum.Component> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        product: true,
         quantity: true
       }
     },
