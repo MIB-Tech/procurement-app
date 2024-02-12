@@ -2,6 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  CLINIC_STATUS: "Statut de clinique",
   FLOOR: "Étage",
   CITY: "Ville",
   CONSTRUCTION_END_AT: "Fin de construction à",
