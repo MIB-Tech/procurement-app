@@ -23,9 +23,7 @@ const mapping: ModelMapping<ModelEnum.City> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {
-        clinics: true
-      }
+      columns: {}
     },
     {
       type: ViewEnum.Create,
@@ -42,6 +40,7 @@ const mapping: ModelMapping<ModelEnum.City> = {
     {
       type: ViewEnum.Detail,
       columns: {
+        name: true,
         clinics: true
       }
     }
