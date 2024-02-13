@@ -10,7 +10,6 @@ type Model = {
   email?: string
   password: string
   passwordConfirm: string
-  phoneNumber: string
   role?: RoleModel
   clinics: Array<ClinicModel>
 } & Timestamp & AbstractModel
