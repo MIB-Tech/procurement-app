@@ -82,7 +82,6 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        abbreviation: true,
         status: true,
         city: true,
         purchaseOrderAllowed: true
