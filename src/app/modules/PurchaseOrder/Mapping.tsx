@@ -48,7 +48,9 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   },
   ref: true,
   externalRef: true,
-  desiredDeliveryDate: true,
+  desiredDeliveryDate: {
+    defaultValue: moment().add(1, 'days').format()
+  },
   currency: true,
   category: true,
   clinic: true,
