@@ -20,24 +20,30 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
       multiple: true
     }
   },
-  views:[
+  views: [
     {
-      type:ViewEnum.Create,
-      fields:{
-        name:true,
+      type: ViewEnum.Listing,
+      columns: {
+        name: true,
       }
     },
     {
-      type:ViewEnum.Update,
-      fields:{
+      type: ViewEnum.Create,
+      fields: {
+        name: true,
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
         name: true,
       }
     },
     {
       type: ViewEnum.Detail,
-      columns:{
-        name:true,
-        products:true
+      columns: {
+        name: true,
+        products: true
       }
     }
   ]

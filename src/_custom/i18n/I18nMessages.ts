@@ -473,6 +473,7 @@ type I18nMessageKey =
   | 'BLOC'
   | 'BLOCS'
   | 'V_A_T_INCLUDED'
+  | 'PRODUCT_SECTION'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 
