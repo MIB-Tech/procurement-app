@@ -33,7 +33,9 @@ const mapping: ModelMapping<ModelEnum.Bloc> = {
     {
       type:ViewEnum.Create,
       fields:{
-        name:true
+        name:true,
+        service: true,
+        floor: true
       }
     },
     {
