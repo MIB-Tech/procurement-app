@@ -2,6 +2,8 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  BLOC: "Emplacement",
+  BLOCS: "Emplacements",
   CLINIC_STATUS: "Statut de clinique",
   FLOOR: "Étage",
   CITY: "Ville",
