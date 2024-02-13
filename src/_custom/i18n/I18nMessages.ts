@@ -472,7 +472,7 @@ type I18nMessageKey =
   | 'CLINIC_STATUS'
   | 'BLOC'
   | 'BLOCS'
-
+  | 'V_A_T_INCLUDED'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 

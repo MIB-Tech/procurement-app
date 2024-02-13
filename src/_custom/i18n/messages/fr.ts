@@ -2,6 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  V_A_T_INCLUDED: "TVA Comprise",
   BLOC: "Emplacement",
   BLOCS: "Emplacements",
   CLINIC_STATUS: "Statut de clinique",
