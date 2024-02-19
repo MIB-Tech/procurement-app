@@ -470,6 +470,10 @@ type I18nMessageKey =
   | 'TAX_ID'
   | 'FLOOR'
   | 'CLINIC_STATUS'
+  | 'BLOC'
+  | 'BLOCS'
+  | 'V_A_T_INCLUDED'
+  | 'PRODUCT_SECTION'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 

@@ -2,6 +2,7 @@ import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from "../../../_custom/Column/String/StringColumn";
+import {CLINIC_STATUS_OPTIONS} from "../PurchaseOrder/Model";
 
 
 const mapping: ModelMapping<ModelEnum.Clinic> = {
@@ -38,7 +39,11 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
       type: ColumnTypeEnum.Number
     },
     status: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Select,
+      options: CLINIC_STATUS_OPTIONS,
+      nullable: true,
+      inline: true,
     },
     constructionStartAt: {
       type: ColumnTypeEnum.String,
@@ -77,7 +82,6 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     {
       type: ViewEnum.Listing,
       columns: {
-        abbreviation: true,
         status: true,
         city: true,
         purchaseOrderAllowed: true
