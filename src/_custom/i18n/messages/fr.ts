@@ -2,11 +2,10 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
-  BUYER: "Acheteur",
-  PRODUCT_TYPE: "Type de produit",
-  COMBINED: "Combiné",
-  SIMPLE: "Simple",
-  SUB_COMPONENT: "Sous-Composé",
+  RESOURCE: "Resource",
+  SUFFIX: "Suffixe",
+  IS_MENU_ITEM: "Element de menu",
+  OPERATION_TYPE: "Type d'operation",
   PRODUCT_SECTION: "Section",
   V_A_T_INCLUDED: "TVA Comprise",
   BLOC: "Emplacement",

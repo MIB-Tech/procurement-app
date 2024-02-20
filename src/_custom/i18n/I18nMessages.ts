@@ -6,7 +6,6 @@ import {PriorityEnum, PurchaseNeedStatusEnum} from '../../app/modules/PurchaseNe
 import {ListingModeEnum} from '../ListingView/ListingView.types';
 import {ViewEnum} from '../types/ModelMapping';
 import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model';
-import {ProductTypeEnum} from "../../app/modules/Product/Model";
 
 
 type Lang = 'en' | 'ar' | 'fr'
@@ -19,7 +18,6 @@ type I18nMessageKey =
   | ViewEnum
   | QuantityStatusEnum
   | ClinicStatusEnum
-  | ProductTypeEnum
   | 'GENERATE_INVOICE'
   | 'VALIDATED'
   | 'SHOW'
@@ -476,9 +474,10 @@ type I18nMessageKey =
   | 'BLOCS'
   | 'V_A_T_INCLUDED'
   | 'PRODUCT_SECTION'
-  | 'PRODUCT_TYPE'
-  | 'BUYER'
-
+  | 'OPERATION_TYPE'
+  | 'IS_MENU_ITEM'
+  | 'SUFFIX'
+  | 'RESOURCE'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};
