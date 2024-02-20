@@ -19,7 +19,7 @@ type I18nMessageKey =
   | ViewEnum
   | QuantityStatusEnum
   | ClinicStatusEnum
-  |ProductTypeEnum
+  | ProductTypeEnum
   | 'GENERATE_INVOICE'
   | 'VALIDATED'
   | 'SHOW'
@@ -477,6 +477,7 @@ type I18nMessageKey =
   | 'V_A_T_INCLUDED'
   | 'PRODUCT_SECTION'
   | 'PRODUCT_TYPE'
+  | 'BUYER'
 
 type I18nLanguage = Record<I18nMessageKey, string>
 

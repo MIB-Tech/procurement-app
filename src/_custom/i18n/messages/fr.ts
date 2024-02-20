@@ -2,6 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  BUYER: "Acheteur",
   PRODUCT_TYPE: "Type de produit",
   COMBINED: "Combiné",
   SIMPLE: "Simple",
