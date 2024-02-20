@@ -105,9 +105,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       type: ColumnTypeEnum.String,
       nullable: true
     },
-    buyer:{
-      type:ModelEnum.User,
-      nullable:true
+    buyer: {
+      type: ModelEnum.User,
+      nullable: true
     },
     taxIncluded: {
       type: ColumnTypeEnum.Boolean
@@ -353,7 +353,70 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           }))
         }))
       }),
-      fields: formFields
+      fields: {
+        vendor: {
+          render: ({fieldProps, item}) => (
+            <ModelAutocompleteField
+              modelName={ModelEnum.Vendor}
+              {...fieldProps}
+              size='sm'
+              disabled={item.purchaseOrderProducts.length > 0}
+            />
+          )
+        },
+        createdAt: {
+          defaultValue: moment().format()
+        },
+        taxIncluded: {
+          defaultValue: false,
+          render: ({item: {purchaseOrderProducts}}) => (
+            <RadioField
+              size='sm'
+              name='taxIncluded'
+              options={[true, false]}
+              getOptionLabel={taxIncluded => taxIncluded ? 'TTC' : 'HT'}
+              disabled={purchaseOrderProducts.length > 0}
+              scrollDisabled
+            />
+          )
+        },
+        ref: true,
+        externalRef: true,
+        desiredDeliveryDate: {
+          defaultValue: moment().add(1, 'days').format()
+        },
+        currency: true,
+        category: true,
+        clinic: true,
+        paymentModality: true,
+        validationStatus: {
+          grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
+          defaultValue: ValidationStatusEnum.Pending,
+          display: props => !!props.item.id
+        },
+        buyer:true,
+        purchaseOrderProducts: {
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              lg: 12,
+              xl: 12,
+            }
+          },
+          display: ({item}) => typeof item.taxIncluded === 'boolean' && !!item.vendor
+        },
+        attachments: {
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              lg: 12,
+              xl: 12,
+            }
+          },
+        },
+      }
     }
   ]
 };
