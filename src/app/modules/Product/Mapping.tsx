@@ -4,6 +4,8 @@ import {ModelEnum} from '../types';
 import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/SelectField';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
+import {CLINIC_STATUS_OPTIONS} from "../PurchaseOrder/Model";
+import {PRODUCT_TYPES} from "./Model";
 
 const formFields: FormFields<ModelEnum.Product> = {
   reference: true,
@@ -29,6 +31,7 @@ const formFields: FormFields<ModelEnum.Product> = {
   section: true,
   mobilised: true,
   stockable: true,
+  productType:true,
   note: {
     slotProps: {
       root: {
@@ -122,6 +125,13 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     section: {
       type: ModelEnum.ProductSection,
       nullable: true
+    },
+    productType:{
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Select,
+      options: PRODUCT_TYPES,
+      nullable: true,
+      inline: true,
     }
   },
   views: [
@@ -168,7 +178,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         mobilised: true,
         stockable: true,
         pricing: true,
-        components: true
+        components: true,
       },
     },
   ]
