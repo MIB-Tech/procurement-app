@@ -68,6 +68,7 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
     {
       type: ViewEnum.Create,
       fields: {
+
         product: true,
         vendor: true,
         purchasePriceExclTax: true,
