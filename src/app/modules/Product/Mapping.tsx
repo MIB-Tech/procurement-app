@@ -4,8 +4,8 @@ import {ModelEnum} from '../types';
 import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/SelectField';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
-import {CLINIC_STATUS_OPTIONS} from "../PurchaseOrder/Model";
-import {PRODUCT_TYPES} from "./Model";
+import {PRODUCT_TYPES, ProductTypeEnum} from "./Model";
+import React from "react";
 
 const formFields: FormFields<ModelEnum.Product> = {
   reference: true,
@@ -31,7 +31,6 @@ const formFields: FormFields<ModelEnum.Product> = {
   section: true,
   mobilised: true,
   stockable: true,
-  productType:true,
   note: {
     slotProps: {
       root: {
@@ -126,12 +125,12 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ModelEnum.ProductSection,
       nullable: true
     },
-    productType:{
+    productType: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Select,
       options: PRODUCT_TYPES,
       nullable: true,
-      inline: true,
+      //inline: true,
     }
   },
   views: [
@@ -155,7 +154,52 @@ const mapping: ModelMapping<ModelEnum.Product> = {
           lg: 2,
         }
       },
-      fields: formFields
+      fields: {
+        reference: true,
+        productType: true,
+        designation: true,
+        measurementUnit: {
+          defaultValue: 'U'
+        },
+        accountingAccount: true,
+        vatRate: {
+          defaultValue: .2,
+          render: ({fieldProps}) => (
+            <SelectField
+              size='sm'
+              options={[0, .07, .1, .14, .2]}
+              getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
+              placeholder='TVA'
+              {...fieldProps}
+            />
+          )
+        },
+        category: true,
+        children: true,
+        section: true,
+        mobilised: true,
+        stockable: true,
+        note: {
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              lg: 12,
+            }
+          }
+        },
+        components: {
+          display: ({item}) => item.productType === ProductTypeEnum.Combined,
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              lg: 12,
+            }
+          }
+        },
+      }
+
     },
     {
       type: ViewEnum.Update,

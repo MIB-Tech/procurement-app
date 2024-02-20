@@ -105,6 +105,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       type: ColumnTypeEnum.String,
       nullable: true
     },
+    buyer:{
+      type:ModelEnum.User,
+      nullable:true
+    },
     taxIncluded: {
       type: ColumnTypeEnum.Boolean
     },

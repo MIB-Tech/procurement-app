@@ -14,10 +14,10 @@ export enum ProductTypeEnum {
   SubComponent = 'SUB_COMPONENT'
 }
 
-export const PRODUCT_TYPES: Array<StringSelectOption> = [
-  {id: ProductTypeEnum.Simple},
-  {id: ProductTypeEnum.Combined},
-  {id: ProductTypeEnum.SubComponent}
+export let PRODUCT_TYPES: Array<StringSelectOption> = [
+  {id: ProductTypeEnum.Simple, color: 'primary'},
+  {id: ProductTypeEnum.Combined, color: 'info'},
+  {id: ProductTypeEnum.SubComponent, color: 'warning'}
 
 ];
 type Model = {
