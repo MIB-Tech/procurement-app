@@ -130,7 +130,6 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       format: StringFormat.Select,
       options: PRODUCT_TYPES,
       nullable: true,
-      //inline: true,
     }
   },
   views: [
