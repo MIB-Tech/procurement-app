@@ -18,7 +18,6 @@ export let PRODUCT_TYPES: Array<StringSelectOption> = [
   {id: ProductTypeEnum.Simple, color: 'primary'},
   {id: ProductTypeEnum.Combined, color: 'info'},
   {id: ProductTypeEnum.SubComponent, color: 'warning'}
-
 ];
 type Model = {
   designation: string
