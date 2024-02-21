@@ -50,6 +50,7 @@ type Model = {
   externalRef?: string
   desiredDeliveryDate: string
   validationStatus: ValidationStatusEnum
+  buyer?: UserModel
   validatedBy?: UserModel
   validatedAt?: string
   clinicStatus: ClinicStatusEnum

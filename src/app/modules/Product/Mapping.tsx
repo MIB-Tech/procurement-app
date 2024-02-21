@@ -1,53 +1,12 @@
-import {FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/SelectField';
-import {StringFormat} from '../../../_custom/Column/String/StringColumn';
-import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
+import {FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping'
+import {ColumnTypeEnum} from '../../../_custom/types/types'
+import {ModelEnum} from '../types'
+import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/SelectField'
+import {StringFormat} from '../../../_custom/Column/String/StringColumn'
+import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn'
+import {PRODUCT_TYPES, ProductTypeEnum} from './Model'
+import React from 'react'
 
-const formFields: FormFields<ModelEnum.Product> = {
-  reference: true,
-  designation: true,
-  measurementUnit: {
-    defaultValue: 'U'
-  },
-  accountingAccount: true,
-  vatRate: {
-    defaultValue: .2,
-    render: ({fieldProps}) => (
-      <SelectField
-        size='sm'
-        options={[0, .07, .1, .14, .2]}
-        getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
-        placeholder='TVA'
-        {...fieldProps}
-      />
-    )
-  },
-  category: true,
-  children: true,
-  section: true,
-  mobilised: true,
-  stockable: true,
-  note: {
-    slotProps: {
-      root: {
-        sm: 12,
-        md: 12,
-        lg: 12,
-      }
-    }
-  },
-  components: {
-    slotProps: {
-      root: {
-        sm: 12,
-        md: 12,
-        lg: 12,
-      }
-    }
-  },
-};
 
 const mapping: ModelMapping<ModelEnum.Product> = {
   modelName: ModelEnum.Product,
@@ -58,20 +17,20 @@ const mapping: ModelMapping<ModelEnum.Product> = {
   // ),
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     designation: {
       type: ColumnTypeEnum.String,
     },
     code: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     ref: {
       type: ColumnTypeEnum.String,
-      nullable: true
+      nullable: true,
     },
     note: {
       type: ColumnTypeEnum.String,
@@ -79,50 +38,56 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       format: StringFormat.Text,
     },
     measurementUnit: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     accountingAccount: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     mobilised: {
       type: ColumnTypeEnum.Boolean,
     },
     stockable: {
-      type: ColumnTypeEnum.Boolean
+      type: ColumnTypeEnum.Boolean,
     },
     vatRate: {
       type: ColumnTypeEnum.Number,
-      format: NumberFormat.Percent
+      format: NumberFormat.Percent,
     },
     category: {
       type: ModelEnum.Category,
-      nullable: true
+      nullable: true,
     },
     components: {
       type: ModelEnum.Component,
       multiple: true,
-      embeddedForm: true
+      embeddedForm: true,
     },
     parentComponents: {
       type: ModelEnum.Component,
-      multiple: true
+      multiple: true,
     },
     purchaseNeedProducts: {
       type: ModelEnum.PurchaseNeedProduct,
-      multiple: true
+      multiple: true,
     },
     pricing: {
       type: ModelEnum.ProductPricing,
-      multiple: true
+      multiple: true,
     },
     purchaseOrders: {
       type: ModelEnum.PurchaseOrder,
-      multiple: true
+      multiple: true,
     },
     section: {
       type: ModelEnum.ProductSection,
-      nullable: true
-    }
+      nullable: true,
+    },
+    productType: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Select,
+      options: PRODUCT_TYPES,
+      nullable: true,
+    },
   },
   views: [
     {
@@ -133,30 +98,93 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         vatRate: true,
         mobilised: true,
         stockable: true,
-        section: true
-      }
+        section: true,
+      },
     },
     {
       type: ViewEnum.Create,
-      slotProps: {
-        item: {
-          sm: 4,
-          md: 3,
-          lg: 2,
-        }
+      slotProps: {item: {sm: 4, md: 3, lg: 2}},
+      fields: {
+        reference: true,
+        productType: {
+          defaultValue: ProductTypeEnum.Simple,
+        },
+        designation: {
+          slotProps: {root: {sm: 8, md: 6, lg: 4}},
+        },
+        accountingAccount: true,
+        measurementUnit: {
+          defaultValue: 'U',
+        },
+        vatRate: {
+          defaultValue: .2,
+          render: ({fieldProps}) => (
+            <SelectField
+              size="sm"
+              options={[0, .07, .1, .14, .2]}
+              getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
+              placeholder="TVA"
+              {...fieldProps}
+            />
+          ),
+        },
+        category: true,
+        section: true,
+        mobilised: {
+          slotProps: {root: {sm: 2, md: 1.5, lg: 1}},
+        },
+        stockable: {
+          slotProps: {root: {sm: 2, md: 1.5, lg: 1}},
+        },
+        note: {
+          slotProps: {root: {sm: 12, md: 12, lg: 12}},
+        },
+        components: {
+          display: ({item}) => item.productType === ProductTypeEnum.Combined,
+          slotProps: {root: {sm: 12, md: 12, lg: 12}},
+        },
       },
-      fields: formFields
     },
     {
       type: ViewEnum.Update,
-      slotProps: {
-        item: {
-          sm: 4,
-          md: 3,
-          lg: 2,
-        }
+      slotProps: {item: {sm: 4, md: 3, lg: 2}},
+      fields: {
+        reference: true,
+        designation: {
+          slotProps: {root: {sm: 8, md: 6, lg: 4}},
+        },
+        accountingAccount: true,
+        measurementUnit: {
+          defaultValue: 'U',
+        },
+        vatRate: {
+          defaultValue: .2,
+          render: ({fieldProps}) => (
+            <SelectField
+              size="sm"
+              options={[0, .07, .1, .14, .2]}
+              getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
+              placeholder="TVA"
+              {...fieldProps}
+            />
+          ),
+        },
+        category: true,
+        section: true,
+        mobilised: {
+          slotProps: {root: {sm: 2, md: 1.5, lg: 1}},
+        },
+        stockable: {
+          slotProps: {root: {sm: 2, md: 1.5, lg: 1}},
+        },
+        note: {
+          slotProps: {root: {sm: 12, md: 12, lg: 12}},
+        },
+        components: {
+          display: ({item}) => item.productType === ProductTypeEnum.Combined,
+          slotProps: {root: {sm: 12, md: 12, lg: 12}},
+        },
       },
-      fields: formFields
     },
     {
       type: ViewEnum.Detail,
@@ -168,10 +196,10 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         mobilised: true,
         stockable: true,
         pricing: true,
-        components: true
+        components: true,
       },
     },
-  ]
-};
+  ],
+}
 
-export default mapping;
+export default mapping
