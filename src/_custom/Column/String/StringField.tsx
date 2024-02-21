@@ -30,6 +30,7 @@ type StringFieldProps = {
   className?: string
   column: StringColumn
   hideIcon?: boolean
+  disabled?: boolean
 } & FieldProps
 export const StringField: FC<StringFieldProps> = ({ column, name, feedbackLabel, hideIcon, className, ...props }) => {
   const { values } = useFormikContext();

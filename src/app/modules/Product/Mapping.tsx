@@ -1,4 +1,4 @@
-import {FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping'
+import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping'
 import {ColumnTypeEnum} from '../../../_custom/types/types'
 import {ModelEnum} from '../types'
 import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/SelectField'
@@ -6,8 +6,25 @@ import {StringFormat} from '../../../_custom/Column/String/StringColumn'
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn'
 import {PRODUCT_TYPES, ProductTypeEnum} from './Model'
 import React from 'react'
+import {StringField} from '../../../_custom/Column/String/StringField'
+import {FieldProps} from '../../../_custom/Column/controls/fields'
+import {useTrans} from '../../../_custom/components/Trans'
+import {I18nMessageKey} from '../../../_custom/i18n/I18nMessages'
+import {useField} from 'formik'
 
+const ProductTypeField = (props: FieldProps & {disabled?: boolean}) => {
+  const {trans} = useTrans()
 
+  return (
+    <SelectField
+      options={PRODUCT_TYPES.map(productType => productType.id)}
+      getOptionLabel={option => trans({id: PRODUCT_TYPES.find(o => o.id === option)?.label || (option as I18nMessageKey)})}
+      getOptionVariant={option => PRODUCT_TYPES.find(o => o.id === option)?.color}
+      {...props}
+      size='sm'
+    />
+  )
+}
 const mapping: ModelMapping<ModelEnum.Product> = {
   modelName: ModelEnum.Product,
   // hydraTitle: (item)=>(
@@ -108,6 +125,12 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         reference: true,
         productType: {
           defaultValue: ProductTypeEnum.Simple,
+          render: ({fieldProps, item}) => (
+            <ProductTypeField
+              {...fieldProps}
+              disabled={item.components.length > 0}
+            />
+          ),
         },
         designation: {
           slotProps: {root: {sm: 8, md: 6, lg: 4}},
