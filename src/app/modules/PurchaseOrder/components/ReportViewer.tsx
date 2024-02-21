@@ -18,7 +18,6 @@ const ReportViewer: React.FC<ReportViewerProps> = ({fileName, params}) => {
     const viewer = new Stimulsoft.Viewer.StiViewer(undefined, 'StiViewer', false);
     viewer.report = report;
     viewer.renderHtml(id);
-    console.log(viewer);
   }, [fileName, params]);
 
   return <div id={id}/>;
