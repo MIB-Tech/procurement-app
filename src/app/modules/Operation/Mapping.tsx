@@ -38,9 +38,7 @@ const mapping: ModelMapping<ModelEnum.Operation> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {
-        title: true
-      }
+      columns: {}
     },
     {
       type: ViewEnum.Create,

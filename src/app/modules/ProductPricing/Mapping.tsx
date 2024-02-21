@@ -67,26 +67,28 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
     },
     {
       type: ViewEnum.Create,
+      slotProps: {item: {sm: 3}},
       fields: {
-        product: true,
-        vendor: true,
+        product: {slotProps: {root: {sm: 4}}},
+        vendor: {slotProps: {root: {sm: 4}}},
+        applicatedAt: {slotProps: {root: {sm: 4}}},
         purchasePriceExclTax: true,
         purchasePriceInclTax: true,
         bidPriceInclTax: true,
         discountValue: true,
-        applicatedAt: true,
       }
     },
     {
       type: ViewEnum.Update,
+      slotProps: {item: {sm: 3}},
       fields: {
-        product: true,
-        vendor: true,
+        product: {slotProps: {root: {sm: 4}}},
+        vendor: {slotProps: {root: {sm: 4}}},
+        applicatedAt: {slotProps: {root: {sm: 4}}},
         purchasePriceExclTax: true,
         purchasePriceInclTax: true,
         bidPriceInclTax: true,
         discountValue: true,
-        applicatedAt: true,
       }
     },
     {
