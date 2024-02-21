@@ -10,7 +10,7 @@ import clsx from 'clsx';
 import { DivToggle } from '../../../../ListingView/Filter/DivToggle';
 
 
-type SelectFieldProps<T extends {}> = {
+export type SelectFieldProps<T extends {}> = {
   onChange?: (option: T) => void,
 } & FieldProps
   & Omit<RadioProps<T>, 'onChange'>
@@ -26,25 +26,20 @@ export const SelectField = <T extends {}>({
   className,
   onChange,
   feedbackLabel,
-  placeholder = 'Select Option'
+  placeholder = 'Select Option',
+  disabled
 }: SelectFieldProps<T>) => {
   const [open, setOpen] = useState<boolean>(false);
   const [{ value }, { error }, helpers] = useField({ name });
 
   return (
     <Field name={name} feedbackLabel={feedbackLabel}>
-      <ClickAwayListener
-        onClickAway={() => {
-          if (open) {
-            setOpen(false);
-          }
-        }}>
-        <Dropdown show={open}>
+      <ClickAwayListener onClickAway={() => open && setOpen(false)}>
+        <Dropdown show={open} >
           <Dropdown.Toggle
             as={DivToggle}
-            onClick={() => {
-              setOpen(true);
-            }}
+            onClick={() => !disabled && setOpen(true)}
+            disabled={disabled}
           >
             <Button
               variant={(value && getOptionVariant && getOptionVariant(value)) || 'light'}
@@ -55,6 +50,7 @@ export const SelectField = <T extends {}>({
                 error && 'border border-danger',
                 className
               )}
+              disabled={disabled}
             >
               {(value !== null && value !== undefined) ? getOptionLabel(value) : placeholder}
             </Button>
