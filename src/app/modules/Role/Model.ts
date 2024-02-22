@@ -5,7 +5,7 @@ import {OperationModel} from '../Operation';
 
 export enum RoleKeyEnum {
   SuperAdmin = 'ROLE_SUPER_ADMIN',
-  Responsible = 'ROLE_RESPONSIBLE',
+  Admin = 'ROLE_ADMIN',
   Buyer = 'ROLE_BUYER',
 }
 
