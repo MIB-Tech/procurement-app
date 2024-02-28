@@ -253,6 +253,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     {
       type: ViewEnum.Detail,
       columns: {
+        buyer:true,
         orderNumber: true,
         validationStatus: true,
         validatedBy: {
