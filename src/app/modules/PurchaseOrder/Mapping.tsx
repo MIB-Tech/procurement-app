@@ -228,6 +228,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         createdAt: {
           quickFilter: true,
         },
+        buyer: true
       },
       sortColumns: {
         createdAt: true,
@@ -238,8 +239,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       },
       columns: {
         createdAt: true,
-        ref: true,
-        externalRef: true,
         desiredDeliveryDate: true,
         totalExclTax: true,
         // totalVatTax: true,
@@ -248,18 +247,21 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         validationStatus: {},
         //  validatedBy: true,
         // validatedAt: true,
+        buyer: true
       },
     },
     {
       type: ViewEnum.Detail,
       columns: {
-        buyer:true,
         orderNumber: true,
         validationStatus: true,
         validatedBy: {
           grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Buyer],
+          display: ({item}) => item.validationStatus === ValidationStatusEnum.Validated,
         },
-        validatedAt: true,
+        validatedAt: {
+          display: ({item}) => item.validationStatus === ValidationStatusEnum.Validated,
+        },
         status: true,
         taxIncluded: {
           render: ({item: {taxIncluded}}) => taxIncluded ? 'TTC' : 'HT',
@@ -267,6 +269,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         ref: true,
         externalRef: true,
         desiredDeliveryDate: true,
+        buyer:true,
         vendor: true,
         currency: true,
         category: true,
@@ -279,7 +282,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalDiscount: true,
         totalInclTax: true,
         clinic: true,
-        clinicStatus: true,
+        clinicStatus: true
       },
       customActions: [
         {render: ({item}) => <PrintPurchaseOrderButton item={item} />},
