@@ -48,18 +48,12 @@ const AdvancedFilterToolbar = <M extends ModelEnum>({ onChange, modelName, colum
         return (
           <>
             <EffectListener execute={!open} handler={() => setValues(value)} />
-            <ClickAwayListener
-              onClickAway={() => {
-                if (open) {
-                  setOpen(false);
-                }
-              }}>
+            <ClickAwayListener onClickAway={() => open && setOpen(false)}>
               <Dropdown className='btn-group-sm' show={open}>
                 <Dropdown.Toggle
                   as={DivToggle}
-                  onClick={() => {
-                    setOpen(true);
-                  }}>
+                  onClick={() => setOpen(true)}
+                >
                   <Help overlay={<Trans id='ADVANCED_FILTER' />}>
                     <Button
                       variant='outline-default'
@@ -73,9 +67,7 @@ const AdvancedFilterToolbar = <M extends ModelEnum>({ onChange, modelName, colum
                     >
                       <SVG path='/general/gen031.svg' />
                       {dirty && (
-                        <div
-                          className='position-absolute top-0 start-100 translate-middle badge badge-sm badge-circle badge-primary'
-                        >
+                        <div className='position-absolute top-0 start-100 translate-middle badge badge-sm badge-circle badge-primary'>
                           {filters.length}
                         </div>
                       )}
@@ -100,10 +92,9 @@ const AdvancedFilterToolbar = <M extends ModelEnum>({ onChange, modelName, colum
 
                         const { property, operator } = filter;
                         //FIXME Removing this condition causes atom's state issue
-                        // if (!(property in columnDef) && !property.toString().includes('.')) {
-                        //   console.log('aaa')
-                        //   return <></>;
-                        // }
+                        if (!(property in columnDef) && !property.toString().includes('.')) {
+                          return <></>;
+                        }
 
                         const columnMapping = getColumnMapping({ modelName, columnName: property });
 
@@ -167,9 +158,7 @@ const AdvancedFilterToolbar = <M extends ModelEnum>({ onChange, modelName, colum
                                   className='rounded-start-0 border-start border-gray-300 h-100'
                                   variant='light'
                                   icon
-                                  onClick={() => {
-                                    arrayHelpers.remove(index);
-                                  }}
+                                  onClick={() => arrayHelpers.remove(index)}
                                 >
                                   <SVG path='/general/gen034.svg' size='1' />
                                 </Button>
@@ -183,9 +172,7 @@ const AdvancedFilterToolbar = <M extends ModelEnum>({ onChange, modelName, colum
                           <Button
                             variant='light'
                             size='sm'
-                            onClick={(e) => {
-                              setOpen(false);
-                            }}
+                            onClick={(e) => setOpen(false)}
                           >
                             <Trans id='CLOSE' />
                           </Button>
@@ -193,8 +180,8 @@ const AdvancedFilterToolbar = <M extends ModelEnum>({ onChange, modelName, colum
                             variant='light'
                             size='sm'
                             disabled={!dirty}
-                            onClick={() => {
-                              setFieldValue('filters', []);
+                            onClick={async () => {
+                              await setFieldValue('filters', []);
                               handleSubmit();
                             }}
                           >
@@ -225,10 +212,7 @@ const AdvancedFilterToolbar = <M extends ModelEnum>({ onChange, modelName, colum
                             size='sm'
                             className='fw-bolder'
                             disabled={equal(values, value)}
-                            onClick={() => {
-                              handleSubmit();
-                              // setOpen(false)
-                            }}
+                            onClick={() =>  handleSubmit()}
                           >
                             <Trans id='APPLY' />
                           </Button>

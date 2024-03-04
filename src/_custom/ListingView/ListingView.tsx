@@ -387,9 +387,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
               {} as FilterColumns<M>
             )}
             value={state.filter}
-            onChange={filter => {
-              setState({...state, filter, page: 1});
-            }}
+            onChange={filter => setState({...state, filter, page: 1})}
           />
         )}
 
@@ -400,9 +398,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
               (obj, columnName) => ({...obj, [columnName]: columnDef[columnName]}),
               {} as ColumnDef<M>
             )}
-            onChange={sort => {
-              setState({...state, sort});
-            }}
+            onChange={sort => setState({...state, sort})}
           />
         )}
 

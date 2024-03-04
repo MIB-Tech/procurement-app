@@ -41,6 +41,7 @@ export const AdvancedFilterValueField = <M extends ModelEnum>(props: ValueFieldP
           );
         case StringFormat.Select:
           const { options } = column;
+
           return (
             <SelectField
               options={options.map(({ id }) => id)}
