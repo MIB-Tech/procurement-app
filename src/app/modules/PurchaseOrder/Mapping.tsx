@@ -56,7 +56,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   clinic: true,
   paymentModality: true,
   validationStatus: {
-    grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
+    grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.],
     defaultValue: ValidationStatusEnum.Pending,
     display: props => !!props.item.id
   },
