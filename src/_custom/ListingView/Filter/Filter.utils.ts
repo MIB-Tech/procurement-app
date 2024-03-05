@@ -208,6 +208,7 @@ export const getAdvancedPropertyFilter = (props: TypeColum) => {
 
       switch (props.format) {
         case StringFormat.Icon:
+        case StringFormat.Select:
           value = null;
           break;
         default:

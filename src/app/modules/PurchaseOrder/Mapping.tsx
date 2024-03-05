@@ -228,7 +228,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         createdAt: {
           quickFilter: true,
         },
-        buyer: true
+        buyer: true,
+        validationStatus: {
+          quickFilter: true,
+        },
       },
       sortColumns: {
         createdAt: true,
