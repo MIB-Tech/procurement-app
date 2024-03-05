@@ -482,6 +482,7 @@ type I18nMessageKey =
   | 'RESOURCE'
   | 'BUYER'
   | 'PRODUCT_TYPE'
+  |'CONSTRUCTION_AMOUNT'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};
