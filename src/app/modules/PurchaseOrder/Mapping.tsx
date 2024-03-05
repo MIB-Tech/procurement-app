@@ -56,7 +56,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   clinic: true,
   paymentModality: true,
   validationStatus: {
-    grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin],
+    grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
     defaultValue: ValidationStatusEnum.Pending,
     display: props => !!props.item.id
   },
@@ -390,7 +390,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         clinic: true,
         paymentModality: true,
         validationStatus: {
-          grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin],
+          grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Responsible],
           defaultValue: ValidationStatusEnum.Pending,
           display: props => !!props.item.id
         },
