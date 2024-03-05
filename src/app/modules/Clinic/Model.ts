@@ -13,17 +13,17 @@ type Model = {
   address?: string
   ice: string
   taxId: string
-  cnss: string
-  amount: number
-  status:ClinicStatusEnum
+  cnss?: string
+  constructionAmount: number
+  status: ClinicStatusEnum
   constructionStartAt: string
   constructionEndAt: string
   purchaseOrderAllowed: boolean
   users: Array<UserModel>
   services: Array<ServiceModel>
   city: CityModel
-  purchaseNeeds:Array<PurchaseNeedModel>
-  purchaseOrders:Array<PurchaseOrderModel>
+  purchaseNeeds: Array<PurchaseNeedModel>
+  purchaseOrders: Array<PurchaseOrderModel>
 } & AbstractModel
 
 export default Model;

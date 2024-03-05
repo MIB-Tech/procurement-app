@@ -394,7 +394,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           defaultValue: ValidationStatusEnum.Pending,
           display: props => !!props.item.id
         },
-        buyer:true,
+        buyer: true,
         purchaseOrderProducts: {
           slotProps: {
             root: {
