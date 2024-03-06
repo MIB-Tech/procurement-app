@@ -219,19 +219,20 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         orderNumber: true,
         ref: true,
         externalRef: true,
-        vendor: {
-          quickFilter: true,
-        },
         desiredDeliveryDate: {
           quickFilter: true,
         },
         createdAt: {
           quickFilter: true,
         },
-        buyer: true,
         validationStatus: {
           quickFilter: true,
         },
+        vendor: {
+          quickFilter: true,
+        },
+        buyer: true,
+        clinic: true
       },
       sortColumns: {
         createdAt: true,
@@ -244,13 +245,11 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         createdAt: true,
         desiredDeliveryDate: true,
         totalExclTax: true,
-        // totalVatTax: true,
         totalInclTax: true,
         status: true,
         validationStatus: {},
-        //  validatedBy: true,
-        // validatedAt: true,
-        buyer: true
+        buyer: true,
+        clinic: true,
       },
     },
     {
