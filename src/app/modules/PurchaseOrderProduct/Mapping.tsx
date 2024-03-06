@@ -378,7 +378,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           )
         },
         grossPrice: true,
-        netPrice: true,
+       // netPrice: true,
         vatRate: true,
         netPriceExclTax: true,
         priceInclTax: true,
@@ -404,7 +404,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           )
         },
         grossPrice: true,
-        netPrice: true,
+      //  netPrice: true,
         vatRate: true,
         netPriceExclTax: true,
         priceInclTax: true,
