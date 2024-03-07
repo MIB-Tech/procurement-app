@@ -24,7 +24,7 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     },
     address: {
       type: ColumnTypeEnum.String,
-      nullable: true
+      nullable: false
     },
     ice: {
       type: ColumnTypeEnum.String
@@ -79,6 +79,12 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     purchaseNeeds: {
       type: ModelEnum.PurchaseNeedProduct,
       multiple: true
+    },
+    deliveryDepots: {
+      type: ModelEnum.DeliveryDepot,
+      multiple: true,
+      embeddedForm: true,
+      nullable:false
     }
   },
   views: [
@@ -106,6 +112,11 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
         constructionEndAt: true,
         status: {defaultValue: ClinicStatusEnum.UnderConstruction},
         purchaseOrderAllowed: true,
+        deliveryDepots: {
+          slotProps: {
+            root: {sm: 12}
+          }
+        }
       }
     },
     {
@@ -118,6 +129,11 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
         constructionEndAt: {slotProps: {root: {sm: 6}}},
         status: {slotProps: {root: {sm: 6}}},
         purchaseOrderAllowed: true,
+        deliveryDepots: {
+          slotProps: {
+            root: {sm: 12}
+          }
+        }
       }
     },
     {
@@ -132,6 +148,7 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
         constructionStartAt: true,
         constructionEndAt: true,
         purchaseOrderAllowed: true,
+        deliveryDepots: true
       }
     }
   ]

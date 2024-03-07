@@ -44,6 +44,7 @@ import {CITY_MAPPING} from "./City";
 import {BLOC_MAPPING} from "./Bloc";
 import {SERVICE_MAPPING} from "./Service";
 import {CLINIC_MAPPING} from "./Clinic";
+import {DELIVERY_DEPOT_MAPPING} from "./DeliveryDepot";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
@@ -86,6 +87,7 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Bloc]: BLOC_MAPPING,
   [ModelEnum.Service]: SERVICE_MAPPING,
   [ModelEnum.Clinic]: CLINIC_MAPPING,
+  [ModelEnum.DeliveryDepot]: DELIVERY_DEPOT_MAPPING,
 
 };
 

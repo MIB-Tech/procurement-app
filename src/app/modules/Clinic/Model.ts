@@ -5,6 +5,7 @@ import {CityModel} from "../City";
 import {PurchaseNeedModel} from "../PurchaseNeed";
 import {PurchaseOrderModel} from "../PurchaseOrder";
 import {ClinicStatusEnum} from "../PurchaseOrder/Model";
+import {DeliveryDepotModel} from "../DeliveryDepot";
 
 
 type Model = {
@@ -24,6 +25,7 @@ type Model = {
   city: CityModel
   purchaseNeeds: Array<PurchaseNeedModel>
   purchaseOrders: Array<PurchaseOrderModel>
+  deliveryDepots:Array<DeliveryDepotModel>
 } & AbstractModel
 
 export default Model;
