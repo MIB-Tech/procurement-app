@@ -2,6 +2,8 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  DELIVERY_DEPOTS: "Dépôts de livraison",
+  DELIVERY_DEPOT: "Dépôt de livraison",
   CONSTRUCTION_AMOUNT: "Budget de construction",
   RESOURCE: "Resource",
   SUFFIX: "Suffixe",
