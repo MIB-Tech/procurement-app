@@ -22,10 +22,12 @@ const mapping: ModelMapping<ModelEnum.Operation> = {
       type: ColumnTypeEnum.Boolean
     },
     suffix: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      readOnly: true
     },
     icon: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      readOnly: true
     },
     resource: {
       type: ModelEnum.Resource
