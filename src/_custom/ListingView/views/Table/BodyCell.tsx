@@ -93,9 +93,10 @@ export const CellContent = (props: CellContentProps & { className?: string }) =>
           return (
             <div className='symbol symbol-30px'>
               <span className='symbol-label'>
-                <KTSVG
+                <SVG
                   path={value as string}
-                  className='svg-icon-dark svg-icon-fluid -align-self-center'
+                  variant='primary'
+                  size='2'
                 />
               </span>
             </div>
