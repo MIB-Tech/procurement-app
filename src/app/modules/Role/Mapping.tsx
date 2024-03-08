@@ -47,7 +47,8 @@ const mapping: ModelMapping<ModelEnum.Role> = {
       fields: {
         name: true,
         roleKey: true,
-        routes: true
+        routes: true,
+        operations:true
       }
     },
     {
@@ -55,7 +56,8 @@ const mapping: ModelMapping<ModelEnum.Role> = {
       fields: {
         name: true,
         roleKey: true,
-        routes: true
+        routes: true,
+        operations: true
       }
     }
   ]
