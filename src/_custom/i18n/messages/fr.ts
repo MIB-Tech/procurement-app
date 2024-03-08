@@ -2,7 +2,10 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
-
+  OPERATIONS: "Operations",
+  DELIVERY_DEPOTS: "Dépôts de livraison",
+  DELIVERY_DEPOT: "Dépôt de livraison",
+  CONSTRUCTION_AMOUNT: "Budget de construction",
   RESOURCE: "Resource",
   SUFFIX: "Suffixe",
   IS_MENU_ITEM: "Element de menu",
@@ -11,9 +14,9 @@ export const fr: I18nLanguage = {
   PRODUCT_TYPE: "Type produit",
   COMBINED: "Combiné",
   SIMPLE: "Simple",
-  SUB_COMPONENT: "Sous-Composé",
+  SUB_COMPONENT: "Sous-composé",
   PRODUCT_SECTION: "Section",
-  V_A_T_INCLUDED: "TVA Comprise",
+  V_A_T_INCLUDED: "TVA comprise",
   BLOC: "Emplacement",
   BLOCS: "Emplacements",
   CLINIC_STATUS: "Statut de clinique",
@@ -115,7 +118,7 @@ export const fr: I18nLanguage = {
   DISCOUNT_VALUE: "Remise",
   EXTERNAL_REF: "Référence externe",
   FILE_NAME: "Nom du fichier",
-  GROSS_PRICE: "P.U brut",
+  GROSS_PRICE: "P.U HT",
   GROSS_TOTAL_EXCL_TAX: "Total brut HT",
   ICE: "ICE",
   IS_CONFORME: "Conforme",

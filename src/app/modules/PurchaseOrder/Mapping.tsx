@@ -248,6 +248,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalInclTax: true,
         status: true,
         validationStatus: {},
+        buyer: true
         //  validatedBy: true,
         // validatedAt: true,
         buyer: true

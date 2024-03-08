@@ -2,7 +2,7 @@ import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {StringFormat} from "../../../_custom/Column/String/StringColumn";
-import {CLINIC_STATUS_OPTIONS} from "../PurchaseOrder/Model";
+import {CLINIC_STATUS_OPTIONS, ClinicStatusEnum} from "../PurchaseOrder/Model";
 
 
 const mapping: ModelMapping<ModelEnum.Clinic> = {
@@ -24,7 +24,7 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     },
     address: {
       type: ColumnTypeEnum.String,
-      nullable: true
+      nullable: false
     },
     ice: {
       type: ColumnTypeEnum.String
@@ -33,10 +33,12 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
       type: ColumnTypeEnum.String
     },
     cnss: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable: true
     },
-    amount: {
-      type: ColumnTypeEnum.Number
+    constructionAmount: {
+      type: ColumnTypeEnum.Number,
+      nullable: true
     },
     status: {
       type: ColumnTypeEnum.String,
@@ -56,7 +58,8 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
       nullable: true
     },
     purchaseOrderAllowed: {
-      type: ColumnTypeEnum.Boolean
+      type: ColumnTypeEnum.Boolean,
+      nullable: true
     },
     users: {
       type: ModelEnum.User,
@@ -76,6 +79,12 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     purchaseNeeds: {
       type: ModelEnum.PurchaseNeedProduct,
       multiple: true
+    },
+    deliveryDepots: {
+      type: ModelEnum.DeliveryDepot,
+      multiple: true,
+      embeddedForm: true,
+      nullable:false
     }
   },
   views: [
@@ -89,18 +98,25 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     },
     {
       type: ViewEnum.Create,
+      slotProps: {item: {sm: 4}},
       fields: {
-        name: true,
+        name: {slotProps: {root: {sm: 8}}},
         abbreviation: true,
-        address: true,
+        address: {slotProps: {root: {sm: 8}}},
         city: true,
         ice: true,
         taxId: true,
         cnss: true,
-        amount: true,
+        constructionAmount: {slotProps: {root: {sm: 4}}},
         constructionStartAt: true,
         constructionEndAt: true,
+        status: {defaultValue: ClinicStatusEnum.UnderConstruction},
         purchaseOrderAllowed: true,
+        deliveryDepots: {
+          slotProps: {
+            root: {sm: 12}
+          }
+        }
       }
     },
     {
@@ -108,10 +124,16 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
       fields: {
         name: true,
         abbreviation: true,
-        address: true,
-        amount: true,
-        constructionEndAt: true,
+        address: {slotProps: {root: {sm: 6}}},
+        constructionAmount: {slotProps: {root: {sm: 6}}},
+        constructionEndAt: {slotProps: {root: {sm: 6}}},
+        status: {slotProps: {root: {sm: 6}}},
         purchaseOrderAllowed: true,
+        deliveryDepots: {
+          slotProps: {
+            root: {sm: 12}
+          }
+        }
       }
     },
     {
@@ -121,10 +143,12 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
         ice: true,
         taxId: true,
         cnss: true,
-        amount: true,
+        constructionAmount: true,
+        status: true,
         constructionStartAt: true,
         constructionEndAt: true,
         purchaseOrderAllowed: true,
+        deliveryDepots: true
       }
     }
   ]

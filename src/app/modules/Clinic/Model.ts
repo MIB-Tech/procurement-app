@@ -5,25 +5,27 @@ import {CityModel} from "../City";
 import {PurchaseNeedModel} from "../PurchaseNeed";
 import {PurchaseOrderModel} from "../PurchaseOrder";
 import {ClinicStatusEnum} from "../PurchaseOrder/Model";
+import {DeliveryDepotModel} from "../DeliveryDepot";
 
 
 type Model = {
   abbreviation: string
   name: string
-  address?: string
+  address: string
   ice: string
   taxId: string
-  cnss: string
-  amount: number
-  status:ClinicStatusEnum
+  cnss?: string
+  constructionAmount: number
+  status: ClinicStatusEnum
   constructionStartAt: string
   constructionEndAt: string
   purchaseOrderAllowed: boolean
   users: Array<UserModel>
   services: Array<ServiceModel>
   city: CityModel
-  purchaseNeeds:Array<PurchaseNeedModel>
-  purchaseOrders:Array<PurchaseOrderModel>
+  purchaseNeeds: Array<PurchaseNeedModel>
+  purchaseOrders: Array<PurchaseOrderModel>
+  deliveryDepots:Array<DeliveryDepotModel>
 } & AbstractModel
 
 export default Model;

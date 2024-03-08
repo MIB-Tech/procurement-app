@@ -19,7 +19,7 @@ type I18nMessageKey =
   | ViewEnum
   | QuantityStatusEnum
   | ClinicStatusEnum
-  |ProductTypeEnum
+  | ProductTypeEnum
   | 'GENERATE_INVOICE'
   | 'VALIDATED'
   | 'SHOW'
@@ -482,6 +482,10 @@ type I18nMessageKey =
   | 'RESOURCE'
   | 'BUYER'
   | 'PRODUCT_TYPE'
+  | 'CONSTRUCTION_AMOUNT'
+  | 'DELIVERY_DEPOT'
+  | 'DELIVERY_DEPOTS'
+  | 'OPERATIONS'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};

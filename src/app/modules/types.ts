@@ -37,6 +37,7 @@ import {CityModel} from "./City";
 import {BlocModel} from "./Bloc";
 import {ServiceModel} from "./Service";
 import {ClinicModel} from "./Clinic";
+import {DeliveryDepotModel} from "./DeliveryDepot";
 
 export enum ModelEnum {
   ApplicantService = 'ApplicantService',
@@ -78,6 +79,8 @@ export enum ModelEnum {
   City = 'City',
   Service = 'Service',
   Bloc = 'Bloc',
+  DeliveryDepot = 'DeliveryDepot',
+
 }
 
 export type Models = {
@@ -120,6 +123,7 @@ export type Models = {
   [ModelEnum.Bloc]: BlocModel,
   [ModelEnum.Service]: ServiceModel,
   [ModelEnum.Clinic]: ClinicModel,
+  [ModelEnum.DeliveryDepot]: DeliveryDepotModel,
 
 
 }
