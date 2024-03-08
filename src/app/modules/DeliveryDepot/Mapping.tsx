@@ -17,6 +17,10 @@ const mapping: ModelMapping<ModelEnum.DeliveryDepot> = {
     },
     clinic: {
       type: ModelEnum.Clinic
+    },
+    desiredProducts: {
+      type: ModelEnum.DesiredProduct,
+      multiple: true
     }
   },
   views: [

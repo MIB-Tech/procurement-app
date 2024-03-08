@@ -1,5 +1,4 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import React from 'react';
 import {string} from 'yup';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
@@ -48,7 +47,7 @@ const mapping: ModelMapping<ModelEnum.Role> = {
         name: true,
         roleKey: true,
         routes: true,
-        operations:true
+        operations: true
       }
     },
     {
