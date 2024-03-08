@@ -28,7 +28,7 @@ export type ReceiptPrintLine = ReceiptLineProductPrint | ReceiptLineComponentPri
 export type ReceiptPrint = {
   lines: Array<ReceiptPrintLine>
 } & Pick<Model, 'receiptNumber' | 'receivedAt'>
-  & Pick<PurchaseOrderPrint, 'vendor' | 'address' | 'paymentModality' | 'comment'>
+  & Pick<PurchaseOrderPrint, 'vendor' | 'paymentModality' | 'comment'>
 
 // const EXAMPLE: ReceiptPrint = {
 //   'address': '',

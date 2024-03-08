@@ -38,7 +38,7 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
     const paymentModalities = purchaseOrders.map(({paymentModality}) => paymentModality['@title']).join(', ');
     const orderNumber = purchaseOrders.map(({orderNumber}) => orderNumber).join(', ');
     const vendor = purchaseOrders.at(0)?.vendor as VendorModel;
-    console.log(vendor)
+
     const result: InvoicePrint = {
       ...item,
       bill: item.invoiceNumber,

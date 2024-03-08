@@ -11,7 +11,7 @@ import {DeliveryDepotModel} from "../DeliveryDepot";
 type Model = {
   abbreviation: string
   name: string
-  address?: string
+  address: string
   ice: string
   taxId: string
   cnss?: string

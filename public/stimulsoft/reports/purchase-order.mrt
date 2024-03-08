@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.4.0",
-  "ReportGuid": "212c03ee5eae4780a2931cad5ffab5a8",
+  "ReportGuid": "b5020997de474ee8a55774781ab68987",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1709735009640+0100)/",
+  "ReportChanged": "/Date(1709909347268+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -32,7 +32,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root",
         "Alias": "root",
-        "Key": "28c5d3f74cf94a66b8dd0679c367f62f",
+        "Key": "311c721de44c4ca09d316749b46d7e62",
         "Columns": {
           "0": {
             "Name": "comment",
@@ -63,10 +63,10 @@
             "Type": "System.String"
           },
           "4": {
-            "Name": "Reference",
+            "Name": "reference",
             "Index": -1,
-            "NameInSource": "Reference",
-            "Alias": "Reference",
+            "NameInSource": "reference",
+            "Alias": "reference",
             "Type": "System.String"
           },
           "5": {
@@ -77,90 +77,83 @@
             "Type": "System.String"
           },
           "6": {
-            "Name": "CliniCName",
+            "Name": "clinic",
             "Index": -1,
-            "NameInSource": "CliniCName",
-            "Alias": "CliniCName",
+            "NameInSource": "clinic",
+            "Alias": "clinic",
             "Type": "System.String"
           },
           "7": {
-            "Name": "Adresse",
-            "Index": -1,
-            "NameInSource": "Adresse",
-            "Alias": "Adresse",
-            "Type": "System.String"
-          },
-          "8": {
             "Name": "buyer",
             "Index": -1,
             "NameInSource": "buyer",
             "Alias": "buyer",
             "Type": "System.String"
           },
-          "9": {
+          "8": {
             "Name": "referent",
             "Index": -1,
             "NameInSource": "referent",
             "Alias": "referent",
             "Type": "System.String"
           },
-          "10": {
+          "9": {
             "Name": "vendor",
             "Index": -1,
             "NameInSource": "vendor",
             "Alias": "vendor",
             "Type": "System.String"
           },
-          "11": {
+          "10": {
             "Name": "taxIncluded",
             "Index": -1,
             "NameInSource": "taxIncluded",
             "Alias": "taxIncluded",
             "Type": "System.Boolean"
           },
-          "12": {
+          "11": {
             "Name": "totalExclTax",
             "Index": -1,
             "NameInSource": "totalExclTax",
             "Alias": "totalExclTax",
             "Type": "System.String"
           },
-          "13": {
+          "12": {
             "Name": "totalVatTax",
             "Index": -1,
             "NameInSource": "totalVatTax",
             "Alias": "totalVatTax",
             "Type": "System.String"
           },
-          "14": {
+          "13": {
             "Name": "totalDiscount",
             "Index": -1,
             "NameInSource": "totalDiscount",
             "Alias": "totalDiscount",
             "Type": "System.String"
           },
-          "15": {
+          "14": {
             "Name": "totalInclTax",
             "Index": -1,
             "NameInSource": "totalInclTax",
             "Alias": "totalInclTax",
             "Type": "System.String"
           },
-          "16": {
+          "15": {
             "Name": "totalInclTaxNumber",
             "Index": -1,
             "NameInSource": "totalInclTaxNumber",
             "Alias": "totalInclTaxNumber",
             "Type": "System.Decimal"
           },
-          "17": {
+          "16": {
             "Name": "lines",
             "Index": -1,
             "NameInSource": "lines",
             "Alias": "lines",
             "Type": "System.String"
           },
-          "18": {
+          "17": {
             "Name": "relationId",
             "Index": -1,
             "NameInSource": "relationId",
@@ -172,9 +165,39 @@
       },
       "1": {
         "Ident": "StiDataTableSource",
+        "Name": "root_clinic",
+        "Alias": "root_clinic",
+        "Key": "167647e7fc88492bb1099c4084999073",
+        "Columns": {
+          "0": {
+            "Name": "name",
+            "Index": -1,
+            "NameInSource": "name",
+            "Alias": "name",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "address",
+            "Index": -1,
+            "NameInSource": "address",
+            "Alias": "address",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "relationId",
+            "Index": -1,
+            "NameInSource": "relationId",
+            "Alias": "relationId",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "DATA_TEST_BC.root_clinic"
+      },
+      "2": {
+        "Ident": "StiDataTableSource",
         "Name": "root_lines",
         "Alias": "root_lines",
-        "Key": "8c577f28befa4867a4fe3eb726f45bab",
+        "Key": "86e2d217aef24d828ebf7a8cd8401ecb",
         "Columns": {
           "0": {
             "Name": "type",
@@ -235,11 +258,11 @@
         },
         "NameInSource": "DATA_TEST_BC.root_lines"
       },
-      "2": {
+      "3": {
         "Ident": "StiDataTableSource",
         "Name": "root_lines_product",
         "Alias": "root_lines_product",
-        "Key": "19624644c7144195bdf1d56a4c4ec1b1",
+        "Key": "49b831a1893843d785a2e6143d794804",
         "Columns": {
           "0": {
             "Name": "code",
@@ -258,11 +281,11 @@
         },
         "NameInSource": "DATA_TEST_BC.root_lines_product"
       },
-      "3": {
+      "4": {
         "Ident": "StiDataTableSource",
         "Name": "root_paymentModality",
         "Alias": "root_paymentModality",
-        "Key": "60f9cec0bef4402ba4a4270bd4695e19",
+        "Key": "de8b165723704b68a0be31c17863269e",
         "Columns": {
           "0": {
             "Name": "name",
@@ -281,11 +304,11 @@
         },
         "NameInSource": "DATA_TEST_BC.root_paymentModality"
       },
-      "4": {
+      "5": {
         "Ident": "StiDataTableSource",
         "Name": "root_vendor",
         "Alias": "root_vendor",
-        "Key": "a1c2f6a547f547ff8d72957bfef8d428",
+        "Key": "89053e6b28d14c218f7cd8e80bfc33ea",
         "Columns": {
           "0": {
             "Name": "name",
@@ -295,10 +318,10 @@
             "Type": "System.String"
           },
           "1": {
-            "Name": "fax",
+            "Name": "phoneNumber",
             "Index": -1,
-            "NameInSource": "fax",
-            "Alias": "fax",
+            "NameInSource": "phoneNumber",
+            "Alias": "phoneNumber",
             "Type": "System.String"
           },
           "2": {
@@ -325,11 +348,11 @@
         },
         "NameInSource": "DATA_TEST_BC.root_vendor"
       },
-      "5": {
+      "6": {
         "Ident": "StiDataTableSource",
         "Name": "root_vendor_defaultAddress",
         "Alias": "root_vendor_defaultAddress",
-        "Key": "ead69da4c77a48f88c2c7e4540d3b31d",
+        "Key": "cd9c2b5c68704cc18dc252c585235cdc",
         "Columns": {
           "0": {
             "Name": "postalCode",
@@ -372,6 +395,19 @@
           "0": "relationId"
         },
         "ParentColumns": {
+          "0": "clinic"
+        },
+        "NameInSource": "root_clinic",
+        "Alias": "root",
+        "ParentSource": "root",
+        "ChildSource": "root_clinic"
+      },
+      "1": {
+        "Name": "root",
+        "ChildColumns": {
+          "0": "relationId"
+        },
+        "ParentColumns": {
           "0": "lines"
         },
         "NameInSource": "root_lines",
@@ -379,7 +415,7 @@
         "ParentSource": "root",
         "ChildSource": "root_lines"
       },
-      "1": {
+      "2": {
         "Name": "root_lines",
         "ChildColumns": {
           "0": "relationId"
@@ -392,7 +428,7 @@
         "ParentSource": "root_lines",
         "ChildSource": "root_lines_product"
       },
-      "2": {
+      "3": {
         "Name": "root",
         "ChildColumns": {
           "0": "relationId"
@@ -405,7 +441,7 @@
         "ParentSource": "root",
         "ChildSource": "root_paymentModality"
       },
-      "3": {
+      "4": {
         "Name": "root",
         "ChildColumns": {
           "0": "relationId"
@@ -418,7 +454,7 @@
         "ParentSource": "root",
         "ChildSource": "root_vendor"
       },
-      "4": {
+      "5": {
         "Name": "root_vendor",
         "ChildColumns": {
           "0": "relationId"
@@ -831,7 +867,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root_vendor.fax}"
+                "Value": "{root_vendor.phoneNumber}"
               },
               "Border": ";;;;;;;solid:Black",
               "Brush": "solid:",
@@ -1055,7 +1091,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root.CliniCName}"
+                "Value": "{root_clinic.name}"
               },
               "Font": ";11;Bold;",
               "Border": "Top, Left, Right;;;;;;;solid:Black",
@@ -1077,14 +1113,14 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root.Adresse}"
+                "Value": "{root_clinic.address}"
               },
               "VertAlignment": "Center",
               "Font": ";9;;",
               "Border": "Left, Right, Bottom;;;;;;;solid:Black",
               "Brush": "solid:255,255,255",
               "TextBrush": "solid:0,0,0",
-              "Type": "DataColumn"
+              "Type": "Expression"
             },
             "28": {
               "Ident": "StiImage",
