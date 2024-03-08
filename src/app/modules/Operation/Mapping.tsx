@@ -1,6 +1,8 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import {OPERATIONS_TYPE_OPTIONS} from "./Model";
+import {StringFormat} from "../../../_custom/Column/String/StringColumn";
 
 
 const mapping: ModelMapping<ModelEnum.Operation> = {
@@ -16,7 +18,9 @@ const mapping: ModelMapping<ModelEnum.Operation> = {
       type: ColumnTypeEnum.String
     },
     operationType: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      format:StringFormat.Select,
+      options: OPERATIONS_TYPE_OPTIONS
     },
     isMenuItem: {
       type: ColumnTypeEnum.Boolean,
@@ -45,8 +49,9 @@ const mapping: ModelMapping<ModelEnum.Operation> = {
     },
     {
       type: ViewEnum.Create,
+      slotProps: {item: {sm: 4}},
       fields: {
-        title: {slotProps: {root: {sm: 4}}},
+        title: true,
         operationType: true,
         resource: true,
         isMenuItem: true
@@ -54,10 +59,11 @@ const mapping: ModelMapping<ModelEnum.Operation> = {
     },
     {
       type: ViewEnum.Update,
+      slotProps: {item: {sm: 4}},
       fields: {
-        title: {slotProps: {root: {sm: 4}}},
-        operationType: {slotProps: {root: {sm: 4}}},
-        resource: {slotProps: {root: {sm: 4}}},
+        title: true,
+        operationType: true,
+        resource: true,
         isMenuItem: true
       }
     },
