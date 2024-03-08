@@ -265,7 +265,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       precision: 5,
-      footer: () => <Bullet />
+      footer: () => <Bullet/>
     },
     note: {
       type: ColumnTypeEnum.String,
@@ -378,7 +378,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           )
         },
         grossPrice: true,
-        netPrice: true,
+       // netPrice: true,
         vatRate: true,
         netPriceExclTax: true,
         priceInclTax: true,
@@ -404,7 +404,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           )
         },
         grossPrice: true,
-        netPrice: true,
+      //  netPrice: true,
         vatRate: true,
         netPriceExclTax: true,
         priceInclTax: true,

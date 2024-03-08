@@ -19,13 +19,16 @@ const mapping: ModelMapping<ModelEnum.Operation> = {
       type: ColumnTypeEnum.String
     },
     isMenuItem: {
-      type: ColumnTypeEnum.Boolean
+      type: ColumnTypeEnum.Boolean,
+      nullable: true
     },
     suffix: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      readOnly: true
     },
     icon: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      readOnly: true
     },
     resource: {
       type: ModelEnum.Resource
@@ -43,13 +46,29 @@ const mapping: ModelMapping<ModelEnum.Operation> = {
     {
       type: ViewEnum.Create,
       fields: {
-        title: true
+        title: {slotProps: {root: {sm: 4}}},
+        operationType: true,
+        resource: true,
+        isMenuItem: true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
-        title: true
+        title: {slotProps: {root: {sm: 4}}},
+        operationType: {slotProps: {root: {sm: 4}}},
+        resource: {slotProps: {root: {sm: 4}}},
+        isMenuItem: true
+      }
+    },
+    {
+      type: ViewEnum.Detail,
+      columns: {
+        title: true,
+        operationType: true,
+        roles: true,
+        resource: true,
+        isMenuItem: true
       }
     }
   ]

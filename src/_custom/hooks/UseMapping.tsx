@@ -14,6 +14,8 @@ export const useMapping = <M extends ModelEnum>({ modelName }: { modelName: M })
   const columNames = Object.keys(columnDef) as Array<keyof Model<M>>;
   const searchableColumnNames = columNames.filter(columnName => {
     const def = columnDef[columnName];
+    if (def.readOnly) return false
+
     switch (def.type) {
       case ColumnTypeEnum.String:
         switch (def.format) {
