@@ -5,7 +5,7 @@ import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {number} from 'yup';
 import {QUANTITY_STATUS_OPTIONS} from "../PurchaseOrder/Model";
 import React from "react";
-import {Field} from "./Field";
+import {ClinicField} from "./Field";
 
 
 const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
@@ -66,7 +66,7 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
         designation: true,
         quantity: true,
         deliveryDepot: {
-          render: ({fieldProps}) => <Field {...fieldProps}/>
+          render: ({fieldProps}) => <ClinicField {...fieldProps}/>
         }
       }
     }
