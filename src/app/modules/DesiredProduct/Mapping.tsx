@@ -39,7 +39,8 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       type: ModelEnum.ReceiptProduct
     },
     deliveryDepot: {
-      type: ModelEnum.DeliveryDepot
+      type: ModelEnum.DeliveryDepot,
+      nullable: true
     }
   },
   views: [
