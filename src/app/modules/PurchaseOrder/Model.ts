@@ -87,6 +87,7 @@ export type PurchaseOrderComponentPrint = {
 export type PurchaseOrderLinePrint = PurchaseOrderProductPrint | PurchaseOrderComponentPrint
 
 export type PurchaseOrderPrint = {
+  taxType: 'HT' | 'TTC'
   totalExclTax: string
   totalInclTax: string
   totalVatTax: string

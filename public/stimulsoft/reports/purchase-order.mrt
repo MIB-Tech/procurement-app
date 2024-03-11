@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.4.0",
-  "ReportGuid": "b5020997de474ee8a55774781ab68987",
+  "ReportGuid": "85f9281176474fb08e02af652ab43010",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1709909347268+0100)/",
+  "ReportChanged": "/Date(1710158277374+0000)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -32,84 +32,84 @@
         "Ident": "StiDataTableSource",
         "Name": "root",
         "Alias": "root",
-        "Key": "311c721de44c4ca09d316749b46d7e62",
+        "Key": "ba468db56b424e7db3073ba5e4f71f4d",
         "Columns": {
           "0": {
+            "Name": "taxType",
+            "Index": -1,
+            "NameInSource": "taxType",
+            "Alias": "taxType",
+            "Type": "System.String"
+          },
+          "1": {
             "Name": "comment",
             "Index": -1,
             "NameInSource": "comment",
             "Alias": "comment",
             "Type": "System.String"
           },
-          "1": {
+          "2": {
             "Name": "paymentModality",
             "Index": -1,
             "NameInSource": "paymentModality",
             "Alias": "paymentModality",
             "Type": "System.String"
           },
-          "2": {
+          "3": {
             "Name": "createdAt",
             "Index": -1,
             "NameInSource": "createdAt",
             "Alias": "createdAt",
             "Type": "System.String"
           },
-          "3": {
+          "4": {
             "Name": "orderNumber",
             "Index": -1,
             "NameInSource": "orderNumber",
             "Alias": "orderNumber",
             "Type": "System.String"
           },
-          "4": {
+          "5": {
             "Name": "reference",
             "Index": -1,
             "NameInSource": "reference",
             "Alias": "reference",
             "Type": "System.String"
           },
-          "5": {
+          "6": {
             "Name": "desiredDeliveryDate",
             "Index": -1,
             "NameInSource": "desiredDeliveryDate",
             "Alias": "desiredDeliveryDate",
             "Type": "System.String"
           },
-          "6": {
+          "7": {
             "Name": "clinic",
             "Index": -1,
             "NameInSource": "clinic",
             "Alias": "clinic",
             "Type": "System.String"
           },
-          "7": {
+          "8": {
             "Name": "buyer",
             "Index": -1,
             "NameInSource": "buyer",
             "Alias": "buyer",
             "Type": "System.String"
           },
-          "8": {
+          "9": {
             "Name": "referent",
             "Index": -1,
             "NameInSource": "referent",
             "Alias": "referent",
             "Type": "System.String"
           },
-          "9": {
+          "10": {
             "Name": "vendor",
             "Index": -1,
             "NameInSource": "vendor",
             "Alias": "vendor",
             "Type": "System.String"
-          },
-          "10": {
-            "Name": "taxIncluded",
-            "Index": -1,
-            "NameInSource": "taxIncluded",
-            "Alias": "taxIncluded",
-            "Type": "System.Boolean"
           },
           "11": {
             "Name": "totalExclTax",
@@ -167,7 +167,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_clinic",
         "Alias": "root_clinic",
-        "Key": "167647e7fc88492bb1099c4084999073",
+        "Key": "fdc135d3b2cc4963808b1f0a7721a850",
         "Columns": {
           "0": {
             "Name": "name",
@@ -197,7 +197,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines",
         "Alias": "root_lines",
-        "Key": "86e2d217aef24d828ebf7a8cd8401ecb",
+        "Key": "3b85a0fd24304b99afdb7f0b1e2f6035",
         "Columns": {
           "0": {
             "Name": "type",
@@ -262,7 +262,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines_product",
         "Alias": "root_lines_product",
-        "Key": "49b831a1893843d785a2e6143d794804",
+        "Key": "5e628d53b0684ab5963689eccf9b772b",
         "Columns": {
           "0": {
             "Name": "code",
@@ -285,7 +285,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_paymentModality",
         "Alias": "root_paymentModality",
-        "Key": "de8b165723704b68a0be31c17863269e",
+        "Key": "79465b14e8734cb781edc5a2bfb9e88a",
         "Columns": {
           "0": {
             "Name": "name",
@@ -308,7 +308,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor",
         "Alias": "root_vendor",
-        "Key": "89053e6b28d14c218f7cd8e80bfc33ea",
+        "Key": "33629eefc2ed4688af21c61cf161ab0c",
         "Columns": {
           "0": {
             "Name": "name",
@@ -352,7 +352,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor_defaultAddress",
         "Alias": "root_vendor_defaultAddress",
-        "Key": "cd9c2b5c68704cc18dc252c585235cdc",
+        "Key": "1e350f6c1a1a428e8f9c8de05cbf750a",
         "Columns": {
           "0": {
             "Name": "postalCode",
@@ -1354,7 +1354,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "P.U HT"
+                "Value": "P.U {root.taxType}"
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",
@@ -1390,7 +1390,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Montant HT"
+                "Value": "Montant {root.taxType}"
               },
               "HorAlignment": "Center",
               "VertAlignment": "Center",
