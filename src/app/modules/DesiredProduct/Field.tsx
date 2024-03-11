@@ -1,85 +1,59 @@
-import {FieldProps} from '../../../_custom/Column/controls/fields';
-import {useAuth} from '../../../_custom/hooks/UseAuth';
-import {useFormikContext} from 'formik';
-import {PurchaseOrderModel} from '../PurchaseOrder';
-import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
-import {ModelEnum} from '../types';
+import { FieldProps } from '../../../_custom/Column/controls/fields';
+import { useAuth } from '../../../_custom/hooks/UseAuth';
+import { useFormikContext } from 'formik';
+import { PurchaseOrderModel } from '../PurchaseOrder';
+import { ModelAutocompleteField } from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
+import { ModelEnum } from '../types';
 import axios from 'axios';
-import {HydraItem} from '../../../_custom/types/hydra.types';
-import {
-  CompoundFilter,
-  CompoundFilterOperator,
-  PropertyFilterOperator
-} from '../../../_custom/ListingView/Filter/Filter.types';
-import {DeliveryDepotModel} from "../DeliveryDepot";
-import {DesiredProductModel} from "./index";
+import { HydraItem } from '../../../_custom/types/hydra.types';
 
 type PartialNullable<T> = {
   [P in keyof T]?: T[P] | null;
 };
 
-export const Field = ({...props}: Pick<FieldProps, 'name'>) => {
-  const {clinic} = useAuth();
-  const {name} = props;
-  const {setFieldValue} = useFormikContext<Partial<PurchaseOrderModel>>();
-  const initialValues: PartialNullable<DeliveryDepotModel> = {
-    address: '',
-    clinic: null,
-    desiredProducts: []
-  };
+export const Field = ({ ...props }: Pick<FieldProps, 'name'>) => {
+  const { clinic } = useAuth();
+  const { name } = props;
+  const { setFieldValue } = useFormikContext<Partial<PurchaseOrderModel>>();
 
   const setValue = async (suffix: string, value: any) => {
-    await setFieldValue(name.replace('address', suffix), value);
+    await setFieldValue(name.replace('clinic', suffix), value);
   };
 
-  const handleAddressChange = async (event: React.ChangeEvent<any>, value: any) => {
-    if (Array.isArray(value)) return;
-    if (!value) return;
+  const fetchDeliveryDepots = async () => {
+    try {
+      // Récupérer les adresses des dépôts de livraison associés à la clinique connectée
+      const response = await axios.get<HydraItem<ModelEnum.DeliveryDepot>[]>(
+        `/api/delivery_depots?clinic=${clinic?.id}`
+      );
 
-    await setValue('address', value);
+      const deliveryDepots = response.data;
 
-    const address = value.address;
-    const addressUri = value['@id'];
-    const detailedProduct = await axios.get<HydraItem<ModelEnum.DeliveryDepot>>(addressUri).then(r => r.data);
+      // Extraire les adresses des dépôts de livraison
+      const depotAddresses = deliveryDepots.map((depot) => depot.address);
 
-    const desiredProduct: Partial<DesiredProductModel> = {
-      deliveryDepot: clinic?.deliveryDepots.at(0)
-    };
-    await setValue('desiredProducts', [desiredProduct]);
-  };
-
-  const deliveryDepotFilter: CompoundFilter<ModelEnum.DeliveryDepot> = {
-    operator: CompoundFilterOperator.And,
-    filters: [
-      {
-        property: 'clinic',
-        operator: PropertyFilterOperator.Equal,
-        value: clinic?.id
-      }
-    ]
+      return depotAddresses;
+    } catch (error) {
+      console.error('Error fetching delivery depots:', error);
+      return [];
+    }
   };
 
   return (
     <div className='mw-250px'>
       <ModelAutocompleteField
         modelName={ModelEnum.DeliveryDepot}
-        size='sm'
-        onChange={handleAddressChange}
-        getParams={(filter) => ({
-          ...filter, // Ajoutez d'autres filtres existants s'il y en a
-          operator: CompoundFilterOperator.And,
-          filters: [
-            ...(filter.filters || []), // Ajoutez d'autres filtres existants s'il y en a
-            {
-              property: 'clinic',
-              operator: PropertyFilterOperator.Equal,
-              value: clinic?.id
-            }
-          ]
-        })}
+      //  name={name}
+        //options={await fetchDeliveryDepots()} // Utilisez le tableau directement
+        onChange={async (event, value) => {
+          if (!value) return;
+
+          await setValue('clinic', value);
+
+          // Autres traitements
+        }}
         {...props}
       />
-
     </div>
   );
 };

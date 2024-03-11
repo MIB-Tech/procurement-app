@@ -57,9 +57,7 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       fields: {
         designation: true,
         quantity: true,
-        deliveryDepot: {
-          render: ({fieldProps}) => <Field {...fieldProps}/>
-        }
+        deliveryDepot: true,
       }
     },
     {
@@ -67,7 +65,9 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       fields: {
         designation: true,
         quantity: true,
-        deliveryDepot: true
+        deliveryDepot: {
+          render: ({fieldProps}) => <Field {...fieldProps}/>
+        }
       }
     }
   ]
