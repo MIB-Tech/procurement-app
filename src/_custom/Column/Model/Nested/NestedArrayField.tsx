@@ -1,8 +1,8 @@
-import React, {useMemo, useRef} from 'react';
+import React, {useMemo, useRef, useState} from 'react'
 import {Field, FieldProps} from '../../controls/fields';
 import {ColumnMapping, CreateViewType, Model, UpdateViewType, ViewEnum} from '../../../types/ModelMapping';
 import {FieldArray, useField, useFormikContext} from 'formik';
-import {useMapping} from '../../../hooks/UseMapping';
+import {getSearchableColumns, useMapping} from '../../../hooks/UseMapping'
 import {getDefaultFields, getInitialValues, getRoutePrefix, stringToI18nMessageKey} from '../../../utils';
 import {ValueField} from '../../ValueField';
 import {AbstractModel, ColumnTypeEnum} from '../../../types/types';
@@ -40,6 +40,7 @@ export const NestedArrayField = <M extends ModelEnum>(
     extraAttribute?: Record<any, any>,
     view?: CreateViewType<M> | UpdateViewType<M>
   }) => {
+  const [importing, setImporting] = useState<boolean>();
   const {trans} = useTrans();
   const {values: {id}} = useFormikContext<AbstractModel>();
   const [{value: baseItems}, , {setValue}] = useField<Array<HydraItem<M>>>({name});
@@ -134,14 +135,17 @@ export const NestedArrayField = <M extends ModelEnum>(
                         style={{display: 'none'}} // Hide the file input
                         ref={fileInputRef}
                         onChange={async e => {
+                          setImporting(true)
                           const file = await e.target.files?.[0]?.arrayBuffer();
                           const workbook = read(file/*, { dateNF: 'yyyy-mm-dd' }*/);
                           let data: Array<Partial<Model<M>>> = [];
-                          for (const row of getData<M>({workbook, mapping})) {
+                          const rows = getData<M>({workbook, mapping})
+                          for (const row of rows) {
                             let _item: Partial<Model<M>> = initialValues;
                             for (const columnName of Object.keys(mapping) as Array<keyof Model<M>>) {
                               const columnMapping = columnDef[columnName] as ColumnMapping<M>;
                               const value = row[columnName];
+                              // console.log(value, columnName)
                               switch (columnMapping.type) {
                                 case undefined:
                                 case ColumnTypeEnum.String:
@@ -157,8 +161,7 @@ export const NestedArrayField = <M extends ModelEnum>(
                                   break;
                                 default:
                                   const path = `/base` + getRoutePrefix(columnMapping.type);
-                                  // TODO searchableColumnNames.
-                                  const searchableColumnNames: string[] = ['code'];
+                                  const searchableColumnNames: string[] = getSearchableColumns({modelName: columnMapping.type});
                                   const filter: CompoundFilter<any> = {
                                     operator: CompoundFilterOperator.Or,
                                     filters: searchableColumnNames.map(columnName => ({
@@ -173,12 +176,13 @@ export const NestedArrayField = <M extends ModelEnum>(
                                   _item[columnName] = response.data['hydra:member'].at(0);
                               }
                             }
-
-                            data.push(_item);
+                            // FIXME: Removing spread operator causes duplicated lines
+                            data.push({..._item});
                           }
-                          console.log(data);
+                          // console.log(data);
                           // @ts-ignore
-                          setValue([...data, ...items]);
+                          await setValue([...data, ...items]);
+                          setImporting(false)
                         }}
                       />
                       <IconButton
@@ -192,6 +196,8 @@ export const NestedArrayField = <M extends ModelEnum>(
                         variant='primary'
                         size='2x'
                         onClick={() => fileInputRef.current?.click()}
+                        loading={importing}
+                        loadingLabel={false}
                       />
                       <IconButton
                         path='/files/fil009.svg'
