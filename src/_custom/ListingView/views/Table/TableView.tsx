@@ -1,18 +1,18 @@
-import {TitleContent} from './HeaderCell';
-import React, {FC, HTMLAttributes, ReactNode} from 'react';
-import {CellContent} from './BodyCell';
-import {Skeleton} from '@mui/material';
-import {ColumnMapping, ListingColumns, Model} from '../../../types/ModelMapping';
-import {HydraItem} from '../../../types/hydra.types';
-import {Trans} from '../../../components/Trans';
-import clsx from 'clsx';
-import {ModelCell, ModelCellSkeleton} from './ModelCell';
-import {useMapping} from '../../../hooks/UseMapping';
-import {stringToI18nMessageKey} from '../../../utils';
-import {PaginationInput} from '../../Pagination/Pagination.types';
-import {ModelEnum} from '../../../../app/modules/types';
-import {Checkbox} from '../../../Column/Boolean/Chechbox/Checkbox';
-import {ColumnTypeEnum} from '../../../types/types';
+import {TitleContent} from './HeaderCell'
+import React, {FC, HTMLAttributes, ReactNode} from 'react'
+import {CellContent} from './BodyCell'
+import {Skeleton} from '@mui/material'
+import {ColumnMapping, ListingColumns, Model} from '../../../types/ModelMapping'
+import {HydraItem} from '../../../types/hydra.types'
+import {Trans} from '../../../components/Trans'
+import clsx from 'clsx'
+import {ModelCell, ModelCellSkeleton} from './ModelCell'
+import {useMapping} from '../../../hooks/UseMapping'
+import {stringToI18nMessageKey} from '../../../utils'
+import {PaginationInput} from '../../Pagination/Pagination.types'
+import {ModelEnum} from '../../../../app/modules/types'
+import {Checkbox} from '../../../Column/Boolean/Chechbox/Checkbox'
+import {ColumnTypeEnum} from '../../../types/types'
 
 
 export type TableViewColumnMapping<M extends ModelEnum> = ColumnMapping<M>
@@ -141,15 +141,16 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
               </td>
               {columnNames.map(columnName => {
                 const column = columns[columnName];
+                const def = columnDef[columnName] as ColumnMapping<M> || undefined;
 
                 return (
-                  <td key={`${item.id}.${columnName.toString()}`}>
+                  <td key={`${item.id}.${columnName.toString()}`} className={clsx(def?.type === ColumnTypeEnum.Number && 'text-end')}>
                     {typeof column === 'object' && column.render ?
                       column.render?.({item}) :
                       <CellContent
                         // FIXME
                         value={item[columnName as keyof Model<M>]}
-                        {...columnDef[columnName]}
+                        {...def}
                       />
                     }
                   </td>

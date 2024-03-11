@@ -10,7 +10,7 @@ import {ListingView} from '../ListingView/ListingView';
 import {Link, useParams} from 'react-router-dom';
 import {DetailViewColumnContent} from './DetailViewColumnContent';
 import {useAuth} from '../hooks/UseAuth';
-import {camelCaseToDash} from '../utils';
+import {camelCaseToDash, stringToI18nMessageKey} from '../utils'
 import {StringFormat} from '../Column/String/StringColumn';
 import {RouteLinks} from '../components/RouteAction/RouteLinks';
 import {useProperty} from '../hooks/UseProperty';
@@ -62,7 +62,7 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {modelN
   return (
     <div className='card mb-3'>
       <div className={clsx('card-body', children && 'pb-0')}>
-        <div className={clsx('d-flex flex-wrap flex-xs-nowrap', children && 'mb-5')}>
+        <div className={clsx('d-flex flex-wrap flex-xs-nowrap', children && 'mb-3')}>
           {isLoading && (
             <ModelCellSkeleton
               iconSize={75}
@@ -71,7 +71,7 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {modelN
             />
           )}
           {item?.['@icon'] && (
-            <div className='symbol -symbol-75px me-3'>
+            <div className='symbol symbol-50px me-3'>
               <div className='symbol-label bg-light-primary'>
                 <SVG path={item['@icon']} size='3x' variant='primary'/>
               </div>
@@ -79,15 +79,15 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {modelN
           )}
           <div className='flex-grow-1'>
             <div className='d-flex justify-content-between align-items-start flex-wrap gap-3'>
-              <div className='d-flex flex-column'>
-                <div className='d-flex align-items-center'>
-                  <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bold me-3'>
+              <div className="d-flex flex-column">
+                <div className="d-flex flex-wrap fw-semibold fs-5 text-gray-500 ">
+                  {item && <Trans id={stringToI18nMessageKey(item?.['@type'])} />}
+                </div>
+                <div className="d-flex align-items-center">
+                  <a href="#" className="text-gray-800 text-hover-primary fs-2 fw-bold mt-1 me-3">
                     {item?.['@title']}
                   </a>
                 </div>
-                {/*<div className='d-flex flex-wrap fw-semibold fs-5 text-gray-500'>*/}
-                {/*  {uid !== item?.['@subTitle'] && item?.['@subTitle']}*/}
-                {/*</div>*/}
                 {/*<Help overlay='Copier' placement='right' className='mt-1 d-flex'>*/}
                 {/*  <a*/}
                 {/*    href='#'*/}
@@ -106,7 +106,7 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {modelN
                 {/*  </a>*/}
                 {/*</Help>*/}
               </div>
-              <div className='d-flex gap-3'>
+              <div className="d-flex gap-3">
                 {item && customActions?.map(({render}, index) => (
                   <Fragment key={index}>
                     {render({item})}
