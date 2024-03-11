@@ -54,7 +54,16 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   },
   currency: true,
   category: true,
-  clinic: true,
+  clinic: {
+    render: ({fieldProps, item}) => (
+      <ModelAutocompleteField
+        modelName={ModelEnum.Clinic}
+        {...fieldProps}
+        size="sm"
+        disabled={item.purchaseOrderProducts.length > 0}
+      />
+    ),
+  },
   paymentModality: true,
   validationStatus: {
     grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin],
@@ -271,7 +280,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         ref: true,
         externalRef: true,
         desiredDeliveryDate: true,
-        buyer:true,
+        buyer: true,
         vendor: true,
         currency: true,
         category: true,
@@ -287,13 +296,13 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         clinicStatus: true
       },
       customActions: [
-        {render: ({item}) => <PrintPurchaseOrderButton item={item} />},
+        {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},
         {
           render: ({item}) => {
             const {status, invoice} = item
             if (status !== QuantityStatusEnum.FullyReceived || invoice) return
 
-            return <GenerateInvoiceButton item={item} />
+            return <GenerateInvoiceButton item={item}/>
           },
         },
         {
@@ -302,7 +311,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
 
             return status !== QuantityStatusEnum.FullyReceived &&
               validationStatus === ValidationStatusEnum.Validated &&
-              <GenerateReceiptButton item={item} />
+                <GenerateReceiptButton item={item}/>
 
           },
         },
