@@ -268,7 +268,6 @@ type I18nMessageKey =
   | 'NATURE'
   | 'EDIT_ACTION_HELPER'
   | 'OVERVIEW'
-  | 'COMPANY_CALLED_AT'
   | 'DURATION'
   | 'IS_EXTERNAL'
   | 'DOWNTIME'
