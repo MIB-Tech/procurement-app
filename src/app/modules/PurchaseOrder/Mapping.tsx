@@ -79,7 +79,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
         xl: 12,
       },
     },
-    display: ({item}) => typeof item.taxIncluded === 'boolean' && !!item.vendor,
+    display: ({item}) => typeof item.taxIncluded === 'boolean' && !!item.vendor && !!item.clinic,
   },
   attachments: {
     slotProps: {
