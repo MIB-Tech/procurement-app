@@ -73,7 +73,8 @@ export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
           const desiredProduct: Partial<DesiredProductModel> = {
             designation,
             quantity: 0,
-            address: clinic?.['@title'] || 'AKDITAL HOLDING'
+            deliveryDepot: clinic?.deliveryDepots.at(0)
+          //  address: clinic?.['@title'] || 'AKDITAL HOLDING'
           };
           await setValue('desiredProducts', [desiredProduct]);
           // pricing
