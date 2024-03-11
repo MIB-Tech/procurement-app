@@ -12,6 +12,6 @@ type Model = {
 
 export type InvoicePrint = {
   bill: string,
-} & Omit<PurchaseOrderPrint, 'clinic'>
+} & Omit<PurchaseOrderPrint, 'clinic' | 'taxType'>
 
 export default Model;
