@@ -4,6 +4,8 @@ import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {number} from 'yup';
 import {QUANTITY_STATUS_OPTIONS} from "../PurchaseOrder/Model";
+import React from "react";
+import {Field} from "./Field";
 
 
 const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
@@ -55,7 +57,9 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       fields: {
         designation: true,
         quantity: true,
-        deliveryDepot: true
+        deliveryDepot: {
+          render: ({fieldProps}) => <Field {...fieldProps}/>
+        }
       }
     },
     {
