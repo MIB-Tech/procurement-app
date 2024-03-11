@@ -34,7 +34,8 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
 
     return {
       ...item,
-      taxType: 'HT',
+      buyer: item.buyer?.['@title'],
+      taxType: item.taxIncluded ? 'TTC' : 'HT',
       totalInclTaxNumber: item.totalInclTax,
       totalExclTax: getNumberUnit({value: item.totalExclTax, precision: 2, unit}),
       totalInclTax: getNumberUnit({value: item.totalInclTax, precision: 2}),
