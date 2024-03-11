@@ -62,12 +62,13 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
     return def.type === parentModelName && !('multiple' in def);
   });
 
-  useEffect(() => {
-
-    return () => {
-      setState({...state, selectedItems: []});
-    };
-  }, [modelName]);
+  // FIXME: causes state reset
+  // useEffect(() => {
+  //
+  //   return () => {
+  //     setState({...state, selectedItems: []});
+  //   };
+  // }, [modelName]);
 
   const {dateFields = []} = view;
   const filter = useMemo<Filter<M>>(() => {

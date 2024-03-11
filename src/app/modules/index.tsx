@@ -87,8 +87,7 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Bloc]: BLOC_MAPPING,
   [ModelEnum.Service]: SERVICE_MAPPING,
   [ModelEnum.Clinic]: CLINIC_MAPPING,
-  [ModelEnum.DeliveryDepot]: DELIVERY_DEPOT_MAPPING,
-
+  [ModelEnum.DeliveryDepot]: DELIVERY_DEPOT_MAPPING
 };
 
 type ListingState = {
