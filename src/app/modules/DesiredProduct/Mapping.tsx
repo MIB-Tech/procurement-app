@@ -42,80 +42,88 @@ const DeliveryDepotField = ({...props}: FieldProps) => {
   )
 }
 
+// @ts-ignore
+// @ts-ignore
 const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
-  modelName: ModelEnum.DesiredProduct,
-  columnDef: {
-    id: {
-      type: ColumnTypeEnum.Number
-    },
-    uid: {
-      type: ColumnTypeEnum.String
-    },
-    designation: {
-      type: ColumnTypeEnum.String
-    },
-    quantity: {
-      type: ColumnTypeEnum.Number,
-      title: 'RECEIVED_QUANTITY',
-      schema: number().positive()
-    },
-    restQuantity: {
-      type: ColumnTypeEnum.Number
-    },
-    status: {
-      type: ColumnTypeEnum.String,
-      format: StringFormat.Select,
-      title: 'DELIVERY_STATUS',
-      options: QUANTITY_STATUS_OPTIONS
-    },
-    purchaseOrderProduct: {
-      type: ModelEnum.PurchaseOrderProduct
-    },
-    receiptProduct: {
-      type: ModelEnum.ReceiptProduct
-    },
-    deliveryDepot: {
-      type: ModelEnum.DeliveryDepot,
-      nullable: true
-    }
-  },
-  views: [
-    {
-      type: ViewEnum.Listing,
-      columns: {
-        deliveryDepot: true,
-        quantity: true,
+    modelName: ModelEnum.DesiredProduct,
+    columnDef: {
+      id: {
+        type: ColumnTypeEnum.Number
+      },
+      uid: {
+        type: ColumnTypeEnum.String
+      },
+      designation: {
+        type: ColumnTypeEnum.String
+      },
+      quantity: {
+        type: ColumnTypeEnum.Number,
+        title: 'RECEIVED_QUANTITY',
+        schema: number().positive()
+      },
+      restQuantity: {
+        type: ColumnTypeEnum.Number
+      },
+      status: {
+        type: ColumnTypeEnum.String,
+        format: StringFormat.Select,
+        title: 'DELIVERY_STATUS',
+        options: QUANTITY_STATUS_OPTIONS
+      },
+      purchaseOrderProduct: {
+        type: ModelEnum.PurchaseOrderProduct
+      },
+      receiptProduct: {
+        type: ModelEnum.ReceiptProduct
+      },
+      deliveryDepot: {
+        type: ModelEnum.DeliveryDepot,
+        nullable: true
       }
     },
-    {
-      type: ViewEnum.Create,
-      fields: {
-        designation: true,
-        quantity: true,
-        deliveryDepot: {
-          render: ({fieldProps}) => (
-            <DeliveryDepotField
-              {...fieldProps}
-            />
-          )
+    views: [
+      {
+        type: ViewEnum.Listing,
+        columns: {
+          deliveryDepot: true,
+          quantity: true,
+        }
+      },
+      {
+        type: ViewEnum.Create,
+        fields: {
+          designation: true,
+          quantity: true,
+          deliveryDepot: {
+            render: ({fieldProps}) => (
+              <DeliveryDepotField
+                {...fieldProps}
+              />
+            ),
+          }
         },
+
+      },
+      {
+        type: ViewEnum.Update,
+        fields:
+          {
+            designation: true,
+            quantity:
+              true,
+            deliveryDepot:
+              {
+                render: ({fieldProps}) => (
+                  <DeliveryDepotField
+                    {...fieldProps}
+                  />
+                )
+              }
+            ,
+          }
       }
-    },
-    {
-      type: ViewEnum.Update,
-      fields: {
-        designation: true,
-        quantity: true,
-        deliveryDepot: {
-          render: ({fieldProps}) => (
-            <DeliveryDepotField
-              {...fieldProps}
-            />
-          )
-        },
-      }
-    }
-  ]
-};
+    ]
+  }
+;
 
 export default mapping;
