@@ -4,7 +4,8 @@ import {UpdateViewType, ViewEnum} from '../types/ModelMapping';
 import {UpdateViewProps} from './UpdateView.types';
 import {ModelEnum} from '../../app/modules/types';
 import {FormView} from '../FormView/FormView';
-import {ItemOverview} from '../DetailView/DetailView';
+
+import {ItemOverview} from '../DetailView/ItemOverview'
 
 
 export const DEFAULT_UPDATE_VIEW: UpdateViewType<any> = {
