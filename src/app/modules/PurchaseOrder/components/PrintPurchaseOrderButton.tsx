@@ -1,22 +1,22 @@
-import React, {FC, useMemo, useState} from 'react';
-import {CustomItemActionProps} from '../../../../_custom/types/ModelMapping';
-import {ModelEnum} from '../../types';
-import {useUri} from '../../../../_custom/hooks/UseUri';
-import {useItemQuery} from '../../../../_custom/hooks/UseItemQuery';
+import React, {FC, useMemo, useState} from 'react'
+import {CustomItemActionProps} from '../../../../_custom/types/ModelMapping'
+import {ModelEnum} from '../../types'
+import {useUri} from '../../../../_custom/hooks/UseUri'
+import {useItemQuery} from '../../../../_custom/hooks/UseItemQuery'
 import {
   LineType,
   PurchaseOrderComponentPrint,
   PurchaseOrderLinePrint,
   PurchaseOrderPrint,
-  PurchaseOrderProductPrint
-} from '../Model';
-import {getNumberUnit} from '../../../../_custom/components/NumberUnit';
-import moment from 'moment';
-import {DiscountType} from '../../PurchaseOrderProduct/Model';
-import {Button} from '../../../../_custom/components/Button';
-import {Trans} from '../../../../_custom/components/Trans';
-import {Modal} from 'react-bootstrap';
-import ReportViewer from './ReportViewer';
+  PurchaseOrderProductPrint,
+} from '../Model'
+import {getNumberUnit} from '../../../../_custom/components/NumberUnit'
+import moment from 'moment'
+import {DiscountType} from '../../PurchaseOrderProduct/Model'
+import {Button} from '../../../../_custom/components/Button'
+import {Trans} from '../../../../_custom/components/Trans'
+import {Modal} from 'react-bootstrap'
+import ReportViewer from './ReportViewer'
 
 export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder>> = ({...props}) => {
   const [open, setOpen] = useState<boolean>();
@@ -30,21 +30,34 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
   const params = useMemo<PurchaseOrderPrint | undefined>(() => {
     if (!item) return undefined;
 
-    const unit = item?.currency?.code || 'DH';
+    const {
+      taxIncluded,
+      buyer,
+      totalInclTax,
+      totalExclTax,
+      totalVatTax,
+      totalDiscount,
+      createdAt,
+      desiredDeliveryDate,
+      purchaseOrderProducts,
+      currency
+    } = item
+    const unit = currency?.code || 'DH';
+
 
     return {
       ...item,
       // @ts-ignore
-      buyer: item.buyer?.['@title'],
-      taxType: item.taxIncluded ? 'TTC' : 'HT',
-      totalInclTaxNumber: item.totalInclTax,
-      totalExclTax: getNumberUnit({value: item.totalExclTax, precision: 2, unit}),
-      totalInclTax: getNumberUnit({value: item.totalInclTax, precision: 2}),
-      totalVatTax: getNumberUnit({value: item.totalVatTax, precision: 2}),
-      totalDiscount: getNumberUnit({value: item.totalDiscount, precision: 2}),
-      createdAt: moment(item.createdAt).format('L'),
-      desiredDeliveryDate: moment(item.desiredDeliveryDate).format('L'),
-      lines: item.purchaseOrderProducts.reduce((lines, purchaseOrderProduct) => {
+      buyer: buyer?.['@title'],
+      taxType: taxIncluded ? 'TTC' : 'HT',
+      totalInclTaxNumber: totalInclTax,
+      totalExclTax: getNumberUnit({value: totalExclTax, precision: 2, unit}),
+      totalInclTax: getNumberUnit({value: totalInclTax, precision: 2}),
+      totalVatTax: getNumberUnit({value: totalVatTax, precision: 2}),
+      totalDiscount: getNumberUnit({value: totalDiscount, precision: 2}),
+      createdAt: moment(createdAt).format('L'),
+      desiredDeliveryDate: moment(desiredDeliveryDate).format('L'),
+      lines: purchaseOrderProducts.reduce((lines, purchaseOrderProduct) => {
         const precision = 2;
         const {
           designation,
@@ -52,9 +65,8 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
           discountType,
           discountValue,
           netPriceExclTax,
-          vatRate,
+          priceInclTax,
           grossPrice,
-          netPrice,
           components
         } = purchaseOrderProduct;
         const isPercentCentDiscount = discountType === DiscountType.Percent;
@@ -65,7 +77,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
             ...purchaseOrderProduct,
             type: LineType.Product,
             designation: `${designation}${note ? `\n\n${note}` : ''}`,
-            netPriceExclTax: getNumberUnit({value: netPriceExclTax, precision}),
+            netPrice: getNumberUnit({value: taxIncluded ? priceInclTax: netPriceExclTax, precision}),
             discount: getNumberUnit({
               value: isPercentCentDiscount ?
                 discountValue * 100 :
@@ -73,9 +85,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
               unit: isPercentCentDiscount ? '%' : unit,
               precision: isPercentCentDiscount ? 2 : precision,
             }),
-            vatRate: getNumberUnit({value: vatRate * 100, unit: '%', precision}),
             grossPrice: getNumberUnit({value: grossPrice, precision}),
-            netPrice: getNumberUnit({value: netPrice, precision}),
           } as PurchaseOrderProductPrint,
           ...components.map(component => ({
             type: LineType.Component,
