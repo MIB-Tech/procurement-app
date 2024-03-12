@@ -26,6 +26,8 @@ import {DesiredProductModel} from '../DesiredProduct';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
 import {PurchaseOrderProductComponentModel} from '../PurchaseOrderProductComponent';
 import {ProductField} from './ProductField';
+import {useCollectionQuery} from "../../../_custom/hooks/UseCollectionQuery";
+import {PropertyFilterOperator} from "../../../_custom/ListingView/Filter/Filter.types";
 
 type NetPriceProps = Pick<Model, 'grossPrice' | 'vatRate' | 'discountType' | 'discountValue'>
   & Pick<PurchaseOrderModel, 'taxIncluded'>
@@ -84,10 +86,18 @@ const getPriceInclTax = (item: PriceInclTaxProps) => {
 
 
 const DesiredProductsField = ({...fieldProps}: FieldProps) => {
-  const formik = useFormikContext<Partial<PurchaseOrderModel>>();
-  // if (!formik) {
-  //   return <></>;
-  // }
+  const {values: purchaseOrder} = useFormikContext<Partial<PurchaseOrderModel>>();
+  const {collection: deliveryDepots} = useCollectionQuery<ModelEnum.DeliveryDepot>({
+    modelName: ModelEnum.DeliveryDepot,
+    params: {
+      itemsPerPage: 1,
+      filter: {
+        property: 'clinic',
+        operator: PropertyFilterOperator.Equal,
+        value: purchaseOrder.clinic?.id
+      }
+    }
+  })
 
   const index = fieldProps.name.split('.').at(1);
 
@@ -96,7 +106,8 @@ const DesiredProductsField = ({...fieldProps}: FieldProps) => {
       {...fieldProps}
       modelName={ModelEnum.DesiredProduct}
       extraAttribute={{
-        designation: index && formik.values.purchaseOrderProducts?.[parseInt(index)].designation
+        designation: index && purchaseOrder.purchaseOrderProducts?.[parseInt(index)].designation,
+        deliveryDepot: deliveryDepots.at(0)
       }}
     />
   );
@@ -268,7 +279,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       format: NumberFormat.Amount,
       precision: 5,
       footer: () => <Bullet/>,
-      title:'UNIT_PRICE',
+      title: 'UNIT_PRICE',
     },
     note: {
       type: ColumnTypeEnum.String,
@@ -381,7 +392,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           )
         },
         grossPrice: true,
-       // netPrice: true,
+        // netPrice: true,
         vatRate: true,
         netPriceExclTax: true,
         priceInclTax: true,
@@ -407,7 +418,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           )
         },
         grossPrice: true,
-      //  netPrice: true,
+        //  netPrice: true,
         vatRate: true,
         netPriceExclTax: true,
         priceInclTax: true,
