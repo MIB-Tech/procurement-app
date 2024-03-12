@@ -18,6 +18,7 @@ import {filterToParams, serializeSort} from '../../../_custom/ListingView/Filter
 import {PurchaseOrderProductComponentModel} from '../PurchaseOrderProductComponent';
 import {PurchaseOrderProductModel} from './index';
 import {DiscountType} from './Model';
+import {useCollectionQuery} from "../../../_custom/hooks/UseCollectionQuery";
 
 type PartialNullable<T> = {
   [P in keyof T]?: T[P] | null;
@@ -27,6 +28,18 @@ export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
   const {clinic} = useAuth();
   const {name} = props;
   const {values: purchaseOrder, setFieldValue} = useFormikContext<Partial<PurchaseOrderModel>>();
+  const {collection: deliveryDepots} = useCollectionQuery<ModelEnum.DeliveryDepot>({
+    modelName: ModelEnum.DeliveryDepot,
+    params: {
+      itemsPerPage: 1,
+      filter: {
+        property: 'clinic',
+        operator: PropertyFilterOperator.Equal,
+        value: purchaseOrder.clinic?.id
+      }
+    }
+  })
+
   const {taxIncluded, vendor} = purchaseOrder;
   const [, , {setValue: setPurchaseOrderProduct}] = useField<HydraItem | null>({name: name.replace('.product', '')});
   // TODO GENERATE
@@ -70,10 +83,11 @@ export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
           await setValue('designation', designation);
           await setValue('note', detailedProduct.note);
           await setValue('vatRate', detailedProduct.vatRate);
+
           const desiredProduct: Partial<DesiredProductModel> = {
             designation,
             quantity: 0,
-            deliveryDepot: clinic?.deliveryDepots.at(0)
+            deliveryDepot: deliveryDepots.at(0)
           //  address: clinic?.['@title'] || 'AKDITAL HOLDING'
           };
           await setValue('desiredProducts', [desiredProduct]);

@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.4.0",
-  "ReportGuid": "85f9281176474fb08e02af652ab43010",
+  "ReportGuid": "de98482e21e440648e0c02a6e1923a3e",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1710158277374+0000)/",
+  "ReportChanged": "/Date(1710245665082+0000)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -32,7 +32,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root",
         "Alias": "root",
-        "Key": "ba468db56b424e7db3073ba5e4f71f4d",
+        "Key": "e7e3596e5a404be0a2678a28db977fd7",
         "Columns": {
           "0": {
             "Name": "taxType",
@@ -167,7 +167,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_clinic",
         "Alias": "root_clinic",
-        "Key": "fdc135d3b2cc4963808b1f0a7721a850",
+        "Key": "c110c6f5539142d0a26d992220ff2d3a",
         "Columns": {
           "0": {
             "Name": "name",
@@ -197,7 +197,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines",
         "Alias": "root_lines",
-        "Key": "3b85a0fd24304b99afdb7f0b1e2f6035",
+        "Key": "bd912d703c324072a122ff365dfe0f17",
         "Columns": {
           "0": {
             "Name": "type",
@@ -235,10 +235,10 @@
             "Type": "System.String"
           },
           "5": {
-            "Name": "netPriceExclTax",
+            "Name": "netPrice",
             "Index": -1,
-            "NameInSource": "netPriceExclTax",
-            "Alias": "netPriceExclTax",
+            "NameInSource": "netPrice",
+            "Alias": "netPrice",
             "Type": "System.String"
           },
           "6": {
@@ -262,7 +262,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines_product",
         "Alias": "root_lines_product",
-        "Key": "5e628d53b0684ab5963689eccf9b772b",
+        "Key": "382c98d492794cf5bac01f4efb3d1ca2",
         "Columns": {
           "0": {
             "Name": "code",
@@ -285,7 +285,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_paymentModality",
         "Alias": "root_paymentModality",
-        "Key": "79465b14e8734cb781edc5a2bfb9e88a",
+        "Key": "cf6aaed01a114f9baae946d1cd542cf2",
         "Columns": {
           "0": {
             "Name": "name",
@@ -308,7 +308,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor",
         "Alias": "root_vendor",
-        "Key": "33629eefc2ed4688af21c61cf161ab0c",
+        "Key": "f51041fd7488460b8be9fdc7c3771a07",
         "Columns": {
           "0": {
             "Name": "name",
@@ -352,7 +352,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor_defaultAddress",
         "Alias": "root_vendor_defaultAddress",
-        "Key": "1e350f6c1a1a428e8f9c8de05cbf750a",
+        "Key": "d8cbc99a93254dd6870f12d6ee3c5a4b",
         "Columns": {
           "0": {
             "Name": "postalCode",
@@ -1733,7 +1733,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root_lines_product.root_lines.netPriceExclTax}"
+                "Value": "{root_lines_product.root_lines.netPrice}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",

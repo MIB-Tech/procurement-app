@@ -78,7 +78,7 @@ export type PurchaseOrderProductPrint = {
   type: LineType.Product
   product: Pick<ProductModel, 'code'>
   grossPrice?: string
-  netPriceExclTax: string
+  netPrice: string
   discount: string
 } & Pick<PurchaseOrderProductModel, 'designation' | 'quantity'>
 export type PurchaseOrderComponentPrint = {

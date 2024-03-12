@@ -17,8 +17,8 @@ const ReportViewer: React.FC<ReportViewerProps> = ({fileName, params}) => {
     report.regData('JsonData', 'JsonData', params);
     const viewer = new Stimulsoft.Viewer.StiViewer(undefined, 'StiViewer', false);
     viewer.report = report;
-    viewer.options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.MultiplePages;
     viewer.renderHtml(id);
+    viewer.options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.MultiplePages;
   }, [fileName, params]);
 
   return <div id={id}/>;

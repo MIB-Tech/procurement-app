@@ -1,6 +1,6 @@
-import {RoleModel} from '../Role';
-import {AbstractModel, Timestamp} from '../../../_custom/types/types';
-import {ClinicModel} from "../Clinic";
+import {RoleModel} from '../Role'
+import {AbstractModel, Timestamp} from '../../../_custom/types/types'
+import {ClinicModel} from '../Clinic'
 
 
 type Model = {
@@ -14,4 +14,4 @@ type Model = {
   clinics: Array<ClinicModel>
 } & Timestamp & AbstractModel
 
-export default Model;
+export default Model
