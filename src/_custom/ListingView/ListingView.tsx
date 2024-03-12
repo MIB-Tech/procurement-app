@@ -51,16 +51,12 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
     itemOperationRoutes,
     bulkActions
   } = view;
-  // TODO: embedded state
   const [state, setState] = useRecoilState(LISTING_FAMILY({modelName, embedded: !!parentModelName}));
   const {selectedItems, basicFilter, ...params} = state;
   const {sort, page, itemsPerPage, mode, search} = params;
   const isCalendar = mode === ListingModeEnum.Calendar;
-  const parentProperty = (Object.keys(columnDef) as Array<keyof Model<M>>).find(columnName => {
-    const def = columnDef[columnName];
-
-    return def.type === parentModelName && !('multiple' in def);
-  });
+  const columnNames = (Object.keys(columnDef) as Array<keyof Model<M>>)
+  const parentProperty = columnNames.find(columnName => columnDef[columnName].type === parentModelName);
 
   // FIXME: causes state reset
   // useEffect(() => {

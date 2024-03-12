@@ -4,7 +4,43 @@ import {ModelEnum} from '../types';
 import {StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {number} from 'yup';
 import {QUANTITY_STATUS_OPTIONS} from "../PurchaseOrder/Model";
+import {ModelAutocompleteField} from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import {FieldProps} from "../../../_custom/Column/controls/fields";
+import {
+  CompoundFilter,
+  CompoundFilterOperator,
+  PropertyFilterOperator
+} from "../../../_custom/ListingView/Filter/Filter.types";
+import {useFormikContext} from "formik";
+import {PurchaseOrderModel} from "../PurchaseOrder";
 
+
+const DeliveryDepotField = ({...props}: FieldProps) => {
+  const {values: {clinic}} = useFormikContext<Partial<PurchaseOrderModel>>();
+
+  return (
+    <ModelAutocompleteField
+      modelName={ModelEnum.DeliveryDepot}
+      {...props}
+      size='sm'
+      getParams={filter => {
+        if (!clinic) return filter
+        const _filter: CompoundFilter<ModelEnum.DeliveryDepot> = {
+          operator: CompoundFilterOperator.And,
+          filters: [
+            filter,
+            {
+              property: 'clinic',
+              operator: PropertyFilterOperator.Equal,
+              value: clinic?.id
+            }
+          ]
+        }
+        return _filter
+      }}
+    />
+  )
+}
 
 const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
   modelName: ModelEnum.DesiredProduct,
@@ -39,7 +75,8 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       type: ModelEnum.ReceiptProduct
     },
     deliveryDepot: {
-      type: ModelEnum.DeliveryDepot
+      type: ModelEnum.DeliveryDepot,
+      nullable: true
     }
   },
   views: [
@@ -55,7 +92,13 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       fields: {
         designation: true,
         quantity: true,
-        deliveryDepot: true
+        deliveryDepot: {
+          render: ({fieldProps}) => (
+            <DeliveryDepotField
+              {...fieldProps}
+            />
+          )
+        },
       }
     },
     {
@@ -63,7 +106,13 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
       fields: {
         designation: true,
         quantity: true,
-        deliveryDepot: true
+        deliveryDepot: {
+          render: ({fieldProps}) => (
+            <DeliveryDepotField
+              {...fieldProps}
+            />
+          )
+        },
       }
     }
   ]

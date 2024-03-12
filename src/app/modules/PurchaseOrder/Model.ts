@@ -99,9 +99,10 @@ export type PurchaseOrderPrint = {
   } & Pick<VendorModel, 'name' | 'phoneNumber' | 'ice'>
   //
   lines: Array<PurchaseOrderLinePrint>
+  reference?: string,
   // FIXME
   comment?: string
-} & Pick<Model, 'orderNumber' | 'createdAt' | 'ref'>
+} & Pick<Model, 'orderNumber' | 'createdAt'>
 
 
 export default Model;

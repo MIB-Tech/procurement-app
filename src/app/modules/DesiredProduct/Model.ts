@@ -11,7 +11,7 @@ type Model = {
   quantity: number
   receiptProduct?: ReceiptProductModel
   purchaseOrderProduct: PurchaseOrderProductModel
-  deliveryDepot: DeliveryDepotModel
+  deliveryDepot?: DeliveryDepotModel
   readonly status: QuantityStatusEnum
   readonly restQuantity: number
 } & AbstractModel

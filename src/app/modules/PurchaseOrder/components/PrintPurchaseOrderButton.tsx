@@ -40,7 +40,8 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
       createdAt,
       desiredDeliveryDate,
       purchaseOrderProducts,
-      currency
+      currency,
+      ref
     } = item
     const unit = currency?.code || 'DH';
 
@@ -49,6 +50,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
       ...item,
       // @ts-ignore
       buyer: buyer?.['@title'],
+      reference: ref,
       taxType: taxIncluded ? 'TTC' : 'HT',
       totalInclTaxNumber: totalInclTax,
       totalExclTax: getNumberUnit({value: totalExclTax, precision: 2, unit}),
