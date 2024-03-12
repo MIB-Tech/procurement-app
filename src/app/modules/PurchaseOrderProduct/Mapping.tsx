@@ -138,7 +138,9 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
       <QuantityField {...fieldProps} />
     )
   },
-  grossPrice: true,
+  grossPrice: {
+    render: ({item}) => <NumberUnit value={item.grossPrice} />
+  },
   note: true,
   discountType: {
     defaultValue: DiscountType.Percent,
@@ -191,7 +193,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
     render: ({fieldProps}) => <DesiredProductsField {...fieldProps}/>
   },
   components: {
-    display: props => false, // TODO
+    display: () => false, // TODO
     render: ({item, fieldProps}) => {
       const view: CreateViewType<ModelEnum.PurchaseOrderProductComponent> | UpdateViewType<ModelEnum.PurchaseOrderProductComponent> = {
         type: item.id ? ViewEnum.Update : ViewEnum.Create,
@@ -266,7 +268,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       format: NumberFormat.Amount,
       precision: 5,
       footer: () => <Bullet/>,
-      title:'P_U'
+      title:'UNIT_PRICE',
     },
     note: {
       type: ColumnTypeEnum.String,
