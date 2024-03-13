@@ -37,13 +37,13 @@ export const PrintReceiptButton: FC<CustomItemActionProps<ModelEnum.Receipt>> = 
             ...receiptProduct,
             type: LineType.Product,
             reference: product.code,
-            name: `${designation}${note ? `\n\n${note}` : ''}`,
+            designation: `${designation}${note ? `\n\n${note}` : ''}`,
             desiredProductQuantity: quantity,
           } as ReceiptLineProductPrint,
           ...components.map(component => ({
             type: LineType.Component,
             reference: component.purchaseOrderProductComponent.product.code,
-            name: component.purchaseOrderProductComponent.designation,
+            designation: component.purchaseOrderProductComponent.designation,
             desiredProductQuantity: component.purchaseOrderProductComponent.quantity,
             quantity: component.quantity,
           } as ReceiptLineComponentPrint))
