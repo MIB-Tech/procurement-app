@@ -4,6 +4,7 @@ import {VendorModel} from '../Vendor';
 import {PurchaseOrderModel} from '../PurchaseOrder';
 import {LineType, PurchaseOrderPrint} from '../PurchaseOrder/Model';
 import {PaymentModalityModel} from '../PaymentModality';
+import {ClinicModel} from '../Clinic'
 
 
 type Model = {
@@ -14,12 +15,13 @@ type Model = {
   readonly vendor: VendorModel
   readonly paymentModality: PaymentModalityModel
   readonly purchaseOrders: Array<PurchaseOrderModel>
+  readonly clinic?: ClinicModel,
 } & AbstractModel
 
 export type ReceiptLineProductPrint = {
   type: LineType.Product
   reference: string
-  name: string
+  designation: string
 } & Pick<ReceiptProductModel, 'quantity' | 'desiredProductQuantity'>
 export type ReceiptLineComponentPrint = {
   type: LineType.Component
@@ -27,6 +29,7 @@ export type ReceiptLineComponentPrint = {
 export type ReceiptPrintLine = ReceiptLineProductPrint | ReceiptLineComponentPrint
 export type ReceiptPrint = {
   lines: Array<ReceiptPrintLine>
+  clinic?: Pick<ClinicModel, 'name' |'address'>
 } & Pick<Model, 'receiptNumber' | 'receivedAt'>
   & Pick<PurchaseOrderPrint, 'vendor' | 'paymentModality' | 'comment'>
 
