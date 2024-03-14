@@ -80,11 +80,18 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
                 </div>
               </div>
             </th>
-            {columnNames.map(columnName => (
-              <th key={columnName.toString()} className='text-truncate text-uppercase'>
-                <TitleContent columnName={columnName} title={columnDef[columnName]?.title} />
-              </th>
-            ))}
+            {columnNames.map(columnName => {
+              const def = columnDef[columnName] as ColumnMapping<M> || undefined;
+
+              return (
+                <th
+                  key={columnName.toString()}
+                  className={clsx('text-truncate text-uppercase', def?.type === ColumnTypeEnum.Number && 'text-end')}
+                >
+                  <TitleContent columnName={columnName} title={columnDef[columnName]?.title} />
+                </th>
+              )
+            })}
             {renderAction && <th className='text-end' />}
           </tr>
         )}
@@ -190,7 +197,7 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
               }
 
               return (
-                <td key={columnName.toString()} className='text-truncate text-uppercase'>
+                <td key={columnName.toString()} className={clsx('text-truncate text-uppercase', columnMapping?.type === ColumnTypeEnum.Number && 'text-end')}>
                   {columnMapping && (
                     <>
                       {columnMapping.footer?.({value, collection: data}) || (
