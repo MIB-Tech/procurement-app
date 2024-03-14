@@ -13,7 +13,6 @@ export const useCurrentOperation: () => OperationModel | undefined = () => {
   const pathnameParts = pathname.split('/').filter(part => part !== '');
   const partCount = ['update', 'delete'].includes(pathnameParts.at(2) || '') ? 3 : 2
   const parts = pathnameParts.slice(0, partCount);
-  console.log(parts)
 
   const newPathname = `/${parts.join('/')}`;
 
