@@ -10,11 +10,15 @@ import {OperationModel} from '../../../../../app/modules/Operation';
 export const useCurrentOperation: () => OperationModel | undefined = () => {
   const {operations, getPath} = useAuth();
   const {pathname} = useLocation();
+  const pathnameParts = pathname.split('/').filter(part => part !== ''); // Split the pathname by '/' and filter out empty strings
+  const firstTwoItems = pathnameParts.slice(0, 2); // Take the first two items
+
+  const newPathname = `/${firstTwoItems.join('/')}`;
 
   return operations.find(({suffix, resource}) => {
     const path = getPath({suffix, resourceName: resource.name});
 
-    return matchPath(path, pathname);
+    return matchPath(path, newPathname);
   });
 };
 
