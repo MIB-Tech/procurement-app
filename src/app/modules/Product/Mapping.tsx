@@ -212,6 +212,9 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     {
       type: ViewEnum.Detail,
       columns: {
+        code: true,
+        designation: true,
+        note: true,
         category: true,
         section: true,
         measurementUnit: true,
