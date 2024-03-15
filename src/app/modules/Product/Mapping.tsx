@@ -6,13 +6,11 @@ import {StringFormat} from '../../../_custom/Column/String/StringColumn'
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn'
 import {PRODUCT_TYPES, ProductTypeEnum} from './Model'
 import React from 'react'
-import {StringField} from '../../../_custom/Column/String/StringField'
 import {FieldProps} from '../../../_custom/Column/controls/fields'
 import {useTrans} from '../../../_custom/components/Trans'
 import {I18nMessageKey} from '../../../_custom/i18n/I18nMessages'
-import {useField} from 'formik'
 
-const ProductTypeField = (props: FieldProps & {disabled?: boolean}) => {
+const ProductTypeField = (props: FieldProps & { disabled?: boolean }) => {
   const {trans} = useTrans()
 
   return (

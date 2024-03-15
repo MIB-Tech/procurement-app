@@ -64,7 +64,17 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
       />
     ),
   },
-  paymentModality: true,
+  paymentModality: {
+    slotProps: {
+      root: {
+        sm: 4,
+        lg: 4,
+        md: 4,
+        xl: 4,
+
+      }
+    }
+  },
   validationStatus: {
     grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin],
     defaultValue: ValidationStatusEnum.Pending,
@@ -194,6 +204,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     paymentModality: {
       type: ModelEnum.PaymentModality,
+
+
+
+
     },
     attachments: {
       type: ModelEnum.purchaseOrderAttachment,
