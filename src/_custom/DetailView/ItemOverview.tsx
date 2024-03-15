@@ -29,9 +29,7 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {
   const view = (views?.find(view => view.type === ViewEnum.Detail) || DEFAULT_DETAIL_VIEW) as DetailViewType<M>
   const {itemOperationRoutes, customActions} = view
   const _operations = useMemo(() => {
-    if (!item) {
-      return []
-    }
+    if (!item) return []
 
     const itemOperations = operations.filter(({resource, operationType}) => {
       if (resource.name !== modelName) return false
@@ -43,7 +41,7 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {
     })
 
     return itemOperationRoutes?.({item, operations: itemOperations}) || itemOperations
-  }, [item])
+  }, [item, currentOperation])
 
   return (
     <div className="card mb-3">

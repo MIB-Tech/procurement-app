@@ -8,9 +8,6 @@ import { HydraItem } from '../../types/hydra.types';
 import { toAbsoluteApi } from '../../../app/modules/utils';
 import { bytesToSize, fileUtils } from './File.utils';
 
-
-const width = 150;
-
 export type FileProps = {
   file: HydraItem
   isUploading?: boolean
@@ -41,25 +38,21 @@ export const File: FC<FileProps> = ({ file, isUploading, onDelete, className }) 
 
   return (
     <div className={clsx('card card-bordered', className)}>
-      <div
-        className='card-body text-center position-relative'
-        style={{ width }}
-      >
-        <div>
-          {preview && contentUrl ?
-            <LazyLoad height={200}>
-              <div className='symbol symbol-75px'>
-                <img src={toAbsoluteApi(contentUrl)} alt={fileName} />
-              </div>
-            </LazyLoad> :
-            <FileIcon extension={ext} {...style} />
-          }
-        </div>
-        <div className='text-center'>
+      <div className='card-body p-3'>
+        <div className='d-flex align-items-center'>
+          <div className='w-25px me-3'>
+            {preview && contentUrl ?
+              <LazyLoad height={75}>
+                <div className='symbol symbol-30px'>
+                  <img src={toAbsoluteApi(contentUrl)} alt={fileName} />
+                </div>
+              </LazyLoad> :
+              <FileIcon extension={ext} {...style} />
+            }
+          </div>
           <a
-            href='src/_custom/Column/controls/components#'
+            href='#'
             className='text-gray-600 text-hover-primary d-inline-block text-truncate'
-            style={{ maxWidth: width - 10 }}
             onClick={e => {
               e.preventDefault();
               onDownload();
@@ -68,20 +61,14 @@ export const File: FC<FileProps> = ({ file, isUploading, onDelete, className }) 
           >
             {fileName}
           </a>
-          <div className='position-absolute top-0 end-0'>
-            <div className='ms-auto'>
-              {onDelete && (
-                <IconButton
-                  activeVariant='danger'
-                  path='/general/gen034.svg'
-                  onClick={() => {
-                    onDelete(file);
-                  }}
-                  size='2'
-                />
-              )}
-            </div>
-          </div>
+          {onDelete && (
+            <IconButton
+              activeVariant='danger'
+              path='/general/gen034.svg'
+              onClick={() => onDelete(file)}
+              size='2'
+            />
+          )}
         </div>
       </div>
     </div>

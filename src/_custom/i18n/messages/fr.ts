@@ -2,7 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
-  P_U: "P.U",
+  UNIT_PRICE: "P.U",
   OPERATIONS: "Operations",
   DELIVERY_DEPOTS: "Dépôts de livraison",
   DELIVERY_DEPOT: "Dépôt de livraison",
@@ -499,7 +499,6 @@ export const fr: I18nLanguage = {
   TREE_PATH: 'Chemin',
   TREE_PATH_SOURCE: 'Source de chemin',
   TYPES: 'Types',
-  UNIT_PRICE: 'Prix unitaire',
   UPDATE: 'Modifier',
   UPDATED_AT: 'Derniére modification',
   USER: 'Utilisateur',

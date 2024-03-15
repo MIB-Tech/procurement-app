@@ -38,7 +38,7 @@ export const FileUploaderField: FC<FileUploaderFieldProps> = ({
           <File
             key={file.id}
             file={file}
-            className='mb-2 me-2 w-150px'
+            className='mb-2 me-2'
             onDelete={onDelete}
           />))}
       </div>

@@ -29,25 +29,7 @@ import {ProductField} from './ProductField';
 import {useCollectionQuery} from "../../../_custom/hooks/UseCollectionQuery";
 import {PropertyFilterOperator} from "../../../_custom/ListingView/Filter/Filter.types";
 
-type NetPriceProps = Pick<Model, 'grossPrice' | 'vatRate' | 'discountType' | 'discountValue'>
-  & Pick<PurchaseOrderModel, 'taxIncluded'>
 
-const getNetPrice = (item: NetPriceProps) => {
-  const {taxIncluded, grossPrice, vatRate, discountType, discountValue} = item;
-  if (!grossPrice) {
-    return 0;
-  }
-
-  const amount = taxIncluded ?
-    grossPrice / (1 + vatRate) :
-    grossPrice;
-
-  const discountAmount = discountType === DiscountType.Amount ?
-    discountValue :
-    amount * discountValue;
-
-  return amount - discountAmount;
-};
 
 const AmountUnit = ({getValue, defaultValue = 0}: {
   defaultValue?: number,
@@ -70,17 +52,38 @@ const AmountUnit = ({getValue, defaultValue = 0}: {
     />
   );
 };
+type NetPriceProps = Pick<Model, 'grossPrice' | 'vatRate' | 'discountType' | 'discountValue'>
+  & Pick<PurchaseOrderModel, 'taxIncluded'>
+const getNetPrice = (item: NetPriceProps) => {
+  const {taxIncluded, grossPrice, vatRate, discountType, discountValue} = item;
+  if (!grossPrice) {
+    return 0;
+  }
+
+  const amount = taxIncluded ?
+    grossPrice / (1 + vatRate) :
+    grossPrice;
+
+  const discountAmount = discountType === DiscountType.Amount ?
+    discountValue :
+    amount * discountValue;
+
+  return amount - discountAmount;
+};
 type NetPriceExclTaxProps = NetPriceProps & Pick<Model, 'quantity'>
 const getNetPriceExclTax = ({quantity, ...item}: NetPriceExclTaxProps) => getNetPrice(item) * quantity;
 type PriceInclTaxProps = NetPriceProps & Pick<Model, 'quantity'>
 const getPriceInclTax = (item: PriceInclTaxProps) => {
-  const {taxIncluded, grossPrice, vatRate, quantity} = item;
+  const {taxIncluded, grossPrice, vatRate, quantity, discountType, discountValue} = item;
   if (!vatRate) return getNetPriceExclTax(item);
 
   const netPriceExclTax = getNetPriceExclTax(item);
+  const discountAmount = discountType === DiscountType.Amount ?
+    discountValue :
+    grossPrice * discountValue;
 
   return taxIncluded ?
-    grossPrice * quantity :
+    (grossPrice - discountAmount) * quantity :
     netPriceExclTax + netPriceExclTax * vatRate;
 };
 
@@ -149,7 +152,9 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
       <QuantityField {...fieldProps} />
     )
   },
-  grossPrice: true,
+  grossPrice: {
+    render: ({item}) => <NumberUnit value={item.grossPrice} />
+  },
   note: true,
   discountType: {
     defaultValue: DiscountType.Percent,
@@ -202,7 +207,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
     render: ({fieldProps}) => <DesiredProductsField {...fieldProps}/>
   },
   components: {
-    display: props => false, // TODO
+    display: () => false, // TODO
     render: ({item, fieldProps}) => {
       const view: CreateViewType<ModelEnum.PurchaseOrderProductComponent> | UpdateViewType<ModelEnum.PurchaseOrderProductComponent> = {
         type: item.id ? ViewEnum.Update : ViewEnum.Create,
@@ -277,7 +282,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       format: NumberFormat.Amount,
       precision: 5,
       footer: () => <Bullet/>,
-      title: 'P_U'
+      title: 'UNIT_PRICE',
     },
     note: {
       type: ColumnTypeEnum.String,

@@ -54,15 +54,21 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
   views: [
     {
       type: ViewEnum.Listing,
+      filterColumns: {
+        product: {
+          quickFilter: true
+        },
+        vendor: {
+          quickFilter: true
+        },
+        applicatedAt: true
+      },
       columns: {
-        product: true,
-        vendor: true,
         purchasePriceExclTax: true,
         purchasePriceInclTax: true,
         bidPriceInclTax: true,
         applicatedAt: true,
         discountValue: true,
-
       }
     },
     {

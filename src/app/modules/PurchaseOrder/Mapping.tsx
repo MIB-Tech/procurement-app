@@ -35,7 +35,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
     defaultValue: moment().format(),
   },
   taxIncluded: {
-    defaultValue: false,
+    defaultValue: true,
     render: ({item: {purchaseOrderProducts}}) => (
       <RadioField
         size="sm"

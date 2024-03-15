@@ -1,20 +1,25 @@
-import clsx from 'clsx';
-import React, {FC} from 'react';
-import {Link, matchPath, useLocation} from 'react-router-dom';
-import {useLayout, usePageData} from '../../../core';
-import {useAuth} from '../../../../../_custom/hooks/UseAuth';
-import {SVG} from '../../../../../_custom/components/SVG/SVG';
-import {OperationModel} from '../../../../../app/modules/Operation';
+import clsx from 'clsx'
+import React, {FC} from 'react'
+import {Link, matchPath, useLocation} from 'react-router-dom'
+import {useLayout, usePageData} from '../../../core'
+import {useAuth} from '../../../../../_custom/hooks/UseAuth'
+import {SVG} from '../../../../../_custom/components/SVG/SVG'
+import {OperationModel} from '../../../../../app/modules/Operation'
 
 
 export const useCurrentOperation: () => OperationModel | undefined = () => {
   const {operations, getPath} = useAuth();
   const {pathname} = useLocation();
+  const pathnameParts = pathname.split('/').filter(part => part !== '');
+  const partCount = ['update', 'delete'].includes(pathnameParts.at(2) || '') ? 3 : 2
+  const parts = pathnameParts.slice(0, partCount);
+
+  const newPathname = `/${parts.join('/')}`;
 
   return operations.find(({suffix, resource}) => {
     const path = getPath({suffix, resourceName: resource.name});
 
-    return matchPath(path, pathname);
+    return matchPath(path, newPathname);
   });
 };
 

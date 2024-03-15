@@ -162,6 +162,10 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     paymentModality: {
       type: ModelEnum.PaymentModality,
     },
+    clinic: {
+      type: ModelEnum.PaymentModality,
+      readOnly: true
+    },
     purchaseOrders: {
       type: ModelEnum.PurchaseOrder,
       multiple: true
