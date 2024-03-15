@@ -145,7 +145,7 @@ export const LISTING_FAMILY = atomFamily<ListingState, { modelName: ModelEnum, e
         defaultValues = {
           ...defaultValues,
           sort: {
-            sortIndex: 'desc'
+            name: 'asc'
           }
         };
         break;
