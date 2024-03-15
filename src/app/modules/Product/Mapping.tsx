@@ -122,7 +122,6 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ViewEnum.Create,
       slotProps: {item: {sm: 4, md: 3, lg: 2}},
       fields: {
-        reference: true,
         productType: {
           defaultValue: ProductTypeEnum.Simple,
           render: ({fieldProps, item}) => (
@@ -151,6 +150,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
             />
           ),
         },
+        ref: true,
         category: true,
         section: true,
         mobilised: {
@@ -172,7 +172,6 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ViewEnum.Update,
       slotProps: {item: {sm: 4, md: 3, lg: 2}},
       fields: {
-        reference: true,
         designation: {
           slotProps: {root: {sm: 8, md: 6, lg: 4}},
         },
@@ -192,6 +191,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
             />
           ),
         },
+        ref: true,
         category: true,
         section: true,
         mobilised: {

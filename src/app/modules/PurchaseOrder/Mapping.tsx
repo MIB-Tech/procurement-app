@@ -350,7 +350,13 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     {
       type: ViewEnum.Update,
-      submittable: props => props.initialValues.validationStatus === ValidationStatusEnum.Pending,
+      submittable: ({formik, isGranted}) => {
+        const {validationStatus, status, invoice} =  formik.initialValues
+        const isPendingValidation =  validationStatus === ValidationStatusEnum.Pending
+        const granted = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin])
+
+        return (granted && status === QuantityStatusEnum.Unreceived && !invoice) || isPendingValidation
+      },
       slotProps: {
         item: {
           sm: 4,
@@ -438,7 +444,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         validationStatus: {
           grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin],
           defaultValue: ValidationStatusEnum.Pending,
-          display: props => !!props.item.id,
+          display: ({item}) => !!item.id,
         },
         purchaseOrderProducts: {
           slotProps: {
