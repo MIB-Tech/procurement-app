@@ -1,20 +1,21 @@
-import {ReactNode} from 'react';
-import {NumberColumn} from '../Column/Number/NumberColumn';
-import {StringColumn} from '../Column/String/StringColumn';
-import {ModelColumn} from '../Column/Model/ModelColumn';
-import {BooleanColumn} from '../Column/Boolean/BooleanColumn';
-import {ArrayColumn} from '../Column/Array/ArrayColumn';
-import {I18nMessageKey} from '../i18n/I18nMessages';
-import {UserModel} from '../../app/modules/User';
-import {RoleKeyEnum} from '../../app/modules/Role/Model';
-import {HydraItem} from './hydra.types';
-import {ModelEnum, Models} from '../../app/modules/types';
-import {Variant} from 'react-bootstrap/types';
-import {OperationModel} from '../../app/modules/Operation';
-import {GridProps} from '@mui/material';
-import {FieldProps} from '../Column/controls/fields';
-import {Input} from '../FormView/FormView.types';
-import {FormikComputedProps, FormikProps, FormikState} from 'formik';
+import {ReactNode} from 'react'
+import {NumberColumn} from '../Column/Number/NumberColumn'
+import {StringColumn} from '../Column/String/StringColumn'
+import {ModelColumn} from '../Column/Model/ModelColumn'
+import {BooleanColumn} from '../Column/Boolean/BooleanColumn'
+import {ArrayColumn} from '../Column/Array/ArrayColumn'
+import {I18nMessageKey} from '../i18n/I18nMessages'
+import {UserModel} from '../../app/modules/User'
+import {RoleKeyEnum} from '../../app/modules/Role/Model'
+import {HydraItem} from './hydra.types'
+import {ModelEnum, Models} from '../../app/modules/types'
+import {Variant} from 'react-bootstrap/types'
+import {OperationModel} from '../../app/modules/Operation'
+import {GridProps} from '@mui/material'
+import {FieldProps} from '../Column/controls/fields'
+import {Input} from '../FormView/FormView.types'
+import {FormikComputedProps, FormikState} from 'formik'
+import {Permission} from '../hooks/UseAuth'
 
 
 export type Model<M extends ModelEnum> = Models[M]
@@ -122,9 +123,13 @@ export enum MutationMode {
   Put = 'PUT',
 }
 
+type SubmittableProps<M extends ModelEnum> = {
+  formik: FormikState<Model<M> | HydraItem<M>> & FormikComputedProps<Model<M> | HydraItem<M>>
+  isGranted: (permissions: Permission[]) => boolean
+}
 export type FormViewType<M extends ModelEnum> = {
   inlineForm?: boolean
-  submittable?: (props: FormikState<Model<M> | HydraItem<M>> & FormikComputedProps<Model<M> | HydraItem<M>>) => boolean | undefined
+  submittable?: (props: SubmittableProps<M>) => boolean | undefined
   className?: string
   fields?: FormFields<M>
   slotProps?: {

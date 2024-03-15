@@ -6,13 +6,11 @@ import {StringFormat} from '../../../_custom/Column/String/StringColumn'
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn'
 import {PRODUCT_TYPES, ProductTypeEnum} from './Model'
 import React from 'react'
-import {StringField} from '../../../_custom/Column/String/StringField'
 import {FieldProps} from '../../../_custom/Column/controls/fields'
 import {useTrans} from '../../../_custom/components/Trans'
 import {I18nMessageKey} from '../../../_custom/i18n/I18nMessages'
-import {useField} from 'formik'
 
-const ProductTypeField = (props: FieldProps & {disabled?: boolean}) => {
+const ProductTypeField = (props: FieldProps & { disabled?: boolean }) => {
   const {trans} = useTrans()
 
   return (
@@ -122,7 +120,6 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ViewEnum.Create,
       slotProps: {item: {sm: 4, md: 3, lg: 2}},
       fields: {
-        reference: true,
         productType: {
           defaultValue: ProductTypeEnum.Simple,
           render: ({fieldProps, item}) => (
@@ -151,6 +148,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
             />
           ),
         },
+        ref: true,
         category: true,
         section: true,
         mobilised: {
@@ -172,7 +170,6 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       type: ViewEnum.Update,
       slotProps: {item: {sm: 4, md: 3, lg: 2}},
       fields: {
-        reference: true,
         designation: {
           slotProps: {root: {sm: 8, md: 6, lg: 4}},
         },
@@ -192,6 +189,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
             />
           ),
         },
+        ref: true,
         category: true,
         section: true,
         mobilised: {
@@ -212,6 +210,9 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     {
       type: ViewEnum.Detail,
       columns: {
+        code: true,
+        designation: true,
+        note: true,
         category: true,
         section: true,
         measurementUnit: true,

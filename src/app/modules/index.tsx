@@ -141,6 +141,14 @@ export const LISTING_FAMILY = atomFamily<ListingState, { modelName: ModelEnum, e
           }
         };
         break;
+      case ModelEnum.PaymentModality:
+        defaultValues = {
+          ...defaultValues,
+          sort: {
+            name: 'asc'
+          }
+        };
+        break;
       default:
         break;
     }

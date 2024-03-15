@@ -16,7 +16,7 @@ export type OperationPermission = {
   resourceName: ModelEnum,
   operationType: ViewEnum,
 }
-type Permission = OperationPermission | RoleKeyEnum
+export type Permission = OperationPermission | RoleKeyEnum
 
 
 export const useAuth = () => {

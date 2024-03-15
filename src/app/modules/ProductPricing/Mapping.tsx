@@ -23,26 +23,28 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
       format: NumberFormat.Amount,
       validation: {
         min: 0
-      }
+      },
+      precision: 5,
     },
     discountValue: {
       type: ColumnTypeEnum.Number,
-      format: NumberFormat.Percent,
-      precision: 2
+      format: NumberFormat.Percent
     },
     purchasePriceExclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       validation: {
         min: 0
-      }
+      },
+      precision: 5
     },
     purchasePriceInclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       validation: {
         min: 0
-      }
+      },
+      precision: 5
     },
     vendor: {
       type: ModelEnum.Vendor

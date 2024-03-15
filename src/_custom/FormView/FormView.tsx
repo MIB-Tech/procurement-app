@@ -120,7 +120,7 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
             onClick={() => formik.handleSubmit()}
             loading={mutation.isLoading || query.isLoading}
             loadingLabel={query.isLoading ? 'LOADING' : undefined}
-            disabled={submittable && !submittable(formik)}
+            disabled={submittable && !submittable({formik, isGranted})}
           >
             <Trans id='SAVE'/>
           </Button>
