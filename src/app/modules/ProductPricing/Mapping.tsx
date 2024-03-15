@@ -24,7 +24,7 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
       validation: {
         min: 0
       },
-      precision: 5
+      precision: 5,
     },
     discountValue: {
       type: ColumnTypeEnum.Number,
