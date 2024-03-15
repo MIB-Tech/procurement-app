@@ -316,7 +316,7 @@ export const fr: I18nLanguage = {
   ASSET_TYPE: 'Type d\'équipement',
   ASSET_TYPES: 'Types d\'équipement',
   CONTRACT: 'Contrat',
-  PURCHASE_PRICE_EXCL_TAX: 'Prix d\'achat HT',
+  PURCHASE_PRICE_EXCL_TAX: 'Prix d\'offre HT',
   GUARANTEED_END_DATE: 'Fin de garantie',
   INSTALLATION_TIME: 'Installation',
   CONTRACT_NUMBER: 'N° contrat',
