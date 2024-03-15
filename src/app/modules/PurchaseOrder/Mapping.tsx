@@ -194,6 +194,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     paymentModality: {
       type: ModelEnum.PaymentModality,
+
+
+
+
     },
     attachments: {
       type: ModelEnum.purchaseOrderAttachment,
