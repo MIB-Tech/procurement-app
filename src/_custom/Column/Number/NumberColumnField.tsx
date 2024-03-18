@@ -20,7 +20,7 @@ export const NumberColumnField: FC<Pick<NumberColumn<any>, 'format'> & FieldProp
       return (
         <NumberField
           {...props}
-          value={_.round(field.value * 100, 2)}
+          value={_.round(field.value * 100, props.precision || 2)}
           onChange={e => setValue(parseFloat(e.target.value) / 100)}
         />
       );
