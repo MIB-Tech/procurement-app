@@ -46,18 +46,17 @@ const mapping: ModelMapping<ModelEnum.VendorAddress> = {
         postalCode: true,
         cityName: true,
         isMain: true,
-        vendor: true
+        // vendor: true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
-        // name: true,
         address: true,
         postalCode: true,
         cityName: true,
         isMain: true,
-        vendor: true
+        // vendor: true
       }
     },
     {
