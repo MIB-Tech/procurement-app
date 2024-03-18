@@ -1,6 +1,7 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
+import {CreateViewType, ModelMapping, UpdateViewType, ViewEnum} from '../../../_custom/types/ModelMapping'
+import {ColumnTypeEnum} from '../../../_custom/types/types'
+import {ModelEnum} from '../types'
+import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField'
 
 
 const mapping: ModelMapping<ModelEnum.Vendor> = {
@@ -67,7 +68,23 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         phoneNumber: true,
         secondaryPhoneNumber: true,
         paymentModality: true,
-        addresses: true,
+        addresses: {
+          render: ({fieldProps}) => (
+            <NestedArrayField
+              modelName={ModelEnum.VendorAddress}
+              {...fieldProps}
+              view={{
+                type: ViewEnum.Create,
+                fields: {
+                  address: true,
+                  postalCode: true,
+                  cityName: true,
+                  isMain: true
+                }
+              } as CreateViewType<ModelEnum.VendorAddress>}
+            />
+          )
+        },
       }
     },
     {
@@ -80,7 +97,23 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         phoneNumber: true,
         secondaryPhoneNumber: true,
         paymentModality: true,
-        addresses: true,
+        addresses: {
+          render: ({fieldProps}) => (
+            <NestedArrayField
+              modelName={ModelEnum.VendorAddress}
+              {...fieldProps}
+              view={{
+                type: ViewEnum.Update,
+                fields: {
+                  address: true,
+                  postalCode: true,
+                  cityName: true,
+                  isMain: true
+                }
+              } as UpdateViewType<ModelEnum.VendorAddress>}
+            />
+          )
+        },
       }
     },
     {
