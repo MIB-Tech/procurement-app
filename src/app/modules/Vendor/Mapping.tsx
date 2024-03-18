@@ -68,23 +68,24 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         phoneNumber: true,
         secondaryPhoneNumber: true,
         paymentModality: true,
-        addresses: {
-          render: ({fieldProps}) => (
-            <NestedArrayField
-              modelName={ModelEnum.VendorAddress}
-              {...fieldProps}
-              view={{
-                type: ViewEnum.Create,
-                fields: {
-                  address: true,
-                  postalCode: true,
-                  cityName: true,
-                  isMain: true
-                }
-              } as CreateViewType<ModelEnum.VendorAddress>}
-            />
-          )
-        },
+        addresses: true,
+        // addresses: {
+        //   render: ({fieldProps}) => (
+        //     <NestedArrayField
+        //       modelName={ModelEnum.VendorAddress}
+        //       {...fieldProps}
+        //       view={{
+        //         type: ViewEnum.Create,
+        //         fields: {
+        //           address: true,
+        //           postalCode: true,
+        //           cityName: true,
+        //           isMain: true
+        //         }
+        //       } as CreateViewType<ModelEnum.VendorAddress>}
+        //     />
+        //   )
+        // },
       }
     },
     {
@@ -97,23 +98,24 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         phoneNumber: true,
         secondaryPhoneNumber: true,
         paymentModality: true,
-        addresses: {
-          render: ({fieldProps}) => (
-            <NestedArrayField
-              modelName={ModelEnum.VendorAddress}
-              {...fieldProps}
-              view={{
-                type: ViewEnum.Update,
-                fields: {
-                  address: true,
-                  postalCode: true,
-                  cityName: true,
-                  isMain: true
-                }
-              } as UpdateViewType<ModelEnum.VendorAddress>}
-            />
-          )
-        },
+        addresses: true,
+        // addresses: {
+        //   render: ({fieldProps}) => (
+        //     <NestedArrayField
+        //       modelName={ModelEnum.VendorAddress}
+        //       {...fieldProps}
+        //       view={{
+        //         type: ViewEnum.Update,
+        //         fields: {
+        //           address: true,
+        //           postalCode: true,
+        //           cityName: true,
+        //           isMain: true
+        //         }
+        //       } as UpdateViewType<ModelEnum.VendorAddress>}
+        //     />
+        //   )
+        // },
       }
     },
     {
