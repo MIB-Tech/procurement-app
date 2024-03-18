@@ -166,6 +166,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
         {...fieldProps}
         size='sm'
         min={0}
+        precision={5}
       />
     )
   },
@@ -302,7 +303,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
     },
     discountValue: {
       type: ColumnTypeEnum.Number,
-      precision: 2,
+      precision: 5,
       footer: () => <></>
     },
     netPrice: {
