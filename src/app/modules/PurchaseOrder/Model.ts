@@ -62,10 +62,10 @@ type Model = {
   paymentModality: PaymentModalityModel
   invoice: InvoiceModel
   clinic: ClinicModel
-  readonly totalExclTax: number
-  readonly totalVatTax: number
-  readonly totalDiscount: number
-  readonly totalInclTax: number
+  totalExclTax: number
+  totalVatTax: number
+  totalDiscount: number
+  totalInclTax: number
   readonly status: QuantityStatusEnum
 } & AbstractModel & CreateTimestamp
 

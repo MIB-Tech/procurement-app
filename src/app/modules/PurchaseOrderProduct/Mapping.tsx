@@ -148,9 +148,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
   },
   designation: true,
   quantity: {
-    render: ({fieldProps, item}) => (
-      <QuantityField {...fieldProps} />
-    )
+    render: ({fieldProps, item}) => <QuantityField {...fieldProps} />
   },
   grossPrice: {
     render: ({item}) => <NumberUnit value={item.grossPrice} />
@@ -172,7 +170,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
   },
   vatRate: {
     defaultValue: .2,
-    render: ({item, fieldProps}) => (
+    render: ({fieldProps}) => (
       <SelectField
         size='sm'
         options={[0, .07, .1, .14, .2]}
@@ -302,7 +300,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
     priceExclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
-      readOnly: true,
       precision: 2,
       nullable: true,
       footer: ({collection, value}) => (
@@ -323,7 +320,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
     priceInclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
-      readOnly: true,
       precision: 2,
       nullable: true,
       footer: ({collection, value}) => (
