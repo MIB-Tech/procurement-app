@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.4.0",
-  "ReportGuid": "8bb974ed20ab4a3b866d0e30001b8654",
+  "ReportGuid": "3a8c4184130045e4a595c0b866ac759c",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1710898204011+0000)/",
+  "ReportChanged": "/Date(1710946742948+0000)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -32,7 +32,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root",
         "Alias": "root",
-        "Key": "d358433334ed45af82ffe377a94d482a",
+        "Key": "8d94cc86524243009623ccef83de8bc0",
         "Columns": {
           "0": {
             "Name": "currency",
@@ -174,7 +174,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_clinic",
         "Alias": "root_clinic",
-        "Key": "23d2cc2b711548fc806720d8381b7f4f",
+        "Key": "c41b2dcfa410445a809f1846ed52dc4f",
         "Columns": {
           "0": {
             "Name": "name",
@@ -204,7 +204,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines",
         "Alias": "root_lines",
-        "Key": "6235e09eaad24693af837173ebd87bb1",
+        "Key": "17cc7f7681af44a5ae9dbabd380eb49a",
         "Columns": {
           "0": {
             "Name": "type",
@@ -256,10 +256,10 @@
             "Type": "System.String"
           },
           "7": {
-            "Name": "netPriceWithDiscount",
+            "Name": "discountedUnitPrice",
             "Index": -1,
-            "NameInSource": "netPriceWithDiscount",
-            "Alias": "netPriceWithDiscount",
+            "NameInSource": "discountedUnitPrice",
+            "Alias": "discountedUnitPrice",
             "Type": "System.String"
           },
           "8": {
@@ -276,7 +276,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines_product",
         "Alias": "root_lines_product",
-        "Key": "44c7861f7c334302891550aa8e4c6dc1",
+        "Key": "ac982fce75a74aff87aacad6325e1a81",
         "Columns": {
           "0": {
             "Name": "code",
@@ -299,7 +299,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_paymentModality",
         "Alias": "root_paymentModality",
-        "Key": "ce03f891b623477abbf36601064ad563",
+        "Key": "e1c6505c87cc4ef196381754bc1ef2b3",
         "Columns": {
           "0": {
             "Name": "name",
@@ -322,7 +322,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor",
         "Alias": "root_vendor",
-        "Key": "9779baa4145741e2a509b1a7fba8f06d",
+        "Key": "676e897bf21a4019bf73c6085b4a85b5",
         "Columns": {
           "0": {
             "Name": "name",
@@ -366,7 +366,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor_defaultAddress",
         "Alias": "root_vendor_defaultAddress",
-        "Key": "06720e4973ce4e8a813d947d77211461",
+        "Key": "49bcdf679c8f47cbbe817cc1ca0f6b6a",
         "Columns": {
           "0": {
             "Name": "postalCode",
@@ -1810,7 +1810,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root_lines_product.root_lines.netPrice}"
+                "Value": "{root_lines_product.root_lines.discountedUnitPrice}"
               },
               "HorAlignment": "Right",
               "VertAlignment": "Center",
@@ -1821,7 +1821,7 @@
               "TextOptions": {
                 "WordWrap": true
               },
-              "Type": "Expression",
+              "Type": "DataColumn",
               "ID": 4
             },
             "5": {

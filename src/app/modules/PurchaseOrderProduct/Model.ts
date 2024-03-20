@@ -23,6 +23,7 @@ type Model = {
   components: Array<PurchaseOrderProductComponentModel>
   priceExclTax: number
   priceInclTax: number
+  discountedUnitPrice: number
   readonly status: boolean
   readonly vatTax: boolean
 } & AbstractModel

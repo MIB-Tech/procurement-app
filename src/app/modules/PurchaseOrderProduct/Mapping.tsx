@@ -312,6 +312,11 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
         />
       )
     },
+    discountedUnitPrice: {
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
+      precision: 2,
+    },
     status: QUANTITY_STATUS_COLUMN,
     vatTax: {
       type: ColumnTypeEnum.Boolean,

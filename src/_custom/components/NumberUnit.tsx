@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 type CurrencyProps = {
   value: number
-  unit?: string,
+  unit?: string | false,
   precision?: number
 } & HTMLAttributes<HTMLDivElement>
 export const getFormattedNumber = ({value, precision = 2}: Omit<CurrencyProps, 'unit' | 'className'>) => {
@@ -18,7 +18,9 @@ export const getFormattedNumber = ({value, precision = 2}: Omit<CurrencyProps, '
 
   return numberFormat.format(value).replaceAll('.', ' ');
 };
-export const getNumberUnit = ({value,  unit = 'DH', precision}: Omit<CurrencyProps, 'className'>) => `${getFormattedNumber({value, precision})} ${unit}`
+export const getNumberUnit = ({value,  unit = 'DH', precision}: Omit<CurrencyProps, 'className'>) => {
+  return `${getFormattedNumber({value, precision})}${unit === false ? '': ` ${unit}`}`
+}
 export const NumberUnit: FC<CurrencyProps> = ({value, unit = 'DH', precision, className}) => (
   <div>
     <span className={clsx('text-gray-700 me-1 text-nowrap', className)}>
