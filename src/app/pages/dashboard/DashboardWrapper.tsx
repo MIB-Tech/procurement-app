@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {FC} from 'react'
+import React, {FC, useEffect} from 'react'
 import {useIntl} from 'react-intl'
-import {PageTitle} from '../../../_metronic/layout/core'
+import {PageTitle, usePageData} from '../../../_metronic/layout/core'
 import {
   MixedWidget2,
   MixedWidget10,
@@ -15,7 +15,7 @@ import {
   TablesWidget10,
   MixedWidget8,
 } from '../../../_metronic/partials/widgets'
-import {Trans} from '../../../_custom/components/Trans'
+import {Trans, useTrans} from '../../../_custom/components/Trans'
 
 const DashboardPage: FC = () => (
   <>
@@ -88,13 +88,15 @@ const DashboardPage: FC = () => (
   </>
 )
 
-const DashboardWrapper: FC = () => (
-  <>
-    <PageTitle breadcrumbs={[]}>
-      <Trans id='DASHBOARD' />
-    </PageTitle>
-    <DashboardPage />
-  </>
-)
+const DashboardWrapper: FC = () => {
+  const {setPageTitle} = usePageData()
+  const {trans} = useTrans()
+
+  useEffect(() => {
+    setPageTitle(trans({id: 'DASHBOARD'}))
+  }, [])
+
+  return <DashboardPage />
+}
 
 export {DashboardWrapper}

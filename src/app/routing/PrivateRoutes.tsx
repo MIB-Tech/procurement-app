@@ -1,22 +1,23 @@
-import React, {ReactNode} from 'react';
-import {Navigate, Route, Routes} from 'react-router-dom';
-import {useAuth} from '../../_custom/hooks/UseAuth';
-import {DetailViewType, Model, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping';
-import {MasterLayout} from '../../_metronic/layout/MasterLayout';
-import {PageDataProvider} from '../../_metronic/layout/core';
-import {DeleteView} from '../../_custom/DeleteView/DeleteView';
-import {ListingView} from '../../_custom/ListingView/ListingView';
-import {MODEL_MAPPINGS} from '../modules';
-import {DEFAULT_DETAIL_VIEW, DetailView} from '../../_custom/DetailView/DetailView';
-import {camelCaseToDash, getRoutePrefix} from '../../_custom/utils';
-import {CreateView} from '../../_custom/CreateView/CreateView';
-import {UpdateView} from '../../_custom/UpdateView/UpdateView';
-import {ModelEnum} from "../modules/types";
+import React, {ReactNode} from 'react'
+import {Navigate, Route, Routes} from 'react-router-dom'
+import {useAuth} from '../../_custom/hooks/UseAuth'
+import {DetailViewType, Model, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping'
+import {MasterLayout} from '../../_metronic/layout/MasterLayout'
+import {PageDataProvider} from '../../_metronic/layout/core'
+import {DeleteView} from '../../_custom/DeleteView/DeleteView'
+import {ListingView} from '../../_custom/ListingView/ListingView'
+import {MODEL_MAPPINGS} from '../modules'
+import {DEFAULT_DETAIL_VIEW, DetailView} from '../../_custom/DetailView/DetailView'
+import {camelCaseToDash, getRoutePrefix} from '../../_custom/utils'
+import {CreateView} from '../../_custom/CreateView/CreateView'
+import {UpdateView} from '../../_custom/UpdateView/UpdateView'
+import {ModelEnum} from '../modules/types'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
+import {RoleKeyEnum} from '../modules/Role/Model'
 
 
 export function PrivateRoutes() {
-  const {operations, getPath} = useAuth();
+  const {operations, getPath, isGranted} = useAuth();
   const defaultOperation = operations
     .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
     .find(operation => operation.isMenuItem && operation.operationType === ViewEnum.Listing);
@@ -25,11 +26,12 @@ export function PrivateRoutes() {
   return (
     <Routes>
       <Route element={(<PageDataProvider><MasterLayout/></PageDataProvider>)}>
-        <Route
-          path='dashboard'
-          element={<DashboardWrapper />}
-        >
-        </Route>
+        {isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin]) && (
+          <Route
+            path='dashboard'
+            element={<DashboardWrapper />}
+          />
+        )}
         {operations.filter(operation=>Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
           const {resource, suffix, operationType} = operation;
           const resourceName = resource.name;
