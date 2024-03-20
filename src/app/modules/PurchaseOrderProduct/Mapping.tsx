@@ -164,7 +164,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
         {...fieldProps}
         size='sm'
         min={0}
-        precision={5}
+        precision={7}
       />
     )
   },
