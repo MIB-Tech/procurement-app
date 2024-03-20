@@ -59,10 +59,9 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
           note,
           discountType,
           discountValue,
-          netPriceExclTax,
+          priceExclTax,
           vatRate,
           grossPrice,
-          netPrice,
           priceInclTax
         } = purchaseOrderProduct;
         const isPercentCentDiscount = discountType === DiscountType.Percent;
@@ -71,7 +70,7 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
           ...purchaseOrderProduct,
           type: LineType.Product,
           designation: `${designation}${note ? `\n\n${note}` : ''}`,
-          netPrice: getNumberUnit({value: netPriceExclTax, precision}),
+          netPrice: getNumberUnit({value: priceExclTax, precision}),
           netPriceInclTax: getNumberUnit({value: priceInclTax, precision}),
           discount: getNumberUnit({
             value: isPercentCentDiscount ?
