@@ -5,7 +5,7 @@ import {DesiredProductModel} from "../DesiredProduct";
 
 type Model = {
   address: string
-  clinic:ClinicModel
+  clinic: ClinicModel
   desiredProducts: Array<DesiredProductModel>
 } & AbstractModel
 
