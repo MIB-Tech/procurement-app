@@ -13,12 +13,13 @@ import {
   ListsWidget6,
   TablesWidget5,
   TablesWidget10,
-  MixedWidget8,
+  MixedWidget8, MixedWidget1,
 } from '../../../_metronic/partials/widgets'
 import {Trans, useTrans} from '../../../_custom/components/Trans'
 
 const DashboardPage: FC = () => (
   <>
+    <MixedWidget1 className='card-xl-stretch mb-xl-8' color='primary' />
     {/* begin::Row */}
     <div className='row gy-5 g-xl-8'>
       <div className='col-xxl-4'>

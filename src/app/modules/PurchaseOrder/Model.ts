@@ -49,6 +49,7 @@ type Model = {
   ref?: string
   externalRef?: string
   desiredDeliveryDate: string
+  comment?: string
   validationStatus: ValidationStatusEnum
   buyer?: UserModel
   validatedBy?: UserModel

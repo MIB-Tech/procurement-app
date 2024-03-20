@@ -22,11 +22,18 @@ export function PrivateRoutes() {
     .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
     .find(operation => operation.isMenuItem && operation.operationType === ViewEnum.Listing);
   // FIXME route render wrong route issue
+  const isAdmin = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin])
+  const indexPath = isAdmin ?
+    'dashboard' :
+    defaultOperation && getPath({
+      resourceName: defaultOperation.resource.name,
+      suffix: defaultOperation.suffix,
+    })
 
   return (
     <Routes>
       <Route element={(<PageDataProvider><MasterLayout/></PageDataProvider>)}>
-        {isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin]) && (
+        {isAdmin && (
           <Route
             path='dashboard'
             element={<DashboardWrapper />}
@@ -188,19 +195,7 @@ export function PrivateRoutes() {
         {/*  })*/}
         {/*})}*/}
       </Route>
-      {defaultOperation && (
-        <Route
-          path='/'
-          element={(
-            <Navigate
-              to={getPath({
-                resourceName: defaultOperation.resource.name,
-                suffix: defaultOperation.suffix
-              })}
-            />
-          )}
-        />
-      )}
+      {indexPath && <Route path="/" element={<Navigate to={indexPath} />} />}
       <Route path='/auth/*' element={<Navigate to='/'/>}/>
       {/*{routes.length > 0 && <Route path='/auth' element={<Navigate to={`/error/${routes.length === 0 ? 403 : 404}`} />} /> }*/}
       <Route path='*' element={<Navigate to={`/error/${operations.length === 0 ? 403 : 404}`}/>}/>

@@ -30,7 +30,6 @@ import {useCollectionQuery} from "../../../_custom/hooks/UseCollectionQuery";
 import {PropertyFilterOperator} from "../../../_custom/ListingView/Filter/Filter.types";
 
 
-
 const AmountUnit = ({getValue, defaultValue = 0}: {
   defaultValue?: number,
   getValue: (taxIncluded: boolean) => number
@@ -151,7 +150,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
     render: ({fieldProps, item}) => <QuantityField {...fieldProps} />
   },
   grossPrice: {
-    render: ({item}) => <NumberUnit value={item.grossPrice} />
+    render: ({item}) => <NumberUnit value={item.grossPrice}/>
   },
   note: true,
   discountType: {
@@ -164,7 +163,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
         {...fieldProps}
         size='sm'
         min={0}
-        precision={5}
+        precision={7}
       />
     )
   },
@@ -311,6 +310,11 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           )}
         />
       )
+    },
+    discountedUnitPrice: {
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
+      precision: 2,
     },
     status: QUANTITY_STATUS_COLUMN,
     vatTax: {

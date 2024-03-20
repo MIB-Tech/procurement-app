@@ -91,6 +91,16 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
     },
     display: ({item}) => typeof item.taxIncluded === 'boolean' && !!item.vendor && !!item.clinic,
   },
+  comment: {
+    slotProps: {
+      root: {
+        sm: 12,
+        md: 12,
+        lg: 12,
+        xl: 12,
+      },
+    },
+  },
   attachments: {
     slotProps: {
       root: {
@@ -204,10 +214,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     paymentModality: {
       type: ModelEnum.PaymentModality,
-
-
-
-
     },
     attachments: {
       type: ModelEnum.purchaseOrderAttachment,
@@ -218,6 +224,11 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       multiple: true,
       embeddedForm: true,
       min: 1,
+    },
+    comment: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Text,
+      nullable: true
     },
     invoice: {
       type: ModelEnum.Invoice,
@@ -299,6 +310,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         currency: true,
         category: true,
         purchaseOrderProducts: true,
+        comment: true,
         attachments: true,
         paymentModality: true,
         invoice: true,
@@ -365,8 +377,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     {
       type: ViewEnum.Update,
       submittable: ({formik, isGranted}) => {
-        const {validationStatus, status, invoice} =  formik.initialValues
-        const isPendingValidation =  validationStatus === ValidationStatusEnum.Pending
+        const {validationStatus, status, invoice} = formik.initialValues
+        const isPendingValidation = validationStatus === ValidationStatusEnum.Pending
         const granted = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin])
 
         return (granted && status === QuantityStatusEnum.Unreceived && !invoice) || isPendingValidation
@@ -470,6 +482,16 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
             },
           },
           display: ({item}) => typeof item.taxIncluded === 'boolean' && !!item.vendor,
+        },
+        comment: {
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              lg: 12,
+              xl: 12,
+            },
+          },
         },
         attachments: {
           slotProps: {

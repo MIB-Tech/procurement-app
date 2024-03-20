@@ -486,6 +486,7 @@ type I18nMessageKey =
   | 'DELIVERY_DEPOTS'
   | 'OPERATIONS'
   | 'DASHBOARD'
+  | 'SUB_CATEGORY'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};
