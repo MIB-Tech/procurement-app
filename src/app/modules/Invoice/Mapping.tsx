@@ -79,7 +79,6 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
                       },
                     ]
                   };
-
                   return newFilter;
                 }}
               />
@@ -100,7 +99,6 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
       }
     }
   ]
-
 };
 
 export default mapping;

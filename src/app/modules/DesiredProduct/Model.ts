@@ -7,7 +7,6 @@ import {DeliveryDepotModel} from "../DeliveryDepot";
 
 type Model = {
   designation: string
-  //address: string
   quantity: number
   receiptProduct?: ReceiptProductModel
   purchaseOrderProduct: PurchaseOrderProductModel
