@@ -9,10 +9,6 @@ import {
   PropertyFilterOperator
 } from '../../../_custom/ListingView/Filter/Filter.types';
 import React from 'react';
-import {PrintPurchaseOrderButton} from '../PurchaseOrder/components/PrintPurchaseOrderButton';
-import {QuantityStatusEnum} from '../PurchaseOrder/Model';
-import {GenerateInvoiceButton} from '../PurchaseOrder/components/GenerateInvoiceButton';
-import {GenerateReceiptButton} from '../PurchaseOrder/components/GenerateReceiptButton';
 import {PrintInvoiceButton} from './PrintInvoiceButton';
 
 
@@ -79,7 +75,6 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
                       },
                     ]
                   };
-
                   return newFilter;
                 }}
               />
@@ -89,18 +84,17 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
       }
     },
     {
-      type:ViewEnum.Detail,
+      type: ViewEnum.Detail,
       customActions: [
         {render: ({item}) => <PrintInvoiceButton item={item}/>},
       ],
-      columns:{
-        invoiceNumber:true,
+      columns: {
+        invoiceNumber: true,
         createdAt: true,
         purchaseOrders: true
       }
     }
   ]
-
 };
 
 export default mapping;
