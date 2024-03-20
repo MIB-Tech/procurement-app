@@ -42,8 +42,6 @@ const DeliveryDepotField = ({...props}: FieldProps) => {
   )
 }
 
-// @ts-ignore
-// @ts-ignore
 const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
     modelName: ModelEnum.DesiredProduct,
     columnDef: {
@@ -102,7 +100,6 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
             ),
           }
         },
-
       },
       {
         type: ViewEnum.Update,
