@@ -15,7 +15,6 @@ import {
   TablesWidget10,
   MixedWidget8,
 } from '../../../_metronic/partials/widgets'
-import {Trans} from '../../../_custom/components/Trans'
 
 const DashboardPage: FC = () => (
   <>
@@ -88,13 +87,14 @@ const DashboardPage: FC = () => (
   </>
 )
 
-const DashboardWrapper: FC = () => (
-  <>
-    <PageTitle breadcrumbs={[]}>
-      <Trans id='DASHBOARD' />
-    </PageTitle>
-    <DashboardPage />
-  </>
-)
+const DashboardWrapper: FC = () => {
+  const intl = useIntl()
+  return (
+    <>
+      <PageTitle breadcrumbs={[]}>{intl.formatMessage({id: 'MENU.DASHBOARD'})}</PageTitle>
+      <DashboardPage />
+    </>
+  )
+}
 
 export {DashboardWrapper}

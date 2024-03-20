@@ -12,6 +12,7 @@ import {camelCaseToDash, getRoutePrefix} from '../../_custom/utils';
 import {CreateView} from '../../_custom/CreateView/CreateView';
 import {UpdateView} from '../../_custom/UpdateView/UpdateView';
 import {ModelEnum} from "../modules/types";
+import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 
 
 export function PrivateRoutes() {
@@ -24,6 +25,11 @@ export function PrivateRoutes() {
   return (
     <Routes>
       <Route element={(<PageDataProvider><MasterLayout/></PageDataProvider>)}>
+        <Route
+          path='dashboard'
+          element={<DashboardWrapper />}
+        >
+        </Route>
         {operations.filter(operation=>Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
           const {resource, suffix, operationType} = operation;
           const resourceName = resource.name;
