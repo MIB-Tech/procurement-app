@@ -161,7 +161,7 @@ export const NestedArrayField = <M extends ModelEnum>(
                                   break;
                                 default:
                                   const path = `/base` + getRoutePrefix(columnMapping.type);
-                                  const searchableColumnNames: string[] = getSearchableColumns({modelName: columnMapping.type});
+                                  const searchableColumnNames: Array<keyof Model<any>> = getSearchableColumns({modelName: columnMapping.type});
                                   const filter: CompoundFilter<any> = {
                                     operator: CompoundFilterOperator.Or,
                                     filters: searchableColumnNames.map(columnName => ({
