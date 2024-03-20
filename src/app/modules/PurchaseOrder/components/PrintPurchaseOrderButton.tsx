@@ -66,7 +66,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
           note,
           discountType,
           discountValue,
-          netPriceExclTax,
+          priceExclTax,
           priceInclTax,
           grossPrice,
           components
@@ -79,7 +79,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
             ...purchaseOrderProduct,
             type: LineType.Product,
             designation: `${designation}${note ? `\n\n${note}` : ''}`,
-            netPrice: getNumberUnit({value: taxIncluded ? priceInclTax: netPriceExclTax, precision}),
+            netPrice: getNumberUnit({value: taxIncluded ? priceInclTax: priceExclTax, precision}),
             discount: getNumberUnit({
               value: isPercentCentDiscount ?
                 discountValue * 100 :

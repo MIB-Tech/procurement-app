@@ -21,9 +21,8 @@ type Model = {
   purchaseOrder: PurchaseOrderModel
   desiredProducts: Array<DesiredProductModel>
   components: Array<PurchaseOrderProductComponentModel>
-  readonly netPrice: number
-  readonly netPriceExclTax: number
-  readonly priceInclTax: number
+  priceExclTax: number
+  priceInclTax: number
   readonly status: boolean
   readonly vatTax: boolean
 } & AbstractModel

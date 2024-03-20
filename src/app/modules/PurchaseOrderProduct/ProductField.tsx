@@ -52,7 +52,7 @@ export const ProductField = ({...props}: Pick<FieldProps, 'name'>) => {
     discountType: DiscountType.Percent,
     discountValue: 0,
     vatRate: 0.2,
-    netPriceExclTax: 0,
+    priceExclTax: 0,
     priceInclTax: 0,
     desiredProducts: [],
     components: []

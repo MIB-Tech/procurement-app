@@ -70,21 +70,21 @@ const getNetPrice = (item: NetPriceProps) => {
 
   return amount - discountAmount;
 };
-type NetPriceExclTaxProps = NetPriceProps & Pick<Model, 'quantity'>
-const getNetPriceExclTax = ({quantity, ...item}: NetPriceExclTaxProps) => getNetPrice(item) * quantity;
+type PriceExclTaxProps = NetPriceProps & Pick<Model, 'quantity'>
+const getPriceExclTax = ({quantity, ...item}: PriceExclTaxProps) => getNetPrice(item) * quantity;
 type PriceInclTaxProps = NetPriceProps & Pick<Model, 'quantity'>
 const getPriceInclTax = (item: PriceInclTaxProps) => {
   const {taxIncluded, grossPrice, vatRate, quantity, discountType, discountValue} = item;
-  if (!vatRate) return getNetPriceExclTax(item);
+  if (!vatRate) return getPriceExclTax(item);
 
-  const netPriceExclTax = getNetPriceExclTax(item);
+  const priceExclTax = getPriceExclTax(item);
   const discountAmount = discountType === DiscountType.Amount ?
     discountValue :
     grossPrice * discountValue;
 
   return taxIncluded ?
     (grossPrice - discountAmount) * quantity :
-    netPriceExclTax + netPriceExclTax * vatRate;
+    priceExclTax + priceExclTax * vatRate;
 };
 
 
@@ -170,13 +170,6 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
       />
     )
   },
-  // netPrice: {
-  //   render: ({item}) => (
-  //     <AmountUnit
-  //       getValue={taxIncluded => getNetPrice({...item, taxIncluded})}
-  //     />
-  //   )
-  // },
   vatRate: {
     defaultValue: .2,
     render: ({item, fieldProps}) => (
@@ -189,10 +182,10 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
       />
     )
   },
-  netPriceExclTax: {
+  priceExclTax: {
     render: ({item}) => (
       <AmountUnit
-        getValue={taxIncluded => getNetPriceExclTax({...item, taxIncluded})}
+        getValue={taxIncluded => getPriceExclTax({...item, taxIncluded})}
       />
     )
   },
@@ -306,7 +299,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       precision: 5,
       footer: () => <></>
     },
-    netPrice: {
+    priceExclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       readOnly: true,
@@ -316,23 +309,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
         <AmountUnit
           defaultValue={value as number}
           getValue={taxIncluded => collection.reduce(
-            (a, item) => a + getNetPrice({...item, taxIncluded}),
-            0
-          )}
-        />
-      )
-    },
-    netPriceExclTax: {
-      type: ColumnTypeEnum.Number,
-      format: NumberFormat.Amount,
-      readOnly: true,
-      precision: 2,
-      nullable: true,
-      footer: ({collection, value}) => (
-        <AmountUnit
-          defaultValue={value as number}
-          getValue={taxIncluded => collection.reduce(
-            (a, item) => a + getNetPriceExclTax({...item, taxIncluded}),
+            (a, item) => a + getPriceExclTax({...item, taxIncluded}),
             0
           )}
         />
@@ -396,9 +373,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           )
         },
         grossPrice: true,
-        // netPrice: true,
         vatRate: true,
-        netPriceExclTax: true,
+        priceExclTax: true,
         priceInclTax: true,
         status: true,
       }
@@ -422,9 +398,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           )
         },
         grossPrice: true,
-        //  netPrice: true,
         vatRate: true,
-        netPriceExclTax: true,
+        priceExclTax: true,
         priceInclTax: true,
         note: true,
         desiredProducts: true
