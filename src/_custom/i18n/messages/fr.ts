@@ -2,6 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  SUB_CATEGORY: "Sous-famille",
   UNIT_PRICE: "P.U",
   OPERATIONS: "Operations",
   DELIVERY_DEPOTS: "Dépôts de livraison",
@@ -73,8 +74,8 @@ export const fr: I18nLanguage = {
   PERCENT: '%',
   RECEIVED_AT: "Date de réception",
   RECEIPT_NUMBER: "Numéro de reçu",
-  PRICE_EXCL_TAX: "Prix HT",
-  PRICE_INCL_TAX: "PRIX TTC",
+  PRICE_EXCL_TAX: "Montant HT",
+  PRICE_INCL_TAX: "Montant TTC",
   CONSULTED_AT: "Date consultation",
   PURCHASE_FILE_TYPE: "Type de dossier d'achat",
   QUOTE_DATE: "Date du devis",

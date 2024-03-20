@@ -52,6 +52,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
       buyer: buyer?.['@title'],
       reference: ref,
       taxType: taxIncluded ? 'TTC' : 'HT',
+      currency: unit,
       totalInclTaxNumber: totalInclTax,
       totalExclTax: getNumberUnit({value: totalExclTax, precision: 2, unit}),
       totalInclTax: getNumberUnit({value: totalInclTax, precision: 2}),
@@ -69,7 +70,8 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
           priceExclTax,
           priceInclTax,
           grossPrice,
-          components
+          components,
+          discountedUnitPrice
         } = purchaseOrderProduct;
         const isPercentCentDiscount = discountType === DiscountType.Percent;
 
@@ -79,7 +81,8 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
             ...purchaseOrderProduct,
             type: LineType.Product,
             designation: `${designation}${note ? `\n\n${note}` : ''}`,
-            netPrice: getNumberUnit({value: taxIncluded ? priceInclTax: priceExclTax, precision}),
+            netPrice: getNumberUnit({value: taxIncluded ? priceInclTax: priceExclTax, precision, unit: false}),
+            discountedUnitPrice: getNumberUnit({value: discountedUnitPrice, unit: false}),
             discount: getNumberUnit({
               value: isPercentCentDiscount ?
                 discountValue * 100 :
@@ -87,7 +90,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
               unit: isPercentCentDiscount ? '%' : unit,
               precision: isPercentCentDiscount ? 2 : precision,
             }),
-            grossPrice: getNumberUnit({value: grossPrice, precision}),
+            grossPrice: getNumberUnit({value: grossPrice, precision, unit: false}),
           } as PurchaseOrderProductPrint,
           ...components.map(component => ({
             type: LineType.Component,

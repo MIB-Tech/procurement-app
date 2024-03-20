@@ -28,7 +28,7 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
     discountValue: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Percent,
-      precision: 5
+      precision: 7
     },
     purchasePriceExclTax: {
       type: ColumnTypeEnum.Number,

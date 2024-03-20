@@ -30,7 +30,6 @@ import {useCollectionQuery} from "../../../_custom/hooks/UseCollectionQuery";
 import {PropertyFilterOperator} from "../../../_custom/ListingView/Filter/Filter.types";
 
 
-
 const AmountUnit = ({getValue, defaultValue = 0}: {
   defaultValue?: number,
   getValue: (taxIncluded: boolean) => number
@@ -148,12 +147,10 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
   },
   designation: true,
   quantity: {
-    render: ({fieldProps, item}) => (
-      <QuantityField {...fieldProps} />
-    )
+    render: ({fieldProps, item}) => <QuantityField {...fieldProps} />
   },
   grossPrice: {
-    render: ({item}) => <NumberUnit value={item.grossPrice} />
+    render: ({item}) => <NumberUnit value={item.grossPrice}/>
   },
   note: true,
   discountType: {
@@ -166,13 +163,13 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
         {...fieldProps}
         size='sm'
         min={0}
-        precision={5}
+        precision={7}
       />
     )
   },
   vatRate: {
     defaultValue: .2,
-    render: ({item, fieldProps}) => (
+    render: ({fieldProps}) => (
       <SelectField
         size='sm'
         options={[0, .07, .1, .14, .2]}
@@ -274,7 +271,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
     grossPrice: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
-      precision: 5,
+      precision: 7,
       footer: () => <Bullet/>,
       title: 'UNIT_PRICE',
     },
@@ -296,13 +293,12 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
     },
     discountValue: {
       type: ColumnTypeEnum.Number,
-      precision: 5,
+      precision: 7,
       footer: () => <></>
     },
     priceExclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
-      readOnly: true,
       precision: 2,
       nullable: true,
       footer: ({collection, value}) => (
@@ -315,6 +311,11 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
         />
       )
     },
+    discountedUnitPrice: {
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
+      precision: 2,
+    },
     status: QUANTITY_STATUS_COLUMN,
     vatTax: {
       type: ColumnTypeEnum.Boolean,
@@ -323,7 +324,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
     priceInclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
-      readOnly: true,
       precision: 2,
       nullable: true,
       footer: ({collection, value}) => (

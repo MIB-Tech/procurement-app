@@ -83,7 +83,7 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
       type: ModelEnum.DeliveryDepot,
       multiple: true,
       embeddedForm: true,
-      nullable:false
+      nullable: false
     }
   },
   views: [
