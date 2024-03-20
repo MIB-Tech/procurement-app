@@ -9,6 +9,14 @@ import React from 'react'
 import {FieldProps} from '../../../_custom/Column/controls/fields'
 import {useTrans} from '../../../_custom/components/Trans'
 import {I18nMessageKey} from '../../../_custom/i18n/I18nMessages'
+import {useFormikContext} from "formik";
+import {ModelAutocompleteField} from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import {
+  CompoundFilter,
+  CompoundFilterOperator,
+  PropertyFilterOperator
+} from "../../../_custom/ListingView/Filter/Filter.types";
+import {CategoryModel} from "../Category";
 
 const ProductTypeField = (props: FieldProps & { disabled?: boolean }) => {
   const {trans} = useTrans()
@@ -23,6 +31,29 @@ const ProductTypeField = (props: FieldProps & { disabled?: boolean }) => {
     />
   )
 }
+
+const SubCategoryField = ({...props}: FieldProps) => (
+  <ModelAutocompleteField
+    modelName={ModelEnum.Category}
+    {...props}
+    size='sm'
+    getParams={filter => {
+      const _filter: CompoundFilter<ModelEnum.Category> = {
+        operator: CompoundFilterOperator.And,
+        filters: [
+          filter,
+          {
+            property: 'parent',
+            operator: PropertyFilterOperator.IsNotNull
+          }
+        ]
+      }
+
+      return _filter
+    }}
+  />
+)
+
 const mapping: ModelMapping<ModelEnum.Product> = {
   modelName: ModelEnum.Product,
   // hydraTitle: (item)=>(
@@ -71,6 +102,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     category: {
       type: ModelEnum.Category,
       nullable: true,
+      title:'SUB_CATEGORY'
     },
     components: {
       type: ModelEnum.Component,
@@ -149,7 +181,9 @@ const mapping: ModelMapping<ModelEnum.Product> = {
           ),
         },
         ref: true,
-        category: true,
+        category: {
+          render: ({fieldProps}) => <SubCategoryField {...fieldProps} />
+        },
         section: true,
         mobilised: {
           slotProps: {root: {sm: 2, md: 1.5, lg: 1}},
