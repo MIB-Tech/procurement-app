@@ -1,91 +1,142 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {FC, useEffect} from 'react'
-import {useIntl} from 'react-intl'
-import {PageTitle, usePageData} from '../../../_metronic/layout/core'
-import {
-  MixedWidget2,
-  MixedWidget10,
-  MixedWidget11,
-  ListsWidget2,
-  ListsWidget3,
-  ListsWidget4,
-  ListsWidget5,
-  ListsWidget6,
-  TablesWidget5,
-  TablesWidget10,
-  MixedWidget8, MixedWidget1,
-} from '../../../_metronic/partials/widgets'
-import {Trans, useTrans} from '../../../_custom/components/Trans'
+import {usePageData} from '../../../_metronic/layout/core'
+import {useTrans} from '../../../_custom/components/Trans'
+import {Widget} from './Widget'
+import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery'
+import {ModelEnum} from '../../modules/types'
+import {Skeleton} from '@mui/material'
+import {TableView} from '../../../_custom/ListingView/views/Table/TableView'
+import {ListingColumns} from '../../../_custom/types/ModelMapping'
+import {NumberUnit} from '../../../_custom/components/NumberUnit'
+import {DashboardPage__OLD} from '../__dashboard/DashboardWrapper'
 
+type Block1Type = {
+  total: number,
+  count: number,
+  items: Array<{}>
+}
+
+const Block1 = () => {
+  const {totalCount, isLoading} = useCollectionQuery<ModelEnum.PurchaseOrder>({
+    modelName: ModelEnum.PurchaseOrder,
+    params: {itemsPerPage: 0},
+  })
+  const title = 'Total des bons de commande'
+
+  return (
+    <Widget
+      variant="primary"
+      title={title}
+      value={isLoading ? <Skeleton /> : totalCount}
+      items={[
+        {title: 'Decembre 2023', subTitle: title, value: 0},
+        {title: 'Janvier 2024', subTitle: title, value: 0},
+        {title: 'Février 2024', subTitle: title, value: 0},
+        {title: 'Mars 2024', subTitle: title, value: 0},
+      ]}
+    />
+  )
+}
+
+const Block2 = () => {
+  const {totalCount, isLoading} = useCollectionQuery<ModelEnum.PurchaseOrder>({
+    modelName: ModelEnum.PurchaseOrder,
+    params: {itemsPerPage: 0},
+  })
+  const title = 'Montant TTC des bons de commande'
+
+  return (
+    <Widget
+      variant="danger"
+      title={title}
+      value={isLoading ? <Skeleton /> : <NumberUnit value={0} className='text-white' unitProps={{className: 'text-white'}}/>}
+      items={[
+        {title: 'Acheteur 1', subTitle: title, value: <NumberUnit value={0} />},
+        {title: 'Acheteur 2', subTitle: title, value: <NumberUnit value={0} />},
+        {title: 'Acheteur 3', subTitle: title, value: <NumberUnit value={0} />},
+        {title: 'Acheteur 4', subTitle: title, value: <NumberUnit value={0} />},
+      ]}
+    />
+  )
+}
+
+const Block3 = () => {
+  const {totalCount, isLoading} = useCollectionQuery<ModelEnum.PurchaseOrder>({
+    modelName: ModelEnum.PurchaseOrder,
+    params: {itemsPerPage: 0},
+  })
+  const title = 'Top fournisseurs'
+
+  return (
+    <Widget
+      variant="info"
+      title={title}
+      value={isLoading ? <Skeleton /> : <NumberUnit value={0} className='text-white' unitProps={{className: 'text-white'}}/>}
+      items={[
+        {title: 'Acheteur 1', subTitle: title, value: <NumberUnit value={0} />},
+        {title: 'Acheteur 2', subTitle: title, value: <NumberUnit value={0} />},
+        {title: 'Acheteur 3', subTitle: title, value: <NumberUnit value={0} />},
+        {title: 'Acheteur 4', subTitle: title, value: <NumberUnit value={0} />},
+      ]}
+    />
+  )
+}
+
+const Block4 = () => {
+  const itemsPerPage = 5
+  const {collection, isLoading} = useCollectionQuery<ModelEnum.PurchaseOrder>({
+    modelName: ModelEnum.PurchaseOrder,
+    params: {
+      itemsPerPage,
+      sort: {
+        createdAt: 'desc',
+      },
+    },
+  })
+
+  return (
+    <div className="card card-bordered">
+      <div className="card-header border-0">
+        <h3 className="card-title align-items-start flex-column">
+          <span className="card-label fw-bold fs-3 mb-1">Bons de commande récents</span>
+          <span className="text-muted fw-semibold fs-7">Les {itemsPerPage} derniers bons de commande</span>
+        </h3>
+      </div>
+      <div className="card-body py-1 px-3">
+        <TableView
+          modelName={ModelEnum.PurchaseOrder}
+          columns={{
+            vendor: true,
+            buyer: true,
+            totalInclTax: true,
+          } as ListingColumns<ModelEnum.PurchaseOrder>}
+          data={collection}
+          loading={isLoading}
+          itemsPerPage={itemsPerPage}
+        />
+      </div>
+    </div>
+  )
+}
 const DashboardPage: FC = () => (
   <>
-    <MixedWidget1 className='card-xl-stretch mb-xl-8' color='primary' />
-    {/* begin::Row */}
-    <div className='row gy-5 g-xl-8'>
-      <div className='col-xxl-4'>
-        <MixedWidget2
-          className='card-xl-stretch mb-xl-8'
-          chartColor='danger'
-          chartHeight='200px'
-          strokeColor='#cb1e46'
-        />
+    <div className="row">
+      <div className="col-4">
+        <Block1 />
       </div>
-      <div className='col-xxl-4'>
-        <ListsWidget5 className='card-xxl-stretch' />
+      <div className="col-4">
+        <Block2 />
       </div>
-      <div className='col-xxl-4'>
-        <MixedWidget10
-          className='card-xxl-stretch-50 mb-5 mb-xl-8'
-          chartColor='primary'
-          chartHeight='150px'
-        />
-        <MixedWidget11
-          className='card-xxl-stretch-50 mb-5 mb-xl-8'
-          chartColor='primary'
-          chartHeight='175px'
-        />
+      <div className="col-4">
+        <Block3 />
       </div>
     </div>
-    {/* end::Row */}
-
-    {/* begin::Row */}
-    <div className='row gy-5 gx-xl-8'>
-      <div className='col-xxl-4'>
-        <ListsWidget3 className='card-xxl-stretch mb-xl-3' />
-      </div>
-      <div className='col-xl-8'>
-        <TablesWidget10 className='card-xxl-stretch mb-5 mb-xl-8' />
-      </div>
+    <div className="mt-5">
+      <Block4 />
     </div>
-    {/* end::Row */}
-
-    {/* begin::Row */}
-    <div className='row gy-5 g-xl-8'>
-      <div className='col-xl-4'>
-        <ListsWidget2 className='card-xl-stretch mb-xl-8' />
-      </div>
-      <div className='col-xl-4'>
-        <ListsWidget6 className='card-xl-stretch mb-xl-8' />
-      </div>
-      <div className='col-xl-4'>
-        <ListsWidget4 className='card-xl-stretch mb-5 mb-xl-8' items={5} />
-        {/* partials/widgets/lists/_widget-4', 'class' => 'card-xl-stretch mb-5 mb-xl-8', 'items' => '5' */}
-      </div>
-    </div>
-    {/* end::Row */}
-
-    <div className='row g-5 gx-xxl-8'>
-      <div className='col-xxl-4'>
-        <MixedWidget8
-          className='card-xxl-stretch mb-xl-3'
-          chartColor='success'
-          chartHeight='150px'
-        />
-      </div>
-      <div className='col-xxl-8'>
-        <TablesWidget5 className='card-xxl-stretch mb-5 mb-xxl-8' />
-      </div>
-    </div>
+    ...
+    <DashboardPage__OLD />
   </>
 )
 

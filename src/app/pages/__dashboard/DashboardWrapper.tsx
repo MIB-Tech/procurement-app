@@ -16,7 +16,7 @@ import {
   MixedWidget8,
 } from '../../../_metronic/partials/widgets'
 
-const DashboardPage: FC = () => (
+export const DashboardPage__OLD: FC = () => (
   <>
     {/* begin::Row */}
     <div className='row gy-5 g-xl-8'>
@@ -92,7 +92,7 @@ const DashboardWrapper: FC = () => {
   return (
     <>
       <PageTitle breadcrumbs={[]}>{intl.formatMessage({id: 'MENU.DASHBOARD'})}</PageTitle>
-      <DashboardPage />
+      <DashboardPage__OLD />
     </>
   )
 }
