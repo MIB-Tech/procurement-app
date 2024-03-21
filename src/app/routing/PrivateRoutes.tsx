@@ -1,44 +1,29 @@
-import React, {ReactNode} from 'react'
-import {Navigate, Route, Routes} from 'react-router-dom'
-import {useAuth} from '../../_custom/hooks/UseAuth'
-import {DetailViewType, Model, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping'
-import {MasterLayout} from '../../_metronic/layout/MasterLayout'
-import {PageDataProvider} from '../../_metronic/layout/core'
-import {DeleteView} from '../../_custom/DeleteView/DeleteView'
-import {ListingView} from '../../_custom/ListingView/ListingView'
-import {MODEL_MAPPINGS} from '../modules'
-import {DEFAULT_DETAIL_VIEW, DetailView} from '../../_custom/DetailView/DetailView'
-import {camelCaseToDash, getRoutePrefix} from '../../_custom/utils'
-import {CreateView} from '../../_custom/CreateView/CreateView'
-import {UpdateView} from '../../_custom/UpdateView/UpdateView'
-import {ModelEnum} from '../modules/types'
-import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
-import {RoleKeyEnum} from '../modules/Role/Model'
+import React, {ReactNode} from 'react';
+import {Navigate, Route, Routes} from 'react-router-dom';
+import {useAuth} from '../../_custom/hooks/UseAuth';
+import {DetailViewType, Model, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping';
+import {MasterLayout} from '../../_metronic/layout/MasterLayout';
+import {PageDataProvider} from '../../_metronic/layout/core';
+import {DeleteView} from '../../_custom/DeleteView/DeleteView';
+import {ListingView} from '../../_custom/ListingView/ListingView';
+import {MODEL_MAPPINGS} from '../modules';
+import {DEFAULT_DETAIL_VIEW, DetailView} from '../../_custom/DetailView/DetailView';
+import {camelCaseToDash, getRoutePrefix} from '../../_custom/utils';
+import {CreateView} from '../../_custom/CreateView/CreateView';
+import {UpdateView} from '../../_custom/UpdateView/UpdateView';
+import {ModelEnum} from "../modules/types";
 
 
 export function PrivateRoutes() {
-  const {operations, getPath, isGranted} = useAuth();
+  const {operations, getPath} = useAuth();
   const defaultOperation = operations
     .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
     .find(operation => operation.isMenuItem && operation.operationType === ViewEnum.Listing);
   // FIXME route render wrong route issue
-  const isAdmin = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin])
-  const indexPath = isAdmin ?
-    'dashboard' :
-    defaultOperation && getPath({
-      resourceName: defaultOperation.resource.name,
-      suffix: defaultOperation.suffix,
-    })
 
   return (
     <Routes>
       <Route element={(<PageDataProvider><MasterLayout/></PageDataProvider>)}>
-        {isAdmin && (
-          <Route
-            path='dashboard'
-            element={<DashboardWrapper />}
-          />
-        )}
         {operations.filter(operation=>Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
           const {resource, suffix, operationType} = operation;
           const resourceName = resource.name;
@@ -195,7 +180,19 @@ export function PrivateRoutes() {
         {/*  })*/}
         {/*})}*/}
       </Route>
-      {indexPath && <Route path="/" element={<Navigate to={indexPath} />} />}
+      {defaultOperation && (
+        <Route
+          path='/'
+          element={(
+            <Navigate
+              to={getPath({
+                resourceName: defaultOperation.resource.name,
+                suffix: defaultOperation.suffix
+              })}
+            />
+          )}
+        />
+      )}
       <Route path='/auth/*' element={<Navigate to='/'/>}/>
       {/*{routes.length > 0 && <Route path='/auth' element={<Navigate to={`/error/${routes.length === 0 ? 403 : 404}`} />} /> }*/}
       <Route path='*' element={<Navigate to={`/error/${operations.length === 0 ? 403 : 404}`}/>}/>

@@ -2,7 +2,6 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
-  DASHBOARD: "Tableau de bord",
   SUB_CATEGORY: "Sous-famille",
   UNIT_PRICE: "P.U",
   OPERATIONS: "Operations",
