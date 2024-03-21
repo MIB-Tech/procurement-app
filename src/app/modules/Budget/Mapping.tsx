@@ -22,7 +22,9 @@ const mapping: ModelMapping<ModelEnum.Budget> = {
         type: ModelEnum.BudgetExercise
       },
       productSectionBudgets: {
-        type: ModelEnum.ProductSectionBudget
+        type: ModelEnum.ProductSectionBudget,
+        multiple: true,
+        nullable: false
       }
     },
     views: [
@@ -32,11 +34,17 @@ const mapping: ModelMapping<ModelEnum.Budget> = {
       },
       {
         type: ViewEnum.Create,
-        fields: {}
+        fields: {
+          description: true,
+          budgetExercise: true
+        }
       },
       {
         type: ViewEnum.Update,
-        fields: {}
+        fields: {
+          description: true,
+          budgetExercise: true
+        }
       },
       {
         type: ViewEnum.Detail,

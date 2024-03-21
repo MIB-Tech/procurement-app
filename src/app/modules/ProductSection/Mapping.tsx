@@ -35,26 +35,31 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+
+      }
     },
     {
       type: ViewEnum.Create,
       fields: {
+        code: true,
         name: true,
+        sortIndex: true,
+        rupture: true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
+        code: true,
         name: true,
+        sortIndex: true,
+        rupture: true,
       }
     },
     {
       type: ViewEnum.Detail,
-      columns: {
-        name: true,
-        products: true
-      }
+      columns: {}
     }
   ]
 };

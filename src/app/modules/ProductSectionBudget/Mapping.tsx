@@ -13,7 +13,8 @@ const mapping: ModelMapping<ModelEnum.ProductSectionBudget> = {
         type: ColumnTypeEnum.String
       },
       amount: {
-        type: ColumnTypeEnum.Number
+        type: ColumnTypeEnum.Number,
+        title:'AMOUNT_PRODUCT_SECTION'
       },
       budget: {
         type: ModelEnum.Budget
