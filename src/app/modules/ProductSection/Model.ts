@@ -1,11 +1,16 @@
 import {AbstractModel} from '../../../_custom/types/types';
 import {ProductModel} from "../Product";
+import {ProductSectionBudgetModel} from "../ProductSectionBudget";
 
 
 type Model = {
   name: string
-  rupture:string
-  products:Array<ProductModel>
+  code: string
+  rupture: string
+  sortIndex: string
+  products: Array<ProductModel>
+  productSectionsBudgets: Array<ProductSectionBudgetModel>
+
 } & AbstractModel
 
 export default Model;
