@@ -485,7 +485,6 @@ type I18nMessageKey =
   | 'DELIVERY_DEPOT'
   | 'DELIVERY_DEPOTS'
   | 'OPERATIONS'
-  | 'DASHBOARD'
   | 'SUB_CATEGORY'
 type I18nLanguage = Record<I18nMessageKey, string>
 
