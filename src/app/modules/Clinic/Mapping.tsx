@@ -84,7 +84,11 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
       multiple: true,
       embeddedForm: true,
       nullable: false
-    }
+    },
+    budgets: {
+      type: ModelEnum.Budget,
+      multiple: true
+    },
   },
   views: [
     {

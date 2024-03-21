@@ -18,9 +18,18 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
     rupture: {
       type: ColumnTypeEnum.String
     },
+    code: {
+      type: ColumnTypeEnum.String
+    },
+    sortIndex: {
+      type: ColumnTypeEnum.String
+    },
     products: {
       type: ModelEnum.Product,
       multiple: true
+    },
+    productSectionsBudgets: {
+      type: ModelEnum.ProductSectionBudget
     }
   },
   views: [
