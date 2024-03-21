@@ -137,7 +137,7 @@ const DashboardPage: FC = () => (
         <Block2/>
       </div>
       <div className="col-4">
-        <Block01/>
+        <Block3/>
       </div>
     </div>
     <div className="mt-5">
