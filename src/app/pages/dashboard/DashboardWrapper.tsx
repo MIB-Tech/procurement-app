@@ -17,6 +17,7 @@ type Block1Type = {
   items: Array<{}>
 }
 
+
 const Block1 = () => {
   const {totalCount, isLoading} = useCollectionQuery<ModelEnum.PurchaseOrder>({
     modelName: ModelEnum.PurchaseOrder,
@@ -28,7 +29,7 @@ const Block1 = () => {
     <Widget
       variant="primary"
       title={title}
-      value={isLoading ? <Skeleton /> : totalCount}
+      value={isLoading ? <Skeleton/> : totalCount}
       items={[
         {title: 'Decembre 2023', subTitle: title, value: 0},
         {title: 'Janvier 2024', subTitle: title, value: 0},
@@ -40,9 +41,14 @@ const Block1 = () => {
 }
 
 const Block2 = () => {
-  const {totalCount, isLoading} = useCollectionQuery<ModelEnum.PurchaseOrder>({
+  const {collection, isLoading} = useCollectionQuery<ModelEnum.PurchaseOrder>({
     modelName: ModelEnum.PurchaseOrder,
-    params: {itemsPerPage: 0},
+    params: {
+      itemsPerPage: 4,
+      sort: {
+        totalInclTax: 'desc'
+      }
+    },
   })
   const title = 'Montant TTC des bons de commande'
 
@@ -50,20 +56,22 @@ const Block2 = () => {
     <Widget
       variant="danger"
       title={title}
-      value={isLoading ? <Skeleton /> : <NumberUnit value={0} className='text-white' unitProps={{className: 'text-white'}}/>}
-      items={[
-        {title: 'Acheteur 1', subTitle: title, value: <NumberUnit value={0} />},
-        {title: 'Acheteur 2', subTitle: title, value: <NumberUnit value={0} />},
-        {title: 'Acheteur 3', subTitle: title, value: <NumberUnit value={0} />},
-        {title: 'Acheteur 4', subTitle: title, value: <NumberUnit value={0} />},
-      ]}
+      value={isLoading ?
+        <Skeleton/> :
+        <NumberUnit value={0} className='text-white' unitProps={{className: 'text-white'}}/>}
+      items={collection.map(item => ({
+        title: item['@title'],
+        subTitle: item['@subTitle'],
+        value: <NumberUnit value={item.totalInclTax} precision={0}/>,
+        icon: item['@icon']
+      }))}
     />
   )
 }
 
 const Block3 = () => {
-  const {totalCount, isLoading} = useCollectionQuery<ModelEnum.PurchaseOrder>({
-    modelName: ModelEnum.PurchaseOrder,
+  const {totalCount, isLoading} = useCollectionQuery<ModelEnum.Vendor>({
+    modelName: ModelEnum.Vendor,
     params: {itemsPerPage: 0},
   })
   const title = 'Top fournisseurs'
@@ -72,16 +80,16 @@ const Block3 = () => {
     <Widget
       variant="info"
       title={title}
-      value={isLoading ? <Skeleton /> : <NumberUnit value={0} className='text-white' unitProps={{className: 'text-white'}}/>}
       items={[
-        {title: 'Acheteur 1', subTitle: title, value: <NumberUnit value={0} />},
-        {title: 'Acheteur 2', subTitle: title, value: <NumberUnit value={0} />},
-        {title: 'Acheteur 3', subTitle: title, value: <NumberUnit value={0} />},
-        {title: 'Acheteur 4', subTitle: title, value: <NumberUnit value={0} />},
+        {title: 'fournisseur 1', subTitle: title, value: <NumberUnit value={0}/>},
+        {title: 'fournisseur 2', subTitle: title, value: <NumberUnit value={0}/>},
+        {title: 'fournisseur 3', subTitle: title, value: <NumberUnit value={0}/>},
+        {title: 'fournisseur 4', subTitle: title, value: <NumberUnit value={0}/>},
       ]}
     />
   )
 }
+
 
 const Block4 = () => {
   const itemsPerPage = 5
@@ -123,20 +131,20 @@ const DashboardPage: FC = () => (
   <>
     <div className="row">
       <div className="col-4">
-        <Block1 />
+        <Block1/>
       </div>
       <div className="col-4">
-        <Block2 />
+        <Block2/>
       </div>
       <div className="col-4">
-        <Block3 />
+        <Block01/>
       </div>
     </div>
     <div className="mt-5">
-      <Block4 />
+      <Block4/>
     </div>
     ...
-    <DashboardPage__OLD />
+    <DashboardPage__OLD/>
   </>
 )
 
@@ -148,7 +156,7 @@ const DashboardWrapper: FC = () => {
     setPageTitle(trans({id: 'DASHBOARD'}))
   }, [])
 
-  return <DashboardPage />
+  return <DashboardPage/>
 }
 
 export {DashboardWrapper}

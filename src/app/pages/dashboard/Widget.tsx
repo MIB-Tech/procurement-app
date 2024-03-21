@@ -7,8 +7,8 @@ import {SVG} from '../../../_custom/components/SVG/SVG'
 type WidgetProps = {
   variant?: Variant
   title: string
-  value: ReactNode,
-  items: Array<{icon?: string, title: string, subTitle: string, value: ReactNode}>
+  value?: ReactNode,
+  items: Array<{icon?: string, title: string, subTitle?: string, value: ReactNode}>
 }
 export const Widget: FC<WidgetProps> = ({variant = 'primary', title, value, items}) => (
   <div className="card">
@@ -17,9 +17,11 @@ export const Widget: FC<WidgetProps> = ({variant = 'primary', title, value, item
         <h3 className="m-0 text-white fw-bolder fs-3">
           {title}
         </h3>
-        <div className="text-end text-white pt-5 fw-bolder fs-4x pt-">
-          {value}
-        </div>
+        {typeof value !== 'undefined' && (
+          <div className="text-end text-white pt-5 fw-bolder fs-4x pt-">
+            {value}
+          </div>
+        )}
       </div>
       <div
         className="shadow-xs card-rounded mx-7 mb-7 px-4 py-7 position-relative z-index-1 bg-white"
@@ -43,9 +45,11 @@ export const Widget: FC<WidgetProps> = ({variant = 'primary', title, value, item
                 >
                   {item.title}
                 </a>
-                <div className="text-gray-400 fw-bold fs-7">
-                  {item.subTitle}
-                </div>
+                {item.subTitle && (
+                  <div className="text-gray-400 fw-bold fs-7 text-truncate">
+                    {item.subTitle}
+                  </div>
+                )}
               </div>
               <div className="fw-bolder fs-5 text-gray-800 pe-1">
                 {item.value}
