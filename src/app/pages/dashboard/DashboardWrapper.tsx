@@ -194,7 +194,7 @@ const DashboardPage: FC = () => (
   </>
 )
 
-const DashboardWrapper: FC = () => {
+export const DashboardWrapper: FC = () => {
   const {setPageTitle} = usePageData()
   const {trans} = useTrans()
 
@@ -204,5 +204,3 @@ const DashboardWrapper: FC = () => {
 
   return <DashboardPage/>
 }
-
-export {DashboardWrapper}

@@ -20,6 +20,7 @@ type I18nMessageKey =
   | QuantityStatusEnum
   | ClinicStatusEnum
   | ProductTypeEnum
+  | 'DASHBOARD'
   | 'GENERATE_INVOICE'
   | 'VALIDATED'
   | 'SHOW'
@@ -485,8 +486,13 @@ type I18nMessageKey =
   | 'DELIVERY_DEPOT'
   | 'DELIVERY_DEPOTS'
   | 'OPERATIONS'
-  | 'DASHBOARD'
   | 'SUB_CATEGORY'
+  | 'BUDGET_EXERCISE'
+  | 'RUPTURE'
+  | 'BUDGET'
+  | 'BUDGET_EXERCISES'
+  | 'PRODUCT_SECTION_BUDGET'
+  | 'AMOUNT_PRODUCT_SECTION'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};

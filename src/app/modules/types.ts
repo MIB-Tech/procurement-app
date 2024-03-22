@@ -38,6 +38,9 @@ import {BlocModel} from "./Bloc";
 import {ServiceModel} from "./Service";
 import {ClinicModel} from "./Clinic";
 import {DeliveryDepotModel} from "./DeliveryDepot";
+import {ProductSectionBudgetModel} from "./ProductSectionBudget";
+import {BudgetModel} from "./Budget";
+import {BudgetExerciseModel} from "./BudgetExercise";
 
 export enum ModelEnum {
   ApplicantService = 'ApplicantService',
@@ -80,7 +83,9 @@ export enum ModelEnum {
   Service = 'Service',
   Bloc = 'Bloc',
   DeliveryDepot = 'DeliveryDepot',
-
+  ProductSectionBudget = 'ProductSectionBudget',
+  Budget = 'Budget',
+  BudgetExercise = 'BudgetExercise'
 }
 
 export type Models = {
@@ -124,6 +129,9 @@ export type Models = {
   [ModelEnum.Service]: ServiceModel,
   [ModelEnum.Clinic]: ClinicModel,
   [ModelEnum.DeliveryDepot]: DeliveryDepotModel,
+  [ModelEnum.ProductSectionBudget]: ProductSectionBudgetModel,
+  [ModelEnum.Budget]: BudgetModel,
+  [ModelEnum.BudgetExercise]: BudgetExerciseModel,
 
 
 }

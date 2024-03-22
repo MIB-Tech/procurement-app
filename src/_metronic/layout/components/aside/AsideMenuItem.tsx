@@ -1,20 +1,20 @@
-import React, {ReactNode} from 'react'
-import clsx from 'clsx'
-import {Link} from 'react-router-dom'
-import {useLocation} from 'react-router'
-import {useLayout} from '../../core'
-import {SVG} from '../../../../_custom/components/SVG/SVG'
+import React from 'react';
+import clsx from 'clsx';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router';
+import { useLayout } from '../../core';
+import { SVG } from '../../../../_custom/components/SVG/SVG';
+import { OperationModel } from '../../../../app/modules/Operation';
+import { getRoutePrefix } from '../../../../_custom/utils';
 
 
 type Props = {
   fontIcon?: string
   group?: boolean,
-  path: string
-  title: ReactNode
-  icon?: string
-}
+} & Pick<OperationModel, 'icon' | 'title' | 'resource'>
 
-const AsideMenuItem: React.FC<Props> = ({fontIcon, group, children, path: treePath, title, icon}) => {
+const AsideMenuItem: React.FC<Props> = ({ fontIcon, group, children, resource, title, icon }) => {
+  const treePath = getRoutePrefix(resource.name);
   const { pathname } = useLocation();
   const { config } = useLayout();
   const { aside } = config;
