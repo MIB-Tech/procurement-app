@@ -4,6 +4,8 @@ import {AsideMenuItem} from './AsideMenuItem';
 import {useAuth} from '../../../../_custom/hooks/UseAuth';
 import {ViewEnum} from '../../../../_custom/types/ModelMapping';
 import {ModelEnum} from '../../../../app/modules/types';
+import {getRoutePrefix} from '../../../../_custom/utils'
+import {Trans} from '../../../../_custom/components/Trans'
 
 const GROUPS = [
   {
@@ -25,6 +27,19 @@ export function AsideMenuMain() {
 
   return (
     <>
+      <AsideMenuItem
+        path='/dashboard'
+        title={<Trans id='DASHBOARD' />}
+        icon='/graphs/gra010.svg'
+      />
+      <AsideMenuItem
+        path='/budget-monitoring'
+        title={<Trans id='BUDGET_MONITORING' />}
+        icon='/graphs/gra004.svg'
+      />
+      {operations.filter(({operationType, isMenuItem}) => isMenuItem && operationType === ViewEnum.Listing)
+        .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
+        .map(operation => <AsideMenuItem key={operation.id} {...operation} path={getRoutePrefix(operation.resource.name)} />)}
       {/*{GROUPS.map(group => {*/}
       {/*  const _ope = operations.filter(({resource}) => group.operations.includes(resource.name));*/}
       {/*  if (_ope.length === 0) return <Fragment key={group.title} />*/}
@@ -42,9 +57,7 @@ export function AsideMenuMain() {
       {/*    </>*/}
       {/*  );*/}
       {/*})}*/}
-      {operations.filter(({operationType, isMenuItem}) => isMenuItem && operationType === ViewEnum.Listing)
-        .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
-        .map(operation => <AsideMenuItem key={operation.id} {...operation} />)}
+
       {/*....................*/}
       {/*{*/}
       {/*  menuRoutes.map(route => {*/}
