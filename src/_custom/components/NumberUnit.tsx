@@ -6,6 +6,7 @@ type CurrencyProps = {
   value: number
   unit?: string | false,
   precision?: number
+  unitProps?: HTMLAttributes<HTMLSpanElement>
 } & HTMLAttributes<HTMLDivElement>
 export const getFormattedNumber = ({value, precision = 2}: Omit<CurrencyProps, 'unit' | 'className'>) => {
   const numberFormat = new Intl.NumberFormat(
@@ -21,11 +22,16 @@ export const getFormattedNumber = ({value, precision = 2}: Omit<CurrencyProps, '
 export const getNumberUnit = ({value,  unit = 'DH', precision}: Omit<CurrencyProps, 'className'>) => {
   return `${getFormattedNumber({value, precision})}${unit === false ? '': ` ${unit}`}`
 }
-export const NumberUnit: FC<CurrencyProps> = ({value, unit = 'DH', precision, className}) => (
+export const NumberUnit: FC<CurrencyProps> = ({value, unit = 'DH', precision, className, unitProps}) => (
   <div>
     <span className={clsx('text-gray-700 me-1 text-nowrap', className)}>
       {getFormattedNumber({value, precision})}
     </span>
-    <span className='text-gray-500 align-self-start fs-8'>{unit}</span>
+    <span
+      {...unitProps}
+      className={clsx('text-gray-500 align-self-start fs-8', unitProps?.className)}
+    >
+      {unit}
+    </span>
   </div>
 );
