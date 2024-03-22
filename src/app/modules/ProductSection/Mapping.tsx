@@ -18,34 +18,48 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
     rupture: {
       type: ColumnTypeEnum.String
     },
+    code: {
+      type: ColumnTypeEnum.String
+    },
+    sortIndex: {
+      type: ColumnTypeEnum.String
+    },
     products: {
       type: ModelEnum.Product,
       multiple: true
+    },
+    productSectionsBudgets: {
+      type: ModelEnum.ProductSectionBudget
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+
+      }
     },
     {
       type: ViewEnum.Create,
       fields: {
+        code: true,
         name: true,
+        sortIndex: true,
+        rupture: true
       }
     },
     {
       type: ViewEnum.Update,
       fields: {
+        code: true,
         name: true,
+        sortIndex: true,
+        rupture: true,
       }
     },
     {
       type: ViewEnum.Detail,
-      columns: {
-        name: true,
-        products: true
-      }
+      columns: {}
     }
   ]
 };

@@ -45,6 +45,9 @@ import {BLOC_MAPPING} from "./Bloc";
 import {SERVICE_MAPPING} from "./Service";
 import {CLINIC_MAPPING} from "./Clinic";
 import {DELIVERY_DEPOT_MAPPING} from "./DeliveryDepot";
+import {PRODUCT_SECTION_BUDGET_MAPPING} from "./ProductSectionBudget";
+import {BUDGET_MAPPING} from "./Budget";
+import {BUDGET_EXERCISE_MAPPING} from "./BudgetExercise";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
@@ -87,7 +90,13 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Bloc]: BLOC_MAPPING,
   [ModelEnum.Service]: SERVICE_MAPPING,
   [ModelEnum.Clinic]: CLINIC_MAPPING,
-  [ModelEnum.DeliveryDepot]: DELIVERY_DEPOT_MAPPING
+  [ModelEnum.DeliveryDepot]: DELIVERY_DEPOT_MAPPING,
+  [ModelEnum.ProductSectionBudget]: PRODUCT_SECTION_BUDGET_MAPPING,
+  [ModelEnum.Budget]: BUDGET_MAPPING,
+  [ModelEnum.BudgetExercise]: BUDGET_EXERCISE_MAPPING
+
+
+
 };
 
 type ListingState = {

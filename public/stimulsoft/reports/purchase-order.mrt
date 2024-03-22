@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.4.0",
-  "ReportGuid": "3a8c4184130045e4a595c0b866ac759c",
+  "ReportGuid": "f0a8487e492a4aa5966d237ca0aabd35",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1710946742948+0000)/",
+  "ReportChanged": "/Date(1711115251480+0000)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -32,7 +32,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root",
         "Alias": "root",
-        "Key": "8d94cc86524243009623ccef83de8bc0",
+        "Key": "871bbcc7649c43268e43ea5e7451e1bd",
         "Columns": {
           "0": {
             "Name": "currency",
@@ -168,13 +168,13 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "DATA_TEST_BC.root"
+        "NameInSource": "DATA_TEST_BC ToTestCOB.root"
       },
       "1": {
         "Ident": "StiDataTableSource",
         "Name": "root_clinic",
         "Alias": "root_clinic",
-        "Key": "c41b2dcfa410445a809f1846ed52dc4f",
+        "Key": "68d1c017901d4013b4101a11915179da",
         "Columns": {
           "0": {
             "Name": "name",
@@ -198,13 +198,13 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "DATA_TEST_BC.root_clinic"
+        "NameInSource": "DATA_TEST_BC ToTestCOB.root_clinic"
       },
       "2": {
         "Ident": "StiDataTableSource",
         "Name": "root_lines",
         "Alias": "root_lines",
-        "Key": "17cc7f7681af44a5ae9dbabd380eb49a",
+        "Key": "dbddff1c6460479d9549ef01d2abdf24",
         "Columns": {
           "0": {
             "Name": "type",
@@ -270,13 +270,13 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "DATA_TEST_BC.root_lines"
+        "NameInSource": "DATA_TEST_BC ToTestCOB.root_lines"
       },
       "3": {
         "Ident": "StiDataTableSource",
         "Name": "root_lines_product",
         "Alias": "root_lines_product",
-        "Key": "ac982fce75a74aff87aacad6325e1a81",
+        "Key": "7cd5ec0b339a4e2b9807af47f51ff98b",
         "Columns": {
           "0": {
             "Name": "code",
@@ -293,13 +293,13 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "DATA_TEST_BC.root_lines_product"
+        "NameInSource": "DATA_TEST_BC ToTestCOB.root_lines_product"
       },
       "4": {
         "Ident": "StiDataTableSource",
         "Name": "root_paymentModality",
         "Alias": "root_paymentModality",
-        "Key": "e1c6505c87cc4ef196381754bc1ef2b3",
+        "Key": "53bef723db594bd18cee7077f90f6dc4",
         "Columns": {
           "0": {
             "Name": "name",
@@ -316,13 +316,13 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "DATA_TEST_BC.root_paymentModality"
+        "NameInSource": "DATA_TEST_BC ToTestCOB.root_paymentModality"
       },
       "5": {
         "Ident": "StiDataTableSource",
         "Name": "root_vendor",
         "Alias": "root_vendor",
-        "Key": "676e897bf21a4019bf73c6085b4a85b5",
+        "Key": "1cb132566db34866b4a5c405ef72fdec",
         "Columns": {
           "0": {
             "Name": "name",
@@ -360,13 +360,13 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "DATA_TEST_BC.root_vendor"
+        "NameInSource": "DATA_TEST_BC ToTestCOB.root_vendor"
       },
       "6": {
         "Ident": "StiDataTableSource",
         "Name": "root_vendor_defaultAddress",
         "Alias": "root_vendor_defaultAddress",
-        "Key": "49bcdf679c8f47cbbe817cc1ca0f6b6a",
+        "Key": "cf902ab65ab94f4fb5aec82a226075a2",
         "Columns": {
           "0": {
             "Name": "postalCode",
@@ -390,15 +390,15 @@
             "Type": "System.String"
           }
         },
-        "NameInSource": "DATA_TEST_BC.root_vendor_defaultAddress"
+        "NameInSource": "DATA_TEST_BC ToTestCOB.root_vendor_defaultAddress"
       }
     },
     "Databases": {
       "0": {
         "Ident": "StiJsonDatabase",
-        "Name": "DATA_TEST_BC",
-        "Alias": "DATA_TEST_BC",
-        "PathData": "C:\\Users\\USER\\Desktop\\sti\\stimu repo\\BC\\DATA_TEST_BC.json",
+        "Name": "DATA_TEST_BC ToTestCOB",
+        "Alias": "DATA_TEST_BC ToTestCOB",
+        "PathData": "C:\\Users\\USER\\Desktop\\sti\\stimu repo\\BC\\DATA_TEST_BC ToTestCOB.json",
         "HeadersString": ""
       }
     },
@@ -1877,7 +1877,8 @@
         "4": {
           "Ident": "StiDataBand",
           "Name": "DataBand1",
-          "ClientRectangle": "0,14,19,12.2",
+          "CanShrink": true,
+          "ClientRectangle": "0,14,19,2.4",
           "Interaction": {
             "Ident": "StiBandInteraction"
           },
@@ -2027,48 +2028,24 @@
               "Brush": "solid:",
               "TextBrush": "solid:Black",
               "Type": "DataColumn"
-            },
-            "8": {
-              "Ident": "StiText",
-              "Name": "Text15",
-              "CanGrow": true,
-              "ClientRectangle": "1.2,4.2,16.8,1.2",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Le présent bon de commande est arrêté à la somme de {ToCurrencyWordsFr(root.totalInclTaxNumber,\"DHS\",2)}."
-              },
-              "Font": ";10;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "TextOptions": {
-                "WordWrap": true
-              },
-              "Type": "Expression"
-            },
-            "9": {
-              "Ident": "StiText",
-              "Name": "Text17",
-              "ClientRectangle": "1.4,5.6,16.8,3.2",
-              "Interaction": {
-                "Ident": "StiInteraction"
-              },
-              "Text": {
-                "Value": "Toute livraison de Produits devra faire l’objet d’un bon de livraison en trois exemplaires signés et cachetés :\r\n \r\n\r\n1 copie originale pour le bureau d’ordre du site\r\n\r\n1 copie originale pour la comptabilité Akdital\r\n\r\n1 copie originale pour le fournisseur"
-              },
-              "Font": ";9;Bold;",
-              "Border": ";;;;;;;solid:Black",
-              "Brush": "solid:",
-              "TextBrush": "solid:Black",
-              "Type": "Expression"
-            },
-            "10": {
+            }
+          }
+        },
+        "5": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand3",
+          "ClientRectangle": "0,17.2,19,2",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
               "Ident": "StiText",
               "Name": "Text23",
               "CanGrow": true,
-              "ClientRectangle": "0,2.6,19,1.4",
+              "ClientRectangle": "0,0.6,19,1.4",
               "Conditions": {
                 "0": {
                   "Ident": "StiCondition",
@@ -2097,7 +2074,55 @@
             }
           }
         },
-        "5": {
+        "6": {
+          "Ident": "StiDataBand",
+          "Name": "DataBand2",
+          "ClientRectangle": "0,20,19,6.2",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text17",
+              "ClientRectangle": "1.4,2.94,16.8,3",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Toute livraison de Produits devra faire l’objet d’un bon de livraison en trois exemplaires signés et cachetés :\r\n \r\n\r\n1 copie originale pour le bureau d’ordre du site\r\n\r\n1 copie originale pour la comptabilité Akdital\r\n\r\n1 copie originale pour le fournisseur"
+              },
+              "Font": ";9;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Text15",
+              "CanGrow": true,
+              "ClientRectangle": "1.4,1.2,16.8,1.2",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "Le présent bon de commande est arrêté à la somme de {ToCurrencyWordsFr(root.totalInclTaxNumber,\"DHS\",2)}."
+              },
+              "Font": ";10;Bold;",
+              "Border": ";;;;;;;solid:Black",
+              "Brush": "solid:",
+              "TextBrush": "solid:Black",
+              "TextOptions": {
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            }
+          }
+        },
+        "7": {
           "Ident": "StiRectanglePrimitive",
           "Name": "RectanglePrimitive8",
           "Guid": "ca76b7cefb7647dfadd0a1e4511e1513",
@@ -2107,7 +2132,7 @@
           },
           "Style": "None"
         },
-        "6": {
+        "8": {
           "Ident": "StiVerticalLinePrimitive",
           "Name": "VerticalLinePrimitive1",
           "Guid": "53af56f18b534272938c0a14c409257a",
@@ -2118,7 +2143,7 @@
           "StartCap": ";;;",
           "EndCap": ";;;"
         },
-        "7": {
+        "9": {
           "Ident": "StiVerticalLinePrimitive",
           "Name": "VerticalLinePrimitive2",
           "Guid": "a4bdca88df114bd9a54ee8e6c1123f60",
@@ -2129,7 +2154,7 @@
           "StartCap": ";;;",
           "EndCap": ";;;"
         },
-        "8": {
+        "10": {
           "Ident": "StiVerticalLinePrimitive",
           "Name": "VerticalLinePrimitive3",
           "Guid": "a85eb4da382d46c0841602a404cd4410",
@@ -2140,7 +2165,7 @@
           "StartCap": ";;;",
           "EndCap": ";;;"
         },
-        "9": {
+        "11": {
           "Ident": "StiVerticalLinePrimitive",
           "Name": "VerticalLinePrimitive4",
           "Guid": "395676ba09e54d868d6a6e49e02f4f93",

@@ -2,6 +2,14 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  BUDGET_MONITORING: "Suivi budgétaire",
+  DASHBOARD: "Tableau de bord",
+  AMOUNT_PRODUCT_SECTION: "Montant",
+  PRODUCT_SECTION_BUDGET: "Budget de la section produit",
+  BUDGET_EXERCISES: "Exercices budgétaire",
+  BUDGET: "Budget",
+  RUPTURE: "Rupture",
+  BUDGET_EXERCISE: "Exercice budgétaire",
   SUB_CATEGORY: "Sous-famille",
   UNIT_PRICE: "P.U",
   OPERATIONS: "Operations",

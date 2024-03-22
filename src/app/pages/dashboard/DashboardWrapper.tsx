@@ -1,100 +1,206 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {FC} from 'react'
-import {useIntl} from 'react-intl'
-import {PageTitle} from '../../../_metronic/layout/core'
-import {
-  MixedWidget2,
-  MixedWidget10,
-  MixedWidget11,
-  ListsWidget2,
-  ListsWidget3,
-  ListsWidget4,
-  ListsWidget5,
-  ListsWidget6,
-  TablesWidget5,
-  TablesWidget10,
-  MixedWidget8,
-} from '../../../_metronic/partials/widgets'
+import React, {FC, useEffect} from 'react'
+import {usePageData} from '../../../_metronic/layout/core'
+import {useTrans} from '../../../_custom/components/Trans'
+import {Widget} from './Widget'
+import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery'
+import {ModelEnum} from '../../modules/types'
+import {capitalize, Skeleton} from '@mui/material'
+import {TableView} from '../../../_custom/ListingView/views/Table/TableView'
+import {ListingColumns} from '../../../_custom/types/ModelMapping'
+import {NumberUnit} from '../../../_custom/components/NumberUnit'
+import {useQuery} from 'react-query'
+import axios from 'axios'
+import moment from 'moment'
+import {useAuth} from '../../../_custom/hooks/UseAuth'
 
+type Block1Type = {
+  total: number,
+  count: number,
+  items: Array<{}>
+}
+
+// Get the current date
+let currentDate = moment()
+
+// Array to store the ranges
+let ranges: Array<{start: string, end: string}> = []
+
+// Loop to get ranges for the last 4 months
+for (let i = 0; i < 4; i++) {
+  // Calculate the start date of the month
+  let startDate = currentDate.clone().subtract(i, 'months').startOf('month')
+  // Calculate the end date of the month
+  let endDate = currentDate.clone().subtract(i, 'months').endOf('month')
+  // Store the range in an object
+  let range = {
+    start: startDate.format('YYYY-MM-DD'),
+    end: endDate.format('YYYY-MM-DD'),
+  }
+  // Push the range object to the array
+  ranges.push(range)
+}
+
+const useStatisticQuery = () => {
+  const {clinic} = useAuth()
+  return useQuery({
+    queryKey: ['BLOCK_1', clinic?.id],
+    queryFn: () => axios.get<{count: number, sum: number, ranges: Array<{start: string, end: string, count: number, sum: number}>}>('/custom/statistics/purchase-orders', {
+      params: {
+        clinicId: clinic?.id,
+        ...ranges.reduce(
+          (previousValue, currentValue, index) => ({
+            ...previousValue,
+            [`range[${index}][start]`]: currentValue.start,
+            [`range[${index}][end]`]: currentValue.end,
+          }),
+          {}
+        )
+      },
+    }),
+  })
+}
+const Block1 = () => {
+  const {data, isLoading} = useStatisticQuery()
+  const title = 'Total des bons de commande'
+
+  return (
+    <Widget
+      variant="primary"
+      title={title}
+      value={isLoading ? <Skeleton/> : data?.data.count}
+      items={
+        (data?.data.ranges || []).map(range => ({
+          title: capitalize(moment(range.start).format('MMM Y')), subTitle: title, value: range.count,
+        }))
+      }
+    />
+  )
+}
+
+const Block2 = () => {
+  const {data, isLoading} = useStatisticQuery()
+  const title = 'Montant TTC des bons de commande'
+
+  return (
+    <Widget
+      variant="danger"
+      title={title}
+      value={isLoading ?
+        <Skeleton/> :
+        <NumberUnit value={data?.data.sum || 0} precision={0} className='text-white' unitProps={{className: 'text-white'}}/>}
+      items={
+        (data?.data.ranges || []).map(range => ({
+          title: capitalize(moment(range.start).format('MMM Y')),
+          subTitle: title,
+          value: <NumberUnit value={range.sum} precision={0}/>,
+        }))
+      }
+      // items={collection.map(item => ({
+      //   title: item['@title'],
+      //   subTitle: item['@subTitle'],
+      //   value: <NumberUnit value={item.totalInclTax} precision={0}/>,
+      //   icon: item['@icon']
+      // }))}
+    />
+  )
+}
+
+const Block3 = () => {
+  const {clinic} = useAuth()
+  const {data} = useQuery({
+    queryKey: ['BLOCK_3', clinic?.id],
+    queryFn: () => axios.get<{sum: number, vendors: Array<{name: string, sumTotalInclTax: number}>}>('/custom/statistics/vendors', {
+      params: {
+        clinicId: clinic?.id,
+      }
+    }),
+  })
+  const title = 'Top fournisseurs'
+
+  return (
+    <Widget
+      variant="info"
+      title={title}
+      items={
+        (data?.data.vendors || []).map(vendor => ({
+          title: vendor.name,
+          subTitle: title,
+          value: <NumberUnit value={vendor.sumTotalInclTax} precision={0}/>,
+        }))
+      }
+    />
+  )
+}
+
+
+const Block4 = () => {
+  const {clinic} = useAuth()
+  const itemsPerPage = 5
+  const {collection, isLoading, refetch} = useCollectionQuery<ModelEnum.PurchaseOrder>({
+    modelName: ModelEnum.PurchaseOrder,
+    params: {
+      itemsPerPage,
+      sort: {
+        createdAt: 'desc',
+      },
+    },
+  })
+
+  useEffect(() => {
+    refetch().then(r => {})
+  }, [clinic?.id])
+
+  return (
+    <div className="card card-bordered">
+      <div className="card-header border-0">
+        <h3 className="card-title align-items-start flex-column">
+          <span className="card-label fw-bold fs-3 mb-1">Bons de commande récents</span>
+          <span className="text-muted fw-semibold fs-7">Les {itemsPerPage} derniers bons de commande</span>
+        </h3>
+      </div>
+      <div className="card-body py-1 px-3">
+        <TableView
+          modelName={ModelEnum.PurchaseOrder}
+          columns={{
+            vendor: true,
+            buyer: true,
+            totalInclTax: true,
+          } as ListingColumns<ModelEnum.PurchaseOrder>}
+          data={collection}
+          loading={isLoading}
+          itemsPerPage={itemsPerPage}
+        />
+      </div>
+    </div>
+  )
+}
 const DashboardPage: FC = () => (
   <>
-    {/* begin::Row */}
-    <div className='row gy-5 g-xl-8'>
-      <div className='col-xxl-4'>
-        <MixedWidget2
-          className='card-xl-stretch mb-xl-8'
-          chartColor='danger'
-          chartHeight='200px'
-          strokeColor='#cb1e46'
-        />
+    <div className="row">
+      <div className="col-4">
+        <Block1/>
       </div>
-      <div className='col-xxl-4'>
-        <ListsWidget5 className='card-xxl-stretch' />
+      <div className="col-4">
+        <Block2/>
       </div>
-      <div className='col-xxl-4'>
-        <MixedWidget10
-          className='card-xxl-stretch-50 mb-5 mb-xl-8'
-          chartColor='primary'
-          chartHeight='150px'
-        />
-        <MixedWidget11
-          className='card-xxl-stretch-50 mb-5 mb-xl-8'
-          chartColor='primary'
-          chartHeight='175px'
-        />
+      <div className="col-4">
+        <Block3/>
       </div>
     </div>
-    {/* end::Row */}
-
-    {/* begin::Row */}
-    <div className='row gy-5 gx-xl-8'>
-      <div className='col-xxl-4'>
-        <ListsWidget3 className='card-xxl-stretch mb-xl-3' />
-      </div>
-      <div className='col-xl-8'>
-        <TablesWidget10 className='card-xxl-stretch mb-5 mb-xl-8' />
-      </div>
-    </div>
-    {/* end::Row */}
-
-    {/* begin::Row */}
-    <div className='row gy-5 g-xl-8'>
-      <div className='col-xl-4'>
-        <ListsWidget2 className='card-xl-stretch mb-xl-8' />
-      </div>
-      <div className='col-xl-4'>
-        <ListsWidget6 className='card-xl-stretch mb-xl-8' />
-      </div>
-      <div className='col-xl-4'>
-        <ListsWidget4 className='card-xl-stretch mb-5 mb-xl-8' items={5} />
-        {/* partials/widgets/lists/_widget-4', 'class' => 'card-xl-stretch mb-5 mb-xl-8', 'items' => '5' */}
-      </div>
-    </div>
-    {/* end::Row */}
-
-    <div className='row g-5 gx-xxl-8'>
-      <div className='col-xxl-4'>
-        <MixedWidget8
-          className='card-xxl-stretch mb-xl-3'
-          chartColor='success'
-          chartHeight='150px'
-        />
-      </div>
-      <div className='col-xxl-8'>
-        <TablesWidget5 className='card-xxl-stretch mb-5 mb-xxl-8' />
-      </div>
+    <div className="mt-5">
+      <Block4/>
     </div>
   </>
 )
 
-const DashboardWrapper: FC = () => {
-  const intl = useIntl()
-  return (
-    <>
-      <PageTitle breadcrumbs={[]}>{intl.formatMessage({id: 'MENU.DASHBOARD'})}</PageTitle>
-      <DashboardPage />
-    </>
-  )
-}
+export const DashboardWrapper: FC = () => {
+  const {setPageTitle} = usePageData()
+  const {trans} = useTrans()
 
-export {DashboardWrapper}
+  useEffect(() => {
+    setPageTitle(trans({id: 'DASHBOARD'}))
+  }, [])
+
+  return <DashboardPage/>
+}
