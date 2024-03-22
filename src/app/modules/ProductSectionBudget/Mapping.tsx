@@ -14,7 +14,7 @@ const mapping: ModelMapping<ModelEnum.ProductSectionBudget> = {
       },
       amount: {
         type: ColumnTypeEnum.Number,
-        title:'AMOUNT_PRODUCT_SECTION'
+        title: 'AMOUNT_PRODUCT_SECTION'
       },
       budget: {
         type: ModelEnum.Budget
@@ -27,18 +27,26 @@ const mapping: ModelMapping<ModelEnum.ProductSectionBudget> = {
       {
         type: ViewEnum.Listing,
         columns: {
-          amount:true,
-          budget:true,
-          productSection:true
+          amount: true,
+          budget: true,
+          productSection: true
         }
       },
       {
         type: ViewEnum.Create,
-        fields: {}
+        fields: {
+          amount: true,
+          budget: true,
+          productSection: true
+        }
       },
       {
         type: ViewEnum.Update,
-        fields: {}
+        fields: {
+          amount: true,
+          budget: true,
+          productSection: true
+        }
       },
       {
         type: ViewEnum.Detail,
