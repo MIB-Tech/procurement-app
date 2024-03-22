@@ -14,6 +14,7 @@ import {UpdateView} from '../../_custom/UpdateView/UpdateView'
 import {ModelEnum} from '../modules/types'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {RoleKeyEnum} from '../modules/Role/Model'
+import {BudgetMonitoringPage} from '../pages/BudgetMonitoring/BudgetMoritoring'
 
 
 export function PrivateRoutes() {
@@ -36,7 +37,7 @@ export function PrivateRoutes() {
         {isAdmin && (
           <>
             <Route path='dashboard' element={<DashboardWrapper />} />
-            <Route path='budget-monitoring' element={<DashboardWrapper />} />
+            <Route path='budget-monitoring' element={<BudgetMonitoringPage />} />
           </>
         )}
         {operations.filter(operation=>Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {

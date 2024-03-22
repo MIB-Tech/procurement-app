@@ -20,6 +20,7 @@ type I18nMessageKey =
   | QuantityStatusEnum
   | ClinicStatusEnum
   | ProductTypeEnum
+  | 'BUDGET_MONITORING'
   | 'DASHBOARD'
   | 'GENERATE_INVOICE'
   | 'VALIDATED'

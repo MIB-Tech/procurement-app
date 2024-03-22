@@ -32,6 +32,11 @@ export function AsideMenuMain() {
         title={<Trans id='DASHBOARD' />}
         icon='/graphs/gra010.svg'
       />
+      <AsideMenuItem
+        path='/budget-monitoring'
+        title={<Trans id='BUDGET_MONITORING' />}
+        icon='/graphs/gra004.svg'
+      />
       {operations.filter(({operationType, isMenuItem}) => isMenuItem && operationType === ViewEnum.Listing)
         .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
         .map(operation => <AsideMenuItem key={operation.id} {...operation} path={getRoutePrefix(operation.resource.name)} />)}
