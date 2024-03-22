@@ -35,12 +35,12 @@ export const BudgetMonitoringPage: FC = () => {
     0
   )
   const totalCommitted = collection.reduce(
-    (totalCommitted, current)=> totalAmount + current.committed,
+    (totalCommitted, current)=> totalCommitted + current.committed,
     0
   )
 
   const totalRest = collection.reduce(
-    (totalRest, current)=> totalAmount + (current.amount - current.committed),
+    (totalRest, current)=> totalRest + (current.amount - current.committed),
     0
   )
 
@@ -86,7 +86,7 @@ export const BudgetMonitoringPage: FC = () => {
         {/*  </h3>*/}
         {/*</div>*/}
         <div className="card-body py-1 px-3">
-          <div className="table-responsive pt-5">
+          <div className="table-responsive">
             <table className="table table-sm table-row-bordered table-row-dark gy-1 align-middle mb-0">
               <thead className="fs-7 text-gray-400 text-uppercase">
               <tr>
