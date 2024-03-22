@@ -4,7 +4,7 @@ import {NumberUnit} from '../../../_custom/components/NumberUnit'
 import clsx from 'clsx'
 import {SVG} from '../../../_custom/components/SVG/SVG'
 
-type WidgetProps = {
+export type WidgetProps = {
   variant?: Variant
   title: string
   value?: ReactNode,

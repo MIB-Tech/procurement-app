@@ -5,11 +5,14 @@ import {useTrans} from '../../../_custom/components/Trans'
 import {Widget} from './Widget'
 import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery'
 import {ModelEnum} from '../../modules/types'
-import {Skeleton} from '@mui/material'
+import {capitalize, Skeleton} from '@mui/material'
 import {TableView} from '../../../_custom/ListingView/views/Table/TableView'
 import {ListingColumns} from '../../../_custom/types/ModelMapping'
 import {NumberUnit} from '../../../_custom/components/NumberUnit'
-import {DashboardPage__OLD} from '../__dashboard/DashboardWrapper'
+import {useQuery} from 'react-query'
+import axios from 'axios'
+import moment from 'moment'
+import {useAuth} from '../../../_custom/hooks/UseAuth'
 
 type Block1Type = {
   total: number,
@@ -17,39 +20,66 @@ type Block1Type = {
   items: Array<{}>
 }
 
+// Get the current date
+let currentDate = moment()
 
-const Block1 = () => {
-  const {totalCount, isLoading} = useCollectionQuery<ModelEnum.PurchaseOrder>({
-    modelName: ModelEnum.PurchaseOrder,
-    params: {itemsPerPage: 0},
+// Array to store the ranges
+let ranges: Array<{start: string, end: string}> = []
+
+// Loop to get ranges for the last 4 months
+for (let i = 0; i < 4; i++) {
+  // Calculate the start date of the month
+  let startDate = currentDate.clone().subtract(i, 'months').startOf('month')
+  // Calculate the end date of the month
+  let endDate = currentDate.clone().subtract(i, 'months').endOf('month')
+  // Store the range in an object
+  let range = {
+    start: startDate.format('YYYY-MM-DD'),
+    end: endDate.format('YYYY-MM-DD'),
+  }
+  // Push the range object to the array
+  ranges.push(range)
+}
+
+const useStatisticQuery = () => {
+  const {clinic} = useAuth()
+  return useQuery({
+    queryKey: ['BLOCK_1', clinic?.id],
+    queryFn: () => axios.get<{count: number, sum: number, ranges: Array<{start: string, end: string, count: number, sum: number}>}>('/custom/statistics/purchase-orders', {
+      params: {
+        clinicId: clinic?.id,
+        ...ranges.reduce(
+          (previousValue, currentValue, index) => ({
+            ...previousValue,
+            [`range[${index}][start]`]: currentValue.start,
+            [`range[${index}][end]`]: currentValue.end,
+          }),
+          {}
+        )
+      },
+    }),
   })
+}
+const Block1 = () => {
+  const {data, isLoading} = useStatisticQuery()
   const title = 'Total des bons de commande'
 
   return (
     <Widget
       variant="primary"
       title={title}
-      value={isLoading ? <Skeleton/> : totalCount}
-      items={[
-        {title: 'Decembre 2023', subTitle: title, value: 0},
-        {title: 'Janvier 2024', subTitle: title, value: 0},
-        {title: 'Février 2024', subTitle: title, value: 0},
-        {title: 'Mars 2024', subTitle: title, value: 0},
-      ]}
+      value={isLoading ? <Skeleton/> : data?.data.count}
+      items={
+        (data?.data.ranges || []).map(range => ({
+          title: capitalize(moment(range.start).format('MMM Y')), subTitle: title, value: range.count,
+        }))
+      }
     />
   )
 }
 
 const Block2 = () => {
-  const {collection, isLoading} = useCollectionQuery<ModelEnum.PurchaseOrder>({
-    modelName: ModelEnum.PurchaseOrder,
-    params: {
-      itemsPerPage: 4,
-      sort: {
-        totalInclTax: 'desc'
-      }
-    },
-  })
+  const {data, isLoading} = useStatisticQuery()
   const title = 'Montant TTC des bons de commande'
 
   return (
@@ -58,21 +88,33 @@ const Block2 = () => {
       title={title}
       value={isLoading ?
         <Skeleton/> :
-        <NumberUnit value={0} className='text-white' unitProps={{className: 'text-white'}}/>}
-      items={collection.map(item => ({
-        title: item['@title'],
-        subTitle: item['@subTitle'],
-        value: <NumberUnit value={item.totalInclTax} precision={0}/>,
-        icon: item['@icon']
-      }))}
+        <NumberUnit value={data?.data.sum || 0} precision={0} className='text-white' unitProps={{className: 'text-white'}}/>}
+      items={
+        (data?.data.ranges || []).map(range => ({
+          title: capitalize(moment(range.start).format('MMM Y')),
+          subTitle: title,
+          value: <NumberUnit value={range.sum} precision={0}/>,
+        }))
+      }
+      // items={collection.map(item => ({
+      //   title: item['@title'],
+      //   subTitle: item['@subTitle'],
+      //   value: <NumberUnit value={item.totalInclTax} precision={0}/>,
+      //   icon: item['@icon']
+      // }))}
     />
   )
 }
 
 const Block3 = () => {
-  const {totalCount, isLoading} = useCollectionQuery<ModelEnum.Vendor>({
-    modelName: ModelEnum.Vendor,
-    params: {itemsPerPage: 0},
+  const {clinic} = useAuth()
+  const {data} = useQuery({
+    queryKey: ['BLOCK_3', clinic?.id],
+    queryFn: () => axios.get<{sum: number, vendors: Array<{name: string, sumTotalInclTax: number}>}>('/custom/statistics/vendors', {
+      params: {
+        clinicId: clinic?.id,
+      }
+    }),
   })
   const title = 'Top fournisseurs'
 
@@ -80,20 +122,22 @@ const Block3 = () => {
     <Widget
       variant="info"
       title={title}
-      items={[
-        {title: 'fournisseur 1', subTitle: title, value: <NumberUnit value={0}/>},
-        {title: 'fournisseur 2', subTitle: title, value: <NumberUnit value={0}/>},
-        {title: 'fournisseur 3', subTitle: title, value: <NumberUnit value={0}/>},
-        {title: 'fournisseur 4', subTitle: title, value: <NumberUnit value={0}/>},
-      ]}
+      items={
+        (data?.data.vendors || []).map(vendor => ({
+          title: vendor.name,
+          subTitle: title,
+          value: <NumberUnit value={vendor.sumTotalInclTax} precision={0}/>,
+        }))
+      }
     />
   )
 }
 
 
 const Block4 = () => {
+  const {clinic} = useAuth()
   const itemsPerPage = 5
-  const {collection, isLoading} = useCollectionQuery<ModelEnum.PurchaseOrder>({
+  const {collection, isLoading, refetch} = useCollectionQuery<ModelEnum.PurchaseOrder>({
     modelName: ModelEnum.PurchaseOrder,
     params: {
       itemsPerPage,
@@ -102,6 +146,10 @@ const Block4 = () => {
       },
     },
   })
+
+  useEffect(() => {
+    refetch().then(r => {})
+  }, [clinic?.id])
 
   return (
     <div className="card card-bordered">
@@ -143,8 +191,6 @@ const DashboardPage: FC = () => (
     <div className="mt-5">
       <Block4/>
     </div>
-    ...
-    <DashboardPage__OLD/>
   </>
 )
 
