@@ -60,6 +60,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
     },
     {
       type: ViewEnum.Create,
+      slotProps: {item: {sm: 4}},
       fields: {
         name: true,
         code: true,
@@ -68,7 +69,9 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         phoneNumber: true,
         secondaryPhoneNumber: true,
         paymentModality: true,
-        addresses: true,
+        addresses: {
+          slotProps: {root: {sm: 12}}
+        },
         // addresses: {
         //   render: ({fieldProps}) => (
         //     <NestedArrayField
@@ -90,6 +93,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
     },
     {
       type: ViewEnum.Update,
+      slotProps: {item: {sm: 4}},
       fields: {
         name: true,
         code: true,
@@ -98,7 +102,9 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         phoneNumber: true,
         secondaryPhoneNumber: true,
         paymentModality: true,
-        addresses: true,
+        addresses: {
+          slotProps: {root: {sm: 12}}
+        },
         // addresses: {
         //   render: ({fieldProps}) => (
         //     <NestedArrayField
