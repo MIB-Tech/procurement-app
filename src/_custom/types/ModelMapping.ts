@@ -34,6 +34,7 @@ export type ViewColumn<M extends ModelEnum> = {
   nullable?: boolean
   readOnly?: boolean
   footer?: (props: { value?: any, collection: Array<HydraItem<M>> }) => ReactNode
+  exportable?: boolean
 }
 export type TypeColum<M extends ModelEnum = any> =
   NumberColumn<M>

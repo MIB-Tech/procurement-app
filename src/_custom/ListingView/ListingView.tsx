@@ -1,39 +1,107 @@
-import React, {Fragment, useEffect, useMemo, useState} from 'react';
-import {ColumnDef, FilterColumns, ListingColumns, ListingViewType, Model, ViewEnum} from '../types/ModelMapping';
-import {DatesSet, ExtendedProps, ListingModeEnum, ListingViewProps} from './ListingView.types';
-import {ModelEnum} from '../../app/modules/types';
-import {useParams} from 'react-router-dom';
-import {useAuth} from '../hooks/UseAuth';
-import {useMapping} from '../hooks/UseMapping';
-import {useRecoilState} from 'recoil';
-import {LISTING_FAMILY} from '../../app/modules';
-import {useCollectionQuery} from '../hooks/UseCollectionQuery';
-import {CompoundFilter, CompoundFilterOperator, Filter, PropertyFilterOperator} from './Filter/Filter.types';
-import {ColumnTypeEnum} from '../types/types';
-import {StringFormat} from '../Column/String/StringColumn';
-import moment from 'moment';
-import {useTrans} from '../components/Trans';
-import {EventInput, EventSourceInput} from '@fullcalendar/core';
-import clsx from 'clsx';
-import {SearchToolbar} from './Search/SearchToolbar';
-import {AdvancedFilterToolbar} from './Filter/AdvancedFilterToolbar';
-import {SortToolbar} from './Sort/SortToolbar';
-import {Radio} from '../Column/controls/base/Radio/Radio';
-import {RouteLinks} from '../components/RouteAction/RouteLinks';
-import {TableView} from './views/Table/TableView';
-import {Pagination} from './Pagination';
-import FullCalendar from '@fullcalendar/react';
-import momentPlugin from '@fullcalendar/moment';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import {GridView} from './views/Grid/GridView';
-import {Help} from '../components/Help';
-import {DetailViewColumnContent} from '../DetailView/DetailViewColumnContent';
-import {ItemView} from '../components/ItemView';
-import {DEFAULT_VIEW, isClinicColumn, RELATED_MODELS} from './ListingView.utils';
-import {BasicFilterToolbar} from './Filter/BasicFilterToolbar';
-import {getAdvancedPropertyFilter, getColumnMapping} from './Filter/Filter.utils';
-import {ItemAction} from './ItemAction';
+import React, {Fragment, useMemo, useState} from 'react'
+import {ColumnDef, FilterColumns, ListingColumns, ListingViewType, Model, ViewEnum} from '../types/ModelMapping'
+import {DatesSet, ExtendedProps, ListingModeEnum, ListingViewProps} from './ListingView.types'
+import {ModelEnum} from '../../app/modules/types'
+import {useParams} from 'react-router-dom'
+import {useAuth} from '../hooks/UseAuth'
+import {useMapping} from '../hooks/UseMapping'
+import {useRecoilState} from 'recoil'
+import {LISTING_FAMILY} from '../../app/modules'
+import {useCollectionQuery} from '../hooks/UseCollectionQuery'
+import {CompoundFilter, CompoundFilterOperator, Filter, PropertyFilterOperator} from './Filter/Filter.types'
+import {ColumnTypeEnum} from '../types/types'
+import {DateFormatEnum, StringFormat, TimeFormatEnum} from '../Column/String/StringColumn'
+import moment from 'moment'
+import {Trans, useTrans} from '../components/Trans'
+import {EventInput, EventSourceInput} from '@fullcalendar/core'
+import clsx from 'clsx'
+import {SearchToolbar} from './Search/SearchToolbar'
+import {AdvancedFilterToolbar} from './Filter/AdvancedFilterToolbar'
+import {SortToolbar} from './Sort/SortToolbar'
+import {Radio} from '../Column/controls/base/Radio/Radio'
+import {RouteLinks} from '../components/RouteAction/RouteLinks'
+import {TableView} from './views/Table/TableView'
+import {Pagination} from './Pagination'
+import FullCalendar from '@fullcalendar/react'
+import momentPlugin from '@fullcalendar/moment'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
+import {GridView} from './views/Grid/GridView'
+import {Help} from '../components/Help'
+import {DetailViewColumnContent} from '../DetailView/DetailViewColumnContent'
+import {ItemView} from '../components/ItemView'
+import {DEFAULT_VIEW, isClinicColumn, RELATED_MODELS} from './ListingView.utils'
+import {BasicFilterToolbar} from './Filter/BasicFilterToolbar'
+import {getAdvancedPropertyFilter, getColumnMapping} from './Filter/Filter.utils'
+import {ItemAction} from './ItemAction'
+import {Button} from '../components/Button'
+import {getRoutePrefix, stringToI18nMessageKey} from '../utils'
+import {utils, writeFile} from 'xlsx'
+import {plural} from 'pluralize'
+import {HydraItem} from '../types/hydra.types'
+
+const ModelExportButton = <M extends ModelEnum>({modelName}: {modelName: M}) => {
+  const {exportableColumnNames, columnDef} = useMapping<M>({modelName})
+  const {trans} = useTrans()
+  const {isLoading, refetch} = useCollectionQuery<M>({
+    modelName,
+    path: `/export${getRoutePrefix(modelName)}`,
+    options: {
+      enabled: false,
+    },
+  })
+
+  return (
+    <Button
+      variant="outline-default"
+      size="sm"
+      className="bg-white"
+      loading={isLoading}
+      onClick={async () => {
+        const headers = exportableColumnNames.map(exportableColumnName => trans({id: stringToI18nMessageKey(exportableColumnName.toString())}))
+        const response = await refetch()
+        const collection = (response.data?.data['hydra:member']) as Array<HydraItem<M>>
+        const dataRows = collection.map(item => exportableColumnNames.map(exportableColumnName => {
+          const value = item[exportableColumnName]
+          const def = columnDef[exportableColumnName]
+          switch (def.type) {
+            case ColumnTypeEnum.String:
+              switch (def.format) {
+                case StringFormat.Time:
+                  return moment(value as string).format(def.timeFormat || TimeFormatEnum.Full)
+                case StringFormat.Date:
+                  return moment(value as string).format(def.dateFormat || DateFormatEnum.European)
+                case StringFormat.Datetime:
+                  return moment(value as string).format(`${def.dateFormat || DateFormatEnum.European} ${def.timeFormat || TimeFormatEnum.Full}`)
+                default:
+                  return value
+              }
+            case ColumnTypeEnum.Number:
+            case ColumnTypeEnum.Boolean:
+              return value
+            case ColumnTypeEnum.Array:
+              return (value as Array<any>)?.join(', ')
+            default:
+              return 'multiple' in def ?
+                (value as Array<string | HydraItem> | undefined)?.map(item => typeof item === 'string' ? item : item['@title']) :
+                typeof value === 'string' ? value : (value as HydraItem)?.['@title']
+          }
+        }))
+        const workSheet = utils.aoa_to_sheet([
+          headers,
+          ...dataRows,
+        ])
+        const workBook = utils.book_new()
+        utils.book_append_sheet(workBook, workSheet, 'Sheet1')
+
+        const fileName = `${trans({id: stringToI18nMessageKey(plural(modelName))})}.${moment().format()}.xlsx`
+        writeFile(workBook, fileName)
+      }}
+    >
+      <Trans id="EXPORT" />
+    </Button>
+  )
+}
 
 export const ListingView = <M extends ModelEnum>({modelName, parentModelName, parent}: ListingViewProps<M>) => {
   const [datesSet, setDatesSet] = useState<DatesSet>({
@@ -42,7 +110,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
   });
   const {id} = useParams<{ id?: string }>();
   const {user, operations, clinic, navigate} = useAuth();
-  const {searchable, columnDef, views} = useMapping({modelName});
+  const {searchable, exportable, columnDef, views} = useMapping({modelName})
   const view = (views?.find(view => view.type === ViewEnum.Listing) || DEFAULT_VIEW) as ListingViewType<M>;
   const {
     filterColumns,
@@ -420,6 +488,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
               {render({selectedItems})}
             </Fragment>
           ))}
+          {exportable && <ModelExportButton modelName={modelName} />}
           <RouteLinks
             operations={operations.filter(({resource, operationType}) => resource.name === modelName && operationType === ViewEnum.Create)}
             linkProps={{
