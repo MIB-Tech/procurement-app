@@ -40,6 +40,9 @@ export const getSearchableColumns = <M extends ModelEnum>({modelName, ignoreNest
 
           return [
             ...columnNames,
+
+            //...nestedSearchableColumns.map(nestedSearchableColumn => `${currentColumnName.toString()}.${nestedSearchableColumn.toString()}`),
+
             // ...nestedSearchableColumns.map(nestedSearchableColumn => `${currentColumnName.toString()}.${nestedSearchableColumn.toString()}`),
           ]
       }

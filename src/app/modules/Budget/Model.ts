@@ -9,8 +9,6 @@ type Model = {
   clinic: ClinicModel
   productSectionBudgets: Array<ProductSectionBudgetModel>
   budgetExercise: BudgetExerciseModel
-
-
 } & AbstractModel
 
 export default Model;
