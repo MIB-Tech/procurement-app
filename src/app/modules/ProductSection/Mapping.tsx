@@ -1,6 +1,7 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import {NumberFormat} from "../../../_custom/Column/Number/NumberColumn";
 
 
 const mapping: ModelMapping<ModelEnum.ProductSection> = {
@@ -22,7 +23,8 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
       type: ColumnTypeEnum.String
     },
     sortIndex: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount
     },
     products: {
       type: ModelEnum.Product,
@@ -35,9 +37,7 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {
-
-      }
+      columns: {}
     },
     {
       type: ViewEnum.Create,

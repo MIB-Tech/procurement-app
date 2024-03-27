@@ -19,36 +19,51 @@ const mapping: ModelMapping<ModelEnum.Budget> = {
         type: ModelEnum.Clinic
       },
       budgetExercise: {
-        type: ModelEnum.BudgetExercise
+        type: ModelEnum.BudgetExercise,
       },
       productSectionBudgets: {
         type: ModelEnum.ProductSectionBudget,
         multiple: true,
-        nullable: false
+        nullable: false,
+        embeddedForm: true
       }
     },
     views: [
       {
         type: ViewEnum.Listing,
-        columns: {}
+        columns: {
+          clinic: true,
+          description: true,
+          budgetExercise: true,
+          productSectionBudgets: true
+        }
       },
       {
         type: ViewEnum.Create,
         fields: {
+          clinic: true,
           description: true,
-          budgetExercise: true
+          budgetExercise: true,
+          productSectionBudgets: true
         }
       },
       {
         type: ViewEnum.Update,
         fields: {
+          clinic: true,
           description: true,
-          budgetExercise: true
+          budgetExercise: true,
+          productSectionBudgets: true
         }
       },
       {
         type: ViewEnum.Detail,
-        columns: {}
+        columns: {
+          clinic: true,
+          description: true,
+          budgetExercise: true,
+          productSectionBudgets: true
+        }
       }
     ]
   }
