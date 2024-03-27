@@ -8,7 +8,6 @@ import {ViewEnum} from '../types/ModelMapping';
 import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model';
 import {ProductTypeEnum} from "../../app/modules/Product/Model";
 import {ColumnTypeEnum} from '../types/types'
-import {ModelEnum} from '../../app/modules/types'
 import {StringFormat} from '../Column/String/StringColumn'
 
 
@@ -510,6 +509,7 @@ type I18nMessageKey =
   | 'BUDGET_EXERCISES'
   | 'PRODUCT_SECTION_BUDGET'
   | 'AMOUNT_PRODUCT_SECTION'
+  | 'PRODUCT_SECTION_BUDGETS'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};
