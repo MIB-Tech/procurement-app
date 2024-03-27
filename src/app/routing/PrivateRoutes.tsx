@@ -15,6 +15,7 @@ import {ModelEnum} from '../modules/types'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {RoleKeyEnum} from '../modules/Role/Model'
 import {BudgetMonitoringPage} from '../pages/BudgetMonitoring/BudgetMoritoring'
+import {ExtractionPage} from '../pages/Extraction/Extraction'
 
 
 export function PrivateRoutes() {
@@ -38,6 +39,7 @@ export function PrivateRoutes() {
           <>
             <Route path='dashboard' element={<DashboardWrapper />} />
             <Route path='budget-monitoring' element={<BudgetMonitoringPage />} />
+            <Route path='extraction' element={<ExtractionPage />} />
           </>
         )}
         {operations.filter(operation=>Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
