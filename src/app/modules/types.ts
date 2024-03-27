@@ -41,6 +41,8 @@ import {DeliveryDepotModel} from "./DeliveryDepot";
 import {ProductSectionBudgetModel} from "./ProductSectionBudget";
 import {BudgetModel} from "./Budget";
 import {BudgetExerciseModel} from "./BudgetExercise";
+import {QueryModel} from './Query'
+import {QueryParamModel} from './QueryParam'
 
 export enum ModelEnum {
   ApplicantService = 'ApplicantService',
@@ -85,7 +87,9 @@ export enum ModelEnum {
   DeliveryDepot = 'DeliveryDepot',
   ProductSectionBudget = 'ProductSectionBudget',
   Budget = 'Budget',
-  BudgetExercise = 'BudgetExercise'
+  BudgetExercise = 'BudgetExercise',
+  Query = 'Query',
+  QueryParam = 'QueryParam',
 }
 
 export type Models = {
@@ -132,6 +136,6 @@ export type Models = {
   [ModelEnum.ProductSectionBudget]: ProductSectionBudgetModel,
   [ModelEnum.Budget]: BudgetModel,
   [ModelEnum.BudgetExercise]: BudgetExerciseModel,
-
-
+  [ModelEnum.Query]: QueryModel,
+  [ModelEnum.QueryParam]: QueryParamModel,
 }

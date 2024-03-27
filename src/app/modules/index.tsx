@@ -48,6 +48,8 @@ import {DELIVERY_DEPOT_MAPPING} from "./DeliveryDepot";
 import {PRODUCT_SECTION_BUDGET_MAPPING} from "./ProductSectionBudget";
 import {BUDGET_MAPPING} from "./Budget";
 import {BUDGET_EXERCISE_MAPPING} from "./BudgetExercise";
+import {QUERY_MAPPING} from './Query'
+import {QUERY_PARAM_MAPPING} from './QueryParam'
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
@@ -93,10 +95,9 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.DeliveryDepot]: DELIVERY_DEPOT_MAPPING,
   [ModelEnum.ProductSectionBudget]: PRODUCT_SECTION_BUDGET_MAPPING,
   [ModelEnum.Budget]: BUDGET_MAPPING,
-  [ModelEnum.BudgetExercise]: BUDGET_EXERCISE_MAPPING
-
-
-
+  [ModelEnum.BudgetExercise]: BUDGET_EXERCISE_MAPPING,
+  [ModelEnum.Query]: QUERY_MAPPING,
+  [ModelEnum.QueryParam]: QUERY_PARAM_MAPPING,
 };
 
 type ListingState = {

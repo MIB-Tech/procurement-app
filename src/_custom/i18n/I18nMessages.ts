@@ -7,6 +7,9 @@ import {ListingModeEnum} from '../ListingView/ListingView.types';
 import {ViewEnum} from '../types/ModelMapping';
 import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model';
 import {ProductTypeEnum} from "../../app/modules/Product/Model";
+import {ColumnTypeEnum} from '../types/types'
+import {ModelEnum} from '../../app/modules/types'
+import {StringFormat} from '../Column/String/StringColumn'
 
 
 type Lang = 'en' | 'ar' | 'fr'
@@ -20,6 +23,18 @@ type I18nMessageKey =
   | QuantityStatusEnum
   | ClinicStatusEnum
   | ProductTypeEnum
+  | ColumnTypeEnum
+  | StringFormat
+  | 'EXTRACTION'
+  | 'PARAM_TYPE'
+  | 'PARAMS'
+  | 'QUERY_STRING'
+  | 'QUERY_PARAM'
+  | 'QUERY'
+  | 'COMPONENT'
+  | 'RECEIPT_PRODUCT_COMPONENT'
+  | 'PURCHASE_ORDER_CATEGORY'
+  | 'OPERATION'
   | 'EXPORT'
   | 'BUDGET_MONITORING'
   | 'DASHBOARD'
