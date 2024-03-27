@@ -1,12 +1,13 @@
-import {getRoutePrefix} from '../utils';
-import {ListingQueryProps} from '../ListingView/ListingView.types';
-import {useMapping} from './UseMapping';
-import {filterToParams, serializeSort} from '../ListingView/Filter/Filter.utils';
-import {CompoundFilterOperator, Filter, PropertyFilterOperator} from '../ListingView/Filter/Filter.types';
-import axios, {AxiosResponse} from 'axios';
-import {HydraItem, JsonldCollectionResponse} from '../types/hydra.types';
-import {useQuery} from 'react-query';
-import {ModelEnum} from '../../app/modules/types';
+import {getRoutePrefix} from '../utils'
+import {ListingQueryProps} from '../ListingView/ListingView.types'
+import {useMapping} from './UseMapping'
+import {filterToParams, serializeSort} from '../ListingView/Filter/Filter.utils'
+import {CompoundFilterOperator, Filter, PropertyFilterOperator} from '../ListingView/Filter/Filter.types'
+import axios, {AxiosResponse} from 'axios'
+import {HydraItem, JsonldCollectionResponse} from '../types/hydra.types'
+import {useQuery} from 'react-query'
+import {ModelEnum} from '../../app/modules/types'
+import {ColumnTypeEnum} from '../types/types'
 
 
 export const useCollectionQuery = <M extends ModelEnum>({
@@ -16,7 +17,7 @@ export const useCollectionQuery = <M extends ModelEnum>({
   options,
   path = getRoutePrefix(modelName)
 }: ListingQueryProps<M>) => {
-  const { searchableColumnNames } = useMapping<M>({ modelName });
+  const {searchableColumnNames, columnDef} = useMapping<M>({modelName})
   let _params = {};
   if (params) {
     const { page, itemsPerPage, sort, filter, search } = params;

@@ -126,25 +126,26 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     orderNumber: {
       type: ColumnTypeEnum.String,
       nullable: true,
+      //exportable: true
     },
     ref: {
       type: ColumnTypeEnum.String,
       nullable: true,
+      //exportable: true
     },
     externalRef: {
       type: ColumnTypeEnum.String,
       nullable: true,
-    },
-    buyer: {
-      type: ModelEnum.User,
-      nullable: true,
+      //exportable: true
     },
     taxIncluded: {
       type: ColumnTypeEnum.Boolean,
+      //exportable: true
     },
     desiredDeliveryDate: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Date,
+      //exportable: true
     },
     clinicStatus: {
       type: ColumnTypeEnum.String,
@@ -173,11 +174,13 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       precision: 2,
+      //exportable: true
     },
     totalInclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       precision: 2,
+      //exportable: true
     },
     totalVatTax: {
       type: ColumnTypeEnum.Number,
@@ -188,23 +191,18 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       precision: 2,
+      //exportable: true
+    },
+    comment: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Text,
+      nullable: true
     },
     createdAt: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Date,
       nullable: true,
-    },
-    vendor: {
-      type: ModelEnum.Vendor,
-    },
-    currency: {
-      type: ModelEnum.Currency,
-      nullable: true,
-    },
-    category: {
-      type: ModelEnum.PurchaseOrderCategory,
-      nullable: true,
-      title: 'NATURE',
+      //exportable: true
     },
     status: {
       type: ColumnTypeEnum.String,
@@ -212,8 +210,36 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       title: 'DELIVERY_STATUS',
       options: QUANTITY_STATUS_OPTIONS,
     },
+    buyer: {
+      type: ModelEnum.User,
+      nullable: true,
+      //exportable: true
+    },
+    vendor: {
+      type: ModelEnum.Vendor,
+      //exportable: true
+    },
+    currency: {
+      type: ModelEnum.Currency,
+      nullable: true,
+      //exportable: true
+    },
+    category: {
+      type: ModelEnum.PurchaseOrderCategory,
+      nullable: true,
+      title: 'NATURE',
+      //exportable: true
+    },
     paymentModality: {
       type: ModelEnum.PaymentModality,
+      //exportable: true
+    },
+    invoice: {
+      type: ModelEnum.Invoice,
+    },
+    clinic: {
+      type: ModelEnum.Clinic,
+      //exportable: true
     },
     attachments: {
       type: ModelEnum.purchaseOrderAttachment,
@@ -224,17 +250,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       multiple: true,
       embeddedForm: true,
       min: 1,
-    },
-    comment: {
-      type: ColumnTypeEnum.String,
-      format: StringFormat.Text,
-      nullable: true
-    },
-    invoice: {
-      type: ModelEnum.Invoice,
-    },
-    clinic: {
-      type: ModelEnum.Clinic,
     },
   },
   views: [

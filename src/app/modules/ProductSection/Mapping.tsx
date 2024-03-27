@@ -22,7 +22,7 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
       type: ColumnTypeEnum.String
     },
     sortIndex: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.Number
     },
     products: {
       type: ModelEnum.Product,

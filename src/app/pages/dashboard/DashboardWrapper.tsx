@@ -14,31 +14,13 @@ import axios from 'axios'
 import moment from 'moment'
 import {useAuth} from '../../../_custom/hooks/UseAuth'
 
-type Block1Type = {
-  total: number,
-  count: number,
-  items: Array<{}>
-}
-
-// Get the current date
 let currentDate = moment()
-
-// Array to store the ranges
 let ranges: Array<{start: string, end: string}> = []
-
-// Loop to get ranges for the last 4 months
 for (let i = 0; i < 4; i++) {
-  // Calculate the start date of the month
-  let startDate = currentDate.clone().subtract(i, 'months').startOf('month')
-  // Calculate the end date of the month
-  let endDate = currentDate.clone().subtract(i, 'months').endOf('month')
-  // Store the range in an object
-  let range = {
-    start: startDate.format('YYYY-MM-DD'),
-    end: endDate.format('YYYY-MM-DD'),
-  }
-  // Push the range object to the array
-  ranges.push(range)
+  ranges.push({
+    start: currentDate.clone().subtract(i, 'months').startOf('month').format('YYYY-MM-DD'),
+    end: currentDate.clone().subtract(i, 'months').endOf('month').format('YYYY-MM-DD'),
+  })
 }
 
 const useStatisticQuery = () => {

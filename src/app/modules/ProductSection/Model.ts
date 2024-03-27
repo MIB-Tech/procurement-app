@@ -7,7 +7,7 @@ type Model = {
   name: string
   code: string
   rupture: string
-  sortIndex: string
+  sortIndex: number
   products: Array<ProductModel>
   productSectionsBudgets: Array<ProductSectionBudgetModel>
 

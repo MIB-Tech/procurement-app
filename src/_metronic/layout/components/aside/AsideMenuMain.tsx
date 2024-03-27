@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React, {Fragment} from 'react';
-import {AsideMenuItem} from './AsideMenuItem';
-import {useAuth} from '../../../../_custom/hooks/UseAuth';
-import {ViewEnum} from '../../../../_custom/types/ModelMapping';
-import {ModelEnum} from '../../../../app/modules/types';
+import React, {Fragment} from 'react'
+import {AsideMenuItem} from './AsideMenuItem'
+import {useAuth} from '../../../../_custom/hooks/UseAuth'
+import {ViewEnum} from '../../../../_custom/types/ModelMapping'
+import {ModelEnum} from '../../../../app/modules/types'
 import {getRoutePrefix} from '../../../../_custom/utils'
 import {Trans} from '../../../../_custom/components/Trans'
+import {RoleKeyEnum} from '../../../../app/modules/Role/Model'
 
 const GROUPS = [
   {
@@ -27,16 +28,26 @@ export function AsideMenuMain() {
 
   return (
     <>
-      <AsideMenuItem
-        path='/dashboard'
-        title={<Trans id='DASHBOARD' />}
-        icon='/graphs/gra010.svg'
-      />
-      <AsideMenuItem
-        path='/budget-monitoring'
-        title={<Trans id='BUDGET_MONITORING' />}
-        icon='/graphs/gra004.svg'
-      />
+      {auth.isGranted([RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin]) && (
+        <>
+          <AsideMenuItem
+            path='/dashboard'
+            title={<Trans id='DASHBOARD' />}
+            icon='/graphs/gra010.svg'
+          />
+          <AsideMenuItem
+            path='/budget-monitoring'
+            title={<Trans id='BUDGET_MONITORING' />}
+            icon='/graphs/gra004.svg'
+          />
+          <AsideMenuItem
+            path='/extraction'
+            title={<Trans id='EXTRACTION' />}
+            // icon='/graphs/gra004.svg'
+          />
+        </>
+      )}
+
       {operations.filter(({operationType, isMenuItem}) => isMenuItem && operationType === ViewEnum.Listing)
         .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
         .map(operation => <AsideMenuItem key={operation.id} {...operation} path={getRoutePrefix(operation.resource.name)} />)}
