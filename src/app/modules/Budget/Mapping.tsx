@@ -25,7 +25,7 @@ const mapping: ModelMapping<ModelEnum.Budget> = {
         type: ModelEnum.ProductSectionBudget,
         multiple: true,
         nullable: false,
-        embeddedForm: true
+        embeddedForm: true,
       }
     },
     views: [
