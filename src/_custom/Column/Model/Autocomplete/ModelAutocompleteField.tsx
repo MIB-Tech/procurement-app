@@ -2,7 +2,6 @@ import {UndefinedBool} from '../../controls/base/Autocomplete';
 import React, {useEffect, useMemo} from 'react';
 import {CompoundFilter, CompoundFilterOperator, PropertyFilterOperator} from '../../../ListingView/Filter/Filter.types';
 import {AutocompleteField, AutocompleteFieldProps} from '../../controls/fields/AutocompleteField';
-import {Model} from '../../../types/ModelMapping';
 import {useField} from 'formik';
 import {useMapping} from '../../../hooks/UseMapping';
 import {getRoutePrefix} from '../../../utils';
@@ -29,17 +28,17 @@ type ModelAutocomplete<M extends ModelEnum, Multiple extends UndefinedBool> =
 export const ModelAutocompleteField = <
   M extends ModelEnum,
   Multiple extends UndefinedBool
->({ modelName, autoSelect, getParams = filter => filter, ...props }: ModelAutocomplete<M, Multiple>) => {
-  const { trans } = useTrans();
-  const [{ value }, , { setValue, setTouched }] = useField<HydraItem>({ name: props.name });
+>({modelName, autoSelect, getParams = filter => filter, ...props}: ModelAutocomplete<M, Multiple>) => {
+  const {trans} = useTrans();
+  const [{value}, , {setValue, setTouched}] = useField<HydraItem>({name: props.name});
   const [inputValue, setInputValue] = React.useState<string>('');
   const [enabled, setEnabled] = React.useState<boolean>(false);
   const [pagination, setPagination] = React.useState<Required<PaginationInput>>({
     page: 1,
     itemsPerPage: 5
   });
-  const { searchableColumnNames } = useMapping<M>({ modelName });
-  const filter = useMemo(()=>{
+  const {searchableColumnNames} = useMapping<M>({modelName});
+  const filter = useMemo(() => {
     return getParams({
       operator: CompoundFilterOperator.Or,
       filters: searchableColumnNames.map(columnName => ({
@@ -50,10 +49,10 @@ export const ModelAutocompleteField = <
     })
   }, [getParams, searchableColumnNames, inputValue])
 
-  const { collection, isLoading, totalCount } = useCollectionQuery<M>({
+  const {collection, isLoading, totalCount} = useCollectionQuery<M>({
     modelName,
     path: '/base' + getRoutePrefix(modelName),
-    options: { enabled },
+    options: {enabled},
     params: {
       filter,
       ...pagination
@@ -77,7 +76,7 @@ export const ModelAutocompleteField = <
       }
     }
   }, [autoSelect, collection]);
-  
+
   const getOptionLabel = (option: string | HydraItem<M>) => {
     if (typeof option === 'string') {
       return option;
@@ -86,7 +85,7 @@ export const ModelAutocompleteField = <
 
     const subTitle = option['@subTitle'];
     if (subTitle) {
-      label += ` (${Object.keys(fr).includes(subTitle) ? trans({ id: subTitle as I18nMessageKey }) : subTitle})`;
+      label += ` (${Object.keys(fr).includes(subTitle) ? trans({id: subTitle as I18nMessageKey}) : subTitle})`;
     }
 
     return label;
@@ -94,7 +93,7 @@ export const ModelAutocompleteField = <
 
   return (
     <AutocompleteField
-      placeholder={trans({ id: 'SEARCH' })}
+      placeholder={trans({id: 'SEARCH'})}
       {...props}
       filterOptions={x => x}
       isOptionEqualToValue={(option, value1) => option['@id'] === value1['@id']}
@@ -113,29 +112,29 @@ export const ModelAutocompleteField = <
         setEnabled(true)
       }}
       loading={isLoading}
-      renderPopper={({ options, getOptionProps, ...listboxProps }) => (
+      renderPopper={({options, getOptionProps, ...listboxProps}) => (
         <Popper {...listboxProps} >
           {!isLoading && options.length === 0 && (
             <li className='d-flex py-2 px-3'>
-              <Trans id='NO_ITEM_FOUND' />
+              <Trans id='NO_ITEM_FOUND'/>
             </li>
           )}
           {isLoading && (
             <li className='d-flex py-2 px-3'>
-              <Trans id='LOADING' />
+              <Trans id='LOADING'/>
             </li>
           )}
           {(options.map((option, index) => (
             <li
               key={option.id}
-              {...getOptionProps({ option, index })}
+              {...getOptionProps({option, index})}
               className={clsx(
                 props.className,
                 'px-2 py-1 bg-hover-light',
-                getOptionProps({ option, index })['aria-selected'] && 'bg-light'
+                getOptionProps({option, index})['aria-selected'] && 'bg-light'
               )}
             >
-              <ModelCell item={option} readOnly />
+              <ModelCell item={option} readOnly/>
             </li>
             // <Option
             //   label={getOptionLabel(option)}
@@ -154,7 +153,7 @@ export const ModelAutocompleteField = <
                 totalCount={totalCount}
                 className='m-1 mx-2'
                 onPageChange={page => {
-                  setPagination({ ...pagination, page });
+                  setPagination({...pagination, page});
                 }}
               />
             </div>
