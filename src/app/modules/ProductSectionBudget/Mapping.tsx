@@ -24,8 +24,12 @@ const mapping: ModelMapping<ModelEnum.ProductSectionBudget> = {
       }
     },
     views: [
+
       {
         type: ViewEnum.Listing,
+        filterColumns: {
+          'budget.budgetExercise': true
+        },
         columns: {
           amount: true,
           budget: true,
