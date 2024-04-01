@@ -35,11 +35,16 @@ export const BudgetMonitoringPage: FC = () => {
     0
   )
   const totalCommitted = collection.reduce(
-    (totalCommitted, current) => totalCommitted + parseFloat(current.committed),
+    (totalCommitted, current) => {
+      // Vérifier si la valeur de 'committed' est définie et n'est pas null
+      const committedValue = current.committed ? parseFloat(current.committed) : 0;
+      return totalCommitted + committedValue;
+    },
     0
-  )
-
+  );
   const totalRest = totalAmount - totalCommitted
+
+
 
   return (
     <>
@@ -61,10 +66,12 @@ export const BudgetMonitoringPage: FC = () => {
             color="white"
             iconColor="primary"
             title={<NumberUnit value={totalCommitted} precision={0}/>}
+
             description="Total (Engagé)"
           />
         </div>
         <div className="col-4">
+
           <StatisticsWidget5
             className="card-bordered"
             svgIcon="/media/icons/duotune/general/gen032.svg"
@@ -96,10 +103,12 @@ export const BudgetMonitoringPage: FC = () => {
               <tbody>
               {(data?.data || []).map(({productSectionName, amount, committed}) => (
                 <tr key={productSectionName}>
+
                   <td>{productSectionName}</td>
                   <td className='text-end'><NumberUnit value={amount}/></td>
                   <td className='text-end'><NumberUnit value={parseFloat(committed)}/></td>
                   <td className='text-end'><NumberUnit value={amount - parseFloat(committed)}/></td>
+
                 </tr>
               ))}
               </tbody>
