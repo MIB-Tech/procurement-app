@@ -16,7 +16,7 @@ export const BudgetMonitoringPage: FC = () => {
     queryKey: ['BUDGET_MONITORING', clinic?.id],
     queryFn: () => axios.get<Array<{
       productSectionName: string,
-      sumAmount: number,
+      amount: number,
       committed: string,
     }>>('/custom/statistics/product-section-budgets', {
       params: {
@@ -31,7 +31,7 @@ export const BudgetMonitoringPage: FC = () => {
   }, [])
   const collection = data?.data || []
   const totalAmount = collection.reduce(
-    (totalAmount, current) => totalAmount + current.sumAmount,
+    (totalAmount, current) => totalAmount + current.amount,
     0
   )
   const totalCommitted = collection.reduce(
@@ -94,12 +94,12 @@ export const BudgetMonitoringPage: FC = () => {
               </tr>
               </thead>
               <tbody>
-              {(data?.data || []).map(({productSectionName, sumAmount, committed}) => (
+              {(data?.data || []).map(({productSectionName, amount, committed}) => (
                 <tr key={productSectionName}>
                   <td>{productSectionName}</td>
-                  <td className='text-end'><NumberUnit value={sumAmount}/></td>
+                  <td className='text-end'><NumberUnit value={amount}/></td>
                   <td className='text-end'><NumberUnit value={parseFloat(committed)}/></td>
-                  <td className='text-end'><NumberUnit value={sumAmount - parseFloat(committed)}/></td>
+                  <td className='text-end'><NumberUnit value={amount - parseFloat(committed)}/></td>
                 </tr>
               ))}
               </tbody>
