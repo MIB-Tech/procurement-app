@@ -16,7 +16,7 @@ export const BudgetMonitoringPage: FC = () => {
     queryKey: ['BUDGET_MONITORING', clinic?.id],
     queryFn: () => axios.get<Array<{
       productSectionName: string,
-      amount: number,
+      sumAmount: number,
       committed: string,
     }>>('/custom/statistics/product-section-budgets', {
       params: {
@@ -31,11 +31,11 @@ export const BudgetMonitoringPage: FC = () => {
   }, [])
   const collection = data?.data || []
   const totalAmount = collection.reduce(
-    (totalAmount, current)=> totalAmount + current.amount,
+    (totalAmount, current) => totalAmount + current.sumAmount,
     0
   )
   const totalCommitted = collection.reduce(
-    (totalCommitted, current)=> totalCommitted + parseFloat(current.committed),
+    (totalCommitted, current) => totalCommitted + parseFloat(current.committed),
     0
   )
 
@@ -50,7 +50,7 @@ export const BudgetMonitoringPage: FC = () => {
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalAmount} precision={0} />}
+            title={<NumberUnit value={totalAmount} precision={0}/>}
             description="Total (Budgeté)"
           />
         </div>
@@ -60,7 +60,7 @@ export const BudgetMonitoringPage: FC = () => {
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalCommitted} precision={0} />}
+            title={<NumberUnit value={totalCommitted} precision={0}/>}
             description="Total (Engagé)"
           />
         </div>
@@ -70,7 +70,7 @@ export const BudgetMonitoringPage: FC = () => {
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalRest} precision={0} />}
+            title={<NumberUnit value={totalRest} precision={0}/>}
             description="Total (Reste)"
           />
         </div>
@@ -94,12 +94,12 @@ export const BudgetMonitoringPage: FC = () => {
               </tr>
               </thead>
               <tbody>
-              {(data?.data || []).map(({productSectionName, amount, committed}) => (
+              {(data?.data || []).map(({productSectionName, sumAmount, committed}) => (
                 <tr key={productSectionName}>
                   <td>{productSectionName}</td>
-                  <td className='text-end'><NumberUnit value={amount}/></td>
+                  <td className='text-end'><NumberUnit value={sumAmount}/></td>
                   <td className='text-end'><NumberUnit value={parseFloat(committed)}/></td>
-                  <td className='text-end'><NumberUnit value={amount - parseFloat(committed)}/></td>
+                  <td className='text-end'><NumberUnit value={sumAmount - parseFloat(committed)}/></td>
                 </tr>
               ))}
               </tbody>
