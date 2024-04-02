@@ -31,20 +31,30 @@ export const BudgetMonitoringPage: FC = () => {
   }, [])
   const collection = data?.data || []
   const totalAmount = collection.reduce(
-    (totalAmount, current) => totalAmount + current.amount,
-    0
-  )
-  const totalCommitted = collection.reduce(
-    (totalCommitted, current) => {
-      // Vérifier si la valeur de 'committed' est définie et n'est pas null
-      const committedValue = current.committed ? parseFloat(current.committed) : 0;
-      return totalCommitted + committedValue;
+    (totalAmount, current) => {
+      const amount = typeof current.amount === 'number' ? current.amount : parseFloat(current.amount);
+      // Vérifier si amount est un nombre valide
+      if (!isNaN(amount)) {
+        return totalAmount + amount;
+      } else {
+        console.error("Invalid amount:", current.amount);
+        return totalAmount;
+      }
     },
     0
   );
+
+
+  console.log("Current amount:", totalAmount);
+
+  const totalCommitted = collection.reduce(
+    (totalCommitted, current)=> totalCommitted + parseFloat(current.committed),
+    0
+  )
+  console.log('totalCommited',totalCommitted)
+
   const totalRest = totalAmount - totalCommitted
-
-
+  console.log('totalRest',totalRest)
 
   return (
     <>
@@ -55,7 +65,7 @@ export const BudgetMonitoringPage: FC = () => {
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalAmount} precision={0}/>}
+            title={<NumberUnit value={totalAmount} precision={0} />}
             description="Total (Budgeté)"
           />
         </div>
@@ -65,19 +75,17 @@ export const BudgetMonitoringPage: FC = () => {
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalCommitted} precision={0}/>}
-
+            title={<NumberUnit value={totalCommitted} precision={0} />}
             description="Total (Engagé)"
           />
         </div>
         <div className="col-4">
-
           <StatisticsWidget5
             className="card-bordered"
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalRest} precision={0}/>}
+            title={<NumberUnit value={totalRest} precision={0} />}
             description="Total (Reste)"
           />
         </div>
@@ -103,12 +111,10 @@ export const BudgetMonitoringPage: FC = () => {
               <tbody>
               {(data?.data || []).map(({productSectionName, amount, committed}) => (
                 <tr key={productSectionName}>
-
                   <td>{productSectionName}</td>
                   <td className='text-end'><NumberUnit value={amount}/></td>
                   <td className='text-end'><NumberUnit value={parseFloat(committed)}/></td>
                   <td className='text-end'><NumberUnit value={amount - parseFloat(committed)}/></td>
-
                 </tr>
               ))}
               </tbody>
