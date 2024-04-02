@@ -25,6 +25,8 @@ export function PrivateRoutes() {
     .find(operation => operation.isMenuItem && operation.operationType === ViewEnum.Listing);
   // FIXME route render wrong route issue
   const isAdmin = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin])
+ // const isGuest = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin])
+
   const indexPath = isAdmin ?
     'dashboard' :
     defaultOperation && getPath({

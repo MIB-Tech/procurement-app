@@ -30,7 +30,8 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
       multiple: true
     },
     productSectionsBudgets: {
-      type: ModelEnum.ProductSectionBudget
+      type: ModelEnum.ProductSectionBudget,
+      multiple: true
     }
   },
   views: [
@@ -58,7 +59,13 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
     },
     {
       type: ViewEnum.Detail,
-      columns: {}
+      columns: {
+        name: true,
+        sortIndex: true,
+        rupture: true,
+        products: true,
+        productSectionsBudgets: true
+      }
     }
   ]
 };
