@@ -6,7 +6,7 @@ import {ProductSectionBudgetModel} from "../ProductSectionBudget";
 type Model = {
   name: string
   code: string
-  rupture: string
+  rupture?: string
   sortIndex: number
   products: Array<ProductModel>
   productSectionsBudgets: Array<ProductSectionBudgetModel>
