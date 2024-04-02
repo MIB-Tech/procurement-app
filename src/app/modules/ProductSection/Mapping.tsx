@@ -16,7 +16,8 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
       type: ColumnTypeEnum.String
     },
     rupture: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable: true
     },
     code: {
       type: ColumnTypeEnum.String
