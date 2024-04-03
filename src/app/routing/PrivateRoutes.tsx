@@ -25,14 +25,14 @@ export function PrivateRoutes() {
     .find(operation => operation.isMenuItem && operation.operationType === ViewEnum.Listing);
   // FIXME route render wrong route issue
   const isAdmin = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin])
- // const isGuest = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin])
+  const isViewer = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin,RoleKeyEnum.SuperAdmin])
 
-  const indexPath = isAdmin ?
-    'dashboard' :
-    defaultOperation && getPath({
-      resourceName: defaultOperation.resource.name,
-      suffix: defaultOperation.suffix,
-    })
+  const indexPath = isAdmin ? 'dashboard' :
+    isViewer ? 'extraction' && 'dashboard':
+      defaultOperation && getPath({
+        resourceName: defaultOperation.resource.name,
+        suffix: defaultOperation.suffix,
+      });
 
   return (
     <Routes>
@@ -41,6 +41,12 @@ export function PrivateRoutes() {
           <>
             <Route path='dashboard' element={<DashboardWrapper />} />
             <Route path='budget-monitoring' element={<BudgetMonitoringPage />} />
+            <Route path='extraction' element={<ExtractionPage />} />
+          </>
+        )}
+        {isViewer && (
+          <>
+            <Route path='dashboard' element={<DashboardWrapper />} />
             <Route path='extraction' element={<ExtractionPage />} />
           </>
         )}
