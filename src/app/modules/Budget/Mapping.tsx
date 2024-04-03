@@ -35,7 +35,6 @@ const mapping: ModelMapping<ModelEnum.Budget> = {
           clinic: true,
           description: true,
           budgetExercise: true,
-          productSectionBudgets: true
         }
       },
       {
