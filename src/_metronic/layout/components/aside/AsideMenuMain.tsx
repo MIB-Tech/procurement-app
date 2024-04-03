@@ -28,7 +28,7 @@ export function AsideMenuMain() {
 
   return (
     <>
-      {auth.isGranted([RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin]) && (
+      {auth.isGranted([RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin,RoleKeyEnum.Viewer]) && (
         <>
           <AsideMenuItem
             path='/dashboard'

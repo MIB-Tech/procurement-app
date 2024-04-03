@@ -47,6 +47,7 @@ export function PrivateRoutes() {
         {isViewer && (
           <>
             <Route path='dashboard' element={<DashboardWrapper />} />
+            <Route path='budget-monitoring' element={<BudgetMonitoringPage />} />
             <Route path='extraction' element={<ExtractionPage />} />
           </>
         )}
