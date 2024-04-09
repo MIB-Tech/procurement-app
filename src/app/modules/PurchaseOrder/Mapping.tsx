@@ -340,11 +340,12 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},
         {
           render: ({item}) => {
-            const {status, invoice} = item
-            if (status !== QuantityStatusEnum.FullyReceived || invoice) return
+            const {status, invoice, validationStatus} = item;
+            if (status !== QuantityStatusEnum.FullyReceived || invoice || validationStatus !== ValidationStatusEnum.Validated) return null;
 
-            return <GenerateInvoiceButton item={item}/>
+            return <GenerateInvoiceButton item={item}/>;
           },
+
         },
         {
           render: ({item}) => {
