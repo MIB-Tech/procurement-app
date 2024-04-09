@@ -341,9 +341,11 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {
           render: ({item}) => {
             const {status, invoice, validationStatus} = item;
-            if (status !== QuantityStatusEnum.FullyReceived || invoice || validationStatus !== ValidationStatusEnum.Validated) return null;
-
-            return <GenerateInvoiceButton item={item}/>;
+            if (status === QuantityStatusEnum.FullyReceived && !invoice && validationStatus === ValidationStatusEnum.Validated) {
+              return <GenerateInvoiceButton item={item} />;
+            } else {
+              return null;
+            }
           },
 
         },
