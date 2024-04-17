@@ -341,11 +341,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         {
           render: ({item}) => {
             const {status, invoice, validationStatus} = item;
-            if (status === QuantityStatusEnum.FullyReceived && !invoice && validationStatus === ValidationStatusEnum.Validated) {
-              return <GenerateInvoiceButton item={item} />;
-            } else {
-              return null;
-            }
+            if (status !== QuantityStatusEnum.FullyReceived || invoice || validationStatus !== ValidationStatusEnum.Validated) return null;
+
+            return <GenerateInvoiceButton item={item}/>;
           },
 
         },
@@ -454,7 +452,16 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         currency: true,
         category: true,
         clinic: true,
-        paymentModality: true,
+        paymentModality: {
+          slotProps: {
+            root: {
+              sm: 4,
+              lg: 4,
+              md: 4,
+              xl: 4,
+            }
+          }
+        },
         buyer: {
           render: ({fieldProps}) => (
             <ModelAutocompleteField
