@@ -337,13 +337,20 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         clinicStatus: true
       },
       customActions: [
-        {render: ({item}) => <PrintPurchaseOrderButton item={item}/>},
         {
           render: ({item}) => {
-            const {status, invoice, validationStatus} = item;
-            if (status !== QuantityStatusEnum.FullyReceived || invoice || validationStatus !== ValidationStatusEnum.Validated) return null;
+            const {status, validationStatus} = item;
+            if (status !== QuantityStatusEnum.Unreceived || validationStatus !== ValidationStatusEnum.Validated) return null;
+            return <PrintPurchaseOrderButton item={item}/>;
+          },
 
-            return <GenerateInvoiceButton item={item}/>;
+        },
+        {
+          render: ({item}) => {
+            const {status, invoice} = item
+            if (status !== QuantityStatusEnum.FullyReceived || invoice) return
+
+            return <GenerateInvoiceButton item={item}/>
           },
 
         },
