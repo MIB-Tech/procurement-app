@@ -37,24 +37,17 @@ export const BudgetMonitoringPage: FC = () => {
       if (!isNaN(amount)) {
         return totalAmount + amount;
       } else {
-        console.error("Invalid amount:", current.amount);
         return totalAmount;
       }
     },
     0
   );
 
-
-  console.log("Current amount:", totalAmount);
-
   const totalCommitted = collection.reduce(
-    (totalCommitted, current)=> totalCommitted + parseFloat(current.committed),
+    (totalCommitted, current) => totalCommitted + parseFloat(current.committed),
     0
   )
-  console.log('totalCommited',totalCommitted)
-
   const totalRest = totalAmount - totalCommitted
-  console.log('totalRest',totalRest)
 
   return (
     <>
@@ -65,7 +58,7 @@ export const BudgetMonitoringPage: FC = () => {
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalAmount} precision={0} />}
+            title={<NumberUnit value={totalAmount} precision={0}/>}
             description="Total (Budgeté)"
           />
         </div>
@@ -75,7 +68,7 @@ export const BudgetMonitoringPage: FC = () => {
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalCommitted} precision={0} />}
+            title={<NumberUnit value={totalCommitted} precision={0}/>}
             description="Total (Engagé)"
           />
         </div>
@@ -85,7 +78,7 @@ export const BudgetMonitoringPage: FC = () => {
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalRest} precision={0} />}
+            title={<NumberUnit value={totalRest} precision={0}/>}
             description="Total (Reste)"
           />
         </div>
