@@ -161,6 +161,7 @@ export type ModelMapping<M extends ModelEnum> = {
   uploadable?: boolean
   hydraTitle?: (item:HydraItem<M>) => ReactNode
   hydraSubtitle?: (item:HydraItem<M>) => ReactNode
+  noSortEdges?: Array<[string, string]>
   columnDef: ColumnDef<M>
   views?: Array<View<M>>
 }

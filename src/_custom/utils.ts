@@ -24,7 +24,7 @@ export const pascalCaseToCamelCase = (str: string) => str.charAt(0).toLowerCase(
 const getReference = (value: string | number) => {
   return typeof value === 'number' ? value : ref(value) as Reference<number>;
 };
-export const getValidationSchema = <M extends ModelEnum>({columnDef, trans, fields}: ValidationSchemaProps<M>) => {
+export const getValidationSchema = <M extends ModelEnum>({columnDef, trans, fields, noSortEdges}: ValidationSchemaProps<M>) => {
   let objectSchema: Record<any, any> = {};
 
   (Object.keys(fields) as Array<keyof Model<M> | string>)
@@ -135,7 +135,8 @@ export const getValidationSchema = <M extends ModelEnum>({columnDef, trans, fiel
             relationSchema = getValidationSchema({
               columnDef: embeddedModelMapping.columnDef as ValidationSchemaDef<M>,
               trans,
-              fields: embeddedFields
+              fields: embeddedFields,
+              noSortEdges
             });
           }
           if ('multiple' in columnMapping) {
@@ -168,8 +169,8 @@ export const getValidationSchema = <M extends ModelEnum>({columnDef, trans, fiel
       objectSchema[columnName] = fieldSchema;
     }
   });
-
-  return object(objectSchema);
+  // TODO
+  return object().shape(objectSchema, noSortEdges);
 };
 export const getDetailQueryKey = (modelName: string) => `${modelName}.DETAIL`;
 export const getDefaultFields = <M extends ModelEnum>(columnDef: ColumnDef<M>) => {

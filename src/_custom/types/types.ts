@@ -12,7 +12,8 @@ export type ValidationSchemaProps<M extends ModelEnum> = {
   columnDef: ColumnDef<M>,
   trans: ({ values, ...descriptor }: FormattedMessageProps) => string
   fields: FormFields<M>,
-  depth?: number
+  depth?: number,
+  noSortEdges?: Array<[string, string]>
 }
 
 export enum ColumnTypeEnum {

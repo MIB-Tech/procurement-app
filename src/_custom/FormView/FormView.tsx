@@ -16,7 +16,7 @@ import {isClinicColumn} from '../ListingView/ListingView.utils';
 
 export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormViewProps<M>) => {
   const {trans} = useTrans();
-  const {columnDef,} = useMapping({modelName});
+  const {columnDef, noSortEdges} = useMapping({modelName});
   const {type, submittable, getMutateInput, navigateTo} = view;
   const isCreateMode = type === ViewEnum.Create;
   const mutation = useCustomMutation<M>({
@@ -63,7 +63,7 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
 
   const formik = useFormik<Model<M>>({
     initialValues,
-    validationSchema: getValidationSchema({ columnDef, fields, trans }),
+    validationSchema: getValidationSchema({ columnDef, fields, trans, noSortEdges }),
     enableReinitialize: true,
     validateOnChange: false,
     validateOnBlur: false,

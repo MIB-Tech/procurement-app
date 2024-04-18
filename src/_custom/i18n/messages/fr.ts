@@ -12,7 +12,7 @@ export const fr: I18nLanguage = {
   TIME: 'Temps',
   COMPONENT: 'Composant',
   OPERATION: 'Operation',
-  PARAMS: 'Params',
+  PARAMS: 'Critères de sélection',
   PARAM_TYPE: 'Type param',
   PURCHASE_ORDER_CATEGORY: 'Famille BC',
   QUERY: 'Requête',
