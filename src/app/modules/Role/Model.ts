@@ -7,6 +7,8 @@ export enum RoleKeyEnum {
   SuperAdmin = 'ROLE_SUPER_ADMIN',
   Admin = 'ROLE_ADMIN',
   Buyer = 'ROLE_BUYER',
+  Viewer = 'ROLE_VIEWER',
+
 }
 
 type Model = {

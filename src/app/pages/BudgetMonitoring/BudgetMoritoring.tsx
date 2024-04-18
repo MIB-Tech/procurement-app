@@ -31,14 +31,22 @@ export const BudgetMonitoringPage: FC = () => {
   }, [])
   const collection = data?.data || []
   const totalAmount = collection.reduce(
-    (totalAmount, current)=> totalAmount + current.amount,
+    (totalAmount, current) => {
+      const amount = typeof current.amount === 'number' ? current.amount : parseFloat(current.amount);
+      // Vérifier si amount est un nombre valide
+      if (!isNaN(amount)) {
+        return totalAmount + amount;
+      } else {
+        return totalAmount;
+      }
+    },
     0
-  )
-  const totalCommitted = collection.reduce(
-    (totalCommitted, current)=> totalCommitted + parseFloat(current.committed),
-    0
-  )
+  );
 
+  const totalCommitted = collection.reduce(
+    (totalCommitted, current) => totalCommitted + parseFloat(current.committed),
+    0
+  )
   const totalRest = totalAmount - totalCommitted
 
   return (
@@ -50,7 +58,7 @@ export const BudgetMonitoringPage: FC = () => {
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalAmount} precision={0} />}
+            title={<NumberUnit value={totalAmount} precision={0}/>}
             description="Total (Budgeté)"
           />
         </div>
@@ -60,7 +68,7 @@ export const BudgetMonitoringPage: FC = () => {
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalCommitted} precision={0} />}
+            title={<NumberUnit value={totalCommitted} precision={0}/>}
             description="Total (Engagé)"
           />
         </div>
@@ -70,7 +78,7 @@ export const BudgetMonitoringPage: FC = () => {
             svgIcon="/media/icons/duotune/general/gen032.svg"
             color="white"
             iconColor="primary"
-            title={<NumberUnit value={totalRest} precision={0} />}
+            title={<NumberUnit value={totalRest} precision={0}/>}
             description="Total (Reste)"
           />
         </div>

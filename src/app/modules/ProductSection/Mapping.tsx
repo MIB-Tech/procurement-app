@@ -16,7 +16,8 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
       type: ColumnTypeEnum.String
     },
     rupture: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
+      nullable: true
     },
     code: {
       type: ColumnTypeEnum.String
@@ -29,15 +30,14 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
       multiple: true
     },
     productSectionsBudgets: {
-      type: ModelEnum.ProductSectionBudget
+      type: ModelEnum.ProductSectionBudget,
+      multiple: true
     }
   },
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {
-
-      }
+      columns: {}
     },
     {
       type: ViewEnum.Create,
@@ -59,7 +59,13 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
     },
     {
       type: ViewEnum.Detail,
-      columns: {}
+      columns: {
+        name: true,
+        sortIndex: true,
+        rupture: true,
+        products: true,
+        productSectionsBudgets: true
+      }
     }
   ]
 };

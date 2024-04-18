@@ -47,14 +47,18 @@ const mapping: ModelMapping<ModelEnum.BudgetExercise> = {
         fields: {
           name: true,
           code: true,
-          budget: true,
           startAt: true,
           endAt: true
         }
       },
       {
         type: ViewEnum.Update,
-        fields: {}
+        fields: {
+          name: true,
+          code: true,
+          startAt: true,
+          endAt: true
+        }
       },
       {
         type: ViewEnum.Detail,
