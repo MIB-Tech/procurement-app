@@ -1,11 +1,11 @@
-import React, { forwardRef, HTMLAttributes } from 'react';
-import { Input } from '../InputBase/Input';
-import { DesktopDateTimePicker, DesktopDateTimePickerProps } from '@mui/x-date-pickers';
-import { FormControlProps } from '../InputBase/Input.types';
-import { InputNumberButton } from '../../Number/InputNumber/InputNumber';
-import clsx from 'clsx';
-import { MomentLocalizationProvider } from '../MomentLocalizationProvider';
-import { STRING_FORMAT_CONFIG } from '../StringColumn';
+import React, {forwardRef, HTMLAttributes} from 'react'
+import {Input} from '../InputBase/Input'
+import {DesktopDateTimePicker, DesktopDateTimePickerProps} from '@mui/x-date-pickers'
+import {FormControlProps} from '../InputBase/Input.types'
+import {InputNumberButton} from '../../Number/InputNumber/InputNumber'
+import clsx from 'clsx'
+import {MomentLocalizationProvider} from '../MomentLocalizationProvider'
+import {STRING_FORMAT_CONFIG} from '../StringColumn'
 
 
 type BaseDesktopPickerProps<TDesktopPicker = DesktopDateTimePickerProps<any, any>> =
@@ -19,13 +19,14 @@ const DateTimePicker = forwardRef<HTMLDivElement, DatetimePickerProps>((
   {
     bg,
     size,
-    onChange = () => {},
+    onChange = () => {
+    },
     className,
     value,
     placeholder,
     ...props
   }, ref) => {
-  const [open, setOpen] = React.useState<boolean>(false);
+  const [open, setOpen] = React.useState<boolean>(false)
 
   return (
     <MomentLocalizationProvider>
@@ -37,8 +38,8 @@ const DateTimePicker = forwardRef<HTMLDivElement, DatetimePickerProps>((
         onChange={onChange}
         {...props}
         ref={ref}
-        renderInput={({ inputRef, inputProps, InputProps }) => (
-          <div className='position-relative'>
+        renderInput={({inputRef, inputProps, InputProps}) => (
+          <div className="position-relative">
             <Input
               ref={inputRef}
               {...inputProps}
@@ -49,11 +50,11 @@ const DateTimePicker = forwardRef<HTMLDivElement, DatetimePickerProps>((
               placeholder={placeholder || inputProps?.placeholder}
             />
             <InputNumberButton
-              className='end-0'
+              className="end-0"
               path={STRING_FORMAT_CONFIG.DATETIME.icon}
               onClick={() => {
                 if (!inputProps?.disabled) {
-                  setOpen(true);
+                  setOpen(true)
                 }
               }}
             />
@@ -61,8 +62,8 @@ const DateTimePicker = forwardRef<HTMLDivElement, DatetimePickerProps>((
         )}
       />
     </MomentLocalizationProvider>
-  );
-});
+  )
+})
 
-export { DateTimePicker };
-export type { BaseDesktopPickerProps, DatetimePickerProps };
+export {DateTimePicker}
+export type {BaseDesktopPickerProps, DatetimePickerProps}

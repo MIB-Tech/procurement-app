@@ -6,13 +6,16 @@ import {getRoutePrefix} from '../utils'
 import {ColumnTypeEnum} from '../types/types'
 import {ModelEnum} from '../../app/modules/types'
 
-export const getSearchableColumns = <M extends ModelEnum>({modelName, ignoreNested}:{modelName: M, ignoreNested?: boolean}) => {
-  const {columnDef} = MODEL_MAPPINGS[modelName] as ModelMapping<any>;
-  const columNames = Object.keys(columnDef) as Array<keyof Model<M>>;
+export const getSearchableColumns = <M extends ModelEnum>({modelName, ignoreNested}: {
+  modelName: M,
+  ignoreNested?: boolean
+}) => {
+  const {columnDef} = MODEL_MAPPINGS[modelName] as ModelMapping<any>
+  const columNames = Object.keys(columnDef) as Array<keyof Model<M>>
 
   return columNames.reduce(
     (columnNames, currentColumnName) => {
-      const def = columnDef[currentColumnName];
+      const def = columnDef[currentColumnName]
       if (def.readOnly) return columnNames
 
       switch (def.type) {
@@ -26,17 +29,20 @@ export const getSearchableColumns = <M extends ModelEnum>({modelName, ignoreNest
             case StringFormat.Qrcode:
               return [
                 ...columnNames,
-                currentColumnName
-              ];
+                currentColumnName,
+              ]
           }
-          return columnNames;
+          return columnNames
         case ColumnTypeEnum.Number:
         case ColumnTypeEnum.Array:
         case ColumnTypeEnum.Boolean:
           return columnNames
         default:
           if ('multiple' in def || ignoreNested) return columnNames
-          const nestedSearchableColumns:Array<keyof Model<any> | string> = getSearchableColumns({modelName: def.type, ignoreNested: true})
+          const nestedSearchableColumns: Array<keyof Model<any> | string> = getSearchableColumns({
+            modelName: def.type,
+            ignoreNested: true,
+          })
 
           return [
             ...columnNames,
@@ -55,17 +61,17 @@ export const getExportableColumns = <M extends ModelEnum>({modelName}: {modelNam
   return columNames.filter(columName => columnDef[columName].exportable)
 }
 
-export const useMapping = <M extends ModelEnum>({ modelName }: { modelName: M }) => {
-  const { isGranted } = useAuth();
-  const modelMapping = MODEL_MAPPINGS[modelName];
-  const { columnDef } = modelMapping;
-  const columNames = Object.keys(columnDef) as Array<keyof Model<M>>;
-  const searchableColumnNames = getSearchableColumns({modelName});
-  const exportableColumnNames = getExportableColumns({modelName});
-  const searchable = searchableColumnNames.length > 0;
-  const exportable = exportableColumnNames.length > 0;
-  const detailable = isGranted([{ resourceName: modelName, operationType: ViewEnum.Detail }]);
-  const routePrefix = getRoutePrefix(modelName);
+export const useMapping = <M extends ModelEnum>({modelName}: {modelName: M}) => {
+  const {isGranted} = useAuth()
+  const modelMapping = MODEL_MAPPINGS[modelName]
+  const {columnDef} = modelMapping
+  const columNames = Object.keys(columnDef) as Array<keyof Model<M>>
+  const searchableColumnNames = getSearchableColumns({modelName})
+  const exportableColumnNames = getExportableColumns({modelName})
+  const searchable = searchableColumnNames.length > 0
+  const exportable = exportableColumnNames.length > 0
+  const detailable = isGranted([{resourceName: modelName, operationType: ViewEnum.Detail}])
+  const routePrefix = getRoutePrefix(modelName)
 
   return {
     routePrefix,
@@ -75,8 +81,8 @@ export const useMapping = <M extends ModelEnum>({ modelName }: { modelName: M })
     searchableColumnNames,
     exportableColumnNames,
     columNames,
-    ...modelMapping
-  };
-};
+    ...modelMapping,
+  }
+}
 
 

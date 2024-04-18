@@ -1,7 +1,7 @@
-import { FilterColumns, Model } from '../../types/ModelMapping';
-import { ModelEnum } from '../../../app/modules/types';
-import { HTMLAttributes } from 'react';
-import { BasicFilter } from '../ListingView.types';
+import {FilterColumns, Model} from '../../types/ModelMapping'
+import {ModelEnum} from '../../../app/modules/types'
+import {HTMLAttributes} from 'react'
+import {BasicFilter} from '../ListingView.types'
 
 
 type StringKeyOf<T extends {}> = keyof T

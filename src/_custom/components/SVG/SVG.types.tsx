@@ -1,5 +1,5 @@
-import { HTMLAttributes } from 'react';
-import { Variant } from 'react-bootstrap/types';
+import {HTMLAttributes} from 'react'
+import {Variant} from 'react-bootstrap/types'
 
 
 export type SVGProps = {

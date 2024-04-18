@@ -1,20 +1,20 @@
-import {ModelFileField} from './File/ModelFileField';
-import {NestedArrayField} from './Nested/NestedArrayField';
-import {NestedField} from './Nested/NestedField';
-import {ModelAutocompleteField} from './Autocomplete/ModelAutocompleteField';
-import React from 'react';
-import {FieldProps} from '../controls/fields';
-import {ModelColumn} from './ModelColumn';
-import {useMapping} from '../../hooks/UseMapping';
-import {ModelEnum} from '../../../app/modules/types';
+import {ModelFileField} from './File/ModelFileField'
+import {NestedArrayField} from './Nested/NestedArrayField'
+import {NestedField} from './Nested/NestedField'
+import {ModelAutocompleteField} from './Autocomplete/ModelAutocompleteField'
+import React from 'react'
+import {FieldProps} from '../controls/fields'
+import {ModelColumn} from './ModelColumn'
+import {useMapping} from '../../hooks/UseMapping'
+import {ModelEnum} from '../../../app/modules/types'
 
 
 export const ModelField = <M extends ModelEnum>({
                                                   modelName,
                                                   column,
                                                   ...props
-                                                }: { modelName: M, column: ModelColumn<M> } & FieldProps) => {
-  const {uploadable} = useMapping<M>({modelName});
+                                                }: {modelName: M, column: ModelColumn<M>} & FieldProps) => {
+  const {uploadable} = useMapping<M>({modelName})
 
   if (uploadable) {
     return (
@@ -22,7 +22,7 @@ export const ModelField = <M extends ModelEnum>({
         modelName={modelName}
         {...props}
       />
-    );
+    )
   }
 
   const {embeddedForm, autoSelect, getAutocompleteParams} = column
@@ -31,8 +31,8 @@ export const ModelField = <M extends ModelEnum>({
 
   if (embeddedForm) {
     return multiple ?
-      <NestedArrayField modelName={modelName} {...props} disableInsert={column.disableInsert}/> :
-      <NestedField modelName={modelName} {...props}/>
+      <NestedArrayField modelName={modelName} {...props} disableInsert={column.disableInsert} /> :
+      <NestedField modelName={modelName} {...props} />
   }
 
   return (
@@ -43,5 +43,5 @@ export const ModelField = <M extends ModelEnum>({
       getParams={getAutocompleteParams}
       {...props}
     />
-  );
-};
+  )
+}

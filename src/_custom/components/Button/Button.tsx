@@ -1,7 +1,7 @@
-import clsx from 'clsx';
-import { ButtonProps } from './Button.types';
-import React from 'react';
-import { Trans } from '../Trans';
+import clsx from 'clsx'
+import {ButtonProps} from './Button.types'
+import React from 'react'
+import {Trans} from '../Trans'
 
 
 export default (
@@ -21,12 +21,12 @@ export default (
     children,
     onClick,
     ...props
-  }: ButtonProps
+  }: ButtonProps,
 ) => {
 
   return (
     <button
-      type='button'
+      type="button"
       data-kt-indicator={loading && 'on'}
       className={clsx(
         'btn',
@@ -40,26 +40,27 @@ export default (
         hoverEffect && `btn-hover-${hoverEffect}`,
         icon && 'btn-icon',
         pulse && clsx('pulse', pulseVariant && `pulse-${pulseVariant}`),
-        className
+        className,
       )}
       disabled={loading}
-      onClick={loading ? () => {} : onClick}
+      onClick={loading ? () => {
+      } : onClick}
       {...props}
     >
-      {pulse && <span className='pulse-ring' />}
+      {pulse && <span className="pulse-ring" />}
       {loading ? (
         <>
-          <span className='indicator-label'>
+          <span className="indicator-label">
           {children}
           </span>
-          <span className='indicator-progress'>
+          <span className="indicator-progress">
             {loadingLabel !== false &&
               <Trans id={typeof loadingLabel === 'undefined' ? 'PLEASE_WAIT' : loadingLabel} />}
-            <span className='spinner-border spinner-border-sm align-middle ms-2' />
+            <span className="spinner-border spinner-border-sm align-middle ms-2" />
           </span>
         </>
       ) : children}
 
     </button>
-  );
+  )
 }

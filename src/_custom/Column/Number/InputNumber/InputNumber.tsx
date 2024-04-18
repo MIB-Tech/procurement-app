@@ -1,21 +1,21 @@
-import React, {FC, forwardRef} from 'react';
-import {Input, InputProps} from '../../String/InputBase/Input';
-import {KTSVG} from '../../../../_metronic/helpers';
-import {Button, ButtonProps} from '../../../components/Button';
-import {makeStyles} from '@mui/styles';
-import clsx from 'clsx';
+import React, {FC, forwardRef} from 'react'
+import {Input, InputProps} from '../../String/InputBase/Input'
+import {KTSVG} from '../../../../_metronic/helpers'
+import {Button, ButtonProps} from '../../../components/Button'
+import {makeStyles} from '@mui/styles'
+import clsx from 'clsx'
 
 
 const useStyles = makeStyles({
   input: {
     '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
       '-webkit-appearance': 'none',
-      display: 'none'
-    }
-  }
-});
+      display: 'none',
+    },
+  },
+})
 
-export const toPrecision = (value: number, precision: number) => parseFloat(value.toFixed(precision));
+export const toPrecision = (value: number, precision: number) => parseFloat(value.toFixed(precision))
 
 
 export type InputNumberProps = {
@@ -33,11 +33,11 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({prec
           return
         }
         // const parsedValue = parseFloat(event.target.value);
-        const parsedValue = parseFloat(event.target.value);
+        const parsedValue = parseFloat(event.target.value)
         const roundedValue = isNaN(parsedValue) ?
           '' :
           precision === undefined ? parsedValue.toString() : parsedValue.toFixed(precision)
-        ;
+
 
         props.onChange?.({
           ...event,
@@ -45,30 +45,30 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(({prec
             ...event.target,
             name: props.name || '',
             value: roundedValue === '' ?
-              '':
-              parseFloat(roundedValue) as unknown as string
-          }
-        });
+              '' :
+              parseFloat(roundedValue) as unknown as string,
+          },
+        })
       }}
       ref={ref}
-      type='number'
+      type="number"
 
     />
-  );
-});
+  )
+})
 
 
 type InputNumberButtonProps = {
   path: string
 } & ButtonProps
-const InputNumberButton: FC<InputNumberButtonProps> = ({ path, className, ...props }) => {
+const InputNumberButton: FC<InputNumberButtonProps> = ({path, className, ...props}) => {
 
   return (
     <Button
       icon
       className={clsx(
         'btn-active-color-gray-700 position-absolute translate-middle-y top-50',
-        className
+        className,
       )}
       {...props}
     >
@@ -77,7 +77,7 @@ const InputNumberButton: FC<InputNumberButtonProps> = ({ path, className, ...pro
         path={path}
       />
     </Button>
-  );
-};
+  )
+}
 
-export { InputNumberButton };
+export {InputNumberButton}

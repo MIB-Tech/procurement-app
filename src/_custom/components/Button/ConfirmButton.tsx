@@ -1,13 +1,13 @@
-import { Button, ButtonProps } from './index';
-import React, { FC, useState } from 'react';
-import { SVG } from '../SVG/SVG';
-import { Trans } from '../Trans';
+import {Button, ButtonProps} from './index'
+import React, {FC, useState} from 'react'
+import {SVG} from '../SVG/SVG'
+import {Trans} from '../Trans'
 
 
 type ConfirmButtonProps = {} & ButtonProps
-export const ConfirmButton: FC<ConfirmButtonProps> = ({ onClick, ...props }) => {
-  const [clicked, setClicked] = useState<boolean>(false);
-  const variant = clicked ? 'danger' : 'warning';
+export const ConfirmButton: FC<ConfirmButtonProps> = ({onClick, ...props}) => {
+  const [clicked, setClicked] = useState<boolean>(false)
+  const variant = clicked ? 'danger' : 'warning'
 
 
   return (
@@ -17,13 +17,13 @@ export const ConfirmButton: FC<ConfirmButtonProps> = ({ onClick, ...props }) => 
       activeVariant={variant}
       onClick={event => {
         if (clicked) {
-          onClick && onClick(event);
+          onClick && onClick(event)
         }
-        setClicked(!clicked);
+        setClicked(!clicked)
       }}
     >
-      {clicked && <SVG path='/general/gen044.svg' variant={variant} />}
+      {clicked && <SVG path="/general/gen044.svg" variant={variant} />}
       <Trans id={clicked ? 'CONFIRM' : 'DELETE'} />
     </Button>
-  );
-};
+  )
+}

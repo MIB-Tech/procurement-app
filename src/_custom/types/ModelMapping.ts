@@ -19,10 +19,10 @@ import {Permission} from '../hooks/UseAuth'
 
 
 export type Model<M extends ModelEnum> = Models[M]
-export type DisplayCallback<M extends ModelEnum> = (props: { item: Model<M> | HydraItem<M> }) => boolean | undefined
+export type DisplayCallback<M extends ModelEnum> = (props: {item: Model<M> | HydraItem<M>}) => boolean | undefined
 export type DisplayViewBaseColum<M extends ModelEnum> = {
   display?: true | RoleKeyEnum[] | DisplayCallback<M>,
-  render?: (props: { item: Model<M> }) => ReactNode
+  render?: (props: {item: Model<M>}) => ReactNode
 }
 
 export type FormViewBaseColumn<M extends ModelEnum> = {
@@ -33,7 +33,7 @@ export type ViewColumn<M extends ModelEnum> = {
   title?: I18nMessageKey
   nullable?: boolean
   readOnly?: boolean
-  footer?: (props: { value?: any, collection: Array<HydraItem<M>> }) => ReactNode
+  footer?: (props: {value?: any, collection: Array<HydraItem<M>>}) => ReactNode
   exportable?: boolean
 }
 export type TypeColum<M extends ModelEnum = any> =
@@ -62,11 +62,11 @@ export type ItemOperationCallback<M extends ModelEnum> = (props: {
 }) => OperationModel[]
 
 export type ListingColumns<M extends ModelEnum> = Partial<Record<keyof Model<M> | string, boolean | {
-  render?: (props: { item: Model<M> }) => ReactNode
+  render?: (props: {item: Model<M>}) => ReactNode
 }>>
 export type FilterColumns<M extends ModelEnum> = Partial<Record<string | keyof Model<M>, boolean | {
   quickFilter?: boolean
-  display?: (props: { user: UserModel }) => boolean | undefined
+  display?: (props: {user: UserModel}) => boolean | undefined
 }>>
 export type BulkAction<M extends ModelEnum> = {
   render: (props: {selectedItems: Array<HydraItem<M>>}) => ReactNode
@@ -89,7 +89,7 @@ export type DetailColumns<M extends ModelEnum> = Partial<Record<keyof Model<M> |
   as?: 'EMPTY' | 'TAB'
   display?: DisplayCallback<M>,
   grantedRoles?: RoleKeyEnum[]
-  render?: (props: { item: Model<M> }) => ReactNode
+  render?: (props: {item: Model<M>}) => ReactNode
 }>>
 export type CustomItemActionProps<M extends ModelEnum> = {item: HydraItem<M>}
 export type CustomItemAction<M extends ModelEnum> = {
@@ -109,7 +109,7 @@ export type FormField<M extends ModelEnum> = {
   // required?: boolean,
   display?: DisplayCallback<M>,
   grantedRoles?: RoleKeyEnum[]
-  render?: (props: { item: Model<M>, fieldProps: FieldProps }) => ReactNode
+  render?: (props: {item: Model<M>, fieldProps: FieldProps}) => ReactNode
   defaultValue?: any
   helperText?: I18nMessageKey
   slotProps?: {
@@ -159,8 +159,8 @@ export type View<M extends ModelEnum> =
 export type ModelMapping<M extends ModelEnum> = {
   modelName: M
   uploadable?: boolean
-  hydraTitle?: (item:HydraItem<M>) => ReactNode
-  hydraSubtitle?: (item:HydraItem<M>) => ReactNode
+  hydraTitle?: (item: HydraItem<M>) => ReactNode
+  hydraSubtitle?: (item: HydraItem<M>) => ReactNode
   noSortEdges?: Array<[string, string]>
   columnDef: ColumnDef<M>
   views?: Array<View<M>>

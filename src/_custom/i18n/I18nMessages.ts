@@ -1,12 +1,12 @@
-import {en} from './messages/en';
-import {ar} from './messages/ar';
-import {fr} from './messages/fr';
-import {CompoundFilterOperator, PropertyFilterOperator} from '../ListingView/Filter/Filter.types';
-import {PriorityEnum, PurchaseNeedStatusEnum} from '../../app/modules/PurchaseNeed/Model';
-import {ListingModeEnum} from '../ListingView/ListingView.types';
-import {ViewEnum} from '../types/ModelMapping';
-import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model';
-import {ProductTypeEnum} from "../../app/modules/Product/Model";
+import {en} from './messages/en'
+import {ar} from './messages/ar'
+import {fr} from './messages/fr'
+import {CompoundFilterOperator, PropertyFilterOperator} from '../ListingView/Filter/Filter.types'
+import {PriorityEnum, PurchaseNeedStatusEnum} from '../../app/modules/PurchaseNeed/Model'
+import {ListingModeEnum} from '../ListingView/ListingView.types'
+import {ViewEnum} from '../types/ModelMapping'
+import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model'
+import {ProductTypeEnum} from '../../app/modules/Product/Model'
 import {ColumnTypeEnum} from '../types/types'
 import {StringFormat} from '../Column/String/StringColumn'
 
@@ -512,7 +512,7 @@ type I18nMessageKey =
   | 'PRODUCT_SECTION_BUDGETS'
 type I18nLanguage = Record<I18nMessageKey, string>
 
-const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};
+const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr}
 
-export type {I18nMessageKey, Lang, I18nLanguage};
-export {I18N_MESSAGES};
+export type {I18nMessageKey, Lang, I18nLanguage}
+export {I18N_MESSAGES}

@@ -1,6 +1,6 @@
-import { I18nMessageKey } from '../../../i18n/I18nMessages';
-import { MessageParams } from 'yup/lib/types';
-import { Variant } from 'react-bootstrap/types';
+import {I18nMessageKey} from '../../../i18n/I18nMessages'
+import {MessageParams} from 'yup/lib/types'
+import {Variant} from 'react-bootstrap/types'
 
 
 type FieldProps = {
@@ -16,6 +16,6 @@ type FeedbackErrorType = {
   variant?: Variant
 }
 
-type FeedbackLabelType = { label?: I18nMessageKey }
+type FeedbackLabelType = {label?: I18nMessageKey}
 
-export type { FieldProps, FeedbackErrorType, FeedbackLabelType };
+export type {FieldProps, FeedbackErrorType, FeedbackLabelType}

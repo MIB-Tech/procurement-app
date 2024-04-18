@@ -1,7 +1,7 @@
-import React, { InputHTMLAttributes } from 'react';
-import clsx from 'clsx';
-import { FormControlProps } from '../InputBase/Input.types';
-import { TextareaAutosize, TextareaAutosizeProps } from '@mui/material';
+import React, {InputHTMLAttributes} from 'react'
+import clsx from 'clsx'
+import {FormControlProps} from '../InputBase/Input.types'
+import {TextareaAutosize, TextareaAutosizeProps} from '@mui/material'
 
 
 export type TextareaProps =
@@ -23,11 +23,11 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>((
         'form-control',
         bg && `form-control-${bg}`,
         size && `form-control-${size}`,
-        className
+        className,
       )}
       minRows={2}
       {...props}
       ref={ref}
     />
-  );
-});
+  )
+})

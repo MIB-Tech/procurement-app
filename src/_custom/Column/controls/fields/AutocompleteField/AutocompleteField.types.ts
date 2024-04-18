@@ -1,7 +1,7 @@
-import { AutocompleteProps } from '@mui/material/Autocomplete/Autocomplete';
-import { AutocompleteBaseProps, DefaultChipComponent, UndefinedBool } from '../../base/Autocomplete';
-import { FieldProps } from '../index';
-import { ElementType } from 'react';
+import {AutocompleteProps} from '@mui/material/Autocomplete/Autocomplete'
+import {AutocompleteBaseProps, DefaultChipComponent, UndefinedBool} from '../../base/Autocomplete'
+import {FieldProps} from '../index'
+import {ElementType} from 'react'
 
 
 export type Props<T,

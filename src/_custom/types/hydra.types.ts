@@ -1,5 +1,5 @@
-import { Model } from './ModelMapping';
-import { ModelEnum } from '../../app/modules/types';
+import {Model} from './ModelMapping'
+import {ModelEnum} from '../../app/modules/types'
 
 
 export type JsonldCollectionResponse<M extends ModelEnum> = {

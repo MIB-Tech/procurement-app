@@ -1,100 +1,100 @@
-import { CompoundFilterOperator, Filter, PropertyFilterOperator } from './Filter.types';
-import { ColumnDef, ColumnMapping, Model, TypeColum } from '../../types/ModelMapping';
-import { MODEL_MAPPINGS } from '../../../app/modules';
-import { SortInput } from '../ListingView.types';
-import { camelCaseToPascalCase, stringToI18nMessageKey } from '../../utils';
-import { ColumnTypeEnum } from '../../types/types';
-import { ModelEnum } from '../../../app/modules/types';
-import { StringFormat } from '../../Column/String/StringColumn';
-import { I18nMessageKey } from '../../i18n/I18nMessages';
+import {CompoundFilterOperator, Filter, PropertyFilterOperator} from './Filter.types'
+import {ColumnDef, ColumnMapping, Model, TypeColum} from '../../types/ModelMapping'
+import {MODEL_MAPPINGS} from '../../../app/modules'
+import {SortInput} from '../ListingView.types'
+import {camelCaseToPascalCase, stringToI18nMessageKey} from '../../utils'
+import {ColumnTypeEnum} from '../../types/types'
+import {ModelEnum} from '../../../app/modules/types'
+import {StringFormat} from '../../Column/String/StringColumn'
+import {I18nMessageKey} from '../../i18n/I18nMessages'
 
 
 const getDefs = <M extends ModelEnum>(modelName: M, path: string) => {
-  const parts = path.split('.');
-  let result: Record<string, ColumnMapping<any>> = {};
+  const parts = path.split('.')
+  let result: Record<string, ColumnMapping<any>> = {}
   parts.forEach(part => {
-    const def = MODEL_MAPPINGS[modelName].columnDef;
-    result[part] = def[part as keyof typeof def];
-  });
+    const def = MODEL_MAPPINGS[modelName].columnDef
+    result[part] = def[part as keyof typeof def]
+  })
 
-  return result;
-};
+  return result
+}
 
-export const getColumnMapping = <M extends ModelEnum>({ modelName, columnName }: {
+export const getColumnMapping = <M extends ModelEnum>({modelName, columnName}: {
   modelName: M,
   columnName: string | keyof Model<M>
 }) => {
-  const defs = getDefs(modelName, columnName.toString());
+  const defs = getDefs(modelName, columnName.toString())
 
-  return Object.values(defs).at(-1) as ColumnMapping<any>;
+  return Object.values(defs).at(-1) as ColumnMapping<any>
 
   if (columnName.toString().includes('.')) {
-    const paths = columnName.toString().split('.');
-    const [_modelColumnName, _nestedColumnName] = paths.slice((paths.length - 2), paths.length) as [string, string];
+    const paths = columnName.toString().split('.')
+    const [_modelColumnName, _nestedColumnName] = paths.slice((paths.length - 2), paths.length) as [string, string]
     // FIXME modelName
-    const modelColumnDef = MODEL_MAPPINGS[modelName].columnDef;
-    console.log(modelColumnDef);
+    const modelColumnDef = MODEL_MAPPINGS[modelName].columnDef
+    console.log(modelColumnDef)
 
 
-    const _columnDef = MODEL_MAPPINGS[camelCaseToPascalCase(_modelColumnName) as ModelEnum].columnDef;
+    const _columnDef = MODEL_MAPPINGS[camelCaseToPascalCase(_modelColumnName) as ModelEnum].columnDef
 
-    return _columnDef[_nestedColumnName as keyof typeof _columnDef];
+    return _columnDef[_nestedColumnName as keyof typeof _columnDef]
   }
 
-  return MODEL_MAPPINGS[modelName].columnDef[columnName as keyof Model<M>];
-};
+  return MODEL_MAPPINGS[modelName].columnDef[columnName as keyof Model<M>]
+}
 
 export const filterToParams = <M extends ModelEnum>(filter: Filter<M>, prefix: string, modelName: M) => {
-  let result: Record<string, string | number> = {};
+  let result: Record<string, string | number> = {}
 
   if ('filters' in filter) {
-    const { operator, filters } = filter;
+    const {operator, filters} = filter
     if (filters.length === 1) {
       result = {
         ...result,
-        ...filterToParams(filters[0], prefix, modelName)
-      };
+        ...filterToParams(filters[0], prefix, modelName),
+      }
     }
 
     if (filters.length > 1) {
-      result[`${prefix}[operator]`] = operator;
+      result[`${prefix}[operator]`] = operator
       filters.forEach((_filter, i) => {
         result = {
           ...result,
-          ...filterToParams(_filter, `${prefix}[filters][${i}]`, modelName)
-        };
-      });
+          ...filterToParams(_filter, `${prefix}[filters][${i}]`, modelName),
+        }
+      })
     }
 
-    return result;
+    return result
   }
 
-  const { property, operator, value } = filter;
+  const {property, operator, value} = filter
 
-  let _value = value;
+  let _value = value
 
-  let def = getColumnMapping({ modelName, columnName: property });
+  let def = getColumnMapping({modelName, columnName: property})
 
   switch (def?.type) {
     case ColumnTypeEnum.String:
     case ColumnTypeEnum.Number:
     case ColumnTypeEnum.Boolean:
-      break;
+      break
     default:
       switch (operator) {
         case PropertyFilterOperator.IsNull:
         case PropertyFilterOperator.IsNotNull:
         case PropertyFilterOperator.IsTrue:
         case PropertyFilterOperator.IsFalse:
-          break;
+          break
         default:
           _value = typeof value === 'object' ?
             (Array.isArray(value) ?
-              value.map(i=>i.id || i):
-              value?.id
-            ):
+                value.map(i => i.id || i) :
+                value?.id
+            ) :
             value
-          ;
+
       }
   }
 
@@ -102,11 +102,11 @@ export const filterToParams = <M extends ModelEnum>(filter: Filter<M>, prefix: s
     ...result,
     [`${prefix}[operator]`]: operator,
     [`${prefix}[property]`]: property,
-    [`${prefix}[value]`]: _value
-  };
-};
+    [`${prefix}[value]`]: _value,
+  }
+}
 export const serializeSort = (sort: SortInput<any>) => Object.keys(sort)
-.reduce((obj, columnName) => ({ ...obj, [`sort[${columnName}]`]: sort[columnName] }), {});
+  .reduce((obj, columnName) => ({...obj, [`sort[${columnName}]`]: sort[columnName]}), {})
 export const getFilterOperators = (column: TypeColum) => {
   switch (column.type) {
     case ColumnTypeEnum.String:
@@ -122,15 +122,15 @@ export const getFilterOperators = (column: TypeColum) => {
             PropertyFilterOperator.LessThan,
             PropertyFilterOperator.LessThanOrEqual,
             PropertyFilterOperator.IsNull,
-            PropertyFilterOperator.IsNotNull
-          ];
+            PropertyFilterOperator.IsNotNull,
+          ]
         case StringFormat.Select:
           return [
             PropertyFilterOperator.Equal,
             PropertyFilterOperator.NotEqual,
             PropertyFilterOperator.IsNull,
-            PropertyFilterOperator.IsNotNull
-          ];
+            PropertyFilterOperator.IsNotNull,
+          ]
         case StringFormat.Text:
         case StringFormat.Email:
         case StringFormat.PhoneNumber:
@@ -147,17 +147,17 @@ export const getFilterOperators = (column: TypeColum) => {
             PropertyFilterOperator.DoesNotStart,
             PropertyFilterOperator.DoesNotEnd,
             PropertyFilterOperator.IsNull,
-            PropertyFilterOperator.IsNotNull
-          ];
+            PropertyFilterOperator.IsNotNull,
+          ]
         case StringFormat.Icon:
           return [
             PropertyFilterOperator.Equal,
             PropertyFilterOperator.NotEqual,
             PropertyFilterOperator.IsNull,
-            PropertyFilterOperator.IsNotNull
-          ];
+            PropertyFilterOperator.IsNotNull,
+          ]
         default:
-          return [];
+          return []
       }
     case ColumnTypeEnum.Number:
       return [
@@ -168,67 +168,67 @@ export const getFilterOperators = (column: TypeColum) => {
         PropertyFilterOperator.LessThan,
         PropertyFilterOperator.LessThanOrEqual,
         PropertyFilterOperator.IsNull,
-        PropertyFilterOperator.IsNotNull
-      ];
+        PropertyFilterOperator.IsNotNull,
+      ]
     case ColumnTypeEnum.Boolean:
       return [
-        PropertyFilterOperator.Equal
-      ];
+        PropertyFilterOperator.Equal,
+      ]
     default:
       return [
         PropertyFilterOperator.Equal,
         PropertyFilterOperator.NotEqual,
         PropertyFilterOperator.IsNull,
-        PropertyFilterOperator.IsNotNull
-      ];
+        PropertyFilterOperator.IsNotNull,
+      ]
   }
-};
+}
 export const getAdvancedPropertyFilter = (props: TypeColum) => {
 
   switch (props.type) {
     case ColumnTypeEnum.String:
-      let operator: PropertyFilterOperator;
-      let value: any;
+      let operator: PropertyFilterOperator
+      let value: any
       switch (props.format) {
         case StringFormat.Text:
         case StringFormat.Email:
         case StringFormat.PhoneNumber:
         case StringFormat.Link:
         case StringFormat.Qrcode:
-          operator = PropertyFilterOperator.Contain;
-          break;
+          operator = PropertyFilterOperator.Contain
+          break
         default:
-          operator = PropertyFilterOperator.Equal;
+          operator = PropertyFilterOperator.Equal
       }
 
       switch (props.format) {
         case StringFormat.Icon:
         case StringFormat.Select:
-          value = null;
-          break;
+          value = null
+          break
         default:
-          value = '';
+          value = ''
       }
 
-      return { operator, value };
+      return {operator, value}
     case ColumnTypeEnum.Number:
       return {
         operator: PropertyFilterOperator.Equal,
-        value: 0
-      };
+        value: 0,
+      }
     case ColumnTypeEnum.Boolean:
       return {
         operator: PropertyFilterOperator.Equal,
-        value: true
-      };
+        value: true,
+      }
     default:
       return {
         operator: PropertyFilterOperator.Equal,
-        value: null
-      };
+        value: null,
+      }
   }
-};
-export const getPropertyFilter = ({ property, ...props }: TypeColum & { property: string }) => {
+}
+export const getPropertyFilter = ({property, ...props}: TypeColum & {property: string}) => {
   switch (props.type) {
     case ColumnTypeEnum.String:
       switch (props.format) {
@@ -241,46 +241,46 @@ export const getPropertyFilter = ({ property, ...props }: TypeColum & { property
               {
                 property,
                 operator: PropertyFilterOperator.GreaterThanOrEqual,
-                value: null
+                value: null,
               },
               {
                 property,
                 operator: PropertyFilterOperator.LessThan,
-                value: null
-              }
-            ]
-          };
+                value: null,
+              },
+            ],
+          }
       }
 
-      break;
+      break
     default:
-      break;
+      break
   }
 
   return {
     property,
-    ...getAdvancedPropertyFilter(props)
-  };
-};
+    ...getAdvancedPropertyFilter(props),
+  }
+}
 export const isValueless = (operator: PropertyFilterOperator) => {
   switch (operator) {
     case PropertyFilterOperator.IsNull:
     case PropertyFilterOperator.IsNotNull:
     case PropertyFilterOperator.IsTrue:
     case PropertyFilterOperator.IsFalse:
-      return true;
+      return true
     default:
-      return false;
+      return false
   }
-};
+}
 export const getPropertyI18NMessageKey = (columnDef: ColumnDef<any>, columnName: keyof Model<any> | string) => {
-  let label: I18nMessageKey;
-  const _option = columnName.toString();
+  let label: I18nMessageKey
+  const _option = columnName.toString()
   if (_option.includes('.')) {
-    const _columnName = _option.split('.').pop() as string;
+    const _columnName = _option.split('.').pop() as string
 
-    return stringToI18nMessageKey(_columnName) as I18nMessageKey;
+    return stringToI18nMessageKey(_columnName) as I18nMessageKey
   } else {
-    return columnDef[columnName].title || stringToI18nMessageKey(_option);
+    return columnDef[columnName].title || stringToI18nMessageKey(_option)
   }
-};
+}

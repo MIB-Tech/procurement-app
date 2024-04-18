@@ -1,21 +1,21 @@
-import React, {FC} from 'react';
-import {NumberColumn, NumberFormat} from './NumberColumn';
-import {CurrencyField} from './CurrencyField';
-import {NumberField} from './NumberField';
-import {FieldProps} from '../controls/fields';
-import {InputNumberProps} from './InputNumber/InputNumber';
-import {useField} from 'formik';
-import _ from 'lodash';
+import React, {FC} from 'react'
+import {NumberColumn, NumberFormat} from './NumberColumn'
+import {CurrencyField} from './CurrencyField'
+import {NumberField} from './NumberField'
+import {FieldProps} from '../controls/fields'
+import {InputNumberProps} from './InputNumber/InputNumber'
+import {useField} from 'formik'
+import _ from 'lodash'
 
 export const NumberColumnField: FC<Pick<NumberColumn<any>, 'format'> & FieldProps & InputNumberProps> = (
   {
     format,
     ...props
   }) => {
-  const [field, , {setValue}] = useField({name: props.name});
+  const [field, , {setValue}] = useField({name: props.name})
   switch (format) {
     case NumberFormat.Amount:
-      return <CurrencyField {...props}/>;
+      return <CurrencyField {...props} />
     case NumberFormat.Percent:
       return (
         <NumberField
@@ -23,8 +23,8 @@ export const NumberColumnField: FC<Pick<NumberColumn<any>, 'format'> & FieldProp
           value={_.round(field.value * 100, props.precision || 2)}
           onChange={e => setValue(parseFloat(e.target.value) / 100)}
         />
-      );
+      )
     default:
-      return <NumberField {...props} />;
+      return <NumberField {...props} />
   }
-};
+}

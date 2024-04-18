@@ -1,6 +1,6 @@
-import React, { FC, HTMLAttributes } from 'react';
-import clsx from 'clsx';
-import { Variant } from 'react-bootstrap/types';
+import React, {FC, HTMLAttributes} from 'react'
+import clsx from 'clsx'
+import {Variant} from 'react-bootstrap/types'
 
 
 export type BulletProps = {
@@ -8,7 +8,7 @@ export type BulletProps = {
     variant?: Variant
   }
   & HTMLAttributes<HTMLSpanElement>
-export const Bullet: FC<BulletProps> = ({ variant, type, className }) => {
+export const Bullet: FC<BulletProps> = ({variant, type, className}) => {
 
   return (
     <span
@@ -16,8 +16,8 @@ export const Bullet: FC<BulletProps> = ({ variant, type, className }) => {
         'bullet',
         type && `bullet-${type}`,
         variant && `bg-${variant}`,
-        className
+        className,
       )}
     />
-  );
-};
+  )
+}
