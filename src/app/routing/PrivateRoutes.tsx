@@ -16,7 +16,34 @@ import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {RoleKeyEnum} from '../modules/Role/Model'
 import {BudgetMonitoringPage} from '../pages/BudgetMonitoring/BudgetMoritoring'
 import {ExtractionPage} from '../pages/Extraction/Extraction'
+import {I18nMessageKey} from '../../_custom/i18n/I18nMessages'
+import {AsideMenuItem} from '../../_metronic/layout/components/aside/AsideMenuItem'
+import {Trans} from '../../_custom/components/Trans'
+import {PathRouteProps} from 'react-router/dist/lib/components'
 
+export const CUSTOM_ROUTES: Array<{title: I18nMessageKey, icon: string, granted: Array<RoleKeyEnum>} & Pick<PathRouteProps, 'path' | 'element'>> = [
+  {
+    path: 'dashboard',
+    title: 'DASHBOARD',
+    icon: '/graphs/gra010.svg',
+    granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
+    element: <DashboardWrapper />
+  },
+  {
+    path: 'budget-monitoring',
+    title: 'BUDGET_MONITORING',
+    icon: '/graphs/gra004.svg',
+    granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
+    element: <BudgetMonitoringPage />
+  },
+  {
+    path: 'extraction',
+    title: 'EXTRACTION',
+    icon: '/graphs/gra004.svg',
+    granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
+    element: <ExtractionPage />
+  }
+]
 
 export function PrivateRoutes() {
   const {operations, getPath, isGranted} = useAuth();
@@ -24,33 +51,30 @@ export function PrivateRoutes() {
     .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
     .find(operation => operation.isMenuItem && operation.operationType === ViewEnum.Listing);
   // FIXME route render wrong route issue
-  const isAdmin = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin])
-  const isViewer = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin,RoleKeyEnum.SuperAdmin])
+  const isAdmin = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin,RoleKeyEnum.SuperAdmin])
 
-  const indexPath = isAdmin ? 'dashboard' :
-    isViewer ? 'extraction' && 'dashboard':
-      defaultOperation && getPath({
-        resourceName: defaultOperation.resource.name,
-        suffix: defaultOperation.suffix,
-      });
+  const indexPath = isAdmin ?
+    'dashboard' :
+    defaultOperation && getPath({
+      resourceName: defaultOperation.resource.name,
+      suffix: defaultOperation.suffix,
+    });
+
 
   return (
     <Routes>
       <Route element={(<PageDataProvider><MasterLayout/></PageDataProvider>)}>
-        {isAdmin && (
-          <>
-            <Route path='dashboard' element={<DashboardWrapper />} />
-            <Route path='budget-monitoring' element={<BudgetMonitoringPage />} />
-            <Route path='extraction' element={<ExtractionPage />} />
-          </>
-        )}
-        {isViewer && (
-          <>
-            <Route path='dashboard' element={<DashboardWrapper />} />
-            <Route path='budget-monitoring' element={<BudgetMonitoringPage />} />
-            <Route path='extraction' element={<ExtractionPage />} />
-          </>
-        )}
+        {CUSTOM_ROUTES.filter(route => isGranted(route.granted)).map(route => {
+
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={route.element}
+            />
+          )
+        })}
+
         {operations.filter(operation=>Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
           const {resource, suffix, operationType} = operation;
           const resourceName = resource.name;

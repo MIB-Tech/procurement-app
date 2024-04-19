@@ -1,13 +1,44 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {FC, useEffect} from 'react'
+import React, {FC, ReactNode, useEffect} from 'react'
 import {usePageData} from '../../../_metronic/layout/core'
 import {useTrans} from '../../../_custom/components/Trans'
 import {useQuery} from 'react-query'
 import axios from 'axios'
 import {useAuth} from '../../../_custom/hooks/UseAuth'
 import {NumberUnit} from '../../../_custom/components/NumberUnit'
-import {StatisticsWidget5} from '../../../_metronic/partials/widgets'
+import {KTSVG} from '../../../_metronic/helpers'
 
+type Props = {
+  className: string
+  color: string
+  svgIcon: string
+  iconColor: string
+  title: ReactNode
+  description: string
+}
+
+const StatisticsWidget5: React.FC<Props> = ({
+                                              className,
+                                              color,
+                                              svgIcon,
+                                              iconColor,
+                                              title,
+                                              description,
+                                            }) => {
+  return (
+    <a href="#" className={`card bg-${color} hoverable ${className}`}>
+      {/* begin::Body */}
+      <div className="card-body">
+        <KTSVG path={svgIcon} className={`svg-icon-${iconColor} svg-icon-3x ms-n1`} />
+
+        <div className={`text-inverse-${color} fw-bolder fs-2 mb-2 mt-5`}>{title}</div>
+
+        <div className={`fw-bold text-inverse-${color} fs-7`}>{description}</div>
+      </div>
+      {/* end::Body */}
+    </a>
+  )
+}
 
 export const BudgetMonitoringPage: FC = () => {
   const {setPageTitle} = usePageData()
