@@ -510,6 +510,7 @@ type I18nMessageKey =
   | 'PRODUCT_SECTION_BUDGET'
   | 'AMOUNT_PRODUCT_SECTION'
   | 'PRODUCT_SECTION_BUDGETS'
+  | 'RECEIPT_COMPLIANCE'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};

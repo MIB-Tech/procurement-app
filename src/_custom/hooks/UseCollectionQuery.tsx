@@ -53,7 +53,7 @@ export const useCollectionQuery = <M extends ModelEnum>({
   }
 
   // QUERY
-  const queryFn = () => axios.get<JsonldCollectionResponse<M>>(path, { params: _params });
+  const queryFn = () => axios?.get<JsonldCollectionResponse<M>>(path, { params: _params });
   const query = useQuery<AxiosResponse<JsonldCollectionResponse<M>>>({
     queryKey: [path, params, queryKey],
     queryFn,

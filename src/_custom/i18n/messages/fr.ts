@@ -2,6 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  RECEIPT_COMPLIANCE: "Conformité de reception",
   PRODUCT_SECTION_BUDGETS: "Budgets de la section produit",
   EXTRACTION: 'Extraction',
   DATE: 'Date',

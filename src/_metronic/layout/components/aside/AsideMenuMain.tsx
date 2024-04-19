@@ -45,6 +45,11 @@ export function AsideMenuMain() {
             title={<Trans id='EXTRACTION' />}
             // icon='/graphs/gra004.svg'
           />
+          <AsideMenuItem
+            path='/receipt-compliance'
+            title={<Trans id='RECEIPT_COMPLIANCE'/>}
+            icon='/graphs/gra010.svg'
+          />
         </>
       )}
 
