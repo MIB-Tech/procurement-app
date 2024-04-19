@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {ReactNode} from 'react'
+import React from 'react'
 import {KTSVG} from '../../../helpers'
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
   color: string
   svgIcon: string
   iconColor: string
-  title: ReactNode
+  title: string
   description: string
 }
 

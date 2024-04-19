@@ -1,2 +1,2 @@
-export * from './FileUploaderField';
-export * from './FileUploaderField.types';
+export * from './FileUploaderField'
+export * from './FileUploaderField.types'

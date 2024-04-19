@@ -1,18 +1,18 @@
-import { StringFormat } from './StringColumn';
-import { HTMLInputTypeAttribute } from 'react';
+import {StringFormat} from './StringColumn'
+import {HTMLInputTypeAttribute} from 'react'
 
 
 export const formatToInputType: (format: StringFormat) => HTMLInputTypeAttribute = (format: StringFormat) => {
   switch (format) {
     case StringFormat.PhoneNumber:
-      return 'tel';
+      return 'tel'
     case StringFormat.Email:
-      return 'email';
+      return 'email'
     case StringFormat.Link:
-      return 'url';
+      return 'url'
     case StringFormat.Password:
-      return 'password';
+      return 'password'
     default:
-      return 'text';
+      return 'text'
   }
-};
+}

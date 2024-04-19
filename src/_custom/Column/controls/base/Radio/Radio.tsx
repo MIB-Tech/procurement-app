@@ -1,11 +1,11 @@
-import React, {ForwardedRef, forwardRef, InputHTMLAttributes, ReactNode} from 'react';
-import clsx from 'clsx';
-import {FormControlProps} from '../../../String/InputBase/Input.types';
-import {Button} from '../../../../components/Button';
-import {Variant} from 'react-bootstrap/types';
+import React, {ForwardedRef, forwardRef, InputHTMLAttributes, ReactNode} from 'react'
+import clsx from 'clsx'
+import {FormControlProps} from '../../../String/InputBase/Input.types'
+import {Button} from '../../../../components/Button'
+import {Variant} from 'react-bootstrap/types'
 
 
-const defaultVariant = 'primary';
+const defaultVariant = 'primary'
 export type RadioProps<T> = {
   options: Array<T>,
   getOptionLabel?: (option: T) => string | ReactNode,
@@ -38,9 +38,9 @@ const RadioInner = <T extends {} | undefined>(
   }: RadioProps<T>,
   ref: ForwardedRef<HTMLDivElement>) => {
 
-  const { isOptionEqualToValue = (option, value) => option === value } = props;
+  const {isOptionEqualToValue = (option, value) => option === value} = props
 
-  const isVertical = direction === 'VERTICAL';
+  const isVertical = direction === 'VERTICAL'
 
   return (
     <div className={clsx(!scrollDisabled && 'scroll')}>
@@ -51,16 +51,17 @@ const RadioInner = <T extends {} | undefined>(
           isVertical ? 'd-inline-flex' : 'flex-column',
           size === 'sm' ? 'p-1' : 'p-2',
           bg === 'solid' ? 'bg-light' : 'border',
-          className
+          className,
         )}
       >
         {options.map((option, index) => {
-          const isActive = value !== undefined && isOptionEqualToValue(option, value);
-          const variant = getOptionVariant(option) || defaultVariant;
+          const isActive = value !== undefined && isOptionEqualToValue(option, value)
+          const variant = getOptionVariant(option) || defaultVariant
 
           return (
-            <div key={index} className='d-flex align-items-center'>
-              {isVertical && !!index && <div className={clsx('bullet bg-gray-500 w-1px h-15px', size === 'sm' ? 'mx-1' : 'mx-2')} />}
+            <div key={index} className="d-flex align-items-center">
+              {isVertical && !!index &&
+                <div className={clsx('bullet bg-gray-500 w-1px h-15px', size === 'sm' ? 'mx-1' : 'mx-2')} />}
               <Button
                 size={size}
                 disabled={disabled || getOptionDisabled(option)}
@@ -73,7 +74,7 @@ const RadioInner = <T extends {} | undefined>(
                       'min-w-30px mw-100px' :
                       'min-w-100px mw-120px'
                     :
-                    'w-100'
+                    'w-100',
                 )}
                 onClick={() => {
                   if (onChange) {
@@ -82,10 +83,10 @@ const RadioInner = <T extends {} | undefined>(
                         //todo remove
                       } else {
                         // @ts-ignore
-                        onChange([...value, option]);
+                        onChange([...value, option])
                       }
                     } else {
-                      onChange(isActive ? null : option);
+                      onChange(isActive ? null : option)
                     }
                   }
                 }}
@@ -93,13 +94,13 @@ const RadioInner = <T extends {} | undefined>(
                 {getOptionLabel(option)}
               </Button>
             </div>
-          );
+          )
         })}
       </div>
     </div>
-  );
-};
+  )
+}
 
 export const Radio = forwardRef(RadioInner) as <T>(
-  props: RadioProps<T> & { ref?: ForwardedRef<HTMLDivElement> }
-) => ReturnType<typeof RadioInner>;
+  props: RadioProps<T> & {ref?: ForwardedRef<HTMLDivElement>},
+) => ReturnType<typeof RadioInner>

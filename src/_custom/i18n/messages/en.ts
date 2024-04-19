@@ -1,5 +1,5 @@
-import { I18nLanguage } from '../I18nMessages';
-import { fr } from './fr';
+import {I18nLanguage} from '../I18nMessages'
+import {fr} from './fr'
 
 
 export const en: I18nLanguage = {
@@ -177,5 +177,5 @@ export const en: I18nLanguage = {
   VERSION: 'Version',
   VIEWS: 'Views',
   WORK_ORDER: 'Work order',
-  WORK_ORDERS: 'Work orders'
-};
+  WORK_ORDERS: 'Work orders',
+}

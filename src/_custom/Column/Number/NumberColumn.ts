@@ -1,8 +1,7 @@
-import {ArraySchema, NumberSchema} from 'yup';
-import { ColumnTypeEnum } from '../../types/types';
-import Reference from 'yup/lib/Reference';
-import {Model} from '../../types/ModelMapping';
-import {ModelEnum} from '../../../app/modules/types';
+import {NumberSchema} from 'yup'
+import {ColumnTypeEnum} from '../../types/types'
+import {Model} from '../../types/ModelMapping'
+import {ModelEnum} from '../../../app/modules/types'
 
 //
 export enum NumberFormat {
@@ -35,8 +34,8 @@ export type NumberColumn<M extends ModelEnum> = {
   // durationFormat?: 'h:mm' | 'h:mm:ss' | 'h:mm:ss.S' | 'h:mm:ss.SS' | 'h:mm:ss.SSS'
 }
 
-export const NUMBER_FORMAT_CONFIG: Record<NumberFormat, { icon: string }> = {
-  [NumberFormat.Amount]: { icon: '/finance/fin010.svg' },
-  [NumberFormat.Percent]: { icon: '/finance/fin010.svg' },
-  [NumberFormat.DecimalUnit]: { icon: '/finance/fin010.svg' }
-};
+export const NUMBER_FORMAT_CONFIG: Record<NumberFormat, {icon: string}> = {
+  [NumberFormat.Amount]: {icon: '/finance/fin010.svg'},
+  [NumberFormat.Percent]: {icon: '/finance/fin010.svg'},
+  [NumberFormat.DecimalUnit]: {icon: '/finance/fin010.svg'},
+}

@@ -1,5 +1,5 @@
-import { ArraySchema } from 'yup';
-import { ColumnTypeEnum } from '../../types/types';
+import {ArraySchema} from 'yup'
+import {ColumnTypeEnum} from '../../types/types'
 
 
 export type ArrayColumn = {

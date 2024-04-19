@@ -1,7 +1,7 @@
-import { FieldProps } from '../index';
-import { DropzoneOptions } from 'react-dropzone';
-import { InputHTMLAttributes } from 'react';
-import { FileProps } from '../../../../components/File/File';
+import {FieldProps} from '../index'
+import {DropzoneOptions} from 'react-dropzone'
+import {InputHTMLAttributes} from 'react'
+import {FileProps} from '../../../../components/File/File'
 
 
 export type FileUploaderFieldProps = {

@@ -1,7 +1,7 @@
-import {AxiosError, AxiosResponse} from 'axios';
-import {HydraItem, JsonldErrorCreateResponse} from '../types/hydra.types';
-import {CreateViewType, Model, UpdateViewType} from '../types/ModelMapping';
-import {ModelEnum} from '../../app/modules/types';
+import {AxiosError, AxiosResponse} from 'axios'
+import {HydraItem, JsonldErrorCreateResponse} from '../types/hydra.types'
+import {CreateViewType, Model, UpdateViewType} from '../types/ModelMapping'
+import {ModelEnum} from '../../app/modules/types'
 
 
 export type SuccessResponse<M extends ModelEnum> = AxiosResponse<HydraItem<M>>

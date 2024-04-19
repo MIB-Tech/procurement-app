@@ -21,69 +21,69 @@ import {isClinicColumn} from '../ListingView/ListingView.utils'
 import {ItemOverview} from './ItemOverview'
 
 export const DEFAULT_DETAIL_VIEW: DetailViewType<any> = {
-  type: ViewEnum.Detail
-};
+  type: ViewEnum.Detail,
+}
 
-export const DetailView = <M extends ModelEnum>({modelName}: { modelName: M }) => {
-  const {columnDef, views} = useMapping<M>({modelName});
-  const {isGranted, clinic,} = useAuth();
-  const view = (views?.find(view => view.type === ViewEnum.Detail) || DEFAULT_DETAIL_VIEW) as DetailViewType<M>;
-  const {property} = useProperty<M>();
-  const isOverview = !property || property.toString().includes('_');
+export const DetailView = <M extends ModelEnum>({modelName}: {modelName: M}) => {
+  const {columnDef, views} = useMapping<M>({modelName})
+  const {isGranted, clinic} = useAuth()
+  const view = (views?.find(view => view.type === ViewEnum.Detail) || DEFAULT_DETAIL_VIEW) as DetailViewType<M>
+  const {property} = useProperty<M>()
+  const isOverview = !property || property.toString().includes('_')
 
   const columns = view.columns ?
     view.columns :
     (Object.keys(columnDef) as Array<keyof Model<M>>).filter(columnName => {
       if (['id', 'uid'].includes(columnName.toString())) {
-        return false;
+        return false
       }
 
-      const def = columnDef[columnName];
+      const def = columnDef[columnName]
       switch (def.type) {
         case ColumnTypeEnum.String:
-          return def.format !== StringFormat.Password;
+          return def.format !== StringFormat.Password
         case ColumnTypeEnum.Array:
-          return false;
+          return false
         default:
-          return true;
+          return true
       }
     }).reduce(
-      (obj, columnName) => ({ ...obj, [columnName]: true }),
-      {} as DetailColumns<M>
-    );
+      (obj, columnName) => ({...obj, [columnName]: true}),
+      {} as DetailColumns<M>,
+    )
 
-  const column = property && columns[property];
-  const uri = useUri({ modelName });
-  const { item, isLoading } = useItemQuery<M>({
+  const column = property && columns[property]
+  const uri = useUri({modelName})
+  const {item, isLoading} = useItemQuery<M>({
     modelName,
     // enabled: isOverview || (typeof column !== 'boolean' && column?.as === 'TAB')
-  });
+  })
   const columnNames = (Object.keys(columns) as Array<keyof typeof columns>).filter(columnName => {
-    const column = property && columns[columnName];
+    const column = property && columns[columnName]
 
-    if (clinic && isClinicColumn({ modelName, columnName })) {
-      return false;
+    if (clinic && isClinicColumn({modelName, columnName})) {
+      return false
     }
 
     if (typeof column === 'boolean') {
-      return column;
+      return column
     }
 
-    const display = column?.display;
+    const display = column?.display
     if (display && item) {
-      return display({ item });
+      return display({item})
     }
 
-    const grantedRoles = column?.grantedRoles;
+    const grantedRoles = column?.grantedRoles
 
-    return !grantedRoles || isGranted(grantedRoles);
-  });
+    return !grantedRoles || isGranted(grantedRoles)
+  })
   const embeddedColumnNames = columnNames.filter(columnName => {
-    const def = columnDef[columnName] as ColumnMapping<M> | undefined;
+    const def = columnDef[columnName] as ColumnMapping<M> | undefined
     if (!def) {
-      const column = columns[columnName];
+      const column = columns[columnName]
 
-      return typeof column !== 'boolean' && column?.as === 'TAB';
+      return typeof column !== 'boolean' && column?.as === 'TAB'
     }
 
     switch (def.type) {
@@ -91,71 +91,71 @@ export const DetailView = <M extends ModelEnum>({modelName}: { modelName: M }) =
       case ColumnTypeEnum.Number:
       case ColumnTypeEnum.Boolean:
       case ColumnTypeEnum.Array:
-        return false;
+        return false
       default:
-        return 'multiple' in def;
+        return 'multiple' in def
     }
-  });
+  })
 
   const emptyColumnNames = columnNames.filter(columnName => {
-    const column = columns[columnName];
+    const column = columns[columnName]
 
-    return typeof column !== 'boolean' && column?.as === 'EMPTY';
-  });
+    return typeof column !== 'boolean' && column?.as === 'EMPTY'
+  })
   const overviewColumnNames = columnNames.filter(columnName => {
-    return !embeddedColumnNames.includes(columnName) && !emptyColumnNames.includes(columnName);
-  });
+    return !embeddedColumnNames.includes(columnName) && !emptyColumnNames.includes(columnName)
+  })
 
-  const embeddedModelNameType = property && columnDef[property]?.type;
+  const embeddedModelNameType = property && columnDef[property]?.type
 
   return (
     <div>
       <ItemOverview modelName={modelName}>
-        <div className='separator' />
-        <ul className='nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold'>
-          <li className='nav-item'>
+        <div className="separator" />
+        <ul className="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+          <li className="nav-item">
             <Link
               to={uri}
               relative={isOverview ? 'route' : 'path'}
               className={clsx(
                 'nav-link text-active-primary py-2 me-3',
-                isOverview && 'active'
+                isOverview && 'active',
               )}
             >
-              <Trans id='OVERVIEW' />
+              <Trans id="OVERVIEW" />
             </Link>
           </li>
 
           {!isLoading && embeddedColumnNames.map(columnName => {
-            const to = camelCaseToDash(columnName.toString());
-            const def = columnDef[columnName] as ColumnMapping<M> | undefined;
+            const to = camelCaseToDash(columnName.toString())
+            const def = columnDef[columnName] as ColumnMapping<M> | undefined
 
             return (
-              <li key={to} className='nav-item'>
+              <li key={to} className="nav-item">
                 <Link
                   to={to}
                   className={clsx(
                     'nav-link text-active-primary py-3',
-                    property === columnName && 'active'
+                    property === columnName && 'active',
                   )}
                 >
                   <TitleContent columnName={columnName.toString()} title={def?.title} />
                 </Link>
               </li>
-            );
+            )
           })}
         </ul>
       </ItemOverview>
-      <div className=''>
+      <div className="">
         {isOverview && (
-          <div className='d-flex flex-column gap-3'>
+          <div className="d-flex flex-column gap-3">
             {emptyColumnNames.map(columnName => {
-              const def = columnDef[columnName] as ColumnMapping<M> | undefined;
-              const column = columns[columnName];
-              const render = typeof column !== 'boolean' ? column?.render : undefined;
+              const def = columnDef[columnName] as ColumnMapping<M> | undefined
+              const column = columns[columnName]
+              const render = typeof column !== 'boolean' ? column?.render : undefined
 
               return (
-                <div key={columnName.toString()} className='mb-5'>
+                <div key={columnName.toString()} className="mb-5">
                   {isLoading && <Skeleton />}
                   {item && (
                     <>
@@ -166,34 +166,34 @@ export const DetailView = <M extends ModelEnum>({modelName}: { modelName: M }) =
                           render={render}
                           {...def}
                         /> :
-                        render?.({ item })
+                        render?.({item})
                       }
                     </>
                   )}
                 </div>
-              );
+              )
             })}
-            <div className='card'>
-              <div className='card-body'>
+            <div className="card">
+              <div className="card-body">
                 <ItemView
-                  rowClassName='row row-cols-sm-3'
+                  rowClassName="row row-cols-sm-3"
                   modelName={modelName}
                   detailView
                   columnDef={overviewColumnNames.reduce(
-                    (prev, curr) => ({ ...prev, [curr]: columnDef[curr as keyof Model<M>] }),
-                    {} as ColumnDef<M>
+                    (prev, curr) => ({...prev, [curr]: columnDef[curr as keyof Model<M>]}),
+                    {} as ColumnDef<M>,
                   )}
-                  renderContent={({ columnName }) => {
+                  renderContent={({columnName}) => {
                     if (isLoading) {
-                      return <Skeleton className='mw-200px' />;
+                      return <Skeleton className="mw-200px" />
                     }
 
                     if (!item) {
-                      return <>NO ITEM</>;
+                      return <>NO ITEM</>
                     }
 
-                    const def = columnDef[columnName];
-                    const column = columns[columnName];
+                    const def = columnDef[columnName]
+                    const column = columns[columnName]
 
                     // if (columnName.toString().includes('.')) {
                     //   console.log(getColumnMapping({modelName, columnName}), def);
@@ -207,7 +207,7 @@ export const DetailView = <M extends ModelEnum>({modelName}: { modelName: M }) =
                         render={typeof column !== 'boolean' ? column?.render : undefined}
                         {...def}
                       />
-                    );
+                    )
                   }}
                 />
               </div>
@@ -241,5 +241,5 @@ export const DetailView = <M extends ModelEnum>({modelName}: { modelName: M }) =
         )}
       </div>
     </div>
-  );
-};
+  )
+}

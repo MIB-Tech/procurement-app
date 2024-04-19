@@ -1,9 +1,9 @@
-import { StringSchema } from 'yup';
-import { I18nMessageKey } from '../../i18n/I18nMessages';
-import { RoleKeyEnum } from '../../../app/modules/Role/Model';
-import { ColumnTypeEnum } from '../../types/types';
-import { Model } from '../../types/ModelMapping';
-import { ModelEnum } from '../../../app/modules/types';
+import {StringSchema} from 'yup'
+import {I18nMessageKey} from '../../i18n/I18nMessages'
+import {RoleKeyEnum} from '../../../app/modules/Role/Model'
+import {ColumnTypeEnum} from '../../types/types'
+import {Model} from '../../types/ModelMapping'
+import {ModelEnum} from '../../../app/modules/types'
 
 
 export enum StringFormat {
@@ -67,7 +67,7 @@ export type StringSelectTransition<M extends ModelEnum> = {
   from: string
   to: string
   grant?: RoleKeyEnum[]
-  when?: (item:Model<M>) => boolean
+  when?: (item: Model<M>) => boolean
 }
 type StringSelectColumn<M extends ModelEnum> = {
   format: StringFormat.Select
@@ -84,16 +84,16 @@ export type StringColumn =
   StringBaseColumn
   & (StringBaselessColumn | StringDatetimeColumn | StringDateColumn | StringTimeColumn | StringSelectColumn<any> | StringPasswordColumn)
 
-export const STRING_FORMAT_CONFIG: Record<StringFormat, { icon: string }> = {
-  [StringFormat.Datetime]: { icon: '/general/gen013.svg' },
-  [StringFormat.Date]: { icon: '/general/gen014.svg' },
-  [StringFormat.Email]: { icon: '/communication/com010.svg' },
-  [StringFormat.Password]: { icon: '/general/gen047.svg' },
-  [StringFormat.PhoneNumber]: { icon: '/electronics/elc002.svg' },
-  [StringFormat.Select]: { icon: '/text/txt009.svg' },
-  [StringFormat.Text]: { icon: '/text/txt001.svg' },
-  [StringFormat.Time]: { icon: '/general/gen013.svg' },
-  [StringFormat.Icon]: { icon: '/general/gen017.svg' },
-  [StringFormat.Link]: { icon: '/coding/cod007.svg' },
-  [StringFormat.Qrcode]: { icon: '/ecommerce/ecm010.svg' }
-};
+export const STRING_FORMAT_CONFIG: Record<StringFormat, {icon: string}> = {
+  [StringFormat.Datetime]: {icon: '/general/gen013.svg'},
+  [StringFormat.Date]: {icon: '/general/gen014.svg'},
+  [StringFormat.Email]: {icon: '/communication/com010.svg'},
+  [StringFormat.Password]: {icon: '/general/gen047.svg'},
+  [StringFormat.PhoneNumber]: {icon: '/electronics/elc002.svg'},
+  [StringFormat.Select]: {icon: '/text/txt009.svg'},
+  [StringFormat.Text]: {icon: '/text/txt001.svg'},
+  [StringFormat.Time]: {icon: '/general/gen013.svg'},
+  [StringFormat.Icon]: {icon: '/general/gen017.svg'},
+  [StringFormat.Link]: {icon: '/coding/cod007.svg'},
+  [StringFormat.Qrcode]: {icon: '/ecommerce/ecm010.svg'},
+}

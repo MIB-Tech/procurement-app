@@ -106,25 +106,25 @@ const ModelExportButton = <M extends ModelEnum>({modelName}: {modelName: M}) => 
 export const ListingView = <M extends ModelEnum>({modelName, parentModelName, parent}: ListingViewProps<M>) => {
   const [datesSet, setDatesSet] = useState<DatesSet>({
     start: moment().startOf('month').toDate(),
-    end: moment().endOf('month').toDate()
-  });
-  const {id} = useParams<{ id?: string }>();
-  const {user, operations, clinic, navigate} = useAuth();
+    end: moment().endOf('month').toDate(),
+  })
+  const {id} = useParams<{id?: string}>()
+  const {user, operations, clinic, navigate} = useAuth()
   const {searchable, exportable, columnDef, views} = useMapping({modelName})
-  const view = (views?.find(view => view.type === ViewEnum.Listing) || DEFAULT_VIEW) as ListingViewType<M>;
+  const view = (views?.find(view => view.type === ViewEnum.Listing) || DEFAULT_VIEW) as ListingViewType<M>
   const {
     filterColumns,
     sortColumns,
     columns,
     itemOperationRoutes,
-    bulkActions
-  } = view;
-  const [state, setState] = useRecoilState(LISTING_FAMILY({modelName, embedded: !!parentModelName}));
-  const {selectedItems, basicFilter, ...params} = state;
-  const {sort, page, itemsPerPage, mode, search} = params;
-  const isCalendar = mode === ListingModeEnum.Calendar;
+    bulkActions,
+  } = view
+  const [state, setState] = useRecoilState(LISTING_FAMILY({modelName, embedded: !!parentModelName}))
+  const {selectedItems, basicFilter, ...params} = state
+  const {sort, page, itemsPerPage, mode, search} = params
+  const isCalendar = mode === ListingModeEnum.Calendar
   const columnNames = (Object.keys(columnDef) as Array<keyof Model<M>>)
-  const parentProperty = columnNames.find(columnName => columnDef[columnName].type === parentModelName);
+  const parentProperty = columnNames.find(columnName => columnDef[columnName].type === parentModelName)
 
   // FIXME: causes state reset
   // useEffect(() => {
@@ -134,57 +134,57 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
   //   };
   // }, [modelName]);
 
-  const {dateFields = []} = view;
+  const {dateFields = []} = view
   const filter = useMemo<Filter<M>>(() => {
-    let filters: Array<Filter<any>> = 'filters' in state.filter ? [...state.filter.filters] : [];
+    let filters: Array<Filter<any>> = 'filters' in state.filter ? [...state.filter.filters] : []
 
-    const filledColumnNames = Object.keys(basicFilter);
+    const filledColumnNames = Object.keys(basicFilter)
     if (filledColumnNames.length > 0) {
       filledColumnNames.forEach(filledColumnName => {
-        const value = basicFilter[filledColumnName];
-        const columnMapping = getColumnMapping({modelName, columnName: filledColumnName});
+        const value = basicFilter[filledColumnName]
+        const columnMapping = getColumnMapping({modelName, columnName: filledColumnName})
 
-        const {operator} = getAdvancedPropertyFilter(columnMapping);
+        const {operator} = getAdvancedPropertyFilter(columnMapping)
         const defaultFilter = {
           property: filledColumnName,
           operator,
-          value
-        };
+          value,
+        }
         switch (columnMapping.type) {
           case ColumnTypeEnum.String:
             switch (columnMapping.format) {
               case StringFormat.Date:
               case StringFormat.Datetime:
               case StringFormat.Time:
-                const [start, end] = [...value];
+                const [start, end] = [...value]
                 if (start) {
                   filters.push({
                     ...defaultFilter,
                     operator: PropertyFilterOperator.GreaterThanOrEqual,
-                    value: start
-                  });
+                    value: start,
+                  })
                 }
                 if (end) {
                   filters.push({
                     ...defaultFilter,
                     operator: PropertyFilterOperator.LessThanOrEqual,
-                    value: end
-                  });
+                    value: end,
+                  })
                 }
-                break;
+                break
               default:
                 if (value) {
-                  filters.push(defaultFilter);
+                  filters.push(defaultFilter)
                 }
             }
-            break;
+            break
           default:
             if (value) {
-              filters.push(defaultFilter);
+              filters.push(defaultFilter)
             }
         }
 
-      });
+      })
 
     }
 
@@ -192,7 +192,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
       filters.push({
         operator: CompoundFilterOperator.Or,
         filters: dateFields.map(dateField => {
-          const {startProperty, endProperty} = dateField;
+          const {startProperty, endProperty} = dateField
           const dateFilter: CompoundFilter<M> = {
             operator: CompoundFilterOperator.And,
             filters: [
@@ -201,17 +201,17 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
                 filters: [
                   {
                     property: startProperty,
-                    operator: PropertyFilterOperator.IsNull
+                    operator: PropertyFilterOperator.IsNull,
                   },
                   {
                     property: startProperty,
                     operator: PropertyFilterOperator.LessThanOrEqual,
-                    value: datesSet.end
-                  }
-                ]
-              }
-            ]
-          };
+                    value: datesSet.end,
+                  },
+                ],
+              },
+            ],
+          }
 
           if (endProperty) {
             dateFilter.filters.push({
@@ -219,20 +219,20 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
               filters: [
                 {
                   property: endProperty,
-                  operator: PropertyFilterOperator.IsNull
+                  operator: PropertyFilterOperator.IsNull,
                 },
                 {
                   property: endProperty,
                   operator: PropertyFilterOperator.GreaterThanOrEqual,
-                  value: datesSet.start
-                }
-              ]
-            });
+                  value: datesSet.start,
+                },
+              ],
+            })
           }
 
-          return dateFilter;
-        })
-      });
+          return dateFilter
+        }),
+      })
     }
 
     if (id && parentProperty) {
@@ -242,18 +242,18 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
           {
             property: `${parentProperty.toString()}.uid`,
             operator: PropertyFilterOperator.Equal,
-            value: id
+            value: id,
           },
-          state.filter
-        ]
-      });
+          state.filter,
+        ],
+      })
     }
 
     return {
       operator: CompoundFilterOperator.And,
-      filters
-    };
-  }, [state.filter, basicFilter, id, parentProperty, isCalendar, dateFields]);
+      filters,
+    }
+  }, [state.filter, basicFilter, id, parentProperty, isCalendar, dateFields])
 
   const {collection, totalCount, isLoading} = useCollectionQuery<M>({
     modelName,
@@ -262,29 +262,29 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
       ...params,
       filter,
       page: isCalendar ? undefined : page,
-      itemsPerPage: isCalendar ? undefined : itemsPerPage
-    }
-  });
+      itemsPerPage: isCalendar ? undefined : itemsPerPage,
+    },
+  })
 
   const isColumnHidden = (columnName: string | keyof Model<M>) => {
     if (parentModelName === columnName) {
-      return true;
+      return true
     }
 
-    return clinic && isClinicColumn({modelName, columnName});
-  };
+    return clinic && isClinicColumn({modelName, columnName})
+  }
 
   const sortColumNames = (Object.keys(sortColumns || columnDef) as Array<keyof Model<M>>).filter(columnName => {
     if (isColumnHidden(columnName)) {
-      return false;
+      return false
     }
     if (sortColumns) {
-      return sortColumns[columnName];
+      return sortColumns[columnName]
     }
     if (['id', 'uid'].includes(columnName.toString())) {
-      return false;
+      return false
     }
-    const def = columnDef[columnName];
+    const def = columnDef[columnName]
     switch (def.type) {
       case ColumnTypeEnum.String:
         switch (def.format) {
@@ -294,28 +294,28 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
           case StringFormat.Icon:
           case StringFormat.Qrcode:
           case StringFormat.Link:
-            return false;
+            return false
           default:
-            return true;
+            return true
         }
       case ColumnTypeEnum.Number:
-        return true;
+        return true
       default:
-        return false;
+        return false
     }
-  });
+  })
 
   //
-  const {locale, trans} = useTrans();
+  const {locale, trans} = useTrans()
   const events = useMemo<EventSourceInput>(() => {
-    let _events: EventInput[] = [];
+    let _events: EventInput[] = []
     collection.forEach(item => {
       dateFields?.forEach(dateField => {
-        const {startProperty, endProperty, variant} = dateField;
+        const {startProperty, endProperty, variant} = dateField
         const extendedProps: ExtendedProps<M> = {
           hydraItem: item,
-          dateField
-        };
+          dateField,
+        }
 
         _events.push({
           id: item['@id'],
@@ -323,109 +323,109 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
           extendedProps,
           date: item[startProperty] as string | undefined,
           end: endProperty && item[endProperty] as string | undefined,
-          className: clsx(variant && `bg-${variant} text-inverse-${variant}`)
-        });
-      });
-    });
+          className: clsx(variant && `bg-${variant} text-inverse-${variant}`),
+        })
+      })
+    })
 
-    return _events;
-  }, [collection, dateFields]);
+    return _events
+  }, [collection, dateFields])
 
   const advancedFilterColumNames = (Object.keys(filterColumns || columnDef) as Array<string | keyof Model<M>>).filter(
     columnName => {
       if (isColumnHidden(columnName)) {
-        return false;
+        return false
       }
       if (filterColumns) {
-        const columnFilterValue = filterColumns[columnName];
+        const columnFilterValue = filterColumns[columnName]
         if (typeof columnFilterValue === 'boolean') {
-          return columnFilterValue;
+          return columnFilterValue
         }
 
-        return !columnFilterValue?.display || (user && columnFilterValue.display({user}));
+        return !columnFilterValue?.display || (user && columnFilterValue.display({user}))
       }
 
       if (['id', 'uid'].includes(columnName.toString())) {
-        return false;
+        return false
       }
-      const def = columnDef[columnName as keyof Model<M>];
+      const def = columnDef[columnName as keyof Model<M>]
       switch (def.type) {
         case ColumnTypeEnum.String:
-          return def.format !== StringFormat.Password;
+          return def.format !== StringFormat.Password
         case ColumnTypeEnum.Number:
         case ColumnTypeEnum.Boolean:
-          return true;
+          return true
         case ColumnTypeEnum.Array:
-          return false;
+          return false
         default:
-          return !('multiple' in def);
+          return !('multiple' in def)
       }
-    });
+    })
   const basicFilterColumNames = advancedFilterColumNames.filter(columnName => {
-    const columnFilterValue = filterColumns?.[columnName];
+    const columnFilterValue = filterColumns?.[columnName]
 
-    return typeof columnFilterValue === 'object' && columnFilterValue.quickFilter;
-  });
+    return typeof columnFilterValue === 'object' && columnFilterValue.quickFilter
+  })
 
   const listingColumns = (Object.keys(columns || columnDef) as Array<keyof Model<M>>).filter(columnName => {
     if (isColumnHidden(columnName)) {
-      return false;
+      return false
     }
     if (columns) {
-      return columns[columnName];
+      return columns[columnName]
     }
     if (['id', 'uid'].includes(columnName.toString())) {
-      return false;
+      return false
     }
-    const def = columnDef[columnName];
+    const def = columnDef[columnName]
     switch (def.type) {
       case ColumnTypeEnum.String:
         switch (def.format) {
           case StringFormat.Password:
           case StringFormat.Text:
-            return false;
+            return false
           default:
-            return true;
+            return true
         }
       case ColumnTypeEnum.Number:
       case ColumnTypeEnum.Boolean:
-        return true;
+        return true
       case ColumnTypeEnum.Array:
-        return false;
+        return false
       default:
-        return !('multiple' in def);
+        return !('multiple' in def)
     }
   }).reduce(
     (obj, columnName) => ({...obj, [columnName]: columns?.[columnName] || true}),
-    {} as ListingColumns<M>
-  );
+    {} as ListingColumns<M>,
+  )
 
-  const parentDef = columnDef;
+  const parentDef = columnDef
   const inverseBy = parentDef && (Object.keys(parentDef) as Array<keyof Model<any>>).find(key => {
     // @ts-ignore
-    return parentDef[key]?.type === parentModelName;
-  });
+    return parentDef[key]?.type === parentModelName
+  })
   // @ts-ignore
-  const parentColumnMapping = inverseBy && parentDef[inverseBy];
+  const parentColumnMapping = inverseBy && parentDef[inverseBy]
   const item = parent && {
     id: parent.id,
     uid: parent.uid,
     '@id': parent['@id'],
     '@title': parent['@title'],
-    '@subTitle': parent['@subTitle']
-  };
+    '@subTitle': parent['@subTitle'],
+  }
 
 
   return (
-    <div className='d-grid gap-3'>
-      <div className='d-flex flex-wrap gap-3'>
+    <div className="d-grid gap-3">
+      <div className="d-flex flex-wrap gap-3">
         {searchable && (
           <SearchToolbar
-            className='min-w-100px mw-200px'
+            className="min-w-100px mw-200px"
             value={search}
             delay={500}
             onChange={search => {
-              setState({...state, search, page: 1});
+              setState({...state, search, page: 1})
             }}
           />
         )}
@@ -435,11 +435,11 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
             modelName={modelName}
             columns={basicFilterColumNames.reduce(
               (obj, columnName) => ({...obj, [columnName]: true}),
-              {} as FilterColumns<M>
+              {} as FilterColumns<M>,
             )}
             value={basicFilter}
             onChange={filter => {
-              setState({...state, basicFilter: filter, page: 1});
+              setState({...state, basicFilter: filter, page: 1})
             }}
           />
         )}
@@ -449,7 +449,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
             modelName={modelName}
             columns={advancedFilterColumNames.reduce(
               (obj, columnName) => ({...obj, [columnName]: true}),
-              {} as FilterColumns<M>
+              {} as FilterColumns<M>,
             )}
             value={state.filter}
             onChange={filter => setState({...state, filter, page: 1})}
@@ -461,7 +461,7 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
             sort={sort}
             columnDef={sortColumNames.reduce(
               (obj, columnName) => ({...obj, [columnName]: columnDef[columnName]}),
-              {} as ColumnDef<M>
+              {} as ColumnDef<M>,
             )}
             onChange={sort => setState({...state, sort})}
           />
@@ -469,8 +469,8 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
 
         <Radio
           scrollDisabled
-          className='bg-white'
-          size='sm'
+          className="bg-white"
+          size="sm"
           options={dateFields.length ?
             Object.values(ListingModeEnum) :
             [ListingModeEnum.Listing, ListingModeEnum.Gallery]
@@ -479,10 +479,10 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
           value={state.mode}
           onChange={mode => setState({
             ...state,
-            mode: mode || ListingModeEnum.Listing
+            mode: mode || ListingModeEnum.Listing,
           })}
         />
-        <div className='d-flex gap-3 ms-sm-auto'>
+        <div className="d-flex gap-3 ms-sm-auto">
           {bulkActions?.map(({render}, index) => (
             <Fragment key={index}>
               {render({selectedItems})}
@@ -490,18 +490,21 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
           ))}
           {exportable && <ModelExportButton modelName={modelName} />}
           <RouteLinks
-            operations={operations.filter(({resource, operationType}) => resource.name === modelName && operationType === ViewEnum.Create)}
+            operations={operations.filter(({
+                                             resource,
+                                             operationType,
+                                           }) => resource.name === modelName && operationType === ViewEnum.Create)}
             linkProps={{
               state: parentColumnMapping && item && {
-                [inverseBy]: 'multiple' in parentColumnMapping ? [item] : item
-              }
+                [inverseBy]: 'multiple' in parentColumnMapping ? [item] : item,
+              },
             }}
           />
         </div>
       </div>
       {mode === ListingModeEnum.Listing && (
-        <div className='card card-bordered'>
-          <div className='card-body py-1 px-3'>
+        <div className="card card-bordered">
+          <div className="card-body py-1 px-3">
             <TableView
               modelName={modelName}
               columns={listingColumns}
@@ -541,45 +544,45 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
         />
       )}
       {mode === ListingModeEnum.Calendar && (
-        <div className='card card-bordered'>
-          <div className='card-body'>
+        <div className="card card-bordered">
+          <div className="card-body">
             <FullCalendar
-              height='auto'
+              height="auto"
               plugins={[momentPlugin, dayGridPlugin, timeGridPlugin]}
               headerToolbar={{
                 left: 'prev,next today',
                 center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                right: 'dayGridMonth,timeGridWeek,timeGridDay',
               }}
               navLinks
-              initialView='dayGridMonth'
+              initialView="dayGridMonth"
               buttonText={{
                 prevYear: trans({id: 'PREV_YEAR'}),
                 nextYear: trans({id: 'NEXT_YEAR'}),
                 today: trans({id: 'TODAY'}),
                 month: trans({id: 'MONTH'}),
                 week: trans({id: 'WEEK'}),
-                day: trans({id: 'DAY'})
+                day: trans({id: 'DAY'}),
               }}
               eventContent={({event}) => {
-                const {hydraItem} = event.extendedProps as ExtendedProps<M>;
-                const title = hydraItem['@title'];
+                const {hydraItem} = event.extendedProps as ExtendedProps<M>
+                const title = hydraItem['@title']
 
                 return (
                   <Help
                     overlay={(
                       <ItemView
-                        rowClassName='w-300px text-start'
+                        rowClassName="w-300px text-start"
                         hideIcon
                         modelName={modelName}
                         detailView
                         columnDef={(Object.keys(listingColumns) as Array<keyof Model<M>>).reduce(
                           (prev, curr) => ({...prev, [curr]: columnDef[curr as keyof Model<M>]}),
-                          {} as ColumnDef<M>
+                          {} as ColumnDef<M>,
                         )}
                         renderContent={({columnName}) => {
-                          const def = columnDef[columnName];
-                          const column = listingColumns[columnName];
+                          const def = columnDef[columnName]
+                          const column = listingColumns[columnName]
 
                           return (
                             <DetailViewColumnContent
@@ -588,16 +591,16 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
                               render={typeof column !== 'boolean' ? column?.render : undefined}
                               {...def}
                             />
-                          );
+                          )
                         }}
                       />
                     )}
                   >
-                    <div className='fw-bolder text-truncate ms-2'>
+                    <div className="fw-bolder text-truncate ms-2">
                       {title}
                     </div>
                   </Help>
-                );
+                )
               }}
               locale={locale}
               events={events}
@@ -612,18 +615,18 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
       )}
       {mode !== ListingModeEnum.Calendar && (
         <Pagination
-          size='sm'
+          size="sm"
           page={page}
           onPageChange={page => {
-            setState({...state, page});
+            setState({...state, page})
           }}
           onItemsPerPageChange={itemsPerPage => {
-            setState({...state, page: 1, itemsPerPage});
+            setState({...state, page: 1, itemsPerPage})
           }}
           totalCount={totalCount}
           itemsPerPage={itemsPerPage}
         />
       )}
     </div>
-  );
-};
+  )
+}

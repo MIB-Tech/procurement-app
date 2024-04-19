@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
-import { Rating as MuiRating, RatingProps as MuiRatingProps } from '@mui/material';
-import { SVG } from '../../../components/SVG/SVG';
+import React, {FC} from 'react'
+import {Rating as MuiRating, RatingProps as MuiRatingProps} from '@mui/material'
+import {SVG} from '../../../components/SVG/SVG'
 
 
 export type RatingProps = MuiRatingProps
 
-export const Rating: FC<RatingProps> = ({ ...props }) => {
+export const Rating: FC<RatingProps> = ({...props}) => {
 
   return (
     <MuiRating
@@ -16,22 +16,22 @@ export const Rating: FC<RatingProps> = ({ ...props }) => {
       )}
       icon={(
         <RatingIcon
-          className='svg-icon-warning'
+          className="svg-icon-warning"
         />
       )}
       {...props}
     />
-  );
-};
+  )
+}
 
 type RatingIconProps = {
   path?: string
   className?: string
 }
-const RatingIcon: FC<RatingIconProps> = ({ ...props }) => (
+const RatingIcon: FC<RatingIconProps> = ({...props}) => (
   <SVG
-    path='/general/gen029.svg'
-    size='1'
+    path="/general/gen029.svg"
+    size="1"
     {...props}
   />
-);
+)

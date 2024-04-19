@@ -1,6 +1,6 @@
-import React, { HTMLAttributes } from 'react';
-import { InputSize } from '../../Column/String/InputBase/Input.types';
-import { UsePaginationProps } from '@mui/material/usePagination/usePagination';
+import {HTMLAttributes} from 'react'
+import {InputSize} from '../../Column/String/InputBase/Input.types'
+import {UsePaginationProps} from '@mui/material/usePagination/usePagination'
 
 
 export type PaginationInput = {
@@ -9,8 +9,8 @@ export type PaginationInput = {
 }
 export const defaultVariables: PaginationInput = {
   page: 1,
-  itemsPerPage: 5
-};
+  itemsPerPage: 5,
+}
 
 export type PaginationProps = {
   onPageChange: (page: number) => void
