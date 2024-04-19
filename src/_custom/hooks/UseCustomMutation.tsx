@@ -23,7 +23,7 @@ export const useCustomMutation = <M extends ModelEnum>(
     modelName: M,
     mode?: MutationMode
   } & Pick<FormViewType<M>, 'navigateTo'>) => {
-  const {createMutationError, error} = useToastr()
+  const {createMutationError, error, createMutationSuccess, updateMutationSuccess} = useToastr()
   const {trans} = useTrans()
   const navigate = useNavigate()
   const [validationErrors, setValidationErrors] = useState<FormikErrors<Model<M>>>()
@@ -37,9 +37,17 @@ export const useCustomMutation = <M extends ModelEnum>(
       data,
     }),
     {
-      onSuccess: ({data}) => {
+      onSuccess: async ({data}) => {
         navigate(navigateTo(data))
-        queryClient.invalidateQueries({queryKey: [getListingQueryKey(modelName)]})
+        await queryClient.invalidateQueries({queryKey: [getListingQueryKey(modelName)]})
+        switch (mode) {
+          case MutationMode.Post:
+            createMutationSuccess()
+            break;
+          case MutationMode.Put:
+            updateMutationSuccess()
+            break;
+        }
       },
       onError: ({response}) => {
         switch (response?.status) {

@@ -1,4 +1,4 @@
-import {CreateViewType, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {CreateViewType, ModelMapping, UpdateViewType, ViewEnum} from '../../../_custom/types/ModelMapping'
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {CellContent} from '../../../_custom/ListingView/views/Table/BodyCell';
@@ -22,19 +22,26 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     },
     quantity: {
       type: ColumnTypeEnum.Number,
-      schema: schema => schema.when(['restQuantity', 'desiredProduct'], {
-        is: (restQuantity: number, desiredProduct: DesiredProductModel) =>  {
-          return desiredProduct.status !== QuantityStatusEnum.FullyReceived && restQuantity > 0
-        },
-        then: schema => schema.positive().max(ref('restQuantity')),
+      schema: schema => schema.when('id', {
+        is: (id: number | undefined) => !!id,
+        then: schema => schema.positive().max(ref('desiredProduct.quantity')),
+        otherwise: schema => schema.when('desiredProduct', {
+          is: ({id, status, restQuantity}: DesiredProductModel) =>  {
+            if (id) return true
+
+            return status !== QuantityStatusEnum.FullyReceived && restQuantity > 0
+          },
+          then: schema => schema.positive().max(ref('desiredProduct.restQuantity')),
+        })
       })
-    },
-    desiredProductQuantity: {
-      type: ColumnTypeEnum.Number,
-      title: 'ORDERED_QUANTITY'
-    },
-    restQuantity: {
-      type: ColumnTypeEnum.Number,
+      // schema: schema => schema.when('desiredProduct', {
+      //   is: ({id, status, restQuantity}: DesiredProductModel) =>  {
+      //     if (id) return true
+      //
+      //     return status !== QuantityStatusEnum.FullyReceived && restQuantity > 0
+      //   },
+      //   then: schema => schema.positive().max(ref('desiredProduct.restQuantity')),
+      // })
     },
     note: {
       type: ColumnTypeEnum.String,
@@ -79,7 +86,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
           render: ({item}) => item.desiredProduct.quantity
         },
         restQuantity: {
-          render: ({item}) => item.restQuantity
+          render: ({item}) => item.desiredProduct.restQuantity
         },
         quantity: true,
         note: true,
@@ -105,6 +112,88 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
           render: ({fieldProps}) => {
             const view: CreateViewType<ModelEnum.ReceiptProductComponent> = {
               type: ViewEnum.Create,
+              fields: {
+                purchaseOrderProductComponent: {
+                  render: ({item}) => (
+                    <div className='text-truncate'>
+                      {/*@ts-ignore*/}
+                      {item.purchaseOrderProductComponent['@title']}
+                    </div>
+                  )
+                },
+                orderedQuantity: {
+                  render: ({item}) => item.purchaseOrderProductComponent.quantity
+                },
+                restQuantity: {
+                  render: ({item}) => item.restQuantity
+                },
+                quantity: true,
+                status: {
+                  render: ({item}) => {
+                    return (
+                      <CellContent
+                        {...QUANTITY_STATUS_COLUMN}
+                        value={item.purchaseOrderProductComponent.status}
+                      />
+                    );
+                  }
+                },
+                received: {
+                  render: ({fieldProps, item}) => (
+                    <BooleanField
+                      {...fieldProps}
+                      disabled={item.purchaseOrderProductComponent.status === QuantityStatusEnum.FullyReceived}
+                    />
+                  )
+                },
+              }
+            };
+
+            return (
+              <NestedArrayField
+                modelName={ModelEnum.ReceiptProductComponent}
+                view={view}
+                disableDelete
+                disableInsert
+                {...fieldProps}
+              />
+            );
+          }
+        }
+      }
+    },
+    {
+      type: ViewEnum.Update,
+      fields: {
+        designation: {
+          render: ({item}) => (
+            <div className='w-400px'>
+              {item.desiredProduct.designation}
+            </div>
+          )
+        },
+        desiredProductQuantity: {
+          render: ({item}) => item.desiredProduct.quantity
+        },
+        restQuantity: {
+          render: ({item}) => item.desiredProduct.quantity - item.quantity
+        },
+        quantity: true,
+        note: true,
+        status: {
+          render: ({item}) => {
+            return (
+              <CellContent
+                {...QUANTITY_STATUS_COLUMN}
+                value={item.desiredProduct.status}
+              />
+            );
+          }
+        },
+        components: {
+          render: ({fieldProps}) => {
+            const view: UpdateViewType<ModelEnum.ReceiptProductComponent> = {
+              type: ViewEnum.Update,
               fields: {
                 purchaseOrderProductComponent: {
                   render: ({item}) => (

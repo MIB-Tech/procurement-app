@@ -10,8 +10,6 @@ type Model = {
   desiredProduct: DesiredProductModel
   receipt: ReceiptModel
   components: Array<ReceiptProductComponentModel>
-  readonly desiredProductQuantity: number
-  readonly restQuantity: number
   readonly received: number
 } & AbstractModel
 

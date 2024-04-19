@@ -15,14 +15,14 @@ type Model = {
   readonly vendor: VendorModel
   readonly paymentModality: PaymentModalityModel
   readonly purchaseOrders: Array<PurchaseOrderModel>
-  readonly clinic?: ClinicModel,
 } & AbstractModel
 
 export type ReceiptLineProductPrint = {
   type: LineType.Product
   reference: string
   designation: string
-} & Pick<ReceiptProductModel, 'quantity' | 'desiredProductQuantity'>
+  desiredProductQuantity: number
+} & Pick<ReceiptProductModel, 'quantity'>
 export type ReceiptLineComponentPrint = {
   type: LineType.Component
 } & Omit<ReceiptLineProductPrint, 'type'>
