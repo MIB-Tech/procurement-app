@@ -59,6 +59,10 @@ const mapping: ModelMapping<ModelEnum.User> = {
     clinics: {
       type: ModelEnum.Clinic,
       multiple: true
+    },
+    referentPurchaseOrders: {
+      type: ModelEnum.PurchaseOrder,
+      multiple: true
     }
   },
   views: [

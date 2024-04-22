@@ -1,6 +1,8 @@
 import {RoleModel} from '../Role'
 import {AbstractModel, Timestamp} from '../../../_custom/types/types'
 import {ClinicModel} from '../Clinic'
+import {UserModel} from './index'
+import {PurchaseOrderModel} from '../PurchaseOrder'
 
 
 type Model = {
@@ -12,6 +14,7 @@ type Model = {
   passwordConfirm: string
   role?: RoleModel
   clinics: Array<ClinicModel>
+  referentPurchaseOrders: Array<PurchaseOrderModel>
 } & Timestamp & AbstractModel
 
 export default Model
