@@ -30,7 +30,7 @@ import {GridView} from './views/Grid/GridView'
 import {Help} from '../components/Help'
 import {DetailViewColumnContent} from '../DetailView/DetailViewColumnContent'
 import {ItemView} from '../components/ItemView'
-import {DEFAULT_VIEW, isClinicColumn, RELATED_MODELS} from './ListingView.utils'
+import {DEFAULT_VIEW, isClinicColumn} from './ListingView.utils'
 import {BasicFilterToolbar} from './Filter/BasicFilterToolbar'
 import {getAdvancedPropertyFilter, getColumnMapping} from './Filter/Filter.utils'
 import {ItemAction} from './ItemAction'
@@ -39,6 +39,7 @@ import {getRoutePrefix, stringToI18nMessageKey} from '../utils'
 import {utils, writeFile} from 'xlsx'
 import {plural} from 'pluralize'
 import {HydraItem} from '../types/hydra.types'
+import {RELATED_MODELS} from '../../app/routing/PrivateRoutes'
 
 const ModelExportButton = <M extends ModelEnum>({modelName}: {modelName: M}) => {
   const {exportableColumnNames, columnDef} = useMapping<M>({modelName})
@@ -407,13 +408,13 @@ export const ListingView = <M extends ModelEnum>({modelName, parentModelName, pa
   })
   // @ts-ignore
   const parentColumnMapping = inverseBy && parentDef[inverseBy]
-  const item = parent && {
+  const item = parent /*&& {
     id: parent.id,
     uid: parent.uid,
     '@id': parent['@id'],
     '@title': parent['@title'],
-    '@subTitle': parent['@subTitle'],
-  }
+    '@subTitle': parent['@subTitle']
+  };*/
 
 
   return (

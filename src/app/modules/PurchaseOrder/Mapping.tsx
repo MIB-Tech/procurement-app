@@ -347,7 +347,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalDiscount: true,
         totalInclTax: true,
         clinic: true,
-        clinicStatus: true
+        clinicStatus: true,
+        referents: true
       },
       customActions: [
         {

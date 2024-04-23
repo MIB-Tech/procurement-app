@@ -49,6 +49,11 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
   },
 ]
 
+export const RELATED_MODELS = [
+  ModelEnum.User,
+  ModelEnum.PurchaseOrder,
+]
+
 export function PrivateRoutes() {
   const {operations, getPath, isGranted} = useAuth()
   const defaultOperation = operations

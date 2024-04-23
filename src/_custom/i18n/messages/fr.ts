@@ -2,6 +2,10 @@ import {I18nLanguage} from '../I18nMessages'
 
 
 export const fr: I18nLanguage = {
+  REFERENT: 'Référent',
+  REFERENTS: 'Référents',
+  REFERENT_PURCHASE_ORDERS: 'BC référencés',
+  RESTRICTED_BY_CATEGORIES: 'Restriction par familles activée',
   PRODUCT_SECTION_BUDGETS: 'Budgets de la section produit',
   EXTRACTION: 'Extraction',
   DATE: 'Date',
@@ -541,5 +545,5 @@ export const fr: I18nLanguage = {
   VIEWS: 'Vues',
   WORK_ORDER: 'Ordre de travail',
   WORK_ORDERS: 'Ordres de travail',
-  RECEIVED_QUANTITY: 'Qté réc.',
+  RECEIVED_QUANTITY: 'Qté réc.'
 }

@@ -24,6 +24,10 @@ type I18nMessageKey =
   | ProductTypeEnum
   | ColumnTypeEnum
   | StringFormat
+  | 'REFERENT'
+  | 'REFERENTS'
+  | 'REFERENT_PURCHASE_ORDERS'
+  | 'RESTRICTED_BY_CATEGORIES'
   | 'EXTRACTION'
   | 'PARAM_TYPE'
   | 'PARAMS'
