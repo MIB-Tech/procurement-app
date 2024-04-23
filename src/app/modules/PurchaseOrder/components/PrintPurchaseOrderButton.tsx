@@ -17,6 +17,7 @@ import {Button} from '../../../../_custom/components/Button'
 import {Trans} from '../../../../_custom/components/Trans'
 import {Modal} from 'react-bootstrap'
 import ReportViewer from './ReportViewer'
+import {HydraItem} from '../../../../_custom/types/hydra.types'
 
 export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder>> = ({...props}) => {
   const [open, setOpen] = useState<boolean>();
@@ -41,15 +42,16 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
       desiredDeliveryDate,
       purchaseOrderProducts,
       currency,
-      ref
+      ref,
+      referents,
     } = item
     const unit = currency?.code || 'DH';
 
 
     return {
       ...item,
-      // @ts-ignore
-      buyer: buyer?.['@title'],
+      referentFullNames: referents.map(referent => (referent as HydraItem)['@title']).join(', '),
+      buyer: (buyer as HydraItem | undefined)?.['@title'],
       reference: ref,
       taxType: taxIncluded ? 'TTC' : 'HT',
       currency: unit,

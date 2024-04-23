@@ -26,7 +26,9 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
         is: (id: number | undefined) => !!id,
         then: schema => schema.positive().max(ref('desiredProduct.quantity')),
         otherwise: schema => schema.when('desiredProduct', {
-          is: ({id, status, restQuantity}: DesiredProductModel) =>  {
+          is: (desiredProduct?: DesiredProductModel) =>  {
+            if (!desiredProduct) return true
+            const {id, status, restQuantity} = desiredProduct
             if (id) return true
 
             return status !== QuantityStatusEnum.FullyReceived && restQuantity > 0

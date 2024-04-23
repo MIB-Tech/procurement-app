@@ -353,8 +353,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       customActions: [
         {
           render: ({item}) => {
-            const {status, validationStatus} = item;
-            if (status !== QuantityStatusEnum.Unreceived || validationStatus !== ValidationStatusEnum.Validated) return null;
+            const {validationStatus} = item;
+            if (validationStatus !== ValidationStatusEnum.Validated) return null;
+
             return <PrintPurchaseOrderButton item={item}/>;
           },
 

@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.4.0",
-  "ReportGuid": "53b4b87317614fec8cc5cfde475bee16",
+  "ReportGuid": "7ae1820e27574bb9ad8d10a7a19e40b1",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1711547308167+0000)/",
+  "ReportChanged": "/Date(1713869732663+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -32,84 +32,95 @@
         "Ident": "StiDataTableSource",
         "Name": "root",
         "Alias": "root",
-        "Key": "871bbcc7649c43268e43ea5e7451e1bd",
+        "Key": "d2f32019d27e4a69a6dc9a9902ffcc6b",
         "Columns": {
           "0": {
             "Name": "currency",
             "Index": -1,
             "NameInSource": "currency",
             "Alias": "currency",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "6d6cfc711a2a43b9a97d82615ad90222"
           },
           "1": {
             "Name": "taxType",
             "Index": -1,
             "NameInSource": "taxType",
             "Alias": "taxType",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "ed8d53490663494cb663118b9f5b706b"
           },
           "2": {
             "Name": "comment",
             "Index": -1,
             "NameInSource": "comment",
             "Alias": "comment",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "843421d7404240bbba36c190e1fcca5b"
           },
           "3": {
             "Name": "paymentModality",
             "Index": -1,
             "NameInSource": "paymentModality",
             "Alias": "paymentModality",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "3f7c3d86e70042f7815ab3789da022de"
           },
           "4": {
             "Name": "createdAt",
             "Index": -1,
             "NameInSource": "createdAt",
             "Alias": "createdAt",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "832a90f357cb49cd9cfac2faadc4b590"
           },
           "5": {
             "Name": "orderNumber",
             "Index": -1,
             "NameInSource": "orderNumber",
             "Alias": "orderNumber",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "26db3c3907a943029220631bfa29d750"
           },
           "6": {
             "Name": "reference",
             "Index": -1,
             "NameInSource": "reference",
             "Alias": "reference",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "be87da1dc789496681e1719ffefd8205"
           },
           "7": {
             "Name": "desiredDeliveryDate",
             "Index": -1,
             "NameInSource": "desiredDeliveryDate",
             "Alias": "desiredDeliveryDate",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "631c6f21c8ad4339a4a9fbda55182c2f"
           },
           "8": {
             "Name": "clinic",
             "Index": -1,
             "NameInSource": "clinic",
             "Alias": "clinic",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "940fb301ab5d45a19d43943abd015905"
           },
           "9": {
             "Name": "buyer",
             "Index": -1,
             "NameInSource": "buyer",
             "Alias": "buyer",
-            "Type": "System.String"
+            "Type": "System.String",
+            "Key": "9b73be07b0cd4c1bb4d9387440e9c091"
           },
           "10": {
-            "Name": "referent",
+            "Name": "referentFullNames",
             "Index": -1,
-            "NameInSource": "referent",
-            "Alias": "referent",
-            "Type": "System.String"
+            "NameInSource": "referentFullNames",
+            "Alias": "referentFullNames",
+            "Type": "System.String",
+            "Key": "4fdf2d6139dd412d9c68b43d054b5b96"
           },
           "11": {
             "Name": "vendor",
@@ -174,7 +185,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_clinic",
         "Alias": "root_clinic",
-        "Key": "68d1c017901d4013b4101a11915179da",
+        "Key": "276bc84105df4470b49f085ba4bc5eb8",
         "Columns": {
           "0": {
             "Name": "name",
@@ -204,7 +215,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines",
         "Alias": "root_lines",
-        "Key": "dbddff1c6460479d9549ef01d2abdf24",
+        "Key": "28525e0b6b0b47eb8889dd96701f8d4b",
         "Columns": {
           "0": {
             "Name": "type",
@@ -276,7 +287,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines_product",
         "Alias": "root_lines_product",
-        "Key": "7cd5ec0b339a4e2b9807af47f51ff98b",
+        "Key": "fe1ef69fe77c42c09440c7c5e7c89955",
         "Columns": {
           "0": {
             "Name": "code",
@@ -299,7 +310,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_paymentModality",
         "Alias": "root_paymentModality",
-        "Key": "53bef723db594bd18cee7077f90f6dc4",
+        "Key": "8f6c98d7f29b4f91af79cab2c9edacc6",
         "Columns": {
           "0": {
             "Name": "name",
@@ -322,7 +333,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor",
         "Alias": "root_vendor",
-        "Key": "1cb132566db34866b4a5c405ef72fdec",
+        "Key": "3b67002d458c4460bc5506dffbfdf458",
         "Columns": {
           "0": {
             "Name": "name",
@@ -366,7 +377,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor_defaultAddress",
         "Alias": "root_vendor_defaultAddress",
-        "Key": "cf902ab65ab94f4fb5aec82a226075a2",
+        "Key": "79da87f8352c4af9bc058c31b864b70f",
         "Columns": {
           "0": {
             "Name": "postalCode",
@@ -398,6 +409,7 @@
         "Ident": "StiJsonDatabase",
         "Name": "DATA_TEST_BC ToTestCOB",
         "Alias": "DATA_TEST_BC ToTestCOB",
+        "Key": "6446a37da5d444e79557f4730213b780",
         "PathData": "C:\\Users\\USER\\Desktop\\sti\\stimu repo\\BC\\DATA_TEST_BC ToTestCOB.json",
         "HeadersString": ""
       }
@@ -973,7 +985,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root.referent}"
+                "Value": "{root.referentFullNames}"
               },
               "VertAlignment": "Center",
               "Border": "All;;;;;;;solid:Black",

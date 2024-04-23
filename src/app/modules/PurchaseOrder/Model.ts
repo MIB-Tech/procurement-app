@@ -103,6 +103,7 @@ export type PurchaseOrderPrint = {
   lines: Array<PurchaseOrderLinePrint>
   reference?: string,
   comment?: string
+  referentFullNames?: string
 } & Pick<Model, 'orderNumber' | 'createdAt'>
 
 
