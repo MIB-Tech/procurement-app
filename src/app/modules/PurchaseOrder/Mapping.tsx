@@ -71,7 +71,6 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
         lg: 4,
         md: 4,
         xl: 4,
-
       }
     }
   },
@@ -94,12 +93,22 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   comment: {
     slotProps: {
       root: {
-        sm: 12,
-        md: 12,
-        lg: 12,
-        xl: 12,
+        sm: 6,
+        md: 6,
+        lg: 6,
+        xl: 6,
       },
     },
+  },
+  referents: {
+    slotProps: {
+      root: {
+        sm: 6,
+        lg: 6,
+        md: 6,
+        xl: 6
+      }
+    }
   },
   attachments: {
     slotProps: {
@@ -251,6 +260,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       embeddedForm: true,
       min: 1,
     },
+    referents: {
+      type: ModelEnum.User,
+      multiple: true
+    }
   },
   views: [
     {
@@ -334,7 +347,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalDiscount: true,
         totalInclTax: true,
         clinic: true,
-        clinicStatus: true
+        clinicStatus: true,
+        referents: true
       },
       customActions: [
         {
@@ -518,12 +532,22 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         comment: {
           slotProps: {
             root: {
-              sm: 12,
-              md: 12,
-              lg: 12,
-              xl: 12,
+              sm: 6,
+              md: 6,
+              lg: 6,
+              xl: 6,
             },
           },
+        },
+        referents: {
+          slotProps: {
+            root: {
+              sm: 6,
+              lg: 6,
+              md: 6,
+              xl: 6
+            }
+          }
         },
         attachments: {
           slotProps: {

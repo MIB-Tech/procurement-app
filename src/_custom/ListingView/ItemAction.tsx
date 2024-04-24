@@ -27,7 +27,7 @@ export const ItemAction = <M extends ModelEnum>({modelName, item, itemOperationR
   return (
     <RouteActionDropdown
       operations={itemOperations}
-      params={{id: item['@uid']}}
+      params={{id: item.uid}}
     />
   )
 }

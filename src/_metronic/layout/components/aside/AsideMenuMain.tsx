@@ -3,22 +3,22 @@ import React, {Fragment} from 'react'
 import {AsideMenuItem} from './AsideMenuItem'
 import {useAuth} from '../../../../_custom/hooks/UseAuth'
 import {ViewEnum} from '../../../../_custom/types/ModelMapping'
-import {ModelEnum} from '../../../../app/modules/types'
-import {getRoutePrefix} from '../../../../_custom/utils'
 import {Trans} from '../../../../_custom/components/Trans'
-import {RoleKeyEnum} from '../../../../app/modules/Role/Model'
+import {CUSTOM_ROUTES} from '../../../../app/routing/PrivateRoutes'
+import {getRoutePrefix} from '../../../../_custom/utils'
 
-const GROUPS = [
-  {
-    title: 'Gestion des utilisateurs',
-    operations: [
-      ModelEnum.Resource,
-      ModelEnum.Operation,
-      ModelEnum.Role,
-      ModelEnum.User,
-    ]
-  }
-];
+// const GROUPS = [
+//   {
+//     title: 'Gestion des utilisateurs',
+//     operations: [
+//       ModelEnum.Resource,
+//       ModelEnum.Operation,
+//       ModelEnum.Role,
+//       ModelEnum.User,
+//     ]
+//   }
+// ];
+
 
 export function AsideMenuMain() {
   const auth = useAuth();
@@ -28,30 +28,17 @@ export function AsideMenuMain() {
 
   return (
     <>
-      {auth.isGranted([RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin,RoleKeyEnum.Viewer]) && (
-        <>
+      {CUSTOM_ROUTES.filter(route => auth.isGranted(route.granted)).map(route => {
+
+        return (
           <AsideMenuItem
-            path='/dashboard'
-            title={<Trans id='DASHBOARD' />}
-            icon='/graphs/gra010.svg'
+            key={route.path}
+            path={`/${route.path}`}
+            title={<Trans id={route.title} />}
+            icon={route.icon}
           />
-          <AsideMenuItem
-            path='/budget-monitoring'
-            title={<Trans id='BUDGET_MONITORING' />}
-            icon='/graphs/gra004.svg'
-          />
-          <AsideMenuItem
-            path='/extraction'
-            title={<Trans id='EXTRACTION' />}
-            // icon='/graphs/gra004.svg'
-          />
-          <AsideMenuItem
-            path='/receipt-compliance'
-            title={<Trans id='RECEIPT_COMPLIANCE'/>}
-            icon='/graphs/gra010.svg'
-          />
-        </>
-      )}
+        )
+      })}
 
       {operations.filter(({operationType, isMenuItem}) => isMenuItem && operationType === ViewEnum.Listing)
         .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)

@@ -79,7 +79,6 @@ export const PurchaseOrdersField = ({name}: FieldProps) => {
             const receiptProducts: Array<RecursivePartial<ReceiptProductModel>> = desiredProducts.map(desiredProduct => ({
               desiredProduct,
               quantity: desiredProduct.restQuantity,
-              restQuantity: desiredProduct.restQuantity,
               note: '',
               desiredProductQuantity: desiredProduct.quantity,
               components: desiredProduct.purchaseOrderProduct.components.map(component => ({

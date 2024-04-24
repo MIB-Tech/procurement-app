@@ -16,68 +16,107 @@ import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {RoleKeyEnum} from '../modules/Role/Model'
 import {BudgetMonitoringPage} from '../pages/BudgetMonitoring/BudgetMoritoring'
 import {ExtractionPage} from '../pages/Extraction/Extraction'
+import {I18nMessageKey} from '../../_custom/i18n/I18nMessages'
+import {PathRouteProps} from 'react-router/dist/lib/components'
 import {ReceiptCompliancePage} from "../pages/ReceiptCompliance/ReceiptCompliance";
 
+type CustomRoute = {
+  title: I18nMessageKey,
+  icon: string,
+  granted: Array<RoleKeyEnum>
+} & Pick<PathRouteProps, 'path' | 'element'>
+
+export const CUSTOM_ROUTES: Array<CustomRoute> = [
+  {
+    path: 'dashboard',
+    title: 'DASHBOARD',
+    icon: '/graphs/gra010.svg',
+    granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
+    element: <DashboardWrapper />,
+  },
+  {
+    path: 'budget-monitoring',
+    title: 'BUDGET_MONITORING',
+    icon: '/graphs/gra004.svg',
+    granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
+    element: <BudgetMonitoringPage />,
+  },
+  {
+    path: 'extraction',
+    title: 'EXTRACTION',
+    icon: '/graphs/gra004.svg',
+    granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
+    element: <ExtractionPage />,
+  },
+  {
+    path: 'Conformite',
+    title: 'RECEIPT_COMPLIANCE',
+    icon: '/graphs/gra004.svg',
+    granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
+    element: <ReceiptCompliancePage/>,
+  },
+]
+
+export const RELATED_MODELS = [
+  ModelEnum.User,
+  ModelEnum.PurchaseOrder,
+]
 
 export function PrivateRoutes() {
-  const {operations, getPath, isGranted} = useAuth();
+  const {operations, getPath, isGranted} = useAuth()
   const defaultOperation = operations
     .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
-    .find(operation => operation.isMenuItem && operation.operationType === ViewEnum.Listing);
+    .find(operation => operation.isMenuItem && operation.operationType === ViewEnum.Listing)
   // FIXME route render wrong route issue
-  const isAdmin = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin])
-  const isViewer = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin,RoleKeyEnum.SuperAdmin])
+  const isAdmin = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin, RoleKeyEnum.SuperAdmin])
 
-  const indexPath = isAdmin ? 'dashboard' :
-    isViewer ? 'extraction' && 'dashboard':
-      defaultOperation && getPath({
-        resourceName: defaultOperation.resource.name,
-        suffix: defaultOperation.suffix,
-      });
+  const indexPath = isAdmin ?
+    'dashboard' :
+    defaultOperation && getPath({
+      resourceName: defaultOperation.resource.name,
+      suffix: defaultOperation.suffix,
+    })
+
 
   return (
     <Routes>
-      <Route element={(<PageDataProvider><MasterLayout/></PageDataProvider>)}>
-        {isAdmin && (
-          <>
-            <Route path='dashboard' element={<DashboardWrapper />} />
-            <Route path='budget-monitoring' element={<BudgetMonitoringPage />} />
-            <Route path='extraction' element={<ExtractionPage />} />
-            <Route path='receipt-compliance' element={<ReceiptCompliancePage/>}/>
-          </>
-        )}
-        {isViewer && (
-          <>
-            <Route path='dashboard' element={<DashboardWrapper />} />
-            <Route path='budget-monitoring' element={<BudgetMonitoringPage />} />
-            <Route path='extraction' element={<ExtractionPage />} />
-          </>
-        )}
-        {operations.filter(operation=>Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
-          const {resource, suffix, operationType} = operation;
-          const resourceName = resource.name;
-          const path = getRoutePrefix(resourceName) + '/' + suffix;
-          let element: ReactNode;
+      <Route element={(<PageDataProvider><MasterLayout /></PageDataProvider>)}>
+        {CUSTOM_ROUTES.filter(route => isGranted(route.granted)).map(route => {
+
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={route.element}
+            />
+          )
+        })}
+
+        {operations.filter(operation => Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
+          const {resource, suffix, operationType} = operation
+          const resourceName = resource.name
+          const path = getRoutePrefix(resourceName) + '/' + suffix
+          let element: ReactNode
           switch (operationType) {
             case ViewEnum.Listing:
-              element = <ListingView modelName={resourceName}/>;
-              break;
+              element = <ListingView modelName={resourceName} />
+              break
             case ViewEnum.Create:
-              element = <CreateView modelName={resourceName}/>;
-              break;
+              element = <CreateView modelName={resourceName} />
+              break
             case ViewEnum.Detail:
-              element = <DetailView modelName={resourceName}/>;
-              break;
+              element = <DetailView modelName={resourceName} />
+              break
             case ViewEnum.Update:
-              element = <UpdateView modelName={resourceName}/>;
-              break;
+              element = <UpdateView modelName={resourceName} />
+              break
             case ViewEnum.Delete:
-              element = <DeleteView modelName={resourceName}/>;
-              break;
+              element = <DeleteView modelName={resourceName} />
+              break
           }
 
-          const {views, columnDef} = MODEL_MAPPINGS[resourceName] as ModelMapping<any>;
-          const detailView = (views?.find(view => view.type === ViewEnum.Detail) || DEFAULT_DETAIL_VIEW) as DetailViewType<any>;
+          const {views, columnDef} = MODEL_MAPPINGS[resourceName] as ModelMapping<any>
+          const detailView = (views?.find(view => view.type === ViewEnum.Detail) || DEFAULT_DETAIL_VIEW) as DetailViewType<any>
 
           return (
             <Route
@@ -86,7 +125,7 @@ export function PrivateRoutes() {
               element={element}
             >
               {(Object.keys(detailView.columns || columnDef) as Array<keyof Model<any> | string>).map(embeddedColumnName => {
-                const _embeddedColumnName = embeddedColumnName.toString();
+                const _embeddedColumnName = embeddedColumnName.toString()
 
                 return (
                   <Route
@@ -100,10 +139,10 @@ export function PrivateRoutes() {
                     >
                     </Route>
                   </Route>
-                );
+                )
               })}
             </Route>
-          );
+          )
         })}
         {/*{(Object.values(ModelEnum) as ModelEnum[]).map(modelName => {*/}
         {/*  const { views, columnDef } = MODEL_MAPPINGS[modelName] as ModelMapping<any>;*/}
@@ -210,9 +249,9 @@ export function PrivateRoutes() {
         {/*})}*/}
       </Route>
       {indexPath && <Route path="/" element={<Navigate to={indexPath} />} />}
-      <Route path='/auth/*' element={<Navigate to='/'/>}/>
+      <Route path="/auth/*" element={<Navigate to="/" />} />
       {/*{routes.length > 0 && <Route path='/auth' element={<Navigate to={`/error/${routes.length === 0 ? 403 : 404}`} />} /> }*/}
-      <Route path='*' element={<Navigate to={`/error/${operations.length === 0 ? 403 : 404}`}/>}/>
+      <Route path="*" element={<Navigate to={`/error/${operations.length === 0 ? 403 : 404}`} />} />
     </Routes>
   )
 

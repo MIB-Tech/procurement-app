@@ -29,7 +29,7 @@ const initialValues2: Value2 = {
 export const ReceiptCompliancePage: FC = () => {
   const {setPageTitle} = usePageData();
   const {trans} = useTrans();
-  const {mutate, isLoading: Load} = useMutation<AxiosResponse<any>, AxiosError<string>, Value2>(
+  const {mutate, isLoading: Load} = useMutation<AxiosResponse<any>, AxiosError<string>, { receiptProducts: Array<Pick<ReceiptProductModel, 'id' | 'complianceStatus' | 'complianceReserve'>>}>(
     data => axios.post(`/bulk/receipt-products`, data),
   )
   const Searchformik = useFormik({
@@ -65,7 +65,11 @@ export const ReceiptCompliancePage: FC = () => {
     } as Value2,
     enableReinitialize: true,
     onSubmit: (values) => {
-      mutate(values)
+      mutate({...values, receiptProducts: values.receiptProducts.map(({id, complianceStatus, complianceReserve})=>({
+          id,
+          complianceStatus,
+          complianceReserve
+        }))})
     },
   });
 

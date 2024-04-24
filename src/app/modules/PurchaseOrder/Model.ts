@@ -67,6 +67,7 @@ type Model = {
   totalVatTax: number
   totalDiscount: number
   totalInclTax: number
+  referents: Array<UserModel>
   readonly status: QuantityStatusEnum
 } & AbstractModel & CreateTimestamp
 
@@ -101,7 +102,6 @@ export type PurchaseOrderPrint = {
   //
   lines: Array<PurchaseOrderLinePrint>
   reference?: string,
-  // FIXME
   comment?: string
 } & Pick<Model, 'orderNumber' | 'createdAt'>
 

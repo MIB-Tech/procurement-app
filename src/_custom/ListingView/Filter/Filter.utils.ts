@@ -2,7 +2,7 @@ import {CompoundFilterOperator, Filter, PropertyFilterOperator} from './Filter.t
 import {ColumnDef, ColumnMapping, Model, TypeColum} from '../../types/ModelMapping'
 import {MODEL_MAPPINGS} from '../../../app/modules'
 import {SortInput} from '../ListingView.types'
-import {camelCaseToPascalCase, stringToI18nMessageKey} from '../../utils'
+import {stringToI18nMessageKey} from '../../utils'
 import {ColumnTypeEnum} from '../../types/types'
 import {ModelEnum} from '../../../app/modules/types'
 import {StringFormat} from '../../Column/String/StringColumn'
@@ -27,21 +27,6 @@ export const getColumnMapping = <M extends ModelEnum>({modelName, columnName}: {
   const defs = getDefs(modelName, columnName.toString())
 
   return Object.values(defs).at(-1) as ColumnMapping<any>
-
-  if (columnName.toString().includes('.')) {
-    const paths = columnName.toString().split('.')
-    const [_modelColumnName, _nestedColumnName] = paths.slice((paths.length - 2), paths.length) as [string, string]
-    // FIXME modelName
-    const modelColumnDef = MODEL_MAPPINGS[modelName].columnDef
-    console.log(modelColumnDef)
-
-
-    const _columnDef = MODEL_MAPPINGS[camelCaseToPascalCase(_modelColumnName) as ModelEnum].columnDef
-
-    return _columnDef[_nestedColumnName as keyof typeof _columnDef]
-  }
-
-  return MODEL_MAPPINGS[modelName].columnDef[columnName as keyof Model<M>]
 }
 
 export const filterToParams = <M extends ModelEnum>(filter: Filter<M>, prefix: string, modelName: M) => {

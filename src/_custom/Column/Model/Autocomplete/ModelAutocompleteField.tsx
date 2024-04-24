@@ -93,6 +93,7 @@ export const ModelAutocompleteField = <
 
   return (
     <AutocompleteField
+      disableCloseOnSelect={props.multiple}
       placeholder={trans({id: 'SEARCH'})}
       {...props}
       filterOptions={x => x}

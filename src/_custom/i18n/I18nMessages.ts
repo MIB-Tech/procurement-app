@@ -24,6 +24,10 @@ type I18nMessageKey =
   | ProductTypeEnum
   | ColumnTypeEnum
   | StringFormat
+  | 'REFERENT'
+  | 'REFERENTS'
+  | 'REFERENT_PURCHASE_ORDERS'
+  | 'RESTRICTED_BY_CATEGORIES'
   | 'EXTRACTION'
   | 'PARAM_TYPE'
   | 'PARAMS'
@@ -400,7 +404,6 @@ type I18nMessageKey =
   | 'DEVIS_DATE'
   | 'IS_VAT_INCLUDED'
   | 'DEVISE_NUMBER'
-  | 'ORDERED_QUANTITY'
   | 'VALIDATED_QUANTITY'
   | 'PART_NUMBER'
   | 'DEVIS_NUMBER'
