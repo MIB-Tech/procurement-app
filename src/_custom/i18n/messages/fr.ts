@@ -2,6 +2,9 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  CONFORME_AVEC_RESERVE: "Conforme avec reserve",
+  COMPLIANCE_STATUS_OPTIONS: "Conformité",
+  RECEPTION_DETAIL: "Detail de reception",
   RECEIPT_COMPLIANCE: "Conformité de reception",
   PRODUCT_SECTION_BUDGETS: "Budgets de la section produit",
   EXTRACTION: 'Extraction',
@@ -260,7 +263,7 @@ export const fr: I18nLanguage = {
   SIZE: 'Taille',
   VIEW: 'Voir',
   CONTEXTUAL_TITLE: 'Titre contextuel',
-  SEARCH: 'Recherche...',
+  SEARCH: 'Recherche',
   BACK: 'Retour',
   ROLE_KEY: 'Clé de rôle',
   ADD: 'Ajouter',

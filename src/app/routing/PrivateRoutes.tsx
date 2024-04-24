@@ -16,7 +16,7 @@ import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {RoleKeyEnum} from '../modules/Role/Model'
 import {BudgetMonitoringPage} from '../pages/BudgetMonitoring/BudgetMoritoring'
 import {ExtractionPage} from '../pages/Extraction/Extraction'
-import {ReceiptCompliance} from "../pages/ReceiptCompliance/ReceiptCompliance";
+import {ReceiptCompliancePage} from "../pages/ReceiptCompliance/ReceiptCompliance";
 
 
 export function PrivateRoutes() {
@@ -43,7 +43,7 @@ export function PrivateRoutes() {
             <Route path='dashboard' element={<DashboardWrapper />} />
             <Route path='budget-monitoring' element={<BudgetMonitoringPage />} />
             <Route path='extraction' element={<ExtractionPage />} />
-            <Route path='receipt-compliance' element={<ReceiptCompliance/>}/>
+            <Route path='receipt-compliance' element={<ReceiptCompliancePage/>}/>
           </>
         )}
         {isViewer && (
