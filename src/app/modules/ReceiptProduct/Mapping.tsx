@@ -112,7 +112,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
         },
         quantity: true,
         note: true,
-        complianceStatus: {defaultValue: ComplianceStatus.Aucun},
+        complianceStatus: {defaultValue: ComplianceStatus.None},
         complianceReserve: true,
         status: {
           render: ({item}) => {
