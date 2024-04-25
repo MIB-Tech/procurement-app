@@ -7,7 +7,7 @@ import {StringSelectOption} from "../../../_custom/Column/String/StringColumn";
 export enum ComplianceStatus {
   Aucun = 'Aucun',
   Conforme = 'Conforme',
-  ConformeAvecReserve = 'Conforme avec reserve'
+  ConformeAvecReserve = 'conforme avec reserve'
 }
 
 export const COMPLIANCE_STATUS_OPTIONS: Array<StringSelectOption> = [

@@ -5,11 +5,12 @@ import {CellContent} from '../../../_custom/ListingView/views/Table/BodyCell';
 import {QUANTITY_STATUS_COLUMN} from '../PurchaseOrderProduct/Mapping';
 import {BooleanField} from '../../../_custom/Column/Boolean/BooleanField';
 import React from 'react';
-import {QuantityStatusEnum} from '../PurchaseOrder/Model';
+import {ClinicStatusEnum, QuantityStatusEnum} from '../PurchaseOrder/Model';
 import {ref} from 'yup';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
 import {DesiredProductModel} from '../DesiredProduct';
 import {StringFormat} from "../../../_custom/Column/String/StringColumn";
+import {COMPLIANCE_STATUS_OPTIONS, ComplianceStatus} from "./Model";
 
 
 const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
@@ -27,7 +28,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
         is: (id: number | undefined) => !!id,
         then: schema => schema.positive().max(ref('desiredProduct.quantity')),
         otherwise: schema => schema.when('desiredProduct', {
-          is: ({id, status, restQuantity}: DesiredProductModel) =>  {
+          is: ({id, status, restQuantity}: DesiredProductModel) => {
             if (id) return true
 
             return status !== QuantityStatusEnum.FullyReceived && restQuantity > 0
@@ -57,7 +58,8 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     },
     complianceStatus: {
       type: ColumnTypeEnum.String,
-      nullable:true
+      nullable: true,
+      options: COMPLIANCE_STATUS_OPTIONS,
     },
     complianceUpdatedAt: {
       type: ColumnTypeEnum.String,
@@ -110,7 +112,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
         },
         quantity: true,
         note: true,
-        complianceStatus: true,
+        complianceStatus: {defaultValue: ComplianceStatus.Aucun},
         complianceReserve: true,
         status: {
           render: ({item}) => {
