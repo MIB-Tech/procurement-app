@@ -2,6 +2,9 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  CONFORM: "Conforme",
+  CONFORM_WITH_RESERVE: "Conforme avec reserve",
+  NONE: "Non conforme",
   REFERENT: 'Référent',
   REFERENTS: 'Référents',
   REFERENT_PURCHASE_ORDERS: 'BC référencés',

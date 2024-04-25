@@ -9,6 +9,7 @@ import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOr
 import {ProductTypeEnum} from '../../app/modules/Product/Model'
 import {ColumnTypeEnum} from '../types/types'
 import {StringFormat} from '../Column/String/StringColumn'
+import {ComplianceStatus} from "../../app/modules/ReceiptProduct/Model";
 
 
 type Lang = 'en' | 'ar' | 'fr'
@@ -24,6 +25,7 @@ type I18nMessageKey =
   | ProductTypeEnum
   | ColumnTypeEnum
   | StringFormat
+  | ComplianceStatus
   | 'REFERENT'
   | 'REFERENTS'
   | 'REFERENT_PURCHASE_ORDERS'

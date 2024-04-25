@@ -5,16 +5,17 @@ import {ReceiptProductComponentModel} from '../ReceiptProductComponent';
 import {StringSelectOption} from "../../../_custom/Column/String/StringColumn";
 
 export enum ComplianceStatus {
-  Aucun = 'Aucun',
-  Conforme = 'Conforme',
-  ConformeAvecReserve = 'conforme avec reserve'
+  None = 'NONE',
+  Conform = 'CONFORM',
+  ConformWithReserve = 'CONFORM_WITH_RESERVE'
 }
 
 export const COMPLIANCE_STATUS_OPTIONS: Array<StringSelectOption> = [
-  {id: ComplianceStatus.Aucun, color: 'warning'},
-  {id: ComplianceStatus.Conforme, color: 'primary'},
-  {id: ComplianceStatus.ConformeAvecReserve, color: 'success'},
+  {id: ComplianceStatus.None, color: 'warning'},
+  {id: ComplianceStatus.Conform, color: 'primary'},
+  {id: ComplianceStatus.ConformWithReserve, color: 'success'},
 ];
+
 type Model = {
   quantity: number
   note: string
