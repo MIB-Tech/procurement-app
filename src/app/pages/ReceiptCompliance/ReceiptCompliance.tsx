@@ -66,7 +66,7 @@ export const ReceiptCompliancePage: FC = () => {
   const validationSchema = Yup.object().shape({
     receiptProducts: Yup.array().of(
       Yup.object().shape({
-        complianceStatus: Yup.string().nullable().required(),
+        complianceStatus: Yup.string().nullable().required('obligatoire'),
         complianceReserve: Yup.string().nullable().when('complianceStatus', {
           is: ComplianceStatus.ConformWithReserve,
           then: Yup.string().required(),
@@ -77,8 +77,10 @@ export const ReceiptCompliancePage: FC = () => {
 
   const Submitformik = useFormik({
     initialValues: {
-      receiptProducts: collection
-    } as Value2,
+      receiptProducts: collection.map((item) => ({
+        ...item,
+        complianceReserve: item.complianceReserve ? item.complianceReserve : '',
+      })),          } as Value2,
     enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -176,12 +178,12 @@ export const ReceiptCompliancePage: FC = () => {
                                           options={Object.values(ComplianceStatus)}
                                           getOptionLabel={id => trans({id})}
                                           name={`receiptProducts[${index}].complianceStatus`}
+                                          className={'w-50'}
                                         />
                                       </th>
                                       <td>
                                         {item.complianceStatus === ComplianceStatus.ConformWithReserve &&
-                                            <InputField name={`receiptProducts[${index}].complianceReserve`}
-                                                        type="text"/>}
+                                            <InputField name={`receiptProducts[${index}].complianceReserve`} type="text"/>}
                                       </td>
                                     </tr>
                                   ))}
