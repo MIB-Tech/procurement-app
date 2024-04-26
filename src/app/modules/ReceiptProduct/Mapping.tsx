@@ -5,7 +5,7 @@ import {CellContent} from '../../../_custom/ListingView/views/Table/BodyCell';
 import {QUANTITY_STATUS_COLUMN} from '../PurchaseOrderProduct/Mapping';
 import {BooleanField} from '../../../_custom/Column/Boolean/BooleanField';
 import React from 'react';
-import {ClinicStatusEnum, QuantityStatusEnum} from '../PurchaseOrder/Model';
+import {QuantityStatusEnum} from '../PurchaseOrder/Model';
 import {ref} from 'yup';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
 import {DesiredProductModel} from '../DesiredProduct';
@@ -58,6 +58,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     },
     complianceStatus: {
       type: ColumnTypeEnum.String,
+      format: StringFormat.Select,
       nullable: true,
       options: COMPLIANCE_STATUS_OPTIONS,
     },

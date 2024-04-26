@@ -9,13 +9,16 @@ import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery';
 import {CompoundFilterOperator, PropertyFilterOperator} from "../../../_custom/ListingView/Filter/Filter.types";
 import {HydraItem} from "../../../_custom/types/hydra.types";
 import {InputField} from "../../../_custom/Column/String/InputField";
-import {SelectField} from "../../../_custom/Column/controls/fields/SelectField/SelectField";
 import {ReceiptProductModel} from "../../modules/ReceiptProduct";
 import {ModelCell} from "../../../_custom/ListingView/views/Table/ModelCell";
 import {COMPLIANCE_STATUS_OPTIONS, ComplianceStatus} from "../../modules/ReceiptProduct/Model";
 import {useMutation} from "react-query";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import * as Yup from 'yup';
+import {StringField} from "../../../_custom/Column/String/StringField";
+import {ColumnTypeEnum} from "../../../_custom/types/types";
+import {StringFormat} from "../../../_custom/Column/String/StringColumn";
+import clsx from "clsx";
 
 type Value = { purchaseOrder: HydraItem | null, }
 type Value2 = { receiptProducts: Array<ReceiptProductModel>, }
@@ -30,7 +33,7 @@ const initialValues2: Value2 = {
 export const ReceiptCompliancePage: FC = () => {
   const {setPageTitle} = usePageData();
   const {trans} = useTrans();
-  const {mutate, isLoading: Load} = useMutation<AxiosResponse<any>, AxiosError<string>, {
+  const mutation = useMutation<AxiosResponse<any>, AxiosError<string>, {
     receiptProducts: Array<Pick<ReceiptProductModel, 'id' | 'complianceStatus' | 'complianceReserve'>>
   }>(
     data => axios.post(`/bulk/receipt-products`, data),
@@ -42,6 +45,7 @@ export const ReceiptCompliancePage: FC = () => {
   });
 
   const purchaseOrdersId = Searchformik.values.purchaseOrder?.id
+
   const {collection, refetch, isLoading} = useCollectionQuery({
     modelName: ModelEnum.ReceiptProduct,
     params: {
@@ -61,8 +65,6 @@ export const ReceiptCompliancePage: FC = () => {
     }
   });
 
-  const receiptProductsId = Searchformik.values.purchaseOrder?.id
-
   const validationSchema = Yup.object().shape({
     receiptProducts: Yup.array().of(
       Yup.object().shape({
@@ -80,11 +82,12 @@ export const ReceiptCompliancePage: FC = () => {
       receiptProducts: collection.map((item) => ({
         ...item,
         complianceReserve: item.complianceReserve ? item.complianceReserve : '',
-      })),          } as Value2,
+      })),
+    } as Value2,
     enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      mutate({
+      mutation.mutate({
         ...values, receiptProducts: values.receiptProducts.map(({id, complianceStatus, complianceReserve}) => ({
           id,
           complianceStatus,
@@ -93,16 +96,18 @@ export const ReceiptCompliancePage: FC = () => {
       })
     },
   });
+  const receiptProductsId = Submitformik.values.receiptProducts.length > 0
+
 
   useEffect(() => {
     setPageTitle(trans({id: 'RECEIPT_COMPLIANCE'}));
   }, []);
 
   return (
-    <FormikProvider value={Searchformik}>
-      <div className="card card-bordered">
-        <div className="card-body">
-          <div>
+    <>
+      <FormikProvider value={Searchformik}>
+        <div className="card card-bordered mb-10">
+          <div className="card-body">
             <div className="fw-bold"><Trans id="PURCHASE_ORDER"/></div>
             <div className="d-flex">
               <div className="flex-grow-1">
@@ -125,85 +130,73 @@ export const ReceiptCompliancePage: FC = () => {
               </div>
             </div>
           </div>
-          <div className="mt-5">
-
-            <div className="card card-bordered ">
-              <div className="card-header">
-                <h3 className="card-title"><Trans id="RECEIPT_COMPLIANCE"/>
-                </h3>
-                <div className="card-toolbar">
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    loading={Load}
-                    disabled={!receiptProductsId}
-                    onClick={() => Submitformik.handleSubmit()}
-                  >
-                    <Trans id="SAVE"/>
-                  </Button>
+        </div>
+      </FormikProvider>
+      <FormikProvider value={Submitformik}>
+        <div className='d-flex justify-content-end'>
+          <Button
+            variant="primary"
+            size="sm"
+            className='mb-3'
+            loading={mutation.isLoading}
+            disabled={!receiptProductsId}
+            onClick={() => Submitformik.handleSubmit()}
+          >
+            <Trans id="SAVE"/>
+          </Button>
+        </div>
+        <div className="card card-bordered">
+          <div className='card-body py-1 px-3'>
+            <div className="fw-bold"/>
+            <div className="d-flex">
+              <div className="flex-grow-1">
+                <div className="table-responsive">
+                  <table className="table table-sm  gy-1 align-middle mb-0">
+                    <thead className="fs-7 text-gray-400 text-uppercase border-bottom text-nowrap">
+                    <tr>
+                      <th><Trans id='PRODUCT'/></th>
+                      <th><Trans id='RECEIVED_QUANTITY'/></th>
+                      <th><Trans id='COMPLIANCE'/></th>
+                      <th><Trans id='COMPLIANCE_RESERVE'/></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {Submitformik.values.receiptProducts.map((item, index, receiptProducts) => (
+                      <tr key={item.id} className={clsx(index < receiptProducts.length - 1 && 'border-bottom')}>
+                        <td>
+                          <ModelCell item={item as HydraItem}/>
+                        </td>
+                        <td>{item.quantity}</td>
+                        <th>
+                          <StringField
+                            column={{
+                              type: ColumnTypeEnum.String,
+                              format: StringFormat.Select,
+                              options: COMPLIANCE_STATUS_OPTIONS,
+                            }}
+                            name={`receiptProducts[${index}].complianceStatus`}
+                            className='w-50'
+                          />
+                        </th>
+                        <td>
+                          {item.complianceStatus === ComplianceStatus.ConformWithReserve &&
+                              <InputField
+                                  name={`receiptProducts[${index}].complianceReserve`}
+                                  type="text"
+                              />
+                          }
+                        </td>
+                      </tr>
+                    ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
-              <div className="card-body">
-                <FormikProvider value={Submitformik}>
-                  <div className="mt-5">
-                    <div className="card card-bordered">
 
-                      <div className="card-body">
-                        <div>
-                          <div className="fw-bold"></div>
-                          <div className="d-flex">
-                            <div className="flex-grow-1">
-                              <div className="table-responsive">
-                                <table
-                                  className="table table-sm table-row-bordered table-row-dark gy-1 align-middle mb-0">
-                                  <thead className="fs-7 text-gray-400 text-uppercase">
-                                  <tr>
-                                    <th>Produit</th>
-                                    <th>QTE rec</th>
-                                    <th>Conformité</th>
-                                    <th>Conformité avec reserve</th>
-
-                                  </tr>
-                                  </thead>
-
-                                  <tbody className="border border-2">
-                                  {Submitformik.values.receiptProducts.map((item, index) => (
-                                    <tr>
-                                      <td>
-                                        <ModelCell item={item as HydraItem}/>
-                                      </td>
-                                      <td>{item.quantity}</td>
-                                      <th>
-                                        <SelectField
-                                          options={Object.values(ComplianceStatus)}
-                                          getOptionLabel={id => trans({id})}
-                                          name={`receiptProducts[${index}].complianceStatus`}
-                                          className={'w-50'}
-                                        />
-                                      </th>
-                                      <td>
-                                        {item.complianceStatus === ComplianceStatus.ConformWithReserve &&
-                                            <InputField name={`receiptProducts[${index}].complianceReserve`} type="text"/>}
-                                      </td>
-                                    </tr>
-                                  ))}
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </FormikProvider></div>
             </div>
           </div>
         </div>
-      </div>
-
-    </FormikProvider>
-
-  );
+      </FormikProvider>
+    </>
+  )
 };
