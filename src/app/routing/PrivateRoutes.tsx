@@ -45,14 +45,14 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
   {
     path: 'extraction',
     title: 'EXTRACTION',
-    icon: '/graphs/gra004.svg',
+    icon: '/files/fil017.svg',
     granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
     element: <ExtractionPage />,
   },
   {
     path: 'Conformite',
     title: 'RECEIPT_COMPLIANCE',
-    icon: '/graphs/gra004.svg',
+    icon: '/ecommerce/ecm010.svg',
     granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
     element: <ReceiptCompliancePage/>,
   },
