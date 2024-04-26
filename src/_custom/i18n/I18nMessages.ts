@@ -519,6 +519,10 @@ type I18nMessageKey =
   | 'RECEPTION_DETAIL'
   | 'COMPLIANCE_STATUS_OPTIONS'
   | 'CONFORME_AVEC_RESERVE'
+  | 'COMPLIANCE_STATUS'
+  | 'COMPLIANCE_RESERVE'
+  | 'COMPLIANCE_UPDATED_BY'
+  | 'COMPLIANCE'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr}
