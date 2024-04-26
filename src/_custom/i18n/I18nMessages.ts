@@ -9,6 +9,7 @@ import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOr
 import {ProductTypeEnum} from '../../app/modules/Product/Model'
 import {ColumnTypeEnum} from '../types/types'
 import {StringFormat} from '../Column/String/StringColumn'
+import {ComplianceStatus} from "../../app/modules/ReceiptProduct/Model";
 
 
 type Lang = 'en' | 'ar' | 'fr'
@@ -24,6 +25,7 @@ type I18nMessageKey =
   | ProductTypeEnum
   | ColumnTypeEnum
   | StringFormat
+  | ComplianceStatus
   | 'REFERENT'
   | 'REFERENTS'
   | 'REFERENT_PURCHASE_ORDERS'
@@ -513,6 +515,10 @@ type I18nMessageKey =
   | 'PRODUCT_SECTION_BUDGET'
   | 'AMOUNT_PRODUCT_SECTION'
   | 'PRODUCT_SECTION_BUDGETS'
+  | 'RECEIPT_COMPLIANCE'
+  | 'RECEPTION_DETAIL'
+  | 'COMPLIANCE_STATUS_OPTIONS'
+  | 'CONFORME_AVEC_RESERVE'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr}

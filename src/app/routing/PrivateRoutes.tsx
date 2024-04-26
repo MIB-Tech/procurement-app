@@ -19,6 +19,7 @@ import {ExtractionPage} from '../pages/Extraction/Extraction'
 import {I18nMessageKey} from '../../_custom/i18n/I18nMessages'
 import {PathRouteProps} from 'react-router/dist/lib/components'
 import {HydraItem} from '../../_custom/types/hydra.types'
+import {ReceiptCompliancePage} from "../pages/ReceiptCompliance/ReceiptCompliance";
 
 type CustomRoute = {
   title: I18nMessageKey,
@@ -47,6 +48,13 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
     icon: '/graphs/gra004.svg',
     granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
     element: <ExtractionPage />,
+  },
+  {
+    path: 'Conformite',
+    title: 'RECEIPT_COMPLIANCE',
+    icon: '/graphs/gra004.svg',
+    granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
+    element: <ReceiptCompliancePage/>,
   },
 ]
 export const navigateOnMutate = <M extends ModelEnum>(item: HydraItem<M>) => item['@id'] + '/update'

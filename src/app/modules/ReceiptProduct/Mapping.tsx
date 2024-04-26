@@ -5,10 +5,12 @@ import {CellContent} from '../../../_custom/ListingView/views/Table/BodyCell';
 import {QUANTITY_STATUS_COLUMN} from '../PurchaseOrderProduct/Mapping';
 import {BooleanField} from '../../../_custom/Column/Boolean/BooleanField';
 import React from 'react';
-import {QuantityStatusEnum} from '../PurchaseOrder/Model';
+import {ClinicStatusEnum, QuantityStatusEnum} from '../PurchaseOrder/Model';
 import {ref} from 'yup';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
 import {DesiredProductModel} from '../DesiredProduct';
+import {StringFormat} from "../../../_custom/Column/String/StringColumn";
+import {COMPLIANCE_STATUS_OPTIONS, ComplianceStatus} from "./Model";
 
 
 const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
@@ -53,6 +55,22 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
       type: ColumnTypeEnum.Boolean,
       nullable: true
     },
+    complianceUpdatedBy: {
+      type: ColumnTypeEnum.String
+    },
+    complianceStatus: {
+      type: ColumnTypeEnum.String,
+      nullable: true,
+      options: COMPLIANCE_STATUS_OPTIONS,
+    },
+    complianceUpdatedAt: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Datetime
+    },
+    complianceReserve: {
+      type: ColumnTypeEnum.String,
+      nullable: true
+    },
     receipt: {
       type: ModelEnum.Receipt
     },
@@ -72,6 +90,10 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
         quantity: true,
         // desiredProduct: true,
         note: true,
+        complianceStatus: true,
+        complianceReserve: true,
+        // complianceUpdatedAt:true,
+        complianceUpdatedBy: true,
       }
     },
     {
@@ -92,6 +114,8 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
         },
         quantity: true,
         note: true,
+        complianceStatus: {defaultValue: ComplianceStatus.None},
+        complianceReserve: true,
         status: {
           render: ({item}) => {
             return (
