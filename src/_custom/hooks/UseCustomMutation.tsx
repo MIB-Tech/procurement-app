@@ -12,13 +12,14 @@ import {queryClient} from '../../index'
 import {getListingQueryKey} from '../ListingView/ListingView.utils'
 import {useToastr} from '../Toastr/UseToastr'
 import {ModelEnum} from '../../app/modules/types'
+import {navigateOnMutate} from '../../app/routing/PrivateRoutes'
 
 
 export const useCustomMutation = <M extends ModelEnum>(
   {
     modelName,
     mode = MutationMode.Post,
-    navigateTo = item => item['@id'] + '/update',
+    navigateTo = navigateOnMutate
   }: {
     modelName: M,
     mode?: MutationMode

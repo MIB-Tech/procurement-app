@@ -18,6 +18,7 @@ import {BudgetMonitoringPage} from '../pages/BudgetMonitoring/BudgetMoritoring'
 import {ExtractionPage} from '../pages/Extraction/Extraction'
 import {I18nMessageKey} from '../../_custom/i18n/I18nMessages'
 import {PathRouteProps} from 'react-router/dist/lib/components'
+import {HydraItem} from '../../_custom/types/hydra.types'
 
 type CustomRoute = {
   title: I18nMessageKey,
@@ -48,7 +49,7 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
     element: <ExtractionPage />,
   },
 ]
-
+export const navigateOnMutate = <M extends ModelEnum>(item: HydraItem<M>) => item['@id'] + '/update'
 export const RELATED_MODELS = [
   ModelEnum.User,
   ModelEnum.PurchaseOrder,
