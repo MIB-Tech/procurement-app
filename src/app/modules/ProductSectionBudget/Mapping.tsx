@@ -31,9 +31,9 @@ const mapping: ModelMapping<ModelEnum.ProductSectionBudget> = {
           'budget.budgetExercise': true
         },
         columns: {
-          amount: true,
           budget: true,
-          productSection: true
+          productSection: true,
+          amount: true,
         }
       },
       {

@@ -1,11 +1,10 @@
-import {FormFields, ModelMapping, UpdateViewType, ViewEnum} from '../../../_custom/types/ModelMapping'
+import {FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping'
 import {ColumnTypeEnum} from '../../../_custom/types/types'
 import {ModelEnum} from '../types'
 import {StringFormat} from '../../../_custom/Column/String/StringColumn'
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField'
 import React from 'react'
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField'
-import {ReceiptProductModel} from '../ReceiptProduct'
 import moment from 'moment'
 import {ArraySchema} from 'yup'
 import {PrintReceiptButton} from './PrintReceiptButton'
@@ -221,7 +220,7 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
           note: receiptProduct.received ? receiptProduct.note : '',
           components: receiptProduct.components
             .filter(component => component.received)
-            .map(component=>({
+            .map(component => ({
               ...component,
               // @ts-ignore
               purchaseOrderProductComponent: component.purchaseOrderProductComponent['@id']
@@ -249,27 +248,18 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
               sm: 12
             }
           },
-          // display: ({item}) => item.purchaseOrders.length > 0,
-          // render: ({item, fieldProps}) => (
-          //   <NestedArrayField
-          //     modelName={ModelEnum.ReceiptProduct}
-          //     disableInsert
-          //     // disableDelete
-          //     {...fieldProps}
-          //     view={{
-          //       type: ViewEnum.Update,
-          //       fields: {
-          //
-          //       }
-          //     } as UpdateViewType<ModelEnum.ReceiptProduct>}
-          //   />
-          // )
         }
       },
       slotProps: {
         item: {
           sm: 6
         }
+      }
+    },
+    {
+      type: ViewEnum.Detail,
+      columns: {
+        receiptProducts: true
       }
     }
   ]

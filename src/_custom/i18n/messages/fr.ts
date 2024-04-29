@@ -2,6 +2,7 @@ import {I18nLanguage} from '../I18nMessages';
 
 
 export const fr: I18nLanguage = {
+  COMPLIANCE_UPDATED_AT: "Date du mise à jour",
   COMPLIANCE: "Conformité",
   COMPLIANCE_RESERVE: "Réserve de conformité",
   COMPLIANCE_STATUS: "État de conformité",

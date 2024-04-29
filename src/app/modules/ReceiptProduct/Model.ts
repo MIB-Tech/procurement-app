@@ -3,6 +3,7 @@ import {DesiredProductModel} from '../DesiredProduct';
 import {ReceiptModel} from '../Receipt';
 import {ReceiptProductComponentModel} from '../ReceiptProductComponent';
 import {StringSelectOption} from "../../../_custom/Column/String/StringColumn";
+import {UserModel} from "../User";
 
 export enum ComplianceStatus {
   None = 'NONE',
@@ -21,7 +22,7 @@ type Model = {
   note: string
   complianceStatus?: ComplianceStatus
   complianceUpdatedAt: string
-  complianceUpdatedBy: string
+  complianceUpdatedBy: UserModel
   complianceReserve: string
   desiredProduct: DesiredProductModel
   receipt: ReceiptModel
