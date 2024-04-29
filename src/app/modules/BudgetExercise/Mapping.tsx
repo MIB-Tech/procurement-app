@@ -48,7 +48,8 @@ const mapping: ModelMapping<ModelEnum.BudgetExercise> = {
           name: true,
           code: true,
           startAt: true,
-          endAt: true
+          endAt: true,
+          budget:true
         }
       },
       {

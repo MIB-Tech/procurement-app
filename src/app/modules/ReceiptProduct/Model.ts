@@ -21,8 +21,8 @@ type Model = {
   quantity: number
   note: string
   complianceStatus?: ComplianceStatus
-  complianceUpdatedAt: UserModel
-  complianceUpdatedBy: string
+  complianceUpdatedAt: string
+  complianceUpdatedBy: UserModel
   complianceReserve: string
   desiredProduct: DesiredProductModel
   receipt: ReceiptModel

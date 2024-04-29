@@ -50,7 +50,7 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
     element: <ExtractionPage />,
   },
   {
-    path: 'Conformite',
+    path: 'receipt-compliance',
     title: 'RECEIPT_COMPLIANCE',
     icon: '/ecommerce/ecm010.svg',
     granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
