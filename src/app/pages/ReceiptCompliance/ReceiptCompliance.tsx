@@ -137,7 +137,7 @@ export const ReceiptCompliancePage: FC = () => {
             <div className="fw-bold"/>
             <div className="d-flex">
               <div className="flex-grow-1">
-                <div className="table-responsive">
+                <div className="table">
                   <table className="table table-sm  gy-1 align-middle mb-0">
                     <thead className="fs-7 text-gray-400 text-uppercase border-bottom text-nowrap">
                     <tr>
