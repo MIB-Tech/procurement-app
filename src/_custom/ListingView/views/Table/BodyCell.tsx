@@ -124,7 +124,9 @@ export const CellContent = (props: CellContentProps & {className?: string}) => {
         />
       )
     case ColumnTypeEnum.Array:
-      return <>{(value as Array<any>).join(props.separator)}</>
+      if (!Array.isArray(value)) return <></>
+
+      return <>{value.join(props.separator)}</>
     default:
       if (!value) {
         return <Bullet />

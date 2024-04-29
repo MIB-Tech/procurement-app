@@ -89,7 +89,6 @@ export const FormView = <M extends ModelEnum>({modelName, view, ...props}: FormV
     },
   })
 
-  console.log(formik.errors)
   useEffect(() => {
     if (mutation.validationErrors) {
       formik.setErrors(mutation.validationErrors)
