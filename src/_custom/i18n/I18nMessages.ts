@@ -523,6 +523,7 @@ type I18nMessageKey =
   | 'COMPLIANCE_RESERVE'
   | 'COMPLIANCE_UPDATED_BY'
   | 'COMPLIANCE'
+  | 'COMPLIANCE_UPDATED_AT'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr}

@@ -20,16 +20,19 @@ import {ColumnTypeEnum} from "../../../_custom/types/types";
 import {StringFormat} from "../../../_custom/Column/String/StringColumn";
 import clsx from "clsx";
 
-type Value = { purchaseOrder: HydraItem | null, }
-type Value2 = { receiptProducts: Array<ReceiptProductModel>, }
-
-const initialValues: Value = {
-  purchaseOrder: null,
-}
-
-const initialValues2: Value2 = {
-  receiptProducts: [],
-}
+const validationSchema = Yup.object().shape({
+  receiptProducts: Yup.array().of(
+    Yup.object().shape({
+      complianceStatus: Yup.string().nullable().required(),
+      complianceReserve: Yup.string().nullable().when('complianceStatus', {
+        is: ComplianceStatus.ConformWithReserve,
+        then: Yup.string().required(),
+      }),
+    })
+  ),
+});
+type SearchValue = { purchaseOrder: HydraItem | null, }
+type ReceiptProductsValue = { receiptProducts: Array<ReceiptProductModel>, }
 export const ReceiptCompliancePage: FC = () => {
   const {setPageTitle} = usePageData();
   const {trans} = useTrans();
@@ -38,15 +41,15 @@ export const ReceiptCompliancePage: FC = () => {
   }>(
     data => axios.post(`/bulk/receipt-products`, data),
   )
-  const Searchformik = useFormik({
-    initialValues,
+  const searchformik = useFormik({
+    initialValues: {
+      purchaseOrder: null,
+    } as SearchValue,
     onSubmit: (values) => {
     },
   });
-
-  const purchaseOrdersId = Searchformik.values.purchaseOrder?.id
-
-  const {collection, refetch, isLoading} = useCollectionQuery({
+  const purchaseOrdersId = searchformik.values.purchaseOrder?.id
+  const purchaseOrdersQuery = useCollectionQuery({
     modelName: ModelEnum.ReceiptProduct,
     params: {
       filter: {
@@ -64,28 +67,15 @@ export const ReceiptCompliancePage: FC = () => {
       enabled: false
     }
   });
-
-  const validationSchema = Yup.object().shape({
-    receiptProducts: Yup.array().of(
-      Yup.object().shape({
-        complianceStatus: Yup.string().nullable().required('obligatoire'),
-        complianceReserve: Yup.string().nullable().when('complianceStatus', {
-          is: ComplianceStatus.ConformWithReserve,
-          then: Yup.string().required(),
-        }),
-      })
-    ),
-  });
-
-  const Submitformik = useFormik({
+  const submitformik = useFormik({
     initialValues: {
-      receiptProducts: collection.map((item) => ({
+      receiptProducts: purchaseOrdersQuery.collection.map((item) => ({
         ...item,
-        complianceReserve: item.complianceReserve ? item.complianceReserve : '',
+        complianceReserve: item.complianceReserve || '',
       })),
-    } as Value2,
+    } as ReceiptProductsValue,
     enableReinitialize: true,
-    validationSchema: validationSchema,
+    validationSchema,
     onSubmit: (values) => {
       mutation.mutate({
         ...values, receiptProducts: values.receiptProducts.map(({id, complianceStatus, complianceReserve}) => ({
@@ -96,16 +86,13 @@ export const ReceiptCompliancePage: FC = () => {
       })
     },
   });
-  const receiptProductsId = Submitformik.values.receiptProducts.length > 0
-
-
   useEffect(() => {
     setPageTitle(trans({id: 'RECEIPT_COMPLIANCE'}));
   }, []);
 
   return (
     <>
-      <FormikProvider value={Searchformik}>
+      <FormikProvider value={searchformik}>
         <div className="card card-bordered mb-10">
           <div className="card-body">
             <div className="fw-bold"><Trans id="PURCHASE_ORDER"/></div>
@@ -121,9 +108,9 @@ export const ReceiptCompliancePage: FC = () => {
                 <Button
                   variant="primary"
                   size="sm"
-                  loading={isLoading}
+                  loading={purchaseOrdersQuery.isLoading}
                   disabled={!purchaseOrdersId}
-                  onClick={() => refetch()}
+                  onClick={() => purchaseOrdersQuery.refetch()}
                 >
                   <Trans id="SEARCH"/>
                 </Button>
@@ -132,15 +119,15 @@ export const ReceiptCompliancePage: FC = () => {
           </div>
         </div>
       </FormikProvider>
-      <FormikProvider value={Submitformik}>
+      <FormikProvider value={submitformik}>
         <div className='d-flex justify-content-end'>
           <Button
             variant="primary"
             size="sm"
             className='mb-3'
             loading={mutation.isLoading}
-            disabled={!receiptProductsId}
-            onClick={() => Submitformik.handleSubmit()}
+            disabled={submitformik.values.receiptProducts.length === 0}
+            onClick={() => submitformik.handleSubmit()}
           >
             <Trans id="SAVE"/>
           </Button>
@@ -161,7 +148,7 @@ export const ReceiptCompliancePage: FC = () => {
                     </tr>
                     </thead>
                     <tbody>
-                    {Submitformik.values.receiptProducts.map((item, index, receiptProducts) => (
+                    {submitformik.values.receiptProducts.map((item, index, receiptProducts) => (
                       <tr key={item.id} className={clsx(index < receiptProducts.length - 1 && 'border-bottom')}>
                         <td>
                           <ModelCell item={item as HydraItem}/>
@@ -192,7 +179,6 @@ export const ReceiptCompliancePage: FC = () => {
                   </table>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
