@@ -155,7 +155,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
   },
   designation: true,
   quantity: {
-    render: ({fieldProps, item}) => <QuantityField {...fieldProps} />
+    render: ({fieldProps}) => <QuantityField {...fieldProps} />
   },
   grossPrice: {
     render: ({item}) => (
