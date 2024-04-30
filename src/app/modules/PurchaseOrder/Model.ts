@@ -94,6 +94,7 @@ export type PurchaseOrderPrint = {
   totalInclTax: string
   totalVatTax: string
   totalDiscount: string
+  currencyCode: string
   clinic: Pick<ClinicModel, 'name' | 'address'>,
   paymentModality: Pick<PaymentModalityModel, 'name'>
   vendor: {

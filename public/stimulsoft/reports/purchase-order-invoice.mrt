@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.4.0",
-  "ReportGuid": "87bf707d938b46cb8ab32070e9dbcc4d",
+  "ReportGuid": "f6c80f920caf4ff89f77992bdc67ef27",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1714477356192+0100)/",
+  "ReportChanged": "/Date(1714481152498+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -32,7 +32,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root",
         "Alias": "root",
-        "Key": "0ebd9de2ab8543c494f249656e7c2104",
+        "Key": "20bde3d48a664914825188e79879c1e7",
         "Columns": {
           "0": {
             "Name": "comment",
@@ -42,10 +42,10 @@
             "Type": "System.String"
           },
           "1": {
-            "Name": "currency",
+            "Name": "currencyCode",
             "Index": -1,
-            "NameInSource": "currency",
-            "Alias": "currency",
+            "NameInSource": "currencyCode",
+            "Alias": "currencyCode",
             "Type": "System.String"
           },
           "2": {
@@ -160,7 +160,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines",
         "Alias": "root_lines",
-        "Key": "e9abcf1c777a434b81bb51568e38c842",
+        "Key": "534fd6c721c347f580607c0eed28bac7",
         "Columns": {
           "0": {
             "Name": "type",
@@ -239,7 +239,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines_product",
         "Alias": "root_lines_product",
-        "Key": "92314b5c4100430dab3a77e5872dacf1",
+        "Key": "f2eae6c7b446416fb54eed946348bf1e",
         "Columns": {
           "0": {
             "Name": "code",
@@ -262,7 +262,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_paymentModality",
         "Alias": "root_paymentModality",
-        "Key": "1d1ddd223ded441ca3b4bc9f6632031b",
+        "Key": "8020becf5c024cad83fc3a44b6607ce3",
         "Columns": {
           "0": {
             "Name": "name",
@@ -285,7 +285,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor",
         "Alias": "root_vendor",
-        "Key": "033b43a0566e40c0a3eda46ec5cc406e",
+        "Key": "3467499defcc435f99404ce2aadc880e",
         "Columns": {
           "0": {
             "Name": "name",
@@ -329,7 +329,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor_defaultAddress",
         "Alias": "root_vendor_defaultAddress",
-        "Key": "1e1b4b6419844da08f2990df99812eee",
+        "Key": "8ea15ecb163741d29501a41aa160a3db",
         "Columns": {
           "0": {
             "Name": "postalCode",
@@ -1191,7 +1191,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root.currency}"
+                "Value": "{root.currencyCode}"
               },
               "Font": ";;Bold;",
               "Border": ";;;;;;;solid:Black",
@@ -1645,7 +1645,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Arrête la présente facture à la somme de  {ToCurrencyWordsFr(root.totalInclTaxNumber,root.currency,2)}."
+                "Value": "Arrête la présente facture à la somme de  {ToCurrencyWordsFr(root.totalInclTaxNumber,root.currencyCode,2)}."
               },
               "Font": ";10;Bold;",
               "Border": ";;;;;;;solid:Black",
