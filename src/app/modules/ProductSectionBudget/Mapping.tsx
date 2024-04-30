@@ -1,6 +1,7 @@
 import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import {NumberFormat} from "../../../_custom/Column/Number/NumberColumn";
 
 
 const mapping: ModelMapping<ModelEnum.ProductSectionBudget> = {
@@ -14,6 +15,7 @@ const mapping: ModelMapping<ModelEnum.ProductSectionBudget> = {
       },
       amount: {
         type: ColumnTypeEnum.Number,
+        format:NumberFormat.Amount,
         title: 'AMOUNT_PRODUCT_SECTION'
       },
       budget: {
@@ -31,15 +33,16 @@ const mapping: ModelMapping<ModelEnum.ProductSectionBudget> = {
           'budget.budgetExercise': true
         },
         columns: {
-          amount: true,
           budget: true,
-          productSection: true
+          productSection: true,
+          amount: true,
         }
       },
       {
         type: ViewEnum.Create,
         fields: {
           amount: true,
+          budget: true,
           productSection: true,
         }
       },
@@ -47,7 +50,8 @@ const mapping: ModelMapping<ModelEnum.ProductSectionBudget> = {
         type: ViewEnum.Update,
         fields: {
           amount: true,
-          productSection: true
+          budget: true,
+          productSection: true,
         }
       },
       {

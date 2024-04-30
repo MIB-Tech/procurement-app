@@ -1,7 +1,7 @@
-import { ButtonHTMLAttributes } from 'react';
-import { InputSize } from '../../Column/String/InputBase/Input.types';
-import { ButtonVariant, Variant } from 'react-bootstrap/types';
-import { I18nMessageKey } from '../../i18n/I18nMessages';
+import {ButtonHTMLAttributes} from 'react'
+import {InputSize} from '../../Column/String/InputBase/Input.types'
+import {ButtonVariant, Variant} from 'react-bootstrap/types'
+import {I18nMessageKey} from '../../i18n/I18nMessages'
 
 
 export type ButtonColor = 'color-gray-700' | 'color-danger' | 'color-primary'

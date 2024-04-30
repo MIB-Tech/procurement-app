@@ -1,6 +1,6 @@
-import React, { forwardRef, InputHTMLAttributes } from 'react';
-import clsx from 'clsx';
-import { FormControlProps } from './Input.types';
+import React, {forwardRef, InputHTMLAttributes} from 'react'
+import clsx from 'clsx'
+import {FormControlProps} from './Input.types'
 
 
 export type InputProps = FormControlProps & Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>
@@ -20,9 +20,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((
         'form-control',
         bg && `form-control-${bg}`,
         size && `form-control-${size}`,
-        className
+        className,
       )}
       {...props}
     />
-  );
-});
+  )
+})

@@ -1,11 +1,10 @@
-import React, {FC, HTMLAttributes} from 'react';
-import { FeedbackErrorType, FeedbackLabelType, FieldProps } from './Field.types';
-import { useField } from 'formik';
-import { Trans } from '../../../components/Trans';
-import { I18nMessageKey } from '../../../i18n/I18nMessages';
+import React, {FC, HTMLAttributes} from 'react'
+import {FeedbackErrorType, FeedbackLabelType, FieldProps} from './Field.types'
+import {useField} from 'formik'
+import {Trans} from '../../../components/Trans'
 
 
-const FeedbackError: FC<FeedbackErrorType> = ({ error, variant = 'danger' }) => {
+const FeedbackError: FC<FeedbackErrorType> = ({error, variant = 'danger'}) => {
 
   return (
     <div className={`text-${variant}`}>
@@ -15,14 +14,14 @@ const FeedbackError: FC<FeedbackErrorType> = ({ error, variant = 'danger' }) => 
   )
 }
 
-const FeedbackLabel: FC<FeedbackLabelType> = ({ label }) => (
-  <div className='text-gray-600'>
+const FeedbackLabel: FC<FeedbackLabelType> = ({label}) => (
+  <div className="text-gray-600">
     {label && <Trans id={label} />}
   </div>
-);
+)
 
-const Field: FC<FieldProps & HTMLAttributes<any>> = ({ name, feedbackLabel, children }) => {
-  const [, { error }] = useField({ name });
+const Field: FC<FieldProps & HTMLAttributes<any>> = ({name, feedbackLabel, children}) => {
+  const [, {error}] = useField({name})
 
   return (
     <>
@@ -30,9 +29,9 @@ const Field: FC<FieldProps & HTMLAttributes<any>> = ({ name, feedbackLabel, chil
       {error && <FeedbackError error={error as FeedbackErrorType['error']} />}
       {!error && feedbackLabel && <FeedbackLabel label={feedbackLabel} />}
     </>
-  );
-};
+  )
+}
 
-export default Field;
+export default Field
 
-export { FeedbackError, FeedbackLabel };
+export {FeedbackError, FeedbackLabel}

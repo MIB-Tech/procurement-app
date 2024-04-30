@@ -1,134 +1,135 @@
-import React from 'react';
-import {EmailLink} from '../../../components/Button/EmailLink';
-import {PhoneNumberLink} from '../../../components/Button/PhoneNumberLink';
-import {Bullet} from '../../../components/Bullet';
-import {HydraItem} from '../../../types/hydra.types';
-import Moment from 'react-moment';
-import {NumberUnit} from '../../../components/NumberUnit';
-import clsx from 'clsx';
-import {NumberFormat} from '../../../Column/Number/NumberColumn';
-import {DateFormatEnum, StringFormat, TimeFormatEnum} from '../../../Column/String/StringColumn';
-import {SVG} from '../../../components/SVG/SVG';
-import {Trans} from '../../../components/Trans';
-import {I18nMessageKey} from '../../../i18n/I18nMessages';
-import {KTSVG} from '../../../../_metronic/helpers';
-import {TypeColum} from '../../../types/ModelMapping';
-import {ModelCell} from './ModelCell';
-import {bytesToSize} from '../../../components/File/File.utils';
-import {ColumnTypeEnum} from '../../../types/types';
+import React from 'react'
+import {EmailLink} from '../../../components/Button/EmailLink'
+import {PhoneNumberLink} from '../../../components/Button/PhoneNumberLink'
+import {Bullet} from '../../../components/Bullet'
+import {HydraItem} from '../../../types/hydra.types'
+import Moment from 'react-moment'
+import {NumberUnit} from '../../../components/NumberUnit'
+import clsx from 'clsx'
+import {NumberFormat} from '../../../Column/Number/NumberColumn'
+import {DateFormatEnum, StringFormat, TimeFormatEnum} from '../../../Column/String/StringColumn'
+import {SVG} from '../../../components/SVG/SVG'
+import {Trans} from '../../../components/Trans'
+import {I18nMessageKey} from '../../../i18n/I18nMessages'
+import {TypeColum} from '../../../types/ModelMapping'
+import {ModelCell} from './ModelCell'
+import {bytesToSize} from '../../../components/File/File.utils'
+import {ColumnTypeEnum} from '../../../types/types'
 
 
 export type CellContentProps = {
   value: any
 } & TypeColum
-export const CellContent = (props: CellContentProps & { className?: string }) => {
-  const {value, type} = props;
+export const CellContent = (props: CellContentProps & {className?: string}) => {
+  const {value, type} = props
 
   switch (type) {
     case ColumnTypeEnum.Number:
       if (value !== 0 && !value) {
-        return <Bullet/>;
+        return <Bullet />
       }
 
       switch (props.format) {
         case NumberFormat.Amount:
-          return <NumberUnit {...props} />;
+          return <NumberUnit {...props} />
         case NumberFormat.Percent:
-          return <NumberUnit {...props} value={value * 100} unit='%'/>;
+          return <NumberUnit {...props} value={value * 100} unit="%" />
         case NumberFormat.DecimalUnit:
-          return <>{bytesToSize(value as number)}</>;
+          return <>{bytesToSize(value as number)}</>
         default:
-          return <>{value as number}</>;
+          return <>{value as number}</>
       }
     case ColumnTypeEnum.String:
       if (!value) {
-        return <Bullet />;
+        return <Bullet />
       }
       switch (props.format) {
         case StringFormat.PhoneNumber:
-          return <PhoneNumberLink phoneNumber={value as string} />;
+          return <PhoneNumberLink phoneNumber={value as string} />
         case StringFormat.Email:
-          return <EmailLink email={value as string} />;
+          return <EmailLink email={value as string} />
         case StringFormat.Datetime:
           return (
-            <div className='d-flex flex-column'>
+            <div className="d-flex flex-column">
               <Moment
                 date={value as string}
                 format={props.dateFormat || DateFormatEnum.European}
               />
               <Moment
-                className='text-gray-500'
+                className="text-gray-500"
                 date={value as string}
                 format={props.timeFormat || TimeFormatEnum.Full}
               />
             </div>
-          );
+          )
         case StringFormat.Date:
           return (
             <Moment
               date={value as string}
               format={props.dateFormat || DateFormatEnum.European}
             />
-          );
+          )
         case StringFormat.Time:
           return (
             <Moment
               date={value as string}
               format={props.timeFormat || TimeFormatEnum.Half}
             />
-          );
+          )
         case StringFormat.Select:
-          const option = props.options.find(o => o.id === value);
+          const option = props.options.find(o => o.id === value)
           if (!option) {
-            return <></>;
+            return <></>
           }
-          const {label, color = 'primary'} = option;
+          const {label, color = 'primary'} = option
 
           return (
             <span className={clsx(`badge fs-7 badge-light-${color}`)}>
               <Trans id={label || (option.id as I18nMessageKey)} />
             </span>
-          );
+          )
         case StringFormat.Icon:
           return (
-            <div className='symbol symbol-30px'>
-              <span className='symbol-label'>
+            <div className="symbol symbol-30px">
+              <span className="symbol-label">
                 <SVG
                   path={value as string}
-                  variant='primary'
-                  size='2'
+                  variant="primary"
+                  size="2"
                 />
               </span>
             </div>
-          );
+          )
         case StringFormat.Link:
           return (
             <a href={value as string}>
               {value}
             </a>
-          );
+          )
         case StringFormat.Qrcode:
           return (
-            <code className='text-truncate'>
+            <code className="text-truncate">
               {value}
             </code>
-          );
+          )
         default:
-          return <>{value as string}</>;
+          return <>{value as string}</>
       }
     case ColumnTypeEnum.Boolean:
       return (
         <SVG
-          size='2'
+          size="2"
           path={value ? '/general/gen037.svg' : '/general/gen036.svg'}
           variant={value ? 'primary' : 'dark'}
         />
-      );
+      )
     case ColumnTypeEnum.Array:
-      return <>{(value as Array<any>).join(props.separator)}</>;
+      if (!Array.isArray(value)) return <></>
+
+      return <>{value.join(props.separator)}</>
     default:
       if (!value) {
-        return <Bullet />;
+        return <Bullet />
       }
 
       const values = ('multiple' in props ? value : [value]) as Array<HydraItem | string>
@@ -144,7 +145,7 @@ export const CellContent = (props: CellContentProps & { className?: string }) =>
             return <ModelCell key={index} item={item} />
           })}
         </>
-      );
+      )
   }
-};
+}
 

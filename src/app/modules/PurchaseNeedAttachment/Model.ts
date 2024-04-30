@@ -10,7 +10,7 @@ export type AbstractFileModel = {
 } & AbstractModel
 
 type Model = {
-  workOrder: PurchaseNeedAttachmentModel
+  purchaseNeed: PurchaseNeedAttachmentModel
 } & AbstractFileModel
 
 export default Model;

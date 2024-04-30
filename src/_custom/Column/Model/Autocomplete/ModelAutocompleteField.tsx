@@ -1,21 +1,21 @@
-import {UndefinedBool} from '../../controls/base/Autocomplete';
-import React, {useEffect, useMemo} from 'react';
-import {CompoundFilter, CompoundFilterOperator, PropertyFilterOperator} from '../../../ListingView/Filter/Filter.types';
-import {AutocompleteField, AutocompleteFieldProps} from '../../controls/fields/AutocompleteField';
-import {useField} from 'formik';
-import {useMapping} from '../../../hooks/UseMapping';
-import {getRoutePrefix} from '../../../utils';
-import {HydraItem} from '../../../types/hydra.types';
-import {Trans, useTrans} from '../../../components/Trans';
-import {fr} from '../../../i18n/messages/fr';
-import {I18nMessageKey} from '../../../i18n/I18nMessages';
-import {ModelCell} from '../../../ListingView/views/Table/ModelCell';
-import clsx from 'clsx';
-import {Popper} from '../../controls/base/Autocomplete/Tag';
-import {Pagination} from '../../../ListingView/Pagination';
-import {useCollectionQuery} from '../../../hooks/UseCollectionQuery';
-import {PaginationInput} from '../../../ListingView/Pagination/Pagination.types';
-import {ModelEnum} from '../../../../app/modules/types';
+import {UndefinedBool} from '../../controls/base/Autocomplete'
+import React, {useEffect, useMemo} from 'react'
+import {CompoundFilter, CompoundFilterOperator, PropertyFilterOperator} from '../../../ListingView/Filter/Filter.types'
+import {AutocompleteField, AutocompleteFieldProps} from '../../controls/fields/AutocompleteField'
+import {useField} from 'formik'
+import {useMapping} from '../../../hooks/UseMapping'
+import {getRoutePrefix} from '../../../utils'
+import {HydraItem} from '../../../types/hydra.types'
+import {Trans, useTrans} from '../../../components/Trans'
+import {fr} from '../../../i18n/messages/fr'
+import {I18nMessageKey} from '../../../i18n/I18nMessages'
+import {ModelCell} from '../../../ListingView/views/Table/ModelCell'
+import clsx from 'clsx'
+import {Popper} from '../../controls/base/Autocomplete/Tag'
+import {Pagination} from '../../../ListingView/Pagination'
+import {useCollectionQuery} from '../../../hooks/UseCollectionQuery'
+import {PaginationInput} from '../../../ListingView/Pagination/Pagination.types'
+import {ModelEnum} from '../../../../app/modules/types'
 
 
 type ModelAutocomplete<M extends ModelEnum, Multiple extends UndefinedBool> =
@@ -29,23 +29,23 @@ export const ModelAutocompleteField = <
   M extends ModelEnum,
   Multiple extends UndefinedBool
 >({modelName, autoSelect, getParams = filter => filter, ...props}: ModelAutocomplete<M, Multiple>) => {
-  const {trans} = useTrans();
-  const [{value}, , {setValue, setTouched}] = useField<HydraItem>({name: props.name});
-  const [inputValue, setInputValue] = React.useState<string>('');
-  const [enabled, setEnabled] = React.useState<boolean>(false);
+  const {trans} = useTrans()
+  const [{value}, , {setValue, setTouched}] = useField<HydraItem>({name: props.name})
+  const [inputValue, setInputValue] = React.useState<string>('')
+  const [enabled, setEnabled] = React.useState<boolean>(false)
   const [pagination, setPagination] = React.useState<Required<PaginationInput>>({
     page: 1,
-    itemsPerPage: 5
-  });
-  const {searchableColumnNames} = useMapping<M>({modelName});
+    itemsPerPage: 5,
+  })
+  const {searchableColumnNames} = useMapping<M>({modelName})
   const filter = useMemo(() => {
     return getParams({
       operator: CompoundFilterOperator.Or,
       filters: searchableColumnNames.map(columnName => ({
         property: columnName,
         operator: PropertyFilterOperator.Contain,
-        value: inputValue
-      }))
+        value: inputValue,
+      })),
     })
   }, [getParams, searchableColumnNames, inputValue])
 
@@ -55,44 +55,45 @@ export const ModelAutocompleteField = <
     options: {enabled},
     params: {
       filter,
-      ...pagination
-    }
-  });
+      ...pagination,
+    },
+  })
 
   useEffect(() => {
     if (value) {
       if (!props.multiple) {
-        setInputValue(value['@title']);
+        setInputValue(value['@title'])
       }
-      setEnabled(false);
+      setEnabled(false)
     }
-  }, [value]);
+  }, [value])
 
   useEffect(() => {
     if (autoSelect) {
-      const item = collection.find(item => item['@title'].toLowerCase() === inputValue.toLowerCase());
+      const item = collection.find(item => item['@title'].toLowerCase() === inputValue.toLowerCase())
       if (item) {
-        setValue(item);
+        setValue(item)
       }
     }
-  }, [autoSelect, collection]);
+  }, [autoSelect, collection])
 
   const getOptionLabel = (option: string | HydraItem<M>) => {
     if (typeof option === 'string') {
-      return option;
+      return option
     }
-    let label = option['@title'];
+    let label = option['@title']
 
-    const subTitle = option['@subTitle'];
+    const subTitle = option['@subTitle']
     if (subTitle) {
-      label += ` (${Object.keys(fr).includes(subTitle) ? trans({id: subTitle as I18nMessageKey}) : subTitle})`;
+      label += ` (${Object.keys(fr).includes(subTitle) ? trans({id: subTitle as I18nMessageKey}) : subTitle})`
     }
 
-    return label;
+    return label
   }
 
   return (
     <AutocompleteField
+      disableCloseOnSelect={props.multiple}
       placeholder={trans({id: 'SEARCH'})}
       {...props}
       filterOptions={x => x}
@@ -102,9 +103,9 @@ export const ModelAutocompleteField = <
       inputValue={inputValue}
       onInputChange={(e, value, reason) => {
         if (reason === 'input') {
-          setInputValue(value);
-          setPagination({...pagination, page: 1});
-          setEnabled(true);
+          setInputValue(value)
+          setPagination({...pagination, page: 1})
+          setEnabled(true)
         }
       }}
       onFocus={() => {
@@ -115,13 +116,13 @@ export const ModelAutocompleteField = <
       renderPopper={({options, getOptionProps, ...listboxProps}) => (
         <Popper {...listboxProps} >
           {!isLoading && options.length === 0 && (
-            <li className='d-flex py-2 px-3'>
-              <Trans id='NO_ITEM_FOUND'/>
+            <li className="d-flex py-2 px-3">
+              <Trans id="NO_ITEM_FOUND" />
             </li>
           )}
           {isLoading && (
-            <li className='d-flex py-2 px-3'>
-              <Trans id='LOADING'/>
+            <li className="d-flex py-2 px-3">
+              <Trans id="LOADING" />
             </li>
           )}
           {(options.map((option, index) => (
@@ -131,10 +132,10 @@ export const ModelAutocompleteField = <
               className={clsx(
                 props.className,
                 'px-2 py-1 bg-hover-light',
-                getOptionProps({option, index})['aria-selected'] && 'bg-light'
+                getOptionProps({option, index})['aria-selected'] && 'bg-light',
               )}
             >
-              <ModelCell item={option} readOnly/>
+              <ModelCell item={option} readOnly />
             </li>
             // <Option
             //   label={getOptionLabel(option)}
@@ -142,18 +143,18 @@ export const ModelAutocompleteField = <
             // />
           )))}
           {(!isLoading && options.length > 0) && (
-            <div className='border-top'>
+            <div className="border-top">
               <Pagination
                 boundaryCount={0}
                 siblingCount={0}
                 pageLess
-                size='sm'
+                size="sm"
                 page={pagination.page}
                 itemsPerPage={pagination.itemsPerPage}
                 totalCount={totalCount}
-                className='m-1 mx-2'
+                className="m-1 mx-2"
                 onPageChange={page => {
-                  setPagination({...pagination, page});
+                  setPagination({...pagination, page})
                 }}
               />
             </div>
@@ -173,5 +174,5 @@ export const ModelAutocompleteField = <
       //   </li>
       // )}
     />
-  );
-};
+  )
+}

@@ -17,6 +17,7 @@ import {Button} from '../../../../_custom/components/Button'
 import {Trans} from '../../../../_custom/components/Trans'
 import {Modal} from 'react-bootstrap'
 import ReportViewer from './ReportViewer'
+import {HydraItem} from '../../../../_custom/types/hydra.types'
 
 export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.PurchaseOrder>> = ({...props}) => {
   const [open, setOpen] = useState<boolean>();
@@ -41,23 +42,24 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
       desiredDeliveryDate,
       purchaseOrderProducts,
       currency,
-      ref
+      ref,
+      referents,
     } = item
     const unit = currency?.code || 'DH';
 
 
     return {
       ...item,
-      // @ts-ignore
-      buyer: buyer?.['@title'],
+      referentFullNames: referents.map(referent => (referent as HydraItem)['@title']).join(', '),
+      buyer: (buyer as HydraItem | undefined)?.['@title'],
       reference: ref,
       taxType: taxIncluded ? 'TTC' : 'HT',
-      currency: unit,
+      currencyCode: unit,
       totalInclTaxNumber: totalInclTax,
       totalExclTax: getNumberUnit({value: totalExclTax, precision: 2, unit}),
-      totalInclTax: getNumberUnit({value: totalInclTax, precision: 2}),
-      totalVatTax: getNumberUnit({value: totalVatTax, precision: 2}),
-      totalDiscount: getNumberUnit({value: totalDiscount, precision: 2}),
+      totalInclTax: getNumberUnit({value: totalInclTax, precision: 2, unit}),
+      totalVatTax: getNumberUnit({value: totalVatTax, precision: 2, unit}),
+      totalDiscount: getNumberUnit({value: totalDiscount, precision: 2, unit}),
       createdAt: moment(createdAt).format('L'),
       desiredDeliveryDate: moment(desiredDeliveryDate).format('L'),
       lines: purchaseOrderProducts.reduce((lines, purchaseOrderProduct) => {

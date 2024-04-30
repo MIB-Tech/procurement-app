@@ -18,7 +18,7 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {
   modelName: M
 } & HTMLAttributes<HTMLDivElement>) => {
   const {views} = useMapping<M>({modelName})
-  const {id: uid} = useParams<{ id: string }>()
+  const {id: uid} = useParams<{id: string}>()
   const {operations} = useAuth()
   const currentOperation = useCurrentOperation()
   const {item, isLoading} = useItemQuery<M>({
@@ -57,7 +57,7 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {
           {item?.['@icon'] && (
             <div className="symbol symbol-50px me-3">
               <div className="symbol-label bg-light-primary">
-                <SVG path={item['@icon']} size="3x" variant="primary"/>
+                <SVG path={item['@icon']} size="3x" variant="primary" />
               </div>
             </div>
           )}
@@ -65,7 +65,7 @@ export const ItemOverview = <M extends ModelEnum>({modelName, children}: {
             <div className="d-flex justify-content-between align-items-start flex-wrap gap-3">
               <div className="d-flex flex-column">
                 <div className="d-flex flex-wrap fw-semibold fs-5 text-gray-500 ">
-                  {item && <Trans id={stringToI18nMessageKey(item?.['@type'])}/>}
+                  {item && <Trans id={stringToI18nMessageKey(item?.['@type'])} />}
                 </div>
                 <div className="d-flex align-items-center">
                   <a href="#" className="text-gray-800 text-hover-primary fs-2 fw-bold mt-1 me-3">

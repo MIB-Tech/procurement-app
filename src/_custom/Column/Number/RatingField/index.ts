@@ -1,1 +1,1 @@
-export { RatingField } from './RatingField';
+export {RatingField} from './RatingField'

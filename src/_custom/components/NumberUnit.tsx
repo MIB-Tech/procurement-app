@@ -1,8 +1,8 @@
-import {FC, HTMLAttributes} from 'react';
-import clsx from 'clsx';
+import {FC, HTMLAttributes} from 'react'
+import clsx from 'clsx'
 
 
-type CurrencyProps = {
+export type CurrencyProps = {
   value: number
   unit?: string | false,
   precision?: number
@@ -15,12 +15,12 @@ export const getFormattedNumber = ({value, precision = 2}: Omit<CurrencyProps, '
       minimumFractionDigits: precision,
       maximumFractionDigits: precision,
       // useGrouping: true,
-    });
+    })
 
-  return numberFormat.format(value).replaceAll('.', ' ');
-};
-export const getNumberUnit = ({value,  unit = 'DH', precision}: Omit<CurrencyProps, 'className'>) => {
-  return `${getFormattedNumber({value, precision})}${unit === false ? '': ` ${unit}`}`
+  return numberFormat.format(value).replaceAll('.', ' ')
+}
+export const getNumberUnit = ({value, unit = 'DH', precision}: Omit<CurrencyProps, 'className'>) => {
+  return `${getFormattedNumber({value, precision})}${unit === false ? '' : ` ${unit}`}`
 }
 export const NumberUnit: FC<CurrencyProps> = ({value, unit = 'DH', precision, className, unitProps}) => (
   <div>
@@ -34,4 +34,4 @@ export const NumberUnit: FC<CurrencyProps> = ({value, unit = 'DH', precision, cl
       {unit}
     </span>
   </div>
-);
+)

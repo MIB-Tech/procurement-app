@@ -4,30 +4,31 @@ import {
   FormFields,
   ModelMapping,
   UpdateViewType,
-  ViewEnum
-} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-import {StringFormat} from '../../../_custom/Column/String/StringColumn';
-import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
-import Model, {DiscountType} from './Model';
-import {CellContent} from '../../../_custom/ListingView/views/Table/BodyCell';
-import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/SelectField';
-import {useField, useFormikContext} from 'formik';
-import {PurchaseOrderModel} from '../PurchaseOrder';
-import {Bullet} from '../../../_custom/components/Bullet';
-import {NumberUnit} from '../../../_custom/components/NumberUnit';
-import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
-import {FieldProps} from '../../../_custom/Column/controls/fields';
-import {NumberColumnField} from '../../../_custom/Column/Number/NumberColumnField';
-import {QUANTITY_STATUS_OPTIONS} from '../PurchaseOrder/Model';
-import {number} from 'yup';
-import {DesiredProductModel} from '../DesiredProduct';
-import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
-import {PurchaseOrderProductComponentModel} from '../PurchaseOrderProductComponent';
-import {ProductField} from './ProductField';
-import {useCollectionQuery} from "../../../_custom/hooks/UseCollectionQuery";
-import {PropertyFilterOperator} from "../../../_custom/ListingView/Filter/Filter.types";
+  ViewEnum,
+} from '../../../_custom/types/ModelMapping'
+import {ColumnTypeEnum} from '../../../_custom/types/types'
+import {ModelEnum} from '../types'
+import {StringFormat} from '../../../_custom/Column/String/StringColumn'
+import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn'
+import Model, {DiscountType} from './Model'
+import {CellContent} from '../../../_custom/ListingView/views/Table/BodyCell'
+import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/SelectField'
+import {useField, useFormikContext} from 'formik'
+import {PurchaseOrderModel} from '../PurchaseOrder'
+import {Bullet} from '../../../_custom/components/Bullet'
+import {CurrencyProps, NumberUnit} from '../../../_custom/components/NumberUnit'
+import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField'
+import {FieldProps} from '../../../_custom/Column/controls/fields'
+import {NumberColumnField} from '../../../_custom/Column/Number/NumberColumnField'
+import {QUANTITY_STATUS_OPTIONS} from '../PurchaseOrder/Model'
+import {number} from 'yup'
+import {DesiredProductModel} from '../DesiredProduct'
+import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField'
+import {PurchaseOrderProductComponentModel} from '../PurchaseOrderProductComponent'
+import {ProductField} from './ProductField'
+import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery'
+import {PropertyFilterOperator} from '../../../_custom/ListingView/Filter/Filter.types'
+import {FC} from 'react'
 
 
 const AmountUnit = ({getValue, defaultValue = 0}: {
@@ -36,7 +37,7 @@ const AmountUnit = ({getValue, defaultValue = 0}: {
 }) => {
   const formik = useFormikContext<Partial<PurchaseOrderModel>>();
   if (!formik) {
-    return <NumberUnit value={defaultValue}/>;
+    return <NumberUnit value={defaultValue} />
   }
 
   const {values: {taxIncluded, currency}} = formik;
@@ -45,7 +46,7 @@ const AmountUnit = ({getValue, defaultValue = 0}: {
   }
 
   return (
-    <NumberUnit
+    <PurchaseOrderNumberUnit
       value={getValue(taxIncluded)}
       unit={currency?.code}
     />
@@ -141,16 +142,25 @@ const QuantityField = ({...props}: Pick<FieldProps, 'name'>) => {
   );
 };
 
+const PurchaseOrderNumberUnit:FC<CurrencyProps> = props => {
+  const formik = useFormikContext<Partial<PurchaseOrderModel>>()
+
+  return (
+    <NumberUnit {...props} unit={formik.values.currency?.code} />
+  )
+}
 const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
   product: {
     render: ({fieldProps}) => <ProductField {...fieldProps}/>
   },
   designation: true,
   quantity: {
-    render: ({fieldProps, item}) => <QuantityField {...fieldProps} />
+    render: ({fieldProps}) => <QuantityField {...fieldProps} />
   },
   grossPrice: {
-    render: ({item}) => <NumberUnit value={item.grossPrice}/>
+    render: ({item}) => (
+      <PurchaseOrderNumberUnit value={item.grossPrice}/>
+    )
   },
   note: true,
   discountType: {

@@ -1,5 +1,5 @@
-import { Variant } from 'react-bootstrap/types';
-import { FC, ReactNode } from 'react';
+import {Variant} from 'react-bootstrap/types'
+import {FC, ReactNode} from 'react'
 
 
 export type ToastrTypes = {

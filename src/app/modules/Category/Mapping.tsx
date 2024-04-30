@@ -23,6 +23,10 @@ const mapping: ModelMapping<ModelEnum.Category> = {
       type: ModelEnum.Category,
       nullable: true
     },
+    users: {
+      type: ModelEnum.User,
+      multiple: true
+    },
   },
   views: [
     {

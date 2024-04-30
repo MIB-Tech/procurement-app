@@ -6,4 +6,4 @@ type FormControlProps = {
   bg?: InputBackground
 }
 
-export type { InputBackground, InputSize, FormControlProps };
+export type {InputBackground, InputSize, FormControlProps}

@@ -1,14 +1,14 @@
-import React, { FC } from 'react';
-import { useField } from 'formik';
-import clsx from 'clsx';
-import { DateTimePicker } from '../Datetime/DateTimePicker';
-import { Field } from '../../controls/fields';
-import { Props } from './DatetimeField.types';
+import React, {FC} from 'react'
+import {useField} from 'formik'
+import clsx from 'clsx'
+import {DateTimePicker} from '../Datetime/DateTimePicker'
+import {Field} from '../../controls/fields'
+import {Props} from './DatetimeField.types'
 
 
-export const DatetimeField: FC<Props> = ({ name, feedbackLabel, className, ...props }) => {
-  const [field, meta, helpers] = useField({ name });
-  const { error } = meta;
+export const DatetimeField: FC<Props> = ({name, feedbackLabel, className, ...props}) => {
+  const [field, meta, helpers] = useField({name})
+  const {error} = meta
 
   return (
     <Field name={name} feedbackLabel={feedbackLabel}>
@@ -17,9 +17,9 @@ export const DatetimeField: FC<Props> = ({ name, feedbackLabel, className, ...pr
         {...props}
         className={clsx(className, error && 'is-invalid')}
         onChange={date => {
-          helpers.setValue(date);
+          helpers.setValue(date)
         }}
       />
     </Field>
-  );
-};
+  )
+}

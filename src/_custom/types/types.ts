@@ -1,8 +1,8 @@
-import {ColumnDef, FormFields, FormViewBaseColumn, Model, ModelMapping, TypeColum} from './ModelMapping';
-import {AxiosError, AxiosResponse} from 'axios';
-import {JsonldErrorCreateResponse, JsonldSuccessCreateResponse} from './hydra.types';
-import {FormattedMessageProps} from '../components/Trans';
-import {ModelEnum} from '../../app/modules/types';
+import {ColumnDef, FormFields, FormViewBaseColumn, Model, ModelMapping, TypeColum} from './ModelMapping'
+import {AxiosError, AxiosResponse} from 'axios'
+import {JsonldErrorCreateResponse, JsonldSuccessCreateResponse} from './hydra.types'
+import {FormattedMessageProps} from '../components/Trans'
+import {ModelEnum} from '../../app/modules/types'
 
 
 export type SuccessResponse = AxiosResponse<JsonldSuccessCreateResponse>
@@ -10,9 +10,10 @@ export type ErrorResponse<M extends ModelEnum> = AxiosError<JsonldErrorCreateRes
 export type ValidationSchemaDef<M extends ModelEnum> = Record<keyof Model<M> | string, Pick<FormViewBaseColumn<M>, 'required'> & TypeColum>
 export type ValidationSchemaProps<M extends ModelEnum> = {
   columnDef: ColumnDef<M>,
-  trans: ({ values, ...descriptor }: FormattedMessageProps) => string
+  trans: ({values, ...descriptor}: FormattedMessageProps) => string
   fields: FormFields<M>,
-  depth?: number
+  depth?: number,
+  noSortEdges?: Array<[string, string]>
 }
 
 export enum ColumnTypeEnum {

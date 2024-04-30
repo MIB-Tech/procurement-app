@@ -1,7 +1,12 @@
 import {AbstractModel, CreateTimestamp} from '../../../_custom/types/types';
 import {PurchaseOrderModel} from '../PurchaseOrder';
 import {VendorModel} from '../Vendor';
-import {PurchaseOrderPrint} from '../PurchaseOrder/Model';
+import {
+  PurchaseOrderComponentPrint,
+  PurchaseOrderLinePrint,
+  PurchaseOrderPrint,
+  PurchaseOrderProductPrint,
+} from '../PurchaseOrder/Model'
 
 
 type Model = {
@@ -12,5 +17,6 @@ type Model = {
 
 export type InvoicePrint = {
   bill: string,
-} & Omit<PurchaseOrderPrint, 'clinic' | 'taxType'>
+  lines: Array<Omit<PurchaseOrderProductPrint, 'netPrice'> & {netPriceExclTax: string, netPriceInclTax: string} | PurchaseOrderComponentPrint>
+} & Omit<PurchaseOrderPrint, 'clinic' | 'taxType' | 'lines'>
 export default Model;

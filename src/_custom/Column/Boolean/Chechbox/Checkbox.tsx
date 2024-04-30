@@ -1,8 +1,8 @@
-import React, { InputHTMLAttributes } from 'react';
-import clsx from 'clsx';
-import { FormControlProps } from '../../String/InputBase/Input.types';
-import { I18nMessageKey } from '../../../i18n/I18nMessages';
-import { Trans } from '../../../components/Trans';
+import React, {InputHTMLAttributes} from 'react'
+import clsx from 'clsx'
+import {FormControlProps} from '../../String/InputBase/Input.types'
+import {I18nMessageKey} from '../../../i18n/I18nMessages'
+import {Trans} from '../../../components/Trans'
 
 
 export type CheckboxProps = {
@@ -32,21 +32,21 @@ export const Checkbox: React.FC<CheckboxProps> = (
         bg && `form-check-${bg}`,
         size && `form-check-${size}`,
         formSwitch && 'form-switch',
-        className
+        className,
       )}
     >
       <input
-        className={clsx('form-check-input',  isInvalid && 'is-invalid')}
-        type='checkbox'
+        className={clsx('form-check-input', isInvalid && 'is-invalid')}
+        type="checkbox"
         checked={checked}
         readOnly
         {...props}
       />
       {label && (
-        <label className='form-check-label'>
+        <label className="form-check-label">
           <Trans id={label} />
         </label>
       )}
     </span>
-  );
-};
+  )
+}

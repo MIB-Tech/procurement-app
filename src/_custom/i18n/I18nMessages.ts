@@ -1,14 +1,15 @@
-import {en} from './messages/en';
-import {ar} from './messages/ar';
-import {fr} from './messages/fr';
-import {CompoundFilterOperator, PropertyFilterOperator} from '../ListingView/Filter/Filter.types';
-import {PriorityEnum, PurchaseNeedStatusEnum} from '../../app/modules/PurchaseNeed/Model';
-import {ListingModeEnum} from '../ListingView/ListingView.types';
-import {ViewEnum} from '../types/ModelMapping';
-import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model';
-import {ProductTypeEnum} from "../../app/modules/Product/Model";
+import {en} from './messages/en'
+import {ar} from './messages/ar'
+import {fr} from './messages/fr'
+import {CompoundFilterOperator, PropertyFilterOperator} from '../ListingView/Filter/Filter.types'
+import {PriorityEnum, PurchaseNeedStatusEnum} from '../../app/modules/PurchaseNeed/Model'
+import {ListingModeEnum} from '../ListingView/ListingView.types'
+import {ViewEnum} from '../types/ModelMapping'
+import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOrder/Model'
+import {ProductTypeEnum} from '../../app/modules/Product/Model'
 import {ColumnTypeEnum} from '../types/types'
 import {StringFormat} from '../Column/String/StringColumn'
+import {ComplianceStatus} from "../../app/modules/ReceiptProduct/Model";
 
 
 type Lang = 'en' | 'ar' | 'fr'
@@ -24,6 +25,11 @@ type I18nMessageKey =
   | ProductTypeEnum
   | ColumnTypeEnum
   | StringFormat
+  | ComplianceStatus
+  | 'REFERENT'
+  | 'REFERENTS'
+  | 'REFERENT_PURCHASE_ORDERS'
+  | 'RESTRICTED_BY_CATEGORIES'
   | 'EXTRACTION'
   | 'PARAM_TYPE'
   | 'PARAMS'
@@ -400,7 +406,6 @@ type I18nMessageKey =
   | 'DEVIS_DATE'
   | 'IS_VAT_INCLUDED'
   | 'DEVISE_NUMBER'
-  | 'ORDERED_QUANTITY'
   | 'VALIDATED_QUANTITY'
   | 'PART_NUMBER'
   | 'DEVIS_NUMBER'
@@ -510,9 +515,18 @@ type I18nMessageKey =
   | 'PRODUCT_SECTION_BUDGET'
   | 'AMOUNT_PRODUCT_SECTION'
   | 'PRODUCT_SECTION_BUDGETS'
+  | 'RECEIPT_COMPLIANCE'
+  | 'RECEPTION_DETAIL'
+  | 'COMPLIANCE_STATUS_OPTIONS'
+  | 'CONFORME_AVEC_RESERVE'
+  | 'COMPLIANCE_STATUS'
+  | 'COMPLIANCE_RESERVE'
+  | 'COMPLIANCE_UPDATED_BY'
+  | 'COMPLIANCE'
+  | 'COMPLIANCE_UPDATED_AT'
 type I18nLanguage = Record<I18nMessageKey, string>
 
-const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr};
+const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr}
 
-export type {I18nMessageKey, Lang, I18nLanguage};
-export {I18N_MESSAGES};
+export type {I18nMessageKey, Lang, I18nLanguage}
+export {I18N_MESSAGES}

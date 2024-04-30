@@ -41,6 +41,7 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
 
     const result: InvoicePrint = {
       ...item,
+      currencyCode: unit,
       bill: item.invoiceNumber,
       orderNumber,
       paymentModality: {
@@ -70,7 +71,7 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
           ...purchaseOrderProduct,
           type: LineType.Product,
           designation: `${designation}${note ? `\n\n${note}` : ''}`,
-          netPrice: getNumberUnit({value: priceExclTax, precision}),
+          netPriceExclTax: getNumberUnit({value: priceExclTax, precision}),
           netPriceInclTax: getNumberUnit({value: priceInclTax, precision}),
           discount: getNumberUnit({
             value: isPercentCentDiscount ?
@@ -111,7 +112,7 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
           {isLoading && <Trans id='LOADING'/>}
           {item && params && (
             <ReportViewer
-              fileName='purchase-order-invoice-tax-included.mrt'
+              fileName='purchase-order-invoice.mrt'
               // fileName={item.taxIncluded ?
               //   'purchase-order-invoice-tax-included.mrt' :
               //   'purchase-order-invoice.mrt'

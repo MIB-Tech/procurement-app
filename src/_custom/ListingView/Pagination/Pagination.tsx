@@ -1,22 +1,22 @@
-import React, { ReactNode } from 'react';
-import clsx from 'clsx';
-import { PaginationProps } from './Pagination.types';
-import { usePagination } from '@mui/lab';
-import { Trans } from '../../components/Trans';
-import { SVG } from '../../components/SVG/SVG';
-import { Button } from '../../components/Button';
-import { Dropdown } from 'react-bootstrap';
+import React, {ReactNode} from 'react'
+import clsx from 'clsx'
+import {PaginationProps} from './Pagination.types'
+import {usePagination} from '@mui/lab'
+import {Trans} from '../../components/Trans'
+import {SVG} from '../../components/SVG/SVG'
+import {Button} from '../../components/Button'
+import {Dropdown} from 'react-bootstrap'
 
-import { DivToggle } from '../Filter/DivToggle';
+import {DivToggle} from '../Filter/DivToggle'
 
 
 const map: Record<'first' | 'last' | 'next' | 'previous', string> = {
   first: '/arrows/arr079.svg',
   last: '/arrows/arr080.svg',
   next: '/arrows/arr071.svg',
-  previous: '/arrows/arr074.svg'
-};
-const Pagination = ({ pageLess, ...props }: PaginationProps) => {
+  previous: '/arrows/arr074.svg',
+}
+const Pagination = ({pageLess, ...props}: PaginationProps) => {
   const {
     onPageChange,
     onItemsPerPageChange,
@@ -25,26 +25,26 @@ const Pagination = ({ pageLess, ...props }: PaginationProps) => {
     outline,
     circle,
     className,
-    itemsPerPage
-  } = props;
-  const { items } = usePagination(
+    itemsPerPage,
+  } = props
+  const {items} = usePagination(
     {
       ...props,
       count: Math.ceil(totalCount / (itemsPerPage || 1)),
       onChange: (event, value) => {
-        onPageChange(value);
-      }
-    }
-  );
+        onPageChange(value)
+      },
+    },
+  )
 
   return (
     <div className={clsx('d-flex flex-stack flex-wrap', className)}>
-      <div className='fs-6 fw-bold text-gray-700'>
+      <div className="fs-6 fw-bold text-gray-700">
         <Trans
-          id='PAGINATION.TITLE'
+          id="PAGINATION.TITLE"
           values={{
             totalCount,
-            itemsPerPage: itemsPerPage && Math.min(totalCount, itemsPerPage)
+            itemsPerPage: itemsPerPage && Math.min(totalCount, itemsPerPage),
           }}
         />
       </div>
@@ -53,24 +53,24 @@ const Pagination = ({ pageLess, ...props }: PaginationProps) => {
           'pagination d-flex',
           outline && 'pagination-outline',
           circle && 'pagination-circle',
-          size && `pagination-${size}`
+          size && `pagination-${size}`,
         )}
       >
         {onItemsPerPageChange && (
-          <li className='page-item'>
+          <li className="page-item">
             <Dropdown>
               <Dropdown.Toggle
                 as={DivToggle}
               >
                 <Button
-                  variant='outline-default'
-                  size='sm'
-                  className='rounded bg-white'
+                  variant="outline-default"
+                  size="sm"
+                  className="rounded bg-white"
                 >
-                  <Trans id='PER_PAGE' />: {itemsPerPage || `All (${totalCount})`}
+                  <Trans id="PER_PAGE" />: {itemsPerPage || `All (${totalCount})`}
                 </Button>
               </Dropdown.Toggle>
-              <Dropdown.Menu align='start'>
+              <Dropdown.Menu align="start">
                 {[12, 24, 48, 96, undefined].map(itemsPerPage => (
                   <Dropdown.Item
                     key={itemsPerPage || totalCount}
@@ -83,7 +83,7 @@ const Pagination = ({ pageLess, ...props }: PaginationProps) => {
             </Dropdown>
           </li>
         )}
-        {items.filter(({ type }) => {
+        {items.filter(({type}) => {
           if (pageLess) {
             switch (type) {
               case 'start-ellipsis':
@@ -94,44 +94,44 @@ const Pagination = ({ pageLess, ...props }: PaginationProps) => {
           }
 
           return true
-        }).map(({ page, type, selected, disabled, ...item }, index) => {
-          let children: ReactNode = '';
+        }).map(({page, type, selected, disabled, ...item}, index) => {
+          let children: ReactNode = ''
 
           switch (type) {
             case 'start-ellipsis':
             case 'end-ellipsis':
               children = (
-                <button className='page-link'>
+                <button className="page-link">
                   ...
                 </button>
-              );
-              break;
+              )
+              break
             case 'page':
               children = (
                 <Button
-                  variant='outline-primary'
-                  size='sm'
+                  variant="outline-primary"
+                  size="sm"
                   icon
-                  className='page-link'
+                  className="page-link"
                   {...item}
                   disabled={selected || disabled}
                 >
                   {page}
                 </Button>
-              );
-              break;
+              )
+              break
             default:
               children = (
                 <Button
-                  variant='outline-default'
-                  size='sm'
+                  variant="outline-default"
+                  size="sm"
                   icon
-                  className='page-link rounded'
+                  className="page-link rounded"
                   {...item}
                 >
-                  <SVG path={map[type]} size='4' />
+                  <SVG path={map[type]} size="4" />
                 </Button>
-              );
+              )
           }
 
           return (
@@ -140,16 +140,16 @@ const Pagination = ({ pageLess, ...props }: PaginationProps) => {
               className={clsx(
                 'page-item',
                 ['next', 'previous'].includes(type) && type,
-                { active: selected, disabled }
+                {active: selected, disabled},
               )}
             >
               {children}
             </li>
-          );
+          )
         })}
       </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Pagination;
+export default Pagination

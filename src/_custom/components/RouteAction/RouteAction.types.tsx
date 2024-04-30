@@ -1,5 +1,5 @@
-import { HTMLAttributes } from 'react';
-import { RoleModel } from '../../../app/modules/Role';
+import {HTMLAttributes} from 'react'
+import {RoleModel} from '../../../app/modules/Role'
 
 
 export type TogglerProps = HTMLAttributes<HTMLDivElement>

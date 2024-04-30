@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.4.0",
-  "ReportGuid": "53b4b87317614fec8cc5cfde475bee16",
+  "ReportGuid": "a96c2bbdfb2f434ba23ce29f05134755",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1711547308167+0000)/",
+  "ReportChanged": "/Date(1714480396000+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -32,13 +32,13 @@
         "Ident": "StiDataTableSource",
         "Name": "root",
         "Alias": "root",
-        "Key": "871bbcc7649c43268e43ea5e7451e1bd",
+        "Key": "da7b44a24fc64bfba8e49fa2c0787a8f",
         "Columns": {
           "0": {
-            "Name": "currency",
+            "Name": "currencyCode",
             "Index": -1,
-            "NameInSource": "currency",
-            "Alias": "currency",
+            "NameInSource": "currencyCode",
+            "Alias": "currencyCode",
             "Type": "System.String"
           },
           "1": {
@@ -105,10 +105,10 @@
             "Type": "System.String"
           },
           "10": {
-            "Name": "referent",
+            "Name": "referentFullNames",
             "Index": -1,
-            "NameInSource": "referent",
-            "Alias": "referent",
+            "NameInSource": "referentFullNames",
+            "Alias": "referentFullNames",
             "Type": "System.String"
           },
           "11": {
@@ -174,7 +174,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_clinic",
         "Alias": "root_clinic",
-        "Key": "68d1c017901d4013b4101a11915179da",
+        "Key": "38a2dd2edad945049d2d55c0da2c17b4",
         "Columns": {
           "0": {
             "Name": "name",
@@ -204,7 +204,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines",
         "Alias": "root_lines",
-        "Key": "dbddff1c6460479d9549ef01d2abdf24",
+        "Key": "8ca4daf1f0ab434e898dd85010a35afc",
         "Columns": {
           "0": {
             "Name": "type",
@@ -276,7 +276,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines_product",
         "Alias": "root_lines_product",
-        "Key": "7cd5ec0b339a4e2b9807af47f51ff98b",
+        "Key": "5962c431927d485c882480393a02c2f0",
         "Columns": {
           "0": {
             "Name": "code",
@@ -299,7 +299,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_paymentModality",
         "Alias": "root_paymentModality",
-        "Key": "53bef723db594bd18cee7077f90f6dc4",
+        "Key": "cc21ce97013f42e4b5d46623e4f13904",
         "Columns": {
           "0": {
             "Name": "name",
@@ -322,7 +322,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor",
         "Alias": "root_vendor",
-        "Key": "1cb132566db34866b4a5c405ef72fdec",
+        "Key": "b9c8b2085ed247b78c9b22c3dfda97f2",
         "Columns": {
           "0": {
             "Name": "name",
@@ -366,7 +366,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor_defaultAddress",
         "Alias": "root_vendor_defaultAddress",
-        "Key": "cf902ab65ab94f4fb5aec82a226075a2",
+        "Key": "08975b043dce4666a600878ca86f3449",
         "Columns": {
           "0": {
             "Name": "postalCode",
@@ -973,7 +973,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root.referent}"
+                "Value": "{root.referentFullNames}"
               },
               "VertAlignment": "Center",
               "Border": "All;;;;;;;solid:Black",
@@ -1458,7 +1458,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "{root.currency}"
+                "Value": "{root.currencyCode}"
               },
               "Font": ";;Bold;",
               "Border": ";;;;;;;solid:Black",
@@ -2038,7 +2038,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Le présent bon de commande est arrêté à la somme de {ToCurrencyWordsFr(root.totalInclTaxNumber,\"DHS\",2)}.\r\n\r\nToute livraison de Produits devra faire l’objet d’un bon de livraison en trois exemplaires signés et cachetés :\r\n \r\n1 copie originale pour le bureau d’ordre du site\r\n1 copie originale pour la comptabilité Akdital\r\n1 copie originale pour le fournisseur"
+                "Value": "Le présent bon de commande est arrêté à la somme de {ToCurrencyWordsFr(root.totalInclTaxNumber,root.currencyCode,2)}.\r\n\r\nToute livraison de Produits devra faire l’objet d’un bon de livraison en trois exemplaires signés et cachetés :\r\n \r\n1 copie originale pour le bureau d’ordre du site\r\n1 copie originale pour la comptabilité Akdital\r\n1 copie originale pour le fournisseur"
               },
               "Font": ";9;Bold;",
               "Border": ";;;;;;;solid:Black",

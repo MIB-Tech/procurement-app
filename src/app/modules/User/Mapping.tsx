@@ -1,10 +1,32 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {StringFormat} from '../../../_custom/Column/String/StringColumn';
-import {ref, string} from 'yup';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-import moment from 'moment';
+import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping'
+import {StringFormat} from '../../../_custom/Column/String/StringColumn'
+import {ref, string} from 'yup'
+import {ColumnTypeEnum} from '../../../_custom/types/types'
+import {ModelEnum} from '../types'
+import moment from 'moment'
+import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField'
+import {FC} from 'react'
+import {FieldProps} from '../../../_custom/Column/controls/fields'
+import {CompoundFilterOperator, PropertyFilterOperator} from '../../../_custom/ListingView/Filter/Filter.types'
 
+const CategoryField:FC<FieldProps> = ({...props}) => (
+  <ModelAutocompleteField
+    modelName={ModelEnum.Category}
+    multiple
+    size='sm'
+    getParams={filter => ({
+      operator: CompoundFilterOperator.And,
+      filters: [
+        filter,
+        {
+          property: 'parent',
+          operator: PropertyFilterOperator.IsNull
+        }
+      ]
+    })}
+    {...props}
+  />
+)
 
 const mapping: ModelMapping<ModelEnum.User> = {
   modelName: ModelEnum.User,
@@ -52,6 +74,10 @@ const mapping: ModelMapping<ModelEnum.User> = {
       format: StringFormat.Datetime,
       title: 'LAST_MODIFIED_TIME'
     },
+    restrictedByCategories: {
+      type: ColumnTypeEnum.Boolean,
+      nullable: true,
+    },
     role: {
       type: ModelEnum.Role,
       nullable: true
@@ -59,7 +85,15 @@ const mapping: ModelMapping<ModelEnum.User> = {
     clinics: {
       type: ModelEnum.Clinic,
       multiple: true
-    }
+    },
+    referentPurchaseOrders: {
+      type: ModelEnum.PurchaseOrder,
+      multiple: true
+    },
+    categories: {
+      type: ModelEnum.Category,
+      multiple: true,
+    },
   },
   views: [
     {
@@ -80,6 +114,10 @@ const mapping: ModelMapping<ModelEnum.User> = {
         passwordConfirm: true,
         role: true,
         clinics: true,
+        restrictedByCategories: true,
+        categories: {
+          render: ({fieldProps}) => <CategoryField {...fieldProps}/>
+        },
       }
     },
     {
@@ -90,6 +128,10 @@ const mapping: ModelMapping<ModelEnum.User> = {
         email: true,
         role: true,
         clinics: true,
+        restrictedByCategories: true,
+        categories: {
+          render: ({fieldProps}) => <CategoryField {...fieldProps}/>
+        },
       }
     }
   ]

@@ -1,7 +1,7 @@
-import React, { HTMLAttributes, ReactNode } from 'react';
-import { I18nMessageKey } from '../i18n/I18nMessages';
-import clsx from 'clsx';
-import { Trans } from './Trans';
+import React, {HTMLAttributes, ReactNode} from 'react'
+import {I18nMessageKey} from '../i18n/I18nMessages'
+import clsx from 'clsx'
+import {Trans} from './Trans'
 
 
 type FormGroupProps = {
@@ -29,8 +29,8 @@ const FormGroup: React.FC<FormGroupProps> = (
         {children}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export type { FormGroupProps };
-export { FormGroup };
+export type {FormGroupProps}
+export {FormGroup}

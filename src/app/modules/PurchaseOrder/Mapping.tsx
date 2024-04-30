@@ -19,6 +19,7 @@ import {GenerateInvoiceButton} from './components/GenerateInvoiceButton'
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField'
 import {RoleKeyEnum} from '../Role/Model'
 import {CompoundFilterOperator, PropertyFilterOperator} from '../../../_custom/ListingView/Filter/Filter.types'
+import {NumberUnit} from '../../../_custom/components/NumberUnit'
 
 const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   vendor: {
@@ -71,7 +72,6 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
         lg: 4,
         md: 4,
         xl: 4,
-
       }
     }
   },
@@ -94,12 +94,22 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   comment: {
     slotProps: {
       root: {
-        sm: 12,
-        md: 12,
-        lg: 12,
-        xl: 12,
+        sm: 6,
+        md: 6,
+        lg: 6,
+        xl: 6,
       },
     },
+  },
+  referents: {
+    slotProps: {
+      root: {
+        sm: 6,
+        lg: 6,
+        md: 6,
+        xl: 6
+      }
+    }
   },
   attachments: {
     slotProps: {
@@ -242,7 +252,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       //exportable: true
     },
     attachments: {
-      type: ModelEnum.purchaseOrderAttachment,
+      type: ModelEnum.PurchaseOrderAttachment,
       multiple: true,
     },
     purchaseOrderProducts: {
@@ -251,6 +261,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       embeddedForm: true,
       min: 1,
     },
+    referents: {
+      type: ModelEnum.User,
+      multiple: true
+    }
   },
   views: [
     {
@@ -293,8 +307,22 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       columns: {
         createdAt: true,
         desiredDeliveryDate: true,
-        totalExclTax: true,
-        totalInclTax: true,
+        totalExclTax: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
+        totalInclTax: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
         status: true,
         validationStatus: {},
         buyer: true,
@@ -329,18 +357,48 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         attachments: true,
         paymentModality: true,
         invoice: true,
-        totalExclTax: true,
-        totalVatTax: true,
-        totalDiscount: true,
-        totalInclTax: true,
+        totalExclTax: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
+        totalVatTax: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
+        totalDiscount: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
+        totalInclTax: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
         clinic: true,
-        clinicStatus: true
+        clinicStatus: true,
+        referents: true
       },
       customActions: [
         {
           render: ({item}) => {
-            const {status, validationStatus} = item;
-            if (status !== QuantityStatusEnum.Unreceived || validationStatus !== ValidationStatusEnum.Validated) return null;
+            const {validationStatus} = item;
+            if (validationStatus !== ValidationStatusEnum.Validated) return null;
+
             return <PrintPurchaseOrderButton item={item}/>;
           },
 
@@ -518,12 +576,22 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         comment: {
           slotProps: {
             root: {
-              sm: 12,
-              md: 12,
-              lg: 12,
-              xl: 12,
+              sm: 6,
+              md: 6,
+              lg: 6,
+              xl: 6,
             },
           },
+        },
+        referents: {
+          slotProps: {
+            root: {
+              sm: 6,
+              lg: 6,
+              md: 6,
+              xl: 6
+            }
+          }
         },
         attachments: {
           slotProps: {
