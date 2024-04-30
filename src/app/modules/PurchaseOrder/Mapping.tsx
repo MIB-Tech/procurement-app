@@ -19,6 +19,7 @@ import {GenerateInvoiceButton} from './components/GenerateInvoiceButton'
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField'
 import {RoleKeyEnum} from '../Role/Model'
 import {CompoundFilterOperator, PropertyFilterOperator} from '../../../_custom/ListingView/Filter/Filter.types'
+import {NumberUnit} from '../../../_custom/components/NumberUnit'
 
 const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   vendor: {
@@ -306,8 +307,22 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       columns: {
         createdAt: true,
         desiredDeliveryDate: true,
-        totalExclTax: true,
-        totalInclTax: true,
+        totalExclTax: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
+        totalInclTax: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
         status: true,
         validationStatus: {},
         buyer: true,
@@ -342,10 +357,38 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         attachments: true,
         paymentModality: true,
         invoice: true,
-        totalExclTax: true,
-        totalVatTax: true,
-        totalDiscount: true,
-        totalInclTax: true,
+        totalExclTax: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
+        totalVatTax: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
+        totalDiscount: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
+        totalInclTax: {
+          render: ({item}) => (
+            <NumberUnit
+              value={item.totalExclTax}
+              unit={item.currency?.code}
+            />
+          ),
+        },
         clinic: true,
         clinicStatus: true,
         referents: true

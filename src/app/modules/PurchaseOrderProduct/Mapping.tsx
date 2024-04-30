@@ -16,7 +16,7 @@ import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/S
 import {useField, useFormikContext} from 'formik';
 import {PurchaseOrderModel} from '../PurchaseOrder';
 import {Bullet} from '../../../_custom/components/Bullet';
-import {NumberUnit} from '../../../_custom/components/NumberUnit';
+import {CurrencyProps, NumberUnit} from '../../../_custom/components/NumberUnit'
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
 import {FieldProps} from '../../../_custom/Column/controls/fields';
 import {NumberColumnField} from '../../../_custom/Column/Number/NumberColumnField';
@@ -28,6 +28,7 @@ import {PurchaseOrderProductComponentModel} from '../PurchaseOrderProductCompone
 import {ProductField} from './ProductField';
 import {useCollectionQuery} from "../../../_custom/hooks/UseCollectionQuery";
 import {PropertyFilterOperator} from "../../../_custom/ListingView/Filter/Filter.types";
+import {FC} from 'react'
 
 
 const AmountUnit = ({getValue, defaultValue = 0}: {
@@ -36,7 +37,7 @@ const AmountUnit = ({getValue, defaultValue = 0}: {
 }) => {
   const formik = useFormikContext<Partial<PurchaseOrderModel>>();
   if (!formik) {
-    return <NumberUnit value={defaultValue}/>;
+    return <PurchaseOrderNumberUnit value={defaultValue}/>;
   }
 
   const {values: {taxIncluded, currency}} = formik;
@@ -45,7 +46,7 @@ const AmountUnit = ({getValue, defaultValue = 0}: {
   }
 
   return (
-    <NumberUnit
+    <PurchaseOrderNumberUnit
       value={getValue(taxIncluded)}
       unit={currency?.code}
     />
@@ -141,6 +142,13 @@ const QuantityField = ({...props}: Pick<FieldProps, 'name'>) => {
   );
 };
 
+const PurchaseOrderNumberUnit:FC<CurrencyProps> = props => {
+  const {values: {currency}} = useFormikContext<Partial<PurchaseOrderModel>>();
+
+  return (
+    <NumberUnit {...props} unit={currency?.code}/>
+  )
+}
 const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
   product: {
     render: ({fieldProps}) => <ProductField {...fieldProps}/>
@@ -150,7 +158,9 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
     render: ({fieldProps, item}) => <QuantityField {...fieldProps} />
   },
   grossPrice: {
-    render: ({item}) => <NumberUnit value={item.grossPrice}/>
+    render: ({item}) => (
+      <PurchaseOrderNumberUnit value={item.grossPrice}/>
+    )
   },
   note: true,
   discountType: {

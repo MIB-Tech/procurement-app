@@ -2,7 +2,7 @@ import {FC, HTMLAttributes} from 'react'
 import clsx from 'clsx'
 
 
-type CurrencyProps = {
+export type CurrencyProps = {
   value: number
   unit?: string | false,
   precision?: number

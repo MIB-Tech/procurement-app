@@ -57,9 +57,9 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
       currency: unit,
       totalInclTaxNumber: totalInclTax,
       totalExclTax: getNumberUnit({value: totalExclTax, precision: 2, unit}),
-      totalInclTax: getNumberUnit({value: totalInclTax, precision: 2}),
-      totalVatTax: getNumberUnit({value: totalVatTax, precision: 2}),
-      totalDiscount: getNumberUnit({value: totalDiscount, precision: 2}),
+      totalInclTax: getNumberUnit({value: totalInclTax, precision: 2, unit}),
+      totalVatTax: getNumberUnit({value: totalVatTax, precision: 2, unit}),
+      totalDiscount: getNumberUnit({value: totalDiscount, precision: 2, unit}),
       createdAt: moment(createdAt).format('L'),
       desiredDeliveryDate: moment(desiredDeliveryDate).format('L'),
       lines: purchaseOrderProducts.reduce((lines, purchaseOrderProduct) => {
