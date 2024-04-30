@@ -111,7 +111,7 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
           {isLoading && <Trans id='LOADING'/>}
           {item && params && (
             <ReportViewer
-              fileName='purchase-order-invoice-tax-included.mrt'
+              fileName='purchase-order-invoice.mrt'
               // fileName={item.taxIncluded ?
               //   'purchase-order-invoice-tax-included.mrt' :
               //   'purchase-order-invoice.mrt'

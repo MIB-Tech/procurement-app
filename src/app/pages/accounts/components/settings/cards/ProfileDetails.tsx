@@ -690,9 +690,9 @@ const ProfileDetails: React.FC = () => {
                   <option value='CAD'>CAD - Canadian dollar</option>
                   <option value='CHF'>CHF - Swiss franc</option>
                 </select>
-                {formik.touched.currency && formik.errors.currency && (
+                {formik.touched.currencyCode && formik.errors.currencyCode && (
                   <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.currency}</div>
+                    <div className='fv-help-block'>{formik.errors.currencyCode}</div>
                   </div>
                 )}
               </div>

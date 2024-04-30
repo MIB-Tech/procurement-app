@@ -82,7 +82,7 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Resource]: RESOURCE_MAPPING,
   [ModelEnum.Operation]: OPERATION_MAPPING,
   [ModelEnum.PurchaseOrderCategory]: PURCHASE_ORDER_CATEGORY_MAPPING,
-  [ModelEnum.purchaseOrderAttachment]: PURCHASE_ORDER_ATTACHMENT_MAPPING,
+  [ModelEnum.PurchaseOrderAttachment]: PURCHASE_ORDER_ATTACHMENT_MAPPING,
   [ModelEnum.Component]: COMPONENT_MAPPING,
   [ModelEnum.PaymentModality]: PAYMENT_MODALITY_MAPPING,
   [ModelEnum.Invoice]: INVOICE_MAPPING,

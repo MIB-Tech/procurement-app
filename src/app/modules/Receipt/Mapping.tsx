@@ -229,7 +229,6 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
           return receiptProduct.received || receiptProduct.components.length > 0;
         })
       }),
-      navigateTo: item => item['@id'],
       slotProps: {
         item: {
           sm: 6

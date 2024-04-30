@@ -54,7 +54,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
       buyer: (buyer as HydraItem | undefined)?.['@title'],
       reference: ref,
       taxType: taxIncluded ? 'TTC' : 'HT',
-      currency: unit,
+      currencyCode: unit,
       totalInclTaxNumber: totalInclTax,
       totalExclTax: getNumberUnit({value: totalExclTax, precision: 2, unit}),
       totalInclTax: getNumberUnit({value: totalInclTax, precision: 2, unit}),

@@ -252,7 +252,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       //exportable: true
     },
     attachments: {
-      type: ModelEnum.purchaseOrderAttachment,
+      type: ModelEnum.PurchaseOrderAttachment,
       multiple: true,
     },
     purchaseOrderProducts: {
