@@ -37,7 +37,10 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {
+        code: true,
+        name: true,
+      }
     },
     {
       type: ViewEnum.Create,
