@@ -318,7 +318,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalInclTax: {
           render: ({item}) => (
             <NumberUnit
-              value={item.totalExclTax}
+              value={item.totalInclTax}
               unit={item.currency?.code}
             />
           ),
