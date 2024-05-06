@@ -8,6 +8,7 @@ export enum RoleKeyEnum {
   Admin = 'ROLE_ADMIN',
   Buyer = 'ROLE_BUYER',
   Viewer = 'ROLE_VIEWER',
+  Referent = 'ROLE_REFERENT',
 
 }
 
