@@ -9,7 +9,8 @@ export enum RoleKeyEnum {
   Buyer = 'ROLE_BUYER',
   Viewer = 'ROLE_VIEWER',
   Referent = 'ROLE_REFERENT',
-
+  Treso = 'ROLE_TRESO',
+  Finances ='ROLE_FINANCES'
 }
 
 type Model = {
