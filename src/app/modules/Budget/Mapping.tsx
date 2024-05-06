@@ -1,6 +1,8 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {CreateViewType, ModelMapping, UpdateViewType, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
+import React from "react";
+import {NestedArrayField} from "../../../_custom/Column/Model/Nested/NestedArrayField";
 
 
 const mapping: ModelMapping<ModelEnum.Budget> = {
@@ -24,7 +26,6 @@ const mapping: ModelMapping<ModelEnum.Budget> = {
       productSectionBudgets: {
         type: ModelEnum.ProductSectionBudget,
         multiple: true,
-        nullable: false,
         embeddedForm: true,
       }
     },
@@ -43,7 +44,21 @@ const mapping: ModelMapping<ModelEnum.Budget> = {
           clinic: true,
           description: true,
           budgetExercise: true,
-          productSectionBudgets: true
+          productSectionBudgets: {
+            render: ({fieldProps}) => (
+              <NestedArrayField
+                {...fieldProps}
+                modelName={ModelEnum.ProductSectionBudget}
+                view={{
+                  type: ViewEnum.Create,
+                  fields: {
+                    amount: true,
+                    productSection: true,
+                  }
+                } as CreateViewType<ModelEnum.ProductSectionBudget>}
+              />
+            )
+          }
         }
       },
       {
@@ -52,7 +67,21 @@ const mapping: ModelMapping<ModelEnum.Budget> = {
           clinic: true,
           description: true,
           budgetExercise: true,
-          productSectionBudgets: true
+          productSectionBudgets: {
+            render: ({fieldProps}) => (
+              <NestedArrayField
+                {...fieldProps}
+                modelName={ModelEnum.ProductSectionBudget}
+                view={{
+                  type: ViewEnum.Update,
+                  fields: {
+                    amount: true,
+                    productSection: true,
+                  }
+                } as UpdateViewType<ModelEnum.ProductSectionBudget>}
+              />
+            )
+          }
         }
       },
       {

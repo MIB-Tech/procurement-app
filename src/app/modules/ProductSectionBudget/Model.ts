@@ -5,9 +5,8 @@ import {ProductSectionModel} from "../ProductSection";
 
 type Model = {
   amount: number
-  budget: BudgetModel
+  budget?: BudgetModel
   productSection: ProductSectionModel
-
 } & AbstractModel
 
 export default Model;
