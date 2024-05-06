@@ -33,27 +33,27 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
     title: 'DASHBOARD',
     icon: '/graphs/gra010.svg',
     granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
-    element: <DashboardWrapper />,
+    element: <DashboardWrapper/>,
   },
   {
     path: 'budget-monitoring',
     title: 'BUDGET_MONITORING',
     icon: '/graphs/gra004.svg',
     granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
-    element: <BudgetMonitoringPage />,
+    element: <BudgetMonitoringPage/>,
   },
   {
     path: 'extraction',
     title: 'EXTRACTION',
     icon: '/files/fil017.svg',
     granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Viewer],
-    element: <ExtractionPage />,
+    element: <ExtractionPage/>,
   },
   {
     path: 'receipt-compliance',
     title: 'RECEIPT_COMPLIANCE',
     icon: '/ecommerce/ecm010.svg',
-    granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin,RoleKeyEnum.Referent],
+    granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Referent],
     element: <ReceiptCompliancePage/>,
   },
 ]
@@ -81,9 +81,8 @@ export function PrivateRoutes() {
 
   return (
     <Routes>
-      <Route element={(<PageDataProvider><MasterLayout /></PageDataProvider>)}>
+      <Route element={(<PageDataProvider><MasterLayout/></PageDataProvider>)}>
         {CUSTOM_ROUTES.filter(route => isGranted(route.granted)).map(route => {
-
           return (
             <Route
               key={route.path}
@@ -92,7 +91,7 @@ export function PrivateRoutes() {
             />
           )
         })}
-
+        <Route path="*" element={<Navigate to="/"/>}/>
         {operations.filter(operation => Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
           const {resource, suffix, operationType} = operation
           const resourceName = resource.name
@@ -100,19 +99,19 @@ export function PrivateRoutes() {
           let element: ReactNode
           switch (operationType) {
             case ViewEnum.Listing:
-              element = <ListingView modelName={resourceName} />
+              element = <ListingView modelName={resourceName}/>
               break
             case ViewEnum.Create:
-              element = <CreateView modelName={resourceName} />
+              element = <CreateView modelName={resourceName}/>
               break
             case ViewEnum.Detail:
-              element = <DetailView modelName={resourceName} />
+              element = <DetailView modelName={resourceName}/>
               break
             case ViewEnum.Update:
-              element = <UpdateView modelName={resourceName} />
+              element = <UpdateView modelName={resourceName}/>
               break
             case ViewEnum.Delete:
-              element = <DeleteView modelName={resourceName} />
+              element = <DeleteView modelName={resourceName}/>
               break
           }
 
@@ -249,10 +248,10 @@ export function PrivateRoutes() {
         {/*  })*/}
         {/*})}*/}
       </Route>
-      {indexPath && <Route path="/" element={<Navigate to={indexPath} />} />}
-      <Route path="/auth/*" element={<Navigate to="/" />} />
+      {indexPath && <Route path="/" element={<Navigate to={indexPath}/>}/>}
+      <Route path="/auth/*" element={<Navigate to="/"/>}/>
       {/*{routes.length > 0 && <Route path='/auth' element={<Navigate to={`/error/${routes.length === 0 ? 403 : 404}`} />} /> }*/}
-      <Route path="*" element={<Navigate to={`/error/${operations.length === 0 ? 403 : 404}`} />} />
+      <Route path="*" element={<Navigate to={`/error/${operations.length === 0 ? 403 : 404}`}/>}/>
     </Routes>
   )
 
