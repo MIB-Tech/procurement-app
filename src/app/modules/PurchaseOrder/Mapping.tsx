@@ -318,7 +318,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalInclTax: {
           render: ({item}) => (
             <NumberUnit
-              value={item.totalExclTax}
+              value={item.totalInclTax}
               unit={item.currency?.code}
             />
           ),
@@ -368,7 +368,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalVatTax: {
           render: ({item}) => (
             <NumberUnit
-              value={item.totalExclTax}
+              value={item.totalVatTax}
               unit={item.currency?.code}
             />
           ),
@@ -376,7 +376,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalDiscount: {
           render: ({item}) => (
             <NumberUnit
-              value={item.totalExclTax}
+              value={item.totalDiscount}
               unit={item.currency?.code}
             />
           ),
@@ -384,7 +384,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         totalInclTax: {
           render: ({item}) => (
             <NumberUnit
-              value={item.totalExclTax}
+              value={item.totalInclTax}
               unit={item.currency?.code}
             />
           ),
