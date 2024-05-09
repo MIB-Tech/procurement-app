@@ -10,13 +10,11 @@ import {getRoutePrefix} from '../utils'
 import {ViewEnum} from '../types/ModelMapping'
 import {OperationModel} from '../../app/modules/Operation'
 
-
 export type OperationPermission = {
-  resourceName: ModelEnum,
-  operationType: ViewEnum,
+  resourceName: ModelEnum
+  operationType: ViewEnum
 }
 export type Permission = OperationPermission | RoleKeyEnum
-
 
 export const useAuth = () => {
   const navigate = useNavigate()
@@ -24,14 +22,17 @@ export const useAuth = () => {
     return auth
   }, shallowEqual) as Required<Pick<AuthState, 'user'>> & Pick<AuthState, 'clinic'>
   const {role} = user
-  const operations = (role?.operations || [])
+  const operations = role?.operations || []
 
   const isGranted = (permissions: Permission[]) => {
     let granted = false
-    permissions.forEach(permission => {
+    permissions.forEach((permission) => {
       if (typeof permission === 'object') {
-        const operation = operations.find(operation => {
-          return operation.resource.name === permission.resourceName && operation.operationType === permission.operationType
+        const operation = operations.find((operation) => {
+          return (
+            operation.resource.name === permission.resourceName &&
+            operation.operationType === permission.operationType
+          )
         })
 
         if (operation) {
@@ -47,11 +48,14 @@ export const useAuth = () => {
     return granted
   }
 
-  const getPath = ({resourceName, suffix, params}: Pick<OperationPermission, 'resourceName'> & {
+  const getPath = ({
+    resourceName,
+    suffix,
+    params,
+  }: Pick<OperationPermission, 'resourceName'> & {
     suffix: string
     params?: Record<'id', string | number>
   }) => {
-
     const path = getRoutePrefix(resourceName) + `/${suffix}`
 
     return params ? path.replace(':id', params.id.toString()) : path
@@ -67,23 +71,22 @@ export const useAuth = () => {
   }
 }
 
-
 export type GrantedProps = {
   params?: Partial<Record<keyof UserModel, string | number>>
   to?: string
   className?: string
-} & Pick<LinkProps, 'relative'>
-  & OperationPermission
-  & Pick<OperationModel, 'suffix'>
+} & Pick<LinkProps, 'relative'> &
+  OperationPermission &
+  Pick<OperationModel, 'suffix'>
 export const GrantedLink: FC<GrantedProps> = ({
-                                                to,
-                                                params = {},
-                                                resourceName,
-                                                operationType,
-                                                suffix,
-                                                children,
-                                                ...props
-                                              }) => {
+  to,
+  params = {},
+  resourceName,
+  operationType,
+  suffix,
+  children,
+  ...props
+}) => {
   const {isGranted, getPath} = useAuth()
   let path = isGranted([{resourceName, operationType}]) && (to || getPath({suffix, resourceName}))
   if (!path) {

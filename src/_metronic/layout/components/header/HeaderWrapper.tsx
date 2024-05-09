@@ -7,7 +7,7 @@ import {useLayout} from '../../core'
 import {Header} from './Header'
 import {DefaultTitle} from './page-title/DefaultTitle'
 import {Topbar} from './Topbar'
-import { Logo } from '../../../../_custom/components/Logo';
+import {Logo} from '../../../../_custom/components/Logo'
 
 export function HeaderWrapper() {
   const {config, classes, attributes} = useLayout()
@@ -41,7 +41,7 @@ export function HeaderWrapper() {
         {!aside.display && (
           <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0'>
             <Link to='/dashboard' className='d-lg-none'>
-              <Logo className='h-30px'/>
+              <Logo className='h-30px' />
             </Link>
           </div>
         )}
@@ -50,7 +50,7 @@ export function HeaderWrapper() {
         {aside.display && (
           <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0'>
             <Link to='/' className='d-lg-none'>
-              <Logo className='h-40px' theme='light' size='sm'/>
+              <Logo className='h-40px' theme='light' size='sm' />
             </Link>
           </div>
         )}
