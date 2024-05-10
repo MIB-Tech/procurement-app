@@ -46,9 +46,11 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
       referents,
     } = item
 
-    const unit =  'DH';
-    let unitDevise = currency?.code || 'DH';
-    if (unit === 'DH') {
+    const unit = 'DH';
+    let unitDevise = currency?.code;
+    if (unitDevise === 'EUR') {
+      unitDevise = 'EUR';
+    } else {
       unitDevise = 'DHS';
     }
     return {
@@ -87,7 +89,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
             ...purchaseOrderProduct,
             type: LineType.Product,
             designation: `${designation}${note ? `\n\n${note}` : ''}`,
-            netPrice: getNumberUnit({value: taxIncluded ? priceInclTax: priceExclTax, precision, unit: false}),
+            netPrice: getNumberUnit({value: taxIncluded ? priceInclTax : priceExclTax, precision, unit: false}),
             discountedUnitPrice: getNumberUnit({value: discountedUnitPrice, unit: false}),
             discount: getNumberUnit({
               value: isPercentCentDiscount ?
