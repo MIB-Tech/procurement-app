@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react'
 import {Navigate, Route, Routes} from 'react-router-dom'
-import {useAuth} from '../../_custom/hooks/UseAuth'
+import {GrantedLink, useAuth} from '../../_custom/hooks/UseAuth'
 import {DetailViewType, Model, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping'
 import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import {PageDataProvider} from '../../_metronic/layout/core'
@@ -71,14 +71,24 @@ export function PrivateRoutes() {
   // FIXME route render wrong route issue
   const isAdmin = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin, RoleKeyEnum.SuperAdmin])
 
-  const indexPath = isAdmin ?
-    'dashboard' :
-    defaultOperation && getPath({
-      resourceName: defaultOperation.resource.name,
-      suffix: defaultOperation.suffix,
-    })
-
-
+  const indexPath = (() => {
+    if (isAdmin) {
+      return 'dashboard';
+    } else if ( RoleKeyEnum.Referent) {
+      return '/receipt-compliance';
+    } else if (RoleKeyEnum.Finances) {
+      return '/dashboard';
+    } else if (RoleKeyEnum.Treso) {
+      return '/dashboard';}
+      else if (defaultOperation) {
+      return getPath({
+        resourceName: defaultOperation.resource.name,
+        suffix: defaultOperation.suffix,
+      });
+    } else {
+      return '/dashboard';
+    }
+  })();
   return (
     <Routes>
       <Route element={(<PageDataProvider><MasterLayout/></PageDataProvider>)}>
@@ -91,7 +101,7 @@ export function PrivateRoutes() {
             />
           )
         })}
-        <Route path="*" element={<Navigate to="/dashboard"/>}/>
+
         {operations.filter(operation => Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
           const {resource, suffix, operationType} = operation
           const resourceName = resource.name
