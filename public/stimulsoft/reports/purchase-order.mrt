@@ -1,11 +1,11 @@
 {
   "ReportVersion": "2024.1.4.0",
-  "ReportGuid": "a96c2bbdfb2f434ba23ce29f05134755",
+  "ReportGuid": "484ebee22f5549b3bb87cd3890044552",
   "ReportName": "Report",
   "ReportAlias": "Report",
   "ReportAuthor": "Mohamed Sarih",
   "ReportCreated": "/Date(1702313167000+0100)/",
-  "ReportChanged": "/Date(1714480396000+0100)/",
+  "ReportChanged": "/Date(1715342904491+0100)/",
   "EngineVersion": "EngineV2",
   "CalculationMode": "Interpretation",
   "Script": "using System;\r\nusing System.Drawing;\r\nusing System.Windows.Forms;\r\nusing System.Data;\r\nusing Stimulsoft.Controls;\r\nusing Stimulsoft.Base.Drawing;\r\nusing Stimulsoft.Report;\r\nusing Stimulsoft.Report.Dialogs;\r\nusing Stimulsoft.Report.Components;\r\n\r\nnamespace Reports\r\n{\r\n    public class Report : Stimulsoft.Report.StiReport\r\n    {\r\n        public Report()        {\r\n            this.InitializeComponent();\r\n        }\r\n\r\n        #region StiReport Designer generated code - do not modify\r\n\t\t#endregion StiReport Designer generated code - do not modify\r\n    }\r\n}\r\n",
@@ -32,135 +32,142 @@
         "Ident": "StiDataTableSource",
         "Name": "root",
         "Alias": "root",
-        "Key": "da7b44a24fc64bfba8e49fa2c0787a8f",
+        "Key": "ca1d1f4c870949f4800d95b65c2dfca8",
         "Columns": {
           "0": {
+            "Name": "stimulsoftCurrencyCode",
+            "Index": -1,
+            "NameInSource": "stimulsoftCurrencyCode",
+            "Alias": "stimulsoftCurrencyCode",
+            "Type": "System.String"
+          },
+          "1": {
             "Name": "currencyCode",
             "Index": -1,
             "NameInSource": "currencyCode",
             "Alias": "currencyCode",
             "Type": "System.String"
           },
-          "1": {
+          "2": {
             "Name": "taxType",
             "Index": -1,
             "NameInSource": "taxType",
             "Alias": "taxType",
             "Type": "System.String"
           },
-          "2": {
+          "3": {
             "Name": "comment",
             "Index": -1,
             "NameInSource": "comment",
             "Alias": "comment",
             "Type": "System.String"
           },
-          "3": {
+          "4": {
             "Name": "paymentModality",
             "Index": -1,
             "NameInSource": "paymentModality",
             "Alias": "paymentModality",
             "Type": "System.String"
           },
-          "4": {
+          "5": {
             "Name": "createdAt",
             "Index": -1,
             "NameInSource": "createdAt",
             "Alias": "createdAt",
             "Type": "System.String"
           },
-          "5": {
+          "6": {
             "Name": "orderNumber",
             "Index": -1,
             "NameInSource": "orderNumber",
             "Alias": "orderNumber",
             "Type": "System.String"
           },
-          "6": {
+          "7": {
             "Name": "reference",
             "Index": -1,
             "NameInSource": "reference",
             "Alias": "reference",
             "Type": "System.String"
           },
-          "7": {
+          "8": {
             "Name": "desiredDeliveryDate",
             "Index": -1,
             "NameInSource": "desiredDeliveryDate",
             "Alias": "desiredDeliveryDate",
             "Type": "System.String"
           },
-          "8": {
+          "9": {
             "Name": "clinic",
             "Index": -1,
             "NameInSource": "clinic",
             "Alias": "clinic",
             "Type": "System.String"
           },
-          "9": {
+          "10": {
             "Name": "buyer",
             "Index": -1,
             "NameInSource": "buyer",
             "Alias": "buyer",
             "Type": "System.String"
           },
-          "10": {
+          "11": {
             "Name": "referentFullNames",
             "Index": -1,
             "NameInSource": "referentFullNames",
             "Alias": "referentFullNames",
             "Type": "System.String"
           },
-          "11": {
+          "12": {
             "Name": "vendor",
             "Index": -1,
             "NameInSource": "vendor",
             "Alias": "vendor",
             "Type": "System.String"
           },
-          "12": {
+          "13": {
             "Name": "totalExclTax",
             "Index": -1,
             "NameInSource": "totalExclTax",
             "Alias": "totalExclTax",
             "Type": "System.String"
           },
-          "13": {
+          "14": {
             "Name": "totalVatTax",
             "Index": -1,
             "NameInSource": "totalVatTax",
             "Alias": "totalVatTax",
             "Type": "System.String"
           },
-          "14": {
+          "15": {
             "Name": "totalDiscount",
             "Index": -1,
             "NameInSource": "totalDiscount",
             "Alias": "totalDiscount",
             "Type": "System.String"
           },
-          "15": {
+          "16": {
             "Name": "totalInclTax",
             "Index": -1,
             "NameInSource": "totalInclTax",
             "Alias": "totalInclTax",
             "Type": "System.String"
           },
-          "16": {
+          "17": {
             "Name": "totalInclTaxNumber",
             "Index": -1,
             "NameInSource": "totalInclTaxNumber",
             "Alias": "totalInclTaxNumber",
             "Type": "System.Decimal"
           },
-          "17": {
+          "18": {
             "Name": "lines",
             "Index": -1,
             "NameInSource": "lines",
             "Alias": "lines",
             "Type": "System.String"
           },
-          "18": {
+          "19": {
             "Name": "relationId",
             "Index": -1,
             "NameInSource": "relationId",
@@ -174,7 +181,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_clinic",
         "Alias": "root_clinic",
-        "Key": "38a2dd2edad945049d2d55c0da2c17b4",
+        "Key": "a5917a1492dc423cb79cf2969ee1d06c",
         "Columns": {
           "0": {
             "Name": "name",
@@ -204,7 +211,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines",
         "Alias": "root_lines",
-        "Key": "8ca4daf1f0ab434e898dd85010a35afc",
+        "Key": "7f66941e334b435e967e4bd1282d771b",
         "Columns": {
           "0": {
             "Name": "type",
@@ -276,7 +283,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_lines_product",
         "Alias": "root_lines_product",
-        "Key": "5962c431927d485c882480393a02c2f0",
+        "Key": "31ff1225a993497e945f24bd25f1a704",
         "Columns": {
           "0": {
             "Name": "code",
@@ -299,7 +306,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_paymentModality",
         "Alias": "root_paymentModality",
-        "Key": "cc21ce97013f42e4b5d46623e4f13904",
+        "Key": "6904f34e874a4ea1bf36bac538268a29",
         "Columns": {
           "0": {
             "Name": "name",
@@ -322,7 +329,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor",
         "Alias": "root_vendor",
-        "Key": "b9c8b2085ed247b78c9b22c3dfda97f2",
+        "Key": "5f4bf35c5e5348be97ecda3528e5389e",
         "Columns": {
           "0": {
             "Name": "name",
@@ -366,7 +373,7 @@
         "Ident": "StiDataTableSource",
         "Name": "root_vendor_defaultAddress",
         "Alias": "root_vendor_defaultAddress",
-        "Key": "08975b043dce4666a600878ca86f3449",
+        "Key": "71b97a456e9b479c99e35de11ff7e146",
         "Columns": {
           "0": {
             "Name": "postalCode",
@@ -2038,7 +2045,7 @@
                 "Ident": "StiInteraction"
               },
               "Text": {
-                "Value": "Le présent bon de commande est arrêté à la somme de {ToCurrencyWordsFr(root.totalInclTaxNumber,root.currencyCode,2)}.\r\n\r\nToute livraison de Produits devra faire l’objet d’un bon de livraison en trois exemplaires signés et cachetés :\r\n \r\n1 copie originale pour le bureau d’ordre du site\r\n1 copie originale pour la comptabilité Akdital\r\n1 copie originale pour le fournisseur"
+                "Value": "Le présent bon de commande est arrêté à la somme de {ToCurrencyWordsFr(root.totalInclTaxNumber,root.stimulsoftCurrencyCode,2)}.\r\n\r\nToute livraison de Produits devra faire l’objet d’un bon de livraison en trois exemplaires signés et cachetés :\r\n \r\n1 copie originale pour le bureau d’ordre du site\r\n1 copie originale pour la comptabilité Akdital\r\n1 copie originale pour le fournisseur"
               },
               "Font": ";9;Bold;",
               "Border": ";;;;;;;solid:Black",
