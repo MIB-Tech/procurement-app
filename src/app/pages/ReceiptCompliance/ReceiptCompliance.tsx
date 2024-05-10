@@ -6,7 +6,11 @@ import {ModelEnum} from '../../modules/types';
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField';
 import {Button} from '../../../_custom/components/Button';
 import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery';
-import {CompoundFilterOperator, PropertyFilterOperator} from "../../../_custom/ListingView/Filter/Filter.types";
+import {
+  CompoundFilter,
+  CompoundFilterOperator,
+  PropertyFilterOperator
+} from "../../../_custom/ListingView/Filter/Filter.types";
 import {HydraItem} from "../../../_custom/types/hydra.types";
 import {InputField} from "../../../_custom/Column/String/InputField";
 import {ReceiptProductModel} from "../../modules/ReceiptProduct";
@@ -19,6 +23,7 @@ import {StringField} from "../../../_custom/Column/String/StringField";
 import {ColumnTypeEnum} from "../../../_custom/types/types";
 import {StringFormat} from "../../../_custom/Column/String/StringColumn";
 import clsx from "clsx";
+import {ValidationStatusEnum} from "../../modules/PurchaseOrder/Model";
 
 const validationSchema = Yup.object().shape({
   receiptProducts: Yup.array().of(
@@ -31,6 +36,7 @@ const validationSchema = Yup.object().shape({
     })
   ),
 });
+type VendorValue = { vendor: HydraItem | null, }
 type SearchValue = { purchaseOrder: HydraItem | null, }
 type ReceiptProductsValue = { receiptProducts: Array<ReceiptProductModel>, }
 export const ReceiptCompliancePage: FC = () => {
@@ -47,6 +53,32 @@ export const ReceiptCompliancePage: FC = () => {
     } as SearchValue,
     onSubmit: (values) => {
     },
+  });
+  const vendorformik = useFormik({
+    initialValues: {
+      vendor: null,
+    } as VendorValue,
+    onSubmit: (values) => {
+    },
+  });
+  const vendorsId = vendorformik.values.vendor?.id
+  const vendorOrdersQuery = useCollectionQuery({
+    modelName: ModelEnum.PurchaseOrder,
+    params: {
+      filter: {
+        operator: CompoundFilterOperator.And,
+        filters: [
+          {
+            property: 'vendor',
+            operator: PropertyFilterOperator.Equal,
+            value: vendorsId
+          },
+        ]
+      },
+    },
+    options: {
+      enabled: false
+    }
   });
   const purchaseOrdersId = searchformik.values.purchaseOrder?.id
   const purchaseOrdersQuery = useCollectionQuery({
@@ -92,33 +124,71 @@ export const ReceiptCompliancePage: FC = () => {
 
   return (
     <>
-      <FormikProvider value={searchformik}>
-        <div className="card card-bordered mb-10">
-          <div className="card-body">
-            <div className="fw-bold"><Trans id="PURCHASE_ORDER"/></div>
-            <div className="d-flex">
-              <div className="flex-grow-1">
-                <ModelAutocompleteField
-                  modelName={ModelEnum.PurchaseOrder}
-                  name="purchaseOrder"
-                  size="sm"
-                />
-              </div>
-              <div className="ms-2">
-                <Button
-                  variant="primary"
-                  size="sm"
-                  loading={purchaseOrdersQuery.isLoading}
-                  disabled={!purchaseOrdersId}
-                  onClick={() => purchaseOrdersQuery.refetch()}
-                >
-                  <Trans id="SEARCH"/>
-                </Button>
-              </div>
+      <div className="card card-bordered mb-10">
+        <div className="card-body">
+          <div className="row">
+            <div className="col-md-6">
+              <FormikProvider value={vendorformik}>
+                <div className="fw-bold"><Trans id="VENDOR"/></div>
+                <div className="d-flex">
+                  <div className="flex-grow-1">
+                    <ModelAutocompleteField
+                      modelName={ModelEnum.Vendor}
+                      name="vendor"
+                      size="sm"
+                    />
+                  </div>
+                </div>
+              </FormikProvider>
+            </div>
+            <div className="col-md-6">
+              <FormikProvider value={searchformik}>
+                <div className="fw-bold"><Trans id="PURCHASE_ORDER"/></div>
+                <div className="d-flex">
+                  <div className="flex-grow-1">
+                    <ModelAutocompleteField
+                      modelName={ModelEnum.PurchaseOrder}
+                      name="purchaseOrder"
+                      size="sm"
+                      getParams={filter => {
+                        const newFilter: CompoundFilter<ModelEnum.PurchaseOrder> = {
+                          operator: CompoundFilterOperator.And,
+                          filters: [
+                            filter,
+                            {
+                              property: 'vendor',
+                              operator: PropertyFilterOperator.Equal,
+                              value: vendorformik.values.vendor?.id
+                            },
+                            {
+                              property: 'validationStatus',
+                              operator: PropertyFilterOperator.Equal,
+                              value: ValidationStatusEnum.Validated
+                            },
+                          ]
+                        };
+
+                        return newFilter;
+                      }}
+                    />
+                  </div>
+                  <div className="ms-2">
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      loading={purchaseOrdersQuery.isLoading}
+                      disabled={!purchaseOrdersId}
+                      onClick={() => purchaseOrdersQuery.refetch()}
+                    >
+                      <Trans id="SEARCH"/>
+                    </Button>
+                  </div>
+                </div>
+              </FormikProvider>
             </div>
           </div>
         </div>
-      </FormikProvider>
+      </div>
       <FormikProvider value={submitformik}>
         <div className='d-flex justify-content-end'>
           <Button
@@ -132,8 +202,8 @@ export const ReceiptCompliancePage: FC = () => {
             <Trans id="SAVE"/>
           </Button>
         </div>
-        <div className="card card-bordered">
-          <div className='card-body py-1 px-3'>
+        <div className="">
+          <div className=''>
             <div className="fw-bold"/>
             <div className="d-flex">
               <div className="flex-grow-1">

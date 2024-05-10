@@ -91,7 +91,7 @@ export function PrivateRoutes() {
             />
           )
         })}
-        <Route path="*" element={<Navigate to="/"/>}/>
+        <Route path="*" element={<Navigate to="/dashboard"/>}/>
         {operations.filter(operation => Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
           const {resource, suffix, operationType} = operation
           const resourceName = resource.name
