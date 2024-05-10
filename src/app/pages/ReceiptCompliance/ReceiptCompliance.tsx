@@ -24,6 +24,7 @@ import {ColumnTypeEnum} from "../../../_custom/types/types";
 import {StringFormat} from "../../../_custom/Column/String/StringColumn";
 import clsx from "clsx";
 import {ValidationStatusEnum} from "../../modules/PurchaseOrder/Model";
+import {useAuth} from "../../../_custom/hooks/UseAuth";
 
 const validationSchema = Yup.object().shape({
   receiptProducts: Yup.array().of(
@@ -42,6 +43,7 @@ type ReceiptProductsValue = { receiptProducts: Array<ReceiptProductModel>, }
 export const ReceiptCompliancePage: FC = () => {
   const {setPageTitle} = usePageData();
   const {trans} = useTrans();
+  const {user} = useAuth();
   const mutation = useMutation<AxiosResponse<any>, AxiosError<string>, {
     receiptProducts: Array<Pick<ReceiptProductModel, 'id' | 'complianceStatus' | 'complianceReserve'>>
   }>(
@@ -150,6 +152,7 @@ export const ReceiptCompliancePage: FC = () => {
                       modelName={ModelEnum.PurchaseOrder}
                       name="purchaseOrder"
                       size="sm"
+                      disabled={!vendorformik.values.vendor}
                       getParams={filter => {
                         const newFilter: CompoundFilter<ModelEnum.PurchaseOrder> = {
                           operator: CompoundFilterOperator.And,
@@ -164,6 +167,11 @@ export const ReceiptCompliancePage: FC = () => {
                               property: 'validationStatus',
                               operator: PropertyFilterOperator.Equal,
                               value: ValidationStatusEnum.Validated
+                            },
+                            {
+                              property: 'referents.id',
+                              operator: PropertyFilterOperator.Equal,
+                              value: user.id
                             },
                           ]
                         };
@@ -189,70 +197,73 @@ export const ReceiptCompliancePage: FC = () => {
           </div>
         </div>
       </div>
-      <FormikProvider value={submitformik}>
-        <div className='d-flex justify-content-end'>
-          <Button
-            variant="primary"
-            size="sm"
-            className='mb-3'
-            loading={mutation.isLoading}
-            disabled={submitformik.values.receiptProducts.length === 0}
-            onClick={() => submitformik.handleSubmit()}
-          >
-            <Trans id="SAVE"/>
-          </Button>
-        </div>
-        <div className="">
-          <div className=''>
-            <div className="fw-bold"/>
-            <div className="d-flex">
-              <div className="flex-grow-1">
-                <div className="table">
-                  <table className="table table-sm  gy-1 align-middle mb-0">
-                    <thead className="fs-7 text-gray-400 text-uppercase border-bottom text-nowrap">
-                    <tr>
-                      <th><Trans id='PRODUCT'/></th>
-                      <th><Trans id='RECEIVED_QUANTITY'/></th>
-                      <th><Trans id='COMPLIANCE'/></th>
-                      <th><Trans id='COMPLIANCE_RESERVE'/></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {submitformik.values.receiptProducts.map((item, index, receiptProducts) => (
-                      <tr key={item.id} className={clsx(index < receiptProducts.length - 1 && 'border-bottom')}>
-                        <td>
-                          <ModelCell item={item as HydraItem}/>
-                        </td>
-                        <td>{item.quantity}</td>
-                        <th>
-                          <StringField
-                            column={{
-                              type: ColumnTypeEnum.String,
-                              format: StringFormat.Select,
-                              options: COMPLIANCE_STATUS_OPTIONS,
-                            }}
-                            name={`receiptProducts[${index}].complianceStatus`}
-                            className='w-50'
-                          />
-                        </th>
-                        <td>
-                          {item.complianceStatus === ComplianceStatus.ConformWithReserve &&
-                              <InputField
-                                  name={`receiptProducts[${index}].complianceReserve`}
-                                  type="text"
-                              />
-                          }
-                        </td>
-                      </tr>
-                    ))}
-                    </tbody>
-                  </table>
-                </div>
+      {vendorformik.values.vendor &&
+          <FormikProvider value={submitformik}>
+              <div className='d-flex justify-content-end'>
+                  <Button
+                      variant="primary"
+                      size="sm"
+                      className='mb-3'
+                      loading={mutation.isLoading}
+                      disabled={submitformik.values.receiptProducts.length === 0}
+                      onClick={() => submitformik.handleSubmit()}
+                  >
+                      <Trans id="SAVE"/>
+                  </Button>
               </div>
-            </div>
-          </div>
-        </div>
-      </FormikProvider>
+              <div className="">
+                  <div className=''>
+                      <div className="fw-bold"/>
+                      <div className="d-flex">
+                          <div className="flex-grow-1">
+                              <div className="table">
+                                  <table className="table table-sm  gy-1 align-middle mb-0">
+                                      <thead className="fs-7 text-gray-400 text-uppercase border-bottom text-nowrap">
+                                      <tr>
+                                          <th><Trans id='PRODUCT'/></th>
+                                          <th><Trans id='RECEIVED_QUANTITY'/></th>
+                                          <th><Trans id='COMPLIANCE'/></th>
+                                          <th><Trans id='COMPLIANCE_RESERVE'/></th>
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                      {submitformik.values.receiptProducts.map((item, index, receiptProducts) => (
+                                        <tr key={item.id}
+                                            className={clsx(index < receiptProducts.length - 1 && 'border-bottom')}>
+                                          <td>
+                                            <ModelCell item={item as HydraItem}/>
+                                          </td>
+                                          <td>{item.quantity}</td>
+                                          <th>
+                                            <StringField
+                                              column={{
+                                                type: ColumnTypeEnum.String,
+                                                format: StringFormat.Select,
+                                                options: COMPLIANCE_STATUS_OPTIONS,
+                                              }}
+                                              name={`receiptProducts[${index}].complianceStatus`}
+                                              className='w-50'
+                                            />
+                                          </th>
+                                          <td>
+                                            {item.complianceStatus === ComplianceStatus.ConformWithReserve &&
+                                                <InputField
+                                                    name={`receiptProducts[${index}].complianceReserve`}
+                                                    type="text"
+                                                />
+                                            }
+                                          </td>
+                                        </tr>
+                                      ))}
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </FormikProvider>
+      }
     </>
   )
 };
