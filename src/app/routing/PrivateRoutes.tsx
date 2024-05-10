@@ -70,17 +70,24 @@ export function PrivateRoutes() {
     .find(operation => operation.isMenuItem && operation.operationType === ViewEnum.Listing)
   // FIXME route render wrong route issue
   const isAdmin = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin, RoleKeyEnum.SuperAdmin])
+  const isReferent = isGranted([RoleKeyEnum.Referent])
+  const isFinance = isGranted([RoleKeyEnum.Finances])
+  const isTresor = isGranted([RoleKeyEnum.Treso])
 
   const indexPath = (() => {
     if (isAdmin) {
       return 'dashboard';
-    } else if ( RoleKeyEnum.Referent) {
-      return '/receipt-compliance';
-    } else if (RoleKeyEnum.Finances) {
-      return '/dashboard';
-    } else if (RoleKeyEnum.Treso) {
-      return '/dashboard';}
-      else if (defaultOperation) {
+    }
+    else if (isReferent) {
+      return 'receipt-compliance';
+    }
+    else if (isFinance) {
+      return 'budget-monitoring';
+    }
+    else if (isTresor) {
+      return 'dashboard';
+    }
+    else if (defaultOperation) {
       return getPath({
         resourceName: defaultOperation.resource.name,
         suffix: defaultOperation.suffix,
@@ -89,6 +96,7 @@ export function PrivateRoutes() {
       return '/dashboard';
     }
   })();
+
   return (
     <Routes>
       <Route element={(<PageDataProvider><MasterLayout/></PageDataProvider>)}>
