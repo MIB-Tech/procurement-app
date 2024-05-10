@@ -14,16 +14,14 @@ import {useToastr} from '../Toastr/UseToastr'
 import {ModelEnum} from '../../app/modules/types'
 import {navigateOnMutate} from '../../app/routing/PrivateRoutes'
 
-
-export const useCustomMutation = <M extends ModelEnum>(
-  {
-    modelName,
-    mode = MutationMode.Post,
-    navigateTo = navigateOnMutate
-  }: {
-    modelName: M,
-    mode?: MutationMode
-  } & Pick<FormViewType<M>, 'navigateTo'>) => {
+export const useCustomMutation = <M extends ModelEnum>({
+  modelName,
+  mode = MutationMode.Post,
+  navigateTo = navigateOnMutate,
+}: {
+  modelName: M
+  mode?: MutationMode
+} & Pick<FormViewType<M>, 'navigateTo'>) => {
   const {createMutationError, error, createMutationSuccess, updateMutationSuccess} = useToastr()
   const {trans} = useTrans()
   const navigate = useNavigate()
@@ -32,11 +30,12 @@ export const useCustomMutation = <M extends ModelEnum>(
   const isCreate = mode === MutationMode.Post
 
   const mutation = useMutation<SuccessResponse<M>, ErrorResponse<M>, Input<M>>(
-    data => axios({
-      method: mode,
-      url: isCreate ? getRoutePrefix(modelName) : uri,
-      data,
-    }),
+    (data) =>
+      axios({
+        method: mode,
+        url: isCreate ? getRoutePrefix(modelName) : uri,
+        data,
+      }),
     {
       onSuccess: async ({data}) => {
         navigate(navigateTo(data))
@@ -44,19 +43,22 @@ export const useCustomMutation = <M extends ModelEnum>(
         switch (mode) {
           case MutationMode.Post:
             createMutationSuccess()
-            break;
+            break
           case MutationMode.Put:
             updateMutationSuccess()
-            break;
+            break
         }
       },
       onError: ({response}) => {
         switch (response?.status) {
           case 422:
-            const errors = response?.data.violations.reduce((errors, {propertyPath, message}) => ({
-              ...errors,
-              [propertyPath]: message,
-            }), {})
+            const errors = response?.data.violations.reduce(
+              (errors, {propertyPath, message}) => ({
+                ...errors,
+                [propertyPath]: message,
+              }),
+              {}
+            )
             setValidationErrors(errors)
             error({title: trans({id: 'EXCEPTION.HTTP_UNPROCESSABLE_ENTITY'})})
             break
@@ -64,9 +66,8 @@ export const useCustomMutation = <M extends ModelEnum>(
             createMutationError()
         }
       },
-    },
+    }
   )
-
 
   return {...mutation, validationErrors}
 }

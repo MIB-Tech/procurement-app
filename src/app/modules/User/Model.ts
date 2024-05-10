@@ -11,6 +11,7 @@ type Model = {
   lastName: string
   email?: string
   password: string
+  currentPassword?: string
   plainPassword: string
   passwordConfirm: string
   restrictedByCategories: boolean

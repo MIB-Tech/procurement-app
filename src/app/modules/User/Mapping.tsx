@@ -65,6 +65,12 @@ const mapping: ModelMapping<ModelEnum.User> = {
       meter: true,
       title: 'PASSWORD',
     },
+    currentPassword: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Password,
+      meter: true,
+      title: 'PASSWORD',
+    },
     passwordConfirm: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Password,

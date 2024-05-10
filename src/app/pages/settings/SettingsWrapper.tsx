@@ -3,13 +3,15 @@ import {usePageData} from '../../../_metronic/layout/core'
 import {Trans, useTrans} from '../../../_custom/components/Trans'
 import {Form, Formik} from 'formik'
 import {useAuth} from '../../../_custom/hooks/UseAuth'
-import axios from 'axios'
+import axios, {AxiosError, AxiosResponse} from 'axios'
 import {GoBackButton} from '../../../_custom/components/Button/GoBackButton'
 import {Button} from '../../../_custom/components/Button'
 import {PasswordField} from '../../../_custom/Column/String/PasswordField'
 import * as Yup from 'yup'
 import {useToastr} from '../../../_custom/Toastr/UseToastr'
 import {useNavigate} from 'react-router-dom'
+import {useMutation} from 'react-query'
+import {UserModel} from '../../modules/User'
 
 const initialValues = {
   currentPassword: '',
@@ -28,14 +30,26 @@ const validationSchema = Yup.object({
 
 export const SettingsWrapper: FC = () => {
   const {user} = useAuth()
-  const [isLoading, setIsLoading] = useState(false)
-  // const [errors, setErrors] = useState<{message: string}[]>([])
-  // console.log(user)
+
   const toastr = useToastr()
   const navigate = useNavigate()
 
   const {setPageTitle} = usePageData()
   const {trans} = useTrans()
+
+  const mutation = useMutation<AxiosResponse<any>, AxiosError<string>, UserModel>((data) =>
+    axios.put(`/users/${user.uid}/password`, data)
+  )
+
+  // handle form success
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      toastr.updateMutationSuccess()
+      navigate('/')
+    }
+  }, [mutation.isSuccess, navigate, toastr])
+
+  // handle form error and validation errors
 
   useEffect(() => {
     setPageTitle(trans({id: 'SETTINGS'}))
@@ -43,26 +57,10 @@ export const SettingsWrapper: FC = () => {
   return (
     <>
       <Formik
-        initialValues={initialValues}
+        initialValues={initialValues as UserModel}
         validationSchema={validationSchema}
         onSubmit={async (values) => {
-          setIsLoading(true)
-          axios
-            .put(`/users/${user.uid}/password`, values)
-            .then((response) => {
-              setIsLoading(false)
-              if (response.status === 200) {
-                toastr.success({title: trans({id: 'PASSWORD_CHANGED_SUCCESSFULLY'})})
-                navigate('/')
-              }
-            })
-            .catch((error) => {
-              // console.log(error.response.data.violations)
-              // setErrors(error.response.data.violations)
-              toastr.error({title: trans({id: 'VALIDATION.STRING.PASSWORD_INCORRECT'})})
-
-              setIsLoading(false)
-            })
+          mutation.mutate(values)
         }}
       >
         {({touched}) => (
@@ -76,12 +74,10 @@ export const SettingsWrapper: FC = () => {
                   variant='primary'
                   size='sm'
                   type='submit'
-                  loading={isLoading}
-                  loadingLabel={isLoading ? 'LOADING' : undefined}
+                  loading={mutation.isLoading}
+                  loadingLabel={mutation.isLoading ? 'LOADING' : undefined}
                   // disabled={submittable && !submittable({formik, isGranted})}
                 >
-                  {isLoading && <span className='spinner-border spinner-border-sm me-1'></span>}
-
                   <Trans id='SAVE' />
                 </Button>
               </div>
