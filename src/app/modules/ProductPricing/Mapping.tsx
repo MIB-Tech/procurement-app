@@ -1,11 +1,8 @@
-import {CreateViewType, ListingViewType, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
+import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
 import {ColumnTypeEnum} from '../../../_custom/types/types';
 import {ModelEnum} from '../types';
 import {DateFormatEnum, StringFormat} from '../../../_custom/Column/String/StringColumn';
 import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
-import {NestedArrayField} from "../../../_custom/Column/Model/Nested/NestedArrayField";
-import React from "react";
-import {ProductField} from "../PurchaseOrderProduct/ProductField";
 
 
 const mapping: ModelMapping<ModelEnum.ProductPricing> = {
@@ -73,7 +70,11 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
         bidPriceInclTax: true,
         applicatedAt: true,
         discountValue: true,
-        product: {render:props => props.item.product.designation}
+        product: {
+          render: props => {
+            return props.item.product.designation;
+          }
+        }
       }
     },
     {
