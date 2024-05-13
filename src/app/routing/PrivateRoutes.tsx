@@ -1,6 +1,6 @@
 
 import React, {ReactNode} from 'react'
-import {Navigate, Route, Routes} from 'react-router-dom'
+import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
 import {GrantedLink, useAuth} from '../../_custom/hooks/UseAuth'
 import {DetailViewType, Model, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping'
 import {MasterLayout} from '../../_metronic/layout/MasterLayout'
@@ -128,19 +128,19 @@ export function PrivateRoutes() {
   const isFinance = isGranted([RoleKeyEnum.Finances])
   const isTresor = isGranted([RoleKeyEnum.Treso])
 
-  const indexPath = isAdmin
+/*  const indexPath = isAdmin
     ? 'dashboard'
     : defaultOperation &&
       getPath({
         resourceName: defaultOperation.resource.name,
         suffix: defaultOperation.suffix,
-      })
-  
+      })*/
+
   const indexPath = (() => {
     if (isAdmin) {
       return 'dashboard';
     }
-    else if (isReferent) {
+     if (isReferent) {
       return 'receipt-compliance';
     }
     else if (isFinance) {
