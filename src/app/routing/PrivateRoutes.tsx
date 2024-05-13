@@ -1,5 +1,5 @@
-import React, {ReactNode} from 'react'
-import {Navigate, Route, Routes} from 'react-router-dom'
+import {ReactNode} from 'react'
+import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
 import {useAuth} from '../../_custom/hooks/UseAuth'
 import {DetailViewType, Model, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping'
 import {MasterLayout} from '../../_metronic/layout/MasterLayout'
@@ -56,6 +56,8 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
       RoleKeyEnum.Viewer,
       RoleKeyEnum.Treso,
       RoleKeyEnum.Finances,
+      RoleKeyEnum.Referent,
+      RoleKeyEnum.Buyer,
     ],
     element: <SettingsWrapper />,
   },
@@ -101,6 +103,19 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
 export const navigateOnMutate = <M extends ModelEnum>(item: HydraItem<M>) => item['@id'] + '/update'
 export const RELATED_MODELS = [ModelEnum.User, ModelEnum.PurchaseOrder]
 
+function PasswordCheck(Component = Routes) {
+  return function WrappedComponent(props: any) {
+    const {user} = useAuth()
+    const location = useLocation()
+
+    if (user.passwordChangedAt === null && location.pathname !== '/settings') {
+      return <Navigate to='/settings' />
+    }
+
+    return <Component {...props} />
+  }
+}
+
 export function PrivateRoutes() {
   const {operations, getPath, isGranted} = useAuth()
   const defaultOperation = operations
@@ -117,8 +132,12 @@ export function PrivateRoutes() {
         suffix: defaultOperation.suffix,
       })
 
+  const RoutesWithPasswordCheck = PasswordCheck(Routes)
+
+  // console.log('user', user.passwordChangedAt)
+
   return (
-    <Routes>
+    <RoutesWithPasswordCheck>
       <Route
         element={
           <PageDataProvider>
@@ -287,10 +306,11 @@ export function PrivateRoutes() {
         {/*})}*/}
       </Route>
       {indexPath && <Route path='/' element={<Navigate to={indexPath} />} />}
+      {/* <Route path='/change-password' element={<ChangePassword />} /> */}
       <Route path='/auth/*' element={<Navigate to='/' />} />
       {/*{routes.length > 0 && <Route path='/auth' element={<Navigate to={`/error/${routes.length === 0 ? 403 : 404}`} />} /> }*/}
       <Route path='*' element={<Navigate to={`/error/${operations.length === 0 ? 403 : 404}`} />} />
-    </Routes>
+    </RoutesWithPasswordCheck>
   )
 
   // return (
