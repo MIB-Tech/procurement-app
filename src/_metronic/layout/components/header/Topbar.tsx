@@ -60,9 +60,10 @@ const Topbar: FC = () => {
           <Button
             flush
             // size='sm'
-            className={clsx()
-            // 'w-100px text-truncate fw-boldest text-hover-primary'
-            // activelocation && 'text-primary'
+            className={
+              clsx()
+              // 'w-100px text-truncate fw-boldest text-hover-primary'
+              // activelocation && 'text-primary'
             }
             //Pour le cas de un achteur peut etre lié a plusieurs cliniques !!!!!!!!!
             //   if (user.locations && user.locations.length > 0) {
