@@ -123,6 +123,41 @@ export function PrivateRoutes() {
     .find((operation) => operation.isMenuItem && operation.operationType === ViewEnum.Listing)
   // FIXME route render wrong route issue
   const isAdmin = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin, RoleKeyEnum.SuperAdmin])
+  const isReferent = isGranted([RoleKeyEnum.Referent])
+  const isFinance = isGranted([RoleKeyEnum.Finances])
+  const isTresor = isGranted([RoleKeyEnum.Treso])
+
+  /*  const indexPath = isAdmin
+      ? 'dashboard'
+      : defaultOperation &&
+        getPath({
+          resourceName: defaultOperation.resource.name,
+          suffix: defaultOperation.suffix,
+        })*/
+
+  const indexPath = (() => {
+    if (isAdmin) {
+      return 'dashboard';
+    }
+    if (isReferent) {
+      return 'receipt-compliance';
+    }
+    else if (isFinance) {
+      return 'budget-monitoring';
+    }
+    else if (isTresor) {
+      return 'dashboard';
+    }
+    else if (defaultOperation) {
+      return getPath({
+        resourceName: defaultOperation.resource.name,
+        suffix: defaultOperation.suffix,
+      });
+    } else {
+      return '/dashboard';
+    }
+  })();
+/*  const isAdmin = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin, RoleKeyEnum.SuperAdmin])
 
   const indexPath = isAdmin
     ? 'dashboard'
@@ -130,7 +165,7 @@ export function PrivateRoutes() {
       getPath({
         resourceName: defaultOperation.resource.name,
         suffix: defaultOperation.suffix,
-      })
+      })*/
 
   // const indexPath = (() => {
   //   if (isAdmin) {
