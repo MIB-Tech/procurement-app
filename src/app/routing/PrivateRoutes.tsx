@@ -1,3 +1,4 @@
+
 import React, {ReactNode} from 'react'
 import {Navigate, Route, Routes} from 'react-router-dom'
 import {GrantedLink, useAuth} from '../../_custom/hooks/UseAuth'
@@ -56,6 +57,8 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
       RoleKeyEnum.Viewer,
       RoleKeyEnum.Treso,
       RoleKeyEnum.Finances,
+      RoleKeyEnum.Referent,
+      RoleKeyEnum.Buyer,
     ],
     element: <SettingsWrapper />,
   },
@@ -101,6 +104,19 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
 export const navigateOnMutate = <M extends ModelEnum>(item: HydraItem<M>) => item['@id'] + '/update'
 export const RELATED_MODELS = [ModelEnum.User, ModelEnum.PurchaseOrder]
 
+function PasswordCheck(Component = Routes) {
+  return function WrappedComponent(props: any) {
+    const {user} = useAuth()
+    const location = useLocation()
+
+    if (user.passwordChangedAt === null && location.pathname !== '/settings') {
+      return <Navigate to='/settings' />
+    }
+
+    return <Component {...props} />
+  }
+}
+
 export function PrivateRoutes() {
   const {operations, getPath, isGranted} = useAuth()
   const defaultOperation = operations
@@ -112,7 +128,6 @@ export function PrivateRoutes() {
   const isFinance = isGranted([RoleKeyEnum.Finances])
   const isTresor = isGranted([RoleKeyEnum.Treso])
 
-<<<<<<< password-change
   const indexPath = isAdmin
     ? 'dashboard'
     : defaultOperation &&
@@ -120,7 +135,7 @@ export function PrivateRoutes() {
         resourceName: defaultOperation.resource.name,
         suffix: defaultOperation.suffix,
       })
-=======
+  
   const indexPath = (() => {
     if (isAdmin) {
       return 'dashboard';
@@ -143,10 +158,13 @@ export function PrivateRoutes() {
       return '/dashboard';
     }
   })();
->>>>>>> dev
+
+  const RoutesWithPasswordCheck = PasswordCheck(Routes)
+
+  // console.log('user', user.passwordChangedAt)
 
   return (
-    <Routes>
+    <RoutesWithPasswordCheck>
       <Route
         element={
           <PageDataProvider>
@@ -157,7 +175,7 @@ export function PrivateRoutes() {
         {CUSTOM_ROUTES.filter((route) => isGranted(route.granted)).map((route) => {
           return <Route key={route.path} path={route.path} element={route.element} />
         })}
-<<<<<<< password-change
+
         <Route path='*' element={<Navigate to='/' />} />
         {operations
           .filter((operation) => Object.values(ModelEnum).includes(operation.resource.name))
@@ -183,31 +201,7 @@ export function PrivateRoutes() {
                 element = <DeleteView modelName={resourceName} />
                 break
             }
-=======
 
-        {operations.filter(operation => Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
-          const {resource, suffix, operationType} = operation
-          const resourceName = resource.name
-          const path = getRoutePrefix(resourceName) + '/' + suffix
-          let element: ReactNode
-          switch (operationType) {
-            case ViewEnum.Listing:
-              element = <ListingView modelName={resourceName}/>
-              break
-            case ViewEnum.Create:
-              element = <CreateView modelName={resourceName}/>
-              break
-            case ViewEnum.Detail:
-              element = <DetailView modelName={resourceName}/>
-              break
-            case ViewEnum.Update:
-              element = <UpdateView modelName={resourceName}/>
-              break
-            case ViewEnum.Delete:
-              element = <DeleteView modelName={resourceName}/>
-              break
-          }
->>>>>>> dev
 
             const {views, columnDef} = MODEL_MAPPINGS[resourceName] as ModelMapping<any>
             const detailView = (views?.find((view) => view.type === ViewEnum.Detail) ||
@@ -341,10 +335,11 @@ export function PrivateRoutes() {
         {/*})}*/}
       </Route>
       {indexPath && <Route path='/' element={<Navigate to={indexPath} />} />}
+      {/* <Route path='/change-password' element={<ChangePassword />} /> */}
       <Route path='/auth/*' element={<Navigate to='/' />} />
       {/*{routes.length > 0 && <Route path='/auth' element={<Navigate to={`/error/${routes.length === 0 ? 403 : 404}`} />} /> }*/}
       <Route path='*' element={<Navigate to={`/error/${operations.length === 0 ? 403 : 404}`} />} />
-    </Routes>
+    </RoutesWithPasswordCheck>
   )
 
   // return (
