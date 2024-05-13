@@ -42,8 +42,8 @@ export const PrintInvoiceButton: FC<
       (a, b) => [...a, ...b.purchaseOrderProducts],
       [] as PurchaseOrderProductModel[]
     );
-    // @ts-ignore
     const paymentModalities = purchaseOrders
+      // @ts-ignore
       .map(({ paymentModality }) => paymentModality["@title"])
       .join(", ");
     const orderNumber = purchaseOrders

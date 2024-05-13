@@ -230,8 +230,8 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
               .filter((component) => component.received)
               .map((component) => ({
                 ...component,
-                // @ts-ignore
                 purchaseOrderProductComponent:
+                  // @ts-ignore
                   component.purchaseOrderProductComponent["@id"],
               })),
           }))
