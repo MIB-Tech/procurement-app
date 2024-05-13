@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react'
 import {Navigate, Route, Routes} from 'react-router-dom'
-import {useAuth} from '../../_custom/hooks/UseAuth'
+import {GrantedLink, useAuth} from '../../_custom/hooks/UseAuth'
 import {DetailViewType, Model, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping'
 import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import {PageDataProvider} from '../../_metronic/layout/core'
@@ -108,7 +108,11 @@ export function PrivateRoutes() {
     .find((operation) => operation.isMenuItem && operation.operationType === ViewEnum.Listing)
   // FIXME route render wrong route issue
   const isAdmin = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin, RoleKeyEnum.SuperAdmin])
+  const isReferent = isGranted([RoleKeyEnum.Referent])
+  const isFinance = isGranted([RoleKeyEnum.Finances])
+  const isTresor = isGranted([RoleKeyEnum.Treso])
 
+<<<<<<< password-change
   const indexPath = isAdmin
     ? 'dashboard'
     : defaultOperation &&
@@ -116,6 +120,30 @@ export function PrivateRoutes() {
         resourceName: defaultOperation.resource.name,
         suffix: defaultOperation.suffix,
       })
+=======
+  const indexPath = (() => {
+    if (isAdmin) {
+      return 'dashboard';
+    }
+    else if (isReferent) {
+      return 'receipt-compliance';
+    }
+    else if (isFinance) {
+      return 'budget-monitoring';
+    }
+    else if (isTresor) {
+      return 'dashboard';
+    }
+    else if (defaultOperation) {
+      return getPath({
+        resourceName: defaultOperation.resource.name,
+        suffix: defaultOperation.suffix,
+      });
+    } else {
+      return '/dashboard';
+    }
+  })();
+>>>>>>> dev
 
   return (
     <Routes>
@@ -129,6 +157,7 @@ export function PrivateRoutes() {
         {CUSTOM_ROUTES.filter((route) => isGranted(route.granted)).map((route) => {
           return <Route key={route.path} path={route.path} element={route.element} />
         })}
+<<<<<<< password-change
         <Route path='*' element={<Navigate to='/' />} />
         {operations
           .filter((operation) => Object.values(ModelEnum).includes(operation.resource.name))
@@ -154,6 +183,31 @@ export function PrivateRoutes() {
                 element = <DeleteView modelName={resourceName} />
                 break
             }
+=======
+
+        {operations.filter(operation => Object.values(ModelEnum).includes(operation.resource.name)).map(operation => {
+          const {resource, suffix, operationType} = operation
+          const resourceName = resource.name
+          const path = getRoutePrefix(resourceName) + '/' + suffix
+          let element: ReactNode
+          switch (operationType) {
+            case ViewEnum.Listing:
+              element = <ListingView modelName={resourceName}/>
+              break
+            case ViewEnum.Create:
+              element = <CreateView modelName={resourceName}/>
+              break
+            case ViewEnum.Detail:
+              element = <DetailView modelName={resourceName}/>
+              break
+            case ViewEnum.Update:
+              element = <UpdateView modelName={resourceName}/>
+              break
+            case ViewEnum.Delete:
+              element = <DeleteView modelName={resourceName}/>
+              break
+          }
+>>>>>>> dev
 
             const {views, columnDef} = MODEL_MAPPINGS[resourceName] as ModelMapping<any>
             const detailView = (views?.find((view) => view.type === ViewEnum.Detail) ||

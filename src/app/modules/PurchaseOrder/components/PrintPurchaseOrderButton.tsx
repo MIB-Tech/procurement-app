@@ -45,9 +45,8 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
       ref,
       referents,
     } = item
+
     const unit = currency?.code || 'DH';
-
-
     return {
       ...item,
       referentFullNames: referents.map(referent => (referent as HydraItem)['@title']).join(', '),
@@ -55,6 +54,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
       reference: ref,
       taxType: taxIncluded ? 'TTC' : 'HT',
       currencyCode: unit,
+      stimulsoftCurrencyCode: unit === 'DH' ? 'DHS': unit,
       totalInclTaxNumber: totalInclTax,
       totalExclTax: getNumberUnit({value: totalExclTax, precision: 2, unit}),
       totalInclTax: getNumberUnit({value: totalInclTax, precision: 2, unit}),
@@ -83,7 +83,7 @@ export const PrintPurchaseOrderButton: FC<CustomItemActionProps<ModelEnum.Purcha
             ...purchaseOrderProduct,
             type: LineType.Product,
             designation: `${designation}${note ? `\n\n${note}` : ''}`,
-            netPrice: getNumberUnit({value: taxIncluded ? priceInclTax: priceExclTax, precision, unit: false}),
+            netPrice: getNumberUnit({value: taxIncluded ? priceInclTax : priceExclTax, precision, unit: false}),
             discountedUnitPrice: getNumberUnit({value: discountedUnitPrice, unit: false}),
             discount: getNumberUnit({
               value: isPercentCentDiscount ?
