@@ -10,7 +10,10 @@ import {ModelEnum} from '../../modules/types'
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField'
 import {Grid} from '@mui/material'
 import {useCollectionQuery} from '../../../_custom/hooks/UseCollectionQuery'
-import {CompoundFilterOperator, PropertyFilterOperator} from '../../../_custom/ListingView/Filter/Filter.types'
+import {
+  CompoundFilterOperator,
+  PropertyFilterOperator,
+} from '../../../_custom/ListingView/Filter/Filter.types'
 import {ValueField} from '../../../_custom/Column/ValueField'
 import {StringFormat} from '../../../_custom/Column/String/StringColumn'
 import {ColumnTypeEnum} from '../../../_custom/types/types'
@@ -40,36 +43,32 @@ export const ExtractionPage: FC = () => {
   const {data, isLoading, refetch} = useQuery({
     queryKey: ['EXTRACTION'],
     queryFn: () => {
-      let params = queryParams.reduce(
-        (queryParams, queryParam) => {
-          let value: any
-          switch (queryParam.paramType) {
-            case ColumnTypeEnum.String:
-            case ColumnTypeEnum.Number:
-            case ColumnTypeEnum.Boolean:
-            case StringFormat.Date:
-            case StringFormat.Datetime:
-              // @ts-ignore
-              value = values[queryParam.name]
-              break
-            default:
-              // @ts-ignore
-              value = (values[queryParam.name] as HydraItem).id
-          }
+      let params = queryParams.reduce((queryParams, queryParam) => {
+        let value: any
+        switch (queryParam.paramType) {
+          case ColumnTypeEnum.String:
+          case ColumnTypeEnum.Number:
+          case ColumnTypeEnum.Boolean:
+          case StringFormat.Date:
+          case StringFormat.Datetime:
+            // @ts-ignore
+            value = values[queryParam.name]
+            break
+          default:
+            // @ts-ignore
+            value = (values[queryParam.name] as HydraItem).id
+        }
 
-          return {
-            ...queryParams,
-            [queryParam.name]: value,
-          }
-        },
-        {},
-      )
+        return {
+          ...queryParams,
+          [queryParam.name]: value,
+        }
+      }, {})
 
       return axios.get<Array<{}>>(`/custom/queries/${queryId}/execute`, {params})
     },
     enabled: false,
     onSuccess: ({data}) => {
-
       const workSheet = utils.json_to_sheet(data)
       const workBook = utils.book_new()
       utils.book_append_sheet(workBook, workSheet, 'Sheet1')
@@ -79,22 +78,23 @@ export const ExtractionPage: FC = () => {
     },
   })
 
-  const {collection: queryParams, isLoading: queryParamsLoading} = useCollectionQuery<ModelEnum.QueryParam>({
-    modelName: ModelEnum.QueryParam,
-    options: {enabled: !!queryId},
-    params: {
-      filter: {
-        operator: CompoundFilterOperator.And,
-        filters: [
-          {
-            property: 'query',
-            operator: PropertyFilterOperator.Equal,
-            value: queryId,
-          },
-        ],
+  const {collection: queryParams, isLoading: queryParamsLoading} =
+    useCollectionQuery<ModelEnum.QueryParam>({
+      modelName: ModelEnum.QueryParam,
+      options: {enabled: !!queryId},
+      params: {
+        filter: {
+          operator: CompoundFilterOperator.And,
+          filters: [
+            {
+              property: 'query',
+              operator: PropertyFilterOperator.Equal,
+              value: queryId,
+            },
+          ],
+        },
       },
-    },
-  })
+    })
 
   const {trans} = useTrans()
 
@@ -104,78 +104,72 @@ export const ExtractionPage: FC = () => {
 
   return (
     <FormikProvider value={formik}>
-      <div className="card card-bordered">
-        <div className="card-body">
+      <div className='card card-bordered'>
+        <div className='card-body'>
           <div>
-            <div className="fw-bold"><Trans id="QUERY" /></div>
-            <div className="d-flex">
-              <div className="flex-grow-1">
-                <ModelAutocompleteField
-                  modelName={ModelEnum.Query}
-                  name="query"
-                  size="sm"
-                />
+            <div className='fw-bold'>
+              <Trans id='QUERY' />
+            </div>
+            <div className='d-flex'>
+              <div className='flex-grow-1'>
+                <ModelAutocompleteField modelName={ModelEnum.Query} name='query' size='sm' />
               </div>
-              <div className="ms-2">
+              <div className='ms-2'>
                 <Button
-                  variant="primary"
-                  size="sm"
+                  variant='primary'
+                  size='sm'
                   loading={queryParamsLoading}
                   onClick={() => handleSubmit()}
                 >
-                  <Trans id="EXPORT" />
+                  <Trans id='EXPORT' />
                 </Button>
               </div>
             </div>
           </div>
           {queryParams.length > 0 && (
-            <div className="mt-5">
-              <div className="card card-bordered">
-                <div className="card-header">
-                  <div className="card-title">
-                    <Trans id="PARAMS" />
+            <div className='mt-5'>
+              <div className='card card-bordered'>
+                <div className='card-header'>
+                  <div className='card-title'>
+                    <Trans id='PARAMS' />
                   </div>
                 </div>
-                <div className="card-body">
+                <div className='card-body'>
                   {queryParams.map(({id, paramType, name, label}) => {
-                    let column:TypeColum
+                    let column: TypeColum
                     switch (paramType) {
                       case ColumnTypeEnum.String:
                         column = {
-                          type: paramType
+                          type: paramType,
                         }
                         break
                       case ColumnTypeEnum.Number:
                         column = {
-                          type: paramType
+                          type: paramType,
                         }
                         break
                       case ColumnTypeEnum.Boolean:
                         column = {
-                          type: paramType
+                          type: paramType,
                         }
                         break
                       case StringFormat.Date:
                       case StringFormat.Datetime:
                         column = {
                           type: ColumnTypeEnum.String,
-                          format: paramType
+                          format: paramType,
                         }
                         break
                       default:
                         column = {
-                          type: paramType
+                          type: paramType,
                         }
                     }
 
                     return (
                       <Grid key={id} item sm={4}>
-                        <div className="fw-bold">{label}</div>
-                        <ValueField
-                          column={column}
-                          name={name}
-                          size="sm"
-                        />
+                        <div className='fw-bold'>{label}</div>
+                        <ValueField column={column} name={name} size='sm' />
                       </Grid>
                     )
                   })}

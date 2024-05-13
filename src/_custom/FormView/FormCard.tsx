@@ -12,33 +12,41 @@ import {ModelEnum} from '../../app/modules/types'
 import {Grid} from '@mui/material'
 import {isClinicColumn} from '../ListingView/ListingView.utils'
 
-
-export const FormCard = <M extends ModelEnum>({modelName, item, setItem, name, view, className}: {
+export const FormCard = <M extends ModelEnum>({
+  modelName,
+  item,
+  setItem,
+  name,
+  view,
+  className,
+}: {
   name?: string
   modelName: M
   item: Model<M>
   setItem: (item: Model<M>) => void
-  view: CreateViewType<M> | UpdateViewType<M>,
+  view: CreateViewType<M> | UpdateViewType<M>
   className?: string
 }) => {
   const {columnDef} = useMapping<M>({modelName})
   const {isGranted, clinic} = useAuth()
   const {inlineForm, fields = getDefaultFields(columnDef)} = view
-  const columnNames = (Object.keys(fields) as Array<keyof Model<M> | string>).filter(columnName => {
-    if (clinic && isClinicColumn({modelName, columnName})) {
-      return false
+  const columnNames = (Object.keys(fields) as Array<keyof Model<M> | string>).filter(
+    (columnName) => {
+      if (clinic && isClinicColumn({modelName, columnName})) {
+        return false
+      }
+
+      const field = fields[columnName]
+      if (typeof field === 'boolean') {
+        return field
+      }
+
+      const display = field?.display
+      const grantedRoles = field?.grantedRoles
+
+      return (!display || display({item})) && (!grantedRoles || isGranted(grantedRoles))
     }
-
-    const field = fields[columnName]
-    if (typeof field === 'boolean') {
-      return field
-    }
-
-    const display = field?.display
-    const grantedRoles = field?.grantedRoles
-
-    return (!display || display({item})) && (!grantedRoles || isGranted(grantedRoles))
-  })
+  )
 
   const {pathname} = useLocation()
   // const url = '/update' + pathname.split('/').slice(0, 3).join('/');
@@ -52,8 +60,7 @@ export const FormCard = <M extends ModelEnum>({modelName, item, setItem, name, v
     if (query.item) {
       setItem(query.item)
     }
-  }, [query.item])
-
+  }, [query.item, setItem])
 
   // return (
   //   <div className='flex-grow-1'>
@@ -75,7 +82,7 @@ export const FormCard = <M extends ModelEnum>({modelName, item, setItem, name, v
   // )
   return (
     <div className={clsx('card', className)}>
-      <div className="card-body">
+      <div className='card-body'>
         <Grid container spacing={1} {...view.slotProps?.root}>
           {columnNames.map((columnName, index, columnNames) => {
             const field = fields[columnName]
@@ -97,21 +104,22 @@ export const FormCard = <M extends ModelEnum>({modelName, item, setItem, name, v
                     className={clsx(
                       'd-flex fw-semibold text-truncate text-muted',
                       inlineForm && 'col-sm-3 mt-2',
-                      !('multiple' in columnMapping) && !columnMapping.nullable && 'required',
+                      !('multiple' in columnMapping) && !columnMapping.nullable && 'required'
                     )}
                   >
                     <TitleContent columnName={columnName} {...columnMapping} />
                   </label>
                   <div className={clsx(inlineForm && 'col-sm-9')}>
-                    {render ?
-                      render({item, fieldProps}) :
+                    {render ? (
+                      render({item, fieldProps})
+                    ) : (
                       <ValueField
                         {...fieldProps}
                         column={columnMapping}
-                        size="sm"
+                        size='sm'
                         feedbackLabel={helperText}
                       />
-                    }
+                    )}
                   </div>
                 </div>
               </Grid>

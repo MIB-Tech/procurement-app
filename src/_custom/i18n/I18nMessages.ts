@@ -9,8 +9,7 @@ import {ClinicStatusEnum, QuantityStatusEnum} from '../../app/modules/PurchaseOr
 import {ProductTypeEnum} from '../../app/modules/Product/Model'
 import {ColumnTypeEnum} from '../types/types'
 import {StringFormat} from '../Column/String/StringColumn'
-import {ComplianceStatus} from "../../app/modules/ReceiptProduct/Model";
-
+import {ComplianceStatus} from '../../app/modules/ReceiptProduct/Model'
 
 type Lang = 'en' | 'ar' | 'fr'
 type I18nMessageKey =
@@ -71,7 +70,6 @@ type I18nMessageKey =
   | 'PLEASE_WAIT'
   | 'ORDERS'
   | 'PAGINATION.TITLE'
-
   | 'ID'
   | 'NAME'
   | 'DESCRIPTION'
@@ -90,7 +88,6 @@ type I18nMessageKey =
   | 'PHONE_NUMBERS'
   | 'UPDATED_AT'
   | 'QUANTITY'
-
   | 'FILTER'
   | 'LOADING'
   | 'ACTION'
@@ -184,7 +181,6 @@ type I18nMessageKey =
   | 'VALIDATION.ARRAY.MAX'
   | 'REQUESTED_AT'
   | 'WORK_ORDERS.DETAIL.STATUS'
-
   | 'MUTATION.DELETE.SUCCESS'
   | 'MUTATION.DELETE.ERROR'
   | 'MUTATION.CREATE.SUCCESS'
@@ -193,7 +189,6 @@ type I18nMessageKey =
   | 'MUTATION.UPDATE.ERROR'
   | 'MUTATION.UPLOAD.SUCCESS'
   | 'MUTATION.UPLOAD.ERROR'
-
   | 'APPLY'
   | 'CLOSE'
   | 'RESET'
@@ -217,7 +212,9 @@ type I18nMessageKey =
   | 'USERS'
   | 'AVATAR'
   | 'PASSWORD_CONFIRM'
+  | 'PASSWORD_CHANGED_SUCCESSFULLY'
   | 'VALIDATION.STRING.PASSWORD_CONFIRM'
+  | 'VALIDATION.STRING.PASSWORD_INCORRECT'
   | 'MEMBERS'
   | 'ITEM.NOT.FOUND'
   | 'CHILD_LOCATIONS'
@@ -240,7 +237,6 @@ type I18nMessageKey =
   | 'DELETE_CONFIRM.TITLE'
   | 'SORT'
   | 'SIGN_OUT'
-
   | 'CREATE_TIME'
   | 'LAST_MODIFIED_TIME'
   | 'NO_ITEM_FOUND'
@@ -525,6 +521,9 @@ type I18nMessageKey =
   | 'COMPLIANCE'
   | 'COMPLIANCE_UPDATED_AT'
   | 'PRODUCT_SECTIONS_BUDGETS'
+  | 'SETTINGS'
+  | 'NEW_PASSWORD'
+  | 'OLD_PASSWORD'
 type I18nLanguage = Record<I18nMessageKey, string>
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = {ar, en, fr}

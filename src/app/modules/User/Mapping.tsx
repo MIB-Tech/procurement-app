@@ -7,22 +7,25 @@ import moment from 'moment'
 import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField'
 import {FC} from 'react'
 import {FieldProps} from '../../../_custom/Column/controls/fields'
-import {CompoundFilterOperator, PropertyFilterOperator} from '../../../_custom/ListingView/Filter/Filter.types'
+import {
+  CompoundFilterOperator,
+  PropertyFilterOperator,
+} from '../../../_custom/ListingView/Filter/Filter.types'
 
-const CategoryField:FC<FieldProps> = ({...props}) => (
+const CategoryField: FC<FieldProps> = ({...props}) => (
   <ModelAutocompleteField
     modelName={ModelEnum.Category}
     multiple
     size='sm'
-    getParams={filter => ({
+    getParams={(filter) => ({
       operator: CompoundFilterOperator.And,
       filters: [
         filter,
         {
           property: 'parent',
-          operator: PropertyFilterOperator.IsNull
-        }
-      ]
+          operator: PropertyFilterOperator.IsNull,
+        },
+      ],
     })}
     {...props}
   />
@@ -32,47 +35,59 @@ const mapping: ModelMapping<ModelEnum.User> = {
   modelName: ModelEnum.User,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     username: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     firstName: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     lastName: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     email: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Email,
-      nullable: true
+      nullable: true,
     },
     password: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Password,
-      meter: true
+      meter: true,
+    },
+    plainPassword: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Password,
+      meter: true,
+      title: 'PASSWORD',
+    },
+    currentPassword: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Password,
+      meter: true,
+      title: 'PASSWORD',
     },
     passwordConfirm: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Password,
       title: 'PASSWORD_CONFIRM',
-      schema: string().oneOf([ref('password'), null], 'VALIDATION.STRING.PASSWORD_CONFIRM')
+      schema: string().oneOf([ref('plainPassword'), null], 'VALIDATION.STRING.PASSWORD_CONFIRM'),
     },
     createdAt: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Datetime,
       title: 'CREATE_TIME',
       nullable: true,
-      min: moment().format()
+      min: moment().format(),
     },
     updatedAt: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Datetime,
-      title: 'LAST_MODIFIED_TIME'
+      title: 'LAST_MODIFIED_TIME',
     },
     restrictedByCategories: {
       type: ColumnTypeEnum.Boolean,
@@ -80,15 +95,15 @@ const mapping: ModelMapping<ModelEnum.User> = {
     },
     role: {
       type: ModelEnum.Role,
-      nullable: true
+      nullable: true,
     },
     clinics: {
       type: ModelEnum.Clinic,
-      multiple: true
+      multiple: true,
     },
     referentPurchaseOrders: {
       type: ModelEnum.PurchaseOrder,
-      multiple: true
+      multiple: true,
     },
     categories: {
       type: ModelEnum.Category,
@@ -101,7 +116,7 @@ const mapping: ModelMapping<ModelEnum.User> = {
       columns: {
         role: true,
         email: true,
-      }
+      },
     },
     {
       type: ViewEnum.Create,
@@ -110,15 +125,16 @@ const mapping: ModelMapping<ModelEnum.User> = {
         firstName: true,
         lastName: true,
         email: true,
-        password: true,
+        // password: true,
+        plainPassword: true,
         passwordConfirm: true,
         role: true,
         clinics: true,
         restrictedByCategories: true,
         categories: {
-          render: ({fieldProps}) => <CategoryField {...fieldProps}/>
+          render: ({fieldProps}) => <CategoryField {...fieldProps} />,
         },
-      }
+      },
     },
     {
       type: ViewEnum.Update,
@@ -130,11 +146,11 @@ const mapping: ModelMapping<ModelEnum.User> = {
         clinics: true,
         restrictedByCategories: true,
         categories: {
-          render: ({fieldProps}) => <CategoryField {...fieldProps}/>
+          render: ({fieldProps}) => <CategoryField {...fieldProps} />,
         },
-      }
-    }
-  ]
-};
+      },
+    },
+  ],
+}
 
-export default mapping;
+export default mapping

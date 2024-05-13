@@ -6,28 +6,28 @@ import {useAuth} from '../../../../../_custom/hooks/UseAuth'
 import {SVG} from '../../../../../_custom/components/SVG/SVG'
 import {OperationModel} from '../../../../../app/modules/Operation'
 
-
 export const useCurrentOperation: () => OperationModel | undefined = () => {
-  const {operations, getPath} = useAuth();
-  const {pathname} = useLocation();
-  const pathnameParts = pathname.split('/').filter(part => part !== '');
+  const {operations, getPath} = useAuth()
+  const {pathname} = useLocation()
+  console.log('pathname', pathname)
+  const pathnameParts = pathname.split('/').filter((part) => part !== '')
   const partCount = ['update', 'delete'].includes(pathnameParts.at(2) || '') ? 3 : 2
-  const parts = pathnameParts.slice(0, partCount);
+  const parts = pathnameParts.slice(0, partCount)
 
-  const newPathname = `/${parts.join('/')}`;
+  const newPathname = `/${parts.join('/')}`
 
   return operations.find(({suffix, resource}) => {
-    const path = getPath({suffix, resourceName: resource.name});
+    const path = getPath({suffix, resourceName: resource.name})
 
-    return matchPath(path, newPathname);
-  });
-};
+    return matchPath(path, newPathname)
+  })
+}
 
 const DefaultTitle: FC = () => {
-  const { pageTitle, pageDescription, pageBreadcrumbs } = usePageData();
-  const { config, classes } = useLayout();
-  const currentOperation = useCurrentOperation();
-  const icon = currentOperation?.icon;
+  const {pageTitle, pageDescription, pageBreadcrumbs} = usePageData()
+  const {config, classes} = useLayout()
+  const currentOperation = useCurrentOperation()
+  const icon = currentOperation?.icon
 
   return (
     <div
@@ -58,7 +58,7 @@ const DefaultTitle: FC = () => {
         config.pageTitle.breadCrumbs && (
           <>
             {config.pageTitle.direction === 'row' && (
-              <span className='h-20px border-gray-200 border-start mx-4'/>
+              <span className='h-20px border-gray-200 border-start mx-4' />
             )}
             <ul className='breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1'>
               {Array.from(pageBreadcrumbs).map((item, index) => (
@@ -74,7 +74,7 @@ const DefaultTitle: FC = () => {
                       {item.title}
                     </Link>
                   ) : (
-                    <span className='bullet bg-gray-200 w-5px h-2px'/>
+                    <span className='bullet bg-gray-200 w-5px h-2px' />
                   )}
                 </li>
               ))}

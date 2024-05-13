@@ -1,12 +1,13 @@
 import {I18nLanguage} from '../I18nMessages'
 import {fr} from './fr'
 
-
 export const en: I18nLanguage = {
   ...fr,
   'ERROR_PAGE.GO_HOME': 'Go to homepage',
-  'ERROR_PAGE.TITLE': '{code, select, 403 {Insufficient permissions} 404 {Page Not Found} other {System Error}}.',
-  'ERROR_PAGE.DESCRIPTION': '{code, select, ' +
+  'ERROR_PAGE.TITLE':
+    '{code, select, 403 {Insufficient permissions} 404 {Page Not Found} other {System Error}}.',
+  'ERROR_PAGE.DESCRIPTION':
+    '{code, select, ' +
     '403 {You do not have permission to open the application} ' +
     '404 {The page you requested could not be found} ' +
     'other {Something went wrong!, Please try again later.}}.',
@@ -17,13 +18,13 @@ export const en: I18nLanguage = {
   'DELETE_CONFIRM.TITLE': 'Are you sure you want to delete "{name}" ?',
   'ITEM.NOT.FOUND': 'Item Not Found',
   'MORE.COUNT': '+{count} more',
-  'MUTATION.CREATE.ERROR': 'Couldn\'t create',
+  'MUTATION.CREATE.ERROR': "Couldn't create",
   'MUTATION.CREATE.SUCCESS': 'Created!',
-  'MUTATION.DELETE.ERROR': 'Couldn\'t delete',
+  'MUTATION.DELETE.ERROR': "Couldn't delete",
   'MUTATION.DELETE.SUCCESS': 'Deleted!',
-  'MUTATION.UPDATE.ERROR': 'Couldn\'t update',
+  'MUTATION.UPDATE.ERROR': "Couldn't update",
   'MUTATION.UPDATE.SUCCESS': 'Updated!',
-  'MUTATION.UPLOAD.ERROR': 'Couldn\'t upload',
+  'MUTATION.UPLOAD.ERROR': "Couldn't upload",
   'MUTATION.UPLOAD.SUCCESS': 'Uploaded!',
   'PAGINATION.TITLE': '{itemsPerPage} of {totalCount}',
   'STOCK.AVAILABLE': 'In Stock',
@@ -53,10 +54,11 @@ export const en: I18nLanguage = {
   'VALIDATION.STRING.EMAIL': 'Must be a valid email',
   'VALIDATION.STRING.LENGTH': 'Must be exactly {length} characters',
   'VALIDATION.STRING.LOWERCASE': 'Must be a lowercase string',
-  'VALIDATION.STRING.MATCHES': 'Must match the following: \'{regex}\'',
+  'VALIDATION.STRING.MATCHES': "Must match the following: '{regex}'",
   'VALIDATION.STRING.MAX': 'Must be at most {max} characters',
   'VALIDATION.STRING.MIN': 'Must be at least {min} characters',
   'VALIDATION.STRING.PASSWORD_CONFIRM': 'Passwords must match',
+  'VALIDATION.STRING.PASSWORD_INCORRECT': 'Password is incorrect',
   'VALIDATION.STRING.STARTS_WITH': 'Must starts with {value}', // todo
   'VALIDATION.STRING.TRIM': 'Must be a trimmed string',
   'VALIDATION.STRING.UPPERCASE': 'Must be a upper case string',
@@ -64,6 +66,8 @@ export const en: I18nLanguage = {
   'VALIDATION.STRING.UUID': 'Must be a valid UUID',
   'VALIDATION.STRING.PHONE_NUMBER': 'Must be a valid phone number',
   'WORK_ORDERS.DETAIL.STATUS': 'Status (Click to Update)',
+  PASSWORD_CHANGED_SUCCESSFULLY: 'Password changed successfully',
+  SETTINGS: 'Settings',
   ACTION: 'Action',
   ACTIONS: 'Actions',
   ASSET_MODEL: 'Asset Model',
@@ -133,6 +137,8 @@ export const en: I18nLanguage = {
   PARENT_ASSET: 'Parent Asset',
   PASSWORD: 'Password',
   PASSWORD_CONFIRM: 'Password Confirm',
+  NEW_PASSWORD: 'New password',
+  OLD_PASSWORD: 'Old password',
   PHONE_NUMBER: 'Phone Number',
   PHONE_NUMBERS: 'Phone Numbers',
   PLEASE_WAIT: 'Please wait...',
