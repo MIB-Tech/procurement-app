@@ -1,6 +1,5 @@
-
 import React, {ReactNode} from 'react'
-import {Navigate, Route, Routes} from 'react-router-dom'
+import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
 import {GrantedLink, useAuth} from '../../_custom/hooks/UseAuth'
 import {DetailViewType, Model, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping'
 import {MasterLayout} from '../../_metronic/layout/MasterLayout'
@@ -124,9 +123,6 @@ export function PrivateRoutes() {
     .find((operation) => operation.isMenuItem && operation.operationType === ViewEnum.Listing)
   // FIXME route render wrong route issue
   const isAdmin = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin, RoleKeyEnum.SuperAdmin])
-  const isReferent = isGranted([RoleKeyEnum.Referent])
-  const isFinance = isGranted([RoleKeyEnum.Finances])
-  const isTresor = isGranted([RoleKeyEnum.Treso])
 
   const indexPath = isAdmin
     ? 'dashboard'
@@ -135,29 +131,25 @@ export function PrivateRoutes() {
         resourceName: defaultOperation.resource.name,
         suffix: defaultOperation.suffix,
       })
-  
-  const indexPath = (() => {
-    if (isAdmin) {
-      return 'dashboard';
-    }
-    else if (isReferent) {
-      return 'receipt-compliance';
-    }
-    else if (isFinance) {
-      return 'budget-monitoring';
-    }
-    else if (isTresor) {
-      return 'dashboard';
-    }
-    else if (defaultOperation) {
-      return getPath({
-        resourceName: defaultOperation.resource.name,
-        suffix: defaultOperation.suffix,
-      });
-    } else {
-      return '/dashboard';
-    }
-  })();
+
+  // const indexPath = (() => {
+  //   if (isAdmin) {
+  //     return 'dashboard'
+  //   } else if (isReferent) {
+  //     return 'receipt-compliance'
+  //   } else if (isFinance) {
+  //     return 'budget-monitoring'
+  //   } else if (isTresor) {
+  //     return 'dashboard'
+  //   } else if (defaultOperation) {
+  //     return getPath({
+  //       resourceName: defaultOperation.resource.name,
+  //       suffix: defaultOperation.suffix,
+  //     })
+  //   } else {
+  //     return '/dashboard'
+  //   }
+  // })()
 
   const RoutesWithPasswordCheck = PasswordCheck(Routes)
 
@@ -201,7 +193,6 @@ export function PrivateRoutes() {
                 element = <DeleteView modelName={resourceName} />
                 break
             }
-
 
             const {views, columnDef} = MODEL_MAPPINGS[resourceName] as ModelMapping<any>
             const detailView = (views?.find((view) => view.type === ViewEnum.Detail) ||
