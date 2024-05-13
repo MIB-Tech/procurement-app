@@ -1,7 +1,6 @@
-
 import React, {ReactNode} from 'react'
 import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
-import {GrantedLink, useAuth} from '../../_custom/hooks/UseAuth'
+import {useAuth} from '../../_custom/hooks/UseAuth'
 import {DetailViewType, Model, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping'
 import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import {PageDataProvider} from '../../_metronic/layout/core'
@@ -44,7 +43,7 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
       RoleKeyEnum.Treso,
       RoleKeyEnum.Finances,
     ],
-    element: <DashboardWrapper />,
+    element: <DashboardWrapper/>,
   },
   {
     path: 'settings',
@@ -60,7 +59,7 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
       RoleKeyEnum.Referent,
       RoleKeyEnum.Buyer,
     ],
-    element: <SettingsWrapper />,
+    element: <SettingsWrapper/>,
   },
   {
     path: 'budget-monitoring',
@@ -75,7 +74,7 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
       RoleKeyEnum.Treso,
       RoleKeyEnum.Finances,
     ],
-    element: <BudgetMonitoringPage />,
+    element: <BudgetMonitoringPage/>,
   },
   {
     path: 'extraction',
@@ -90,7 +89,7 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
       RoleKeyEnum.Treso,
       RoleKeyEnum.Finances,
     ],
-    element: <ExtractionPage />,
+    element: <ExtractionPage/>,
   },
   {
     path: 'receipt-compliance',
@@ -98,7 +97,7 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
     icon: '/ecommerce/ecm010.svg',
     display: [DisplayEnum.SIDE_MENU],
     granted: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin, RoleKeyEnum.Referent],
-    element: <ReceiptCompliancePage />,
+    element: <ReceiptCompliancePage/>,
   },
 ]
 export const navigateOnMutate = <M extends ModelEnum>(item: HydraItem<M>) => item['@id'] + '/update'
@@ -110,7 +109,7 @@ function PasswordCheck(Component = Routes) {
     const location = useLocation()
 
     if (user.passwordChangedAt === null && location.pathname !== '/settings') {
-      return <Navigate to='/settings' />
+      return <Navigate to='/settings'/>
     }
 
     return <Component {...props} />
@@ -128,36 +127,75 @@ export function PrivateRoutes() {
   const isFinance = isGranted([RoleKeyEnum.Finances])
   const isTresor = isGranted([RoleKeyEnum.Treso])
 
-/*  const indexPath = isAdmin
-    ? 'dashboard'
-    : defaultOperation &&
-      getPath({
-        resourceName: defaultOperation.resource.name,
-        suffix: defaultOperation.suffix,
-      })*/
+
+  /*  const indexPath = isAdmin
+      ? 'dashboard'
+      : defaultOperation &&
+        getPath({
+          resourceName: defaultOperation.resource.name,
+          suffix: defaultOperation.suffix,
+        })*/
+
+  /*  const indexPath = isAdmin
+      ? 'dashboard'
+      : defaultOperation &&
+        getPath({
+          resourceName: defaultOperation.resource.name,
+          suffix: defaultOperation.suffix,
+        })*/
+
 
   const indexPath = (() => {
     if (isAdmin) {
       return 'dashboard';
     }
-     if (isReferent) {
-      return 'receipt-compliance';
-    }
-    else if (isFinance) {
-      return 'budget-monitoring';
-    }
-    else if (isTresor) {
-      return 'dashboard';
-    }
-    else if (defaultOperation) {
-      return getPath({
-        resourceName: defaultOperation.resource.name,
-        suffix: defaultOperation.suffix,
-      });
-    } else {
-      return '/dashboard';
+    if (isReferent) {
+
+      if (isReferent) {
+
+        return 'receipt-compliance';
+      } else if (isFinance) {
+        return 'budget-monitoring';
+      } else if (isTresor) {
+        return 'dashboard';
+      } else if (defaultOperation) {
+        return getPath({
+          resourceName: defaultOperation.resource.name,
+          suffix: defaultOperation.suffix,
+        });
+      } else {
+        return '/dashboard';
+      }
     }
   })();
+  /*  const isAdmin = isGranted([RoleKeyEnum.Viewer, RoleKeyEnum.SuperAdmin, RoleKeyEnum.SuperAdmin])
+
+    const indexPath = isAdmin
+      ? 'dashboard'
+      : defaultOperation &&
+        getPath({
+          resourceName: defaultOperation.resource.name,
+          suffix: defaultOperation.suffix,
+        })*/
+
+  // const indexPath = (() => {
+  //   if (isAdmin) {
+  //     return 'dashboard'
+  //   } else if (isReferent) {
+  //     return 'receipt-compliance'
+  //   } else if (isFinance) {
+  //     return 'budget-monitoring'
+  //   } else if (isTresor) {
+  //     return 'dashboard'
+  //   } else if (defaultOperation) {
+  //     return getPath({
+  //       resourceName: defaultOperation.resource.name,
+  //       suffix: defaultOperation.suffix,
+  //     })
+  //   } else {
+  //     return '/dashboard'
+  //   }
+  // })()
 
   const RoutesWithPasswordCheck = PasswordCheck(Routes)
 
@@ -168,15 +206,15 @@ export function PrivateRoutes() {
       <Route
         element={
           <PageDataProvider>
-            <MasterLayout />
+            <MasterLayout/>
           </PageDataProvider>
         }
       >
         {CUSTOM_ROUTES.filter((route) => isGranted(route.granted)).map((route) => {
-          return <Route key={route.path} path={route.path} element={route.element} />
+          return <Route key={route.path} path={route.path} element={route.element}/>
         })}
 
-        <Route path='*' element={<Navigate to='/' />} />
+        <Route path='*' element={<Navigate to='/'/>}/>
         {operations
           .filter((operation) => Object.values(ModelEnum).includes(operation.resource.name))
           .map((operation) => {
@@ -186,22 +224,21 @@ export function PrivateRoutes() {
             let element: ReactNode
             switch (operationType) {
               case ViewEnum.Listing:
-                element = <ListingView modelName={resourceName} />
+                element = <ListingView modelName={resourceName}/>
                 break
               case ViewEnum.Create:
-                element = <CreateView modelName={resourceName} />
+                element = <CreateView modelName={resourceName}/>
                 break
               case ViewEnum.Detail:
-                element = <DetailView modelName={resourceName} />
+                element = <DetailView modelName={resourceName}/>
                 break
               case ViewEnum.Update:
-                element = <UpdateView modelName={resourceName} />
+                element = <UpdateView modelName={resourceName}/>
                 break
               case ViewEnum.Delete:
-                element = <DeleteView modelName={resourceName} />
+                element = <DeleteView modelName={resourceName}/>
                 break
             }
-
 
             const {views, columnDef} = MODEL_MAPPINGS[resourceName] as ModelMapping<any>
             const detailView = (views?.find((view) => view.type === ViewEnum.Detail) ||
@@ -334,11 +371,11 @@ export function PrivateRoutes() {
         {/*  })*/}
         {/*})}*/}
       </Route>
-      {indexPath && <Route path='/' element={<Navigate to={indexPath} />} />}
+      {indexPath && <Route path='/' element={<Navigate to={indexPath}/>}/>}
       {/* <Route path='/change-password' element={<ChangePassword />} /> */}
-      <Route path='/auth/*' element={<Navigate to='/' />} />
+      <Route path='/auth/*' element={<Navigate to='/'/>}/>
       {/*{routes.length > 0 && <Route path='/auth' element={<Navigate to={`/error/${routes.length === 0 ? 403 : 404}`} />} /> }*/}
-      <Route path='*' element={<Navigate to={`/error/${operations.length === 0 ? 403 : 404}`} />} />
+      <Route path='*' element={<Navigate to={`/error/${operations.length === 0 ? 403 : 404}`}/>}/>
     </RoutesWithPasswordCheck>
   )
 
