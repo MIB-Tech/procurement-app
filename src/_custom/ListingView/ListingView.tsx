@@ -27,13 +27,9 @@ import {
   PropertyFilterOperator,
 } from "./Filter/Filter.types";
 import { ColumnTypeEnum } from "../types/types";
-import {
-  DateFormatEnum,
-  StringFormat,
-  TimeFormatEnum,
-} from "../Column/String/StringColumn";
+import { StringFormat } from "../Column/String/StringColumn";
 import moment from "moment";
-import { Trans, useTrans } from "../components/Trans";
+import { useTrans } from "../components/Trans";
 import { EventInput, EventSourceInput } from "@fullcalendar/core";
 import clsx from "clsx";
 import { SearchToolbar } from "./Search/SearchToolbar";
@@ -58,97 +54,8 @@ import {
   getColumnMapping,
 } from "./Filter/Filter.utils";
 import { ItemAction } from "./ItemAction";
-import { Button } from "../components/Button";
-import { getRoutePrefix, stringToI18nMessageKey } from "../utils";
-import { utils, writeFile } from "xlsx";
-import { plural } from "pluralize";
-import { HydraItem } from "../types/hydra.types";
 import { RELATED_MODELS } from "../../app/routing/PrivateRoutes";
-
-const ModelExportButton = <M extends ModelEnum>({
-  modelName,
-}: {
-  modelName: M;
-}) => {
-  const { exportableColumnNames, columnDef } = useMapping<M>({ modelName });
-  const { trans } = useTrans();
-  const { isLoading, refetch } = useCollectionQuery<M>({
-    modelName,
-    path: `/export${getRoutePrefix(modelName)}`,
-    options: {
-      enabled: false,
-    },
-  });
-
-  return (
-    <Button
-      variant='outline-default'
-      size='sm'
-      className='bg-white'
-      loading={isLoading}
-      onClick={async () => {
-        const headers = exportableColumnNames.map((exportableColumnName) =>
-          trans({ id: stringToI18nMessageKey(exportableColumnName.toString()) })
-        );
-        const response = await refetch();
-        const collection = response.data?.data["hydra:member"] as Array<
-          HydraItem<M>
-        >;
-        const dataRows = collection.map((item) =>
-          exportableColumnNames.map((exportableColumnName) => {
-            const value = item[exportableColumnName];
-            const def = columnDef[exportableColumnName];
-            switch (def.type) {
-              case ColumnTypeEnum.String:
-                switch (def.format) {
-                  case StringFormat.Time:
-                    return moment(value as string).format(
-                      def.timeFormat || TimeFormatEnum.Full
-                    );
-                  case StringFormat.Date:
-                    return moment(value as string).format(
-                      def.dateFormat || DateFormatEnum.European
-                    );
-                  case StringFormat.Datetime:
-                    return moment(value as string).format(
-                      `${def.dateFormat || DateFormatEnum.European} ${
-                        def.timeFormat || TimeFormatEnum.Full
-                      }`
-                    );
-                  default:
-                    return value;
-                }
-              case ColumnTypeEnum.Number:
-              case ColumnTypeEnum.Boolean:
-                return value;
-              case ColumnTypeEnum.Array:
-                return (value as Array<any>)?.join(", ");
-              default:
-                return "multiple" in def
-                  ? (value as Array<string | HydraItem> | undefined)?.map(
-                      (item) =>
-                        typeof item === "string" ? item : item["@title"]
-                    )
-                  : typeof value === "string"
-                  ? value
-                  : (value as HydraItem)?.["@title"];
-            }
-          })
-        );
-        const workSheet = utils.aoa_to_sheet([headers, ...dataRows]);
-        const workBook = utils.book_new();
-        utils.book_append_sheet(workBook, workSheet, "Sheet1");
-
-        const fileName = `${trans({
-          id: stringToI18nMessageKey(plural(modelName)),
-        })}.${moment().format()}.xlsx`;
-        writeFile(workBook, fileName);
-      }}
-    >
-      <Trans id='EXPORT' />
-    </Button>
-  );
-};
+import { ModelExportButton } from "./Export/ModelExportButton";
 
 export const ListingView = <M extends ModelEnum>({
   modelName,
@@ -161,12 +68,13 @@ export const ListingView = <M extends ModelEnum>({
   });
   const { id } = useParams<{ id?: string }>();
   const { user, operations, clinic, navigate } = useAuth();
-  const { searchable, exportable, columnDef, views } = useMapping({
+  const { searchable, columnDef, views } = useMapping({
     modelName,
   });
   const view = (views?.find((view) => view.type === ViewEnum.Listing) ||
     DEFAULT_VIEW) as ListingViewType<M>;
   const {
+    exportableColumns,
     filterColumns,
     sortColumns,
     columns,
@@ -570,7 +478,13 @@ export const ListingView = <M extends ModelEnum>({
           {bulkActions?.map(({ render }, index) => (
             <Fragment key={index}>{render({ selectedItems })}</Fragment>
           ))}
-          {exportable && <ModelExportButton modelName={modelName} />}
+          {exportableColumns && Object.keys(exportableColumns) && (
+            <ModelExportButton
+              modelName={modelName}
+              items={selectedItems}
+              columns={exportableColumns}
+            />
+          )}
           <RouteLinks
             operations={operations.filter(
               ({ resource, operationType }) =>

@@ -51,16 +51,6 @@ export const getSearchableColumns = <M extends ModelEnum>({
     }
   }, [] as Array<keyof Model<M> | string>);
 };
-export const getExportableColumns = <M extends ModelEnum>({
-  modelName,
-}: {
-  modelName: M;
-}) => {
-  const { columnDef } = MODEL_MAPPINGS[modelName] as ModelMapping<any>;
-  const columNames = Object.keys(columnDef) as Array<keyof Model<M>>;
-
-  return columNames.filter((columName) => columnDef[columName].exportable);
-};
 
 export const useMapping = <M extends ModelEnum>({
   modelName,
@@ -72,9 +62,7 @@ export const useMapping = <M extends ModelEnum>({
   const { columnDef } = modelMapping;
   const columNames = Object.keys(columnDef) as Array<keyof Model<M>>;
   const searchableColumnNames = getSearchableColumns({ modelName });
-  const exportableColumnNames = getExportableColumns({ modelName });
   const searchable = searchableColumnNames.length > 0;
-  const exportable = exportableColumnNames.length > 0;
   const detailable = isGranted([
     { resourceName: modelName, operationType: ViewEnum.Detail },
   ]);
@@ -84,9 +72,7 @@ export const useMapping = <M extends ModelEnum>({
     routePrefix,
     searchable,
     detailable,
-    exportable,
     searchableColumnNames,
-    exportableColumnNames,
     columNames,
     ...modelMapping,
   };

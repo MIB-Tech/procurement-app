@@ -38,7 +38,6 @@ export type ViewColumn<M extends ModelEnum> = {
     value?: any;
     collection: Array<HydraItem<M>>;
   }) => ReactNode;
-  exportable?: boolean;
 };
 export type TypeColum<M extends ModelEnum = any> =
   | NumberColumn<M>
@@ -87,6 +86,15 @@ export type FilterColumns<M extends ModelEnum> = Partial<
       }
   >
 >;
+export type ExportableColumn<M extends ModelEnum> = Partial<
+  Record<
+    string | keyof Model<M>,
+    | boolean
+    | {
+        getValue?: (props: Model<M>) => string | number;
+      }
+  >
+>;
 export type BulkAction<M extends ModelEnum> = {
   render: (props: { selectedItems: Array<HydraItem<M>> }) => ReactNode;
 };
@@ -96,6 +104,7 @@ export type ListingViewType<M extends ModelEnum> = {
   itemOperationRoutes?: ItemOperationCallback<M>;
   columns?: ListingColumns<M>;
   filterColumns?: FilterColumns<M>;
+  exportableColumns?: ExportableColumn<M>;
   sortColumns?: Partial<Record<keyof Model<M>, boolean>>;
   bulkActions?: Array<BulkAction<M>>;
 };

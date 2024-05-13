@@ -18,15 +18,31 @@ import { StringFormat } from "../../Column/String/StringColumn";
 import { I18nMessageKey } from "../../i18n/I18nMessages";
 
 const getDefs = <M extends ModelEnum>(modelName: M, path: string) => {
+  let currentType: ModelEnum = modelName;
   const parts = path.split(".");
   let result: Record<string, ColumnMapping<any>> = {};
   parts.forEach((part) => {
-    const def = MODEL_MAPPINGS[modelName].columnDef;
+    const def = MODEL_MAPPINGS[currentType].columnDef;
+    currentType = def[part as keyof typeof def].type as ModelEnum;
+
     result[part] = def[part as keyof typeof def];
+
+    return def;
   });
 
   return result;
 };
+
+// const getDefs = <M extends ModelEnum>(modelName: M, path: string) => {
+//   const parts = path.split(".");
+//   let result: Record<string, ColumnMapping<any>> = {};
+//   parts.forEach((part) => {
+//     const def = MODEL_MAPPINGS[modelName].columnDef;
+//     result[part] = def[part as keyof typeof def];
+//   });
+//
+//   return result;
+// };
 
 export const getColumnMapping = <M extends ModelEnum>({
   modelName,
