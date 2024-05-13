@@ -5,30 +5,41 @@
  * components (e.g: `src/app/modules/Auth/pages/AuthPage`, `src/app/BasePage`).
  */
 
-import React, { FC } from 'react';
-import { createBrowserRouter, Navigate, Route, RouterProvider, Routes } from 'react-router-dom';
-import { shallowEqual, useSelector } from 'react-redux';
-import { PrivateRoutes } from './PrivateRoutes';
-import { Logout } from '../pages/auth';
-import { ErrorsPage } from '../pages/errors/ErrorsPage';
-import { RootState } from '../../setup';
-import { PublicRoutes } from './PublicRoutes';
-import { ErrorContent } from '../pages/errors/ErrorContent';
-
+import React, { FC } from "react";
+import {
+  createBrowserRouter,
+  Navigate,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router-dom";
+import { shallowEqual, useSelector } from "react-redux";
+import { PrivateRoutes } from "./PrivateRoutes";
+import { Logout } from "../pages/auth";
+import { ErrorsPage } from "../pages/errors/ErrorsPage";
+import { RootState } from "../../setup";
+import { PublicRoutes } from "./PublicRoutes";
+import { ErrorContent } from "../pages/errors/ErrorContent";
 
 const AppRoutes: FC = () => {
-  const isAuthorized = useSelector<RootState>(({ auth }) => auth.user, shallowEqual);
+  const isAuthorized = useSelector<RootState>(
+    ({ auth }) => auth.user,
+    shallowEqual
+  );
   const router = createBrowserRouter([
-    { path: '/logout', element: <Logout /> },
+    { path: "/logout", element: <Logout /> },
     {
-      path: '/error',
+      path: "/error",
       element: <ErrorsPage />,
       children: [
-        { path: ':code', element: <ErrorContent /> },
+        { path: ":code", element: <ErrorContent /> },
         { index: true, element: <Navigate to='/error/404' /> },
-      ]
+      ],
     },
-    { path: '/*', element: isAuthorized ? <PrivateRoutes /> : <PublicRoutes /> },
+    {
+      path: "/*",
+      element: isAuthorized ? <PrivateRoutes /> : <PublicRoutes />,
+    },
   ]);
 
   return <RouterProvider router={router} />;

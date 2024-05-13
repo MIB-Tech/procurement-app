@@ -1,44 +1,47 @@
-import React, {useState} from 'react'
-import {toAbsoluteUrl} from '../../../../../../_metronic/helpers'
-import {IProfileDetails, profileDetailsInitValues as initialValues} from '../SettingsModel'
-import * as Yup from 'yup'
-import {useFormik} from 'formik'
+import React, { useState } from "react";
+import { toAbsoluteUrl } from "../../../../../../_metronic/helpers";
+import {
+  IProfileDetails,
+  profileDetailsInitValues as initialValues,
+} from "../SettingsModel";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 
 const profileDetailsSchema = Yup.object().shape({
-  fName: Yup.string().required('First name is required'),
-  lName: Yup.string().required('Last name is required'),
-  company: Yup.string().required('Company name is required'),
-  contactPhone: Yup.string().required('Contact phone is required'),
-  companySite: Yup.string().required('Company site is required'),
-  country: Yup.string().required('Country is required'),
-  language: Yup.string().required('Language is required'),
-  timeZone: Yup.string().required('Time zone is required'),
-  currency: Yup.string().required('Currency is required'),
-})
+  fName: Yup.string().required("First name is required"),
+  lName: Yup.string().required("Last name is required"),
+  company: Yup.string().required("Company name is required"),
+  contactPhone: Yup.string().required("Contact phone is required"),
+  companySite: Yup.string().required("Company site is required"),
+  country: Yup.string().required("Country is required"),
+  language: Yup.string().required("Language is required"),
+  timeZone: Yup.string().required("Time zone is required"),
+  currency: Yup.string().required("Currency is required"),
+});
 
 const ProfileDetails: React.FC = () => {
-  const [data, setData] = useState<IProfileDetails>(initialValues)
+  const [data, setData] = useState<IProfileDetails>(initialValues);
   const updateData = (fieldsToUpdate: Partial<IProfileDetails>): void => {
-    const updatedData = Object.assign(data, fieldsToUpdate)
-    setData(updatedData)
-  }
+    const updatedData = Object.assign(data, fieldsToUpdate);
+    setData(updatedData);
+  };
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const formik = useFormik<IProfileDetails>({
     initialValues,
     validationSchema: profileDetailsSchema,
     onSubmit: (values) => {
-      setLoading(true)
+      setLoading(true);
       setTimeout(() => {
-        values.communications.email = data.communications.email
-        values.communications.phone = data.communications.phone
-        values.allowMarketing = data.allowMarketing
-        const updatedData = Object.assign(data, values)
-        setData(updatedData)
-        setLoading(false)
-      }, 1000)
+        values.communications.email = data.communications.email;
+        values.communications.phone = data.communications.phone;
+        values.allowMarketing = data.allowMarketing;
+        const updatedData = Object.assign(data, values);
+        setData(updatedData);
+        setLoading(false);
+      }, 1000);
     },
-  })
+  });
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -55,27 +58,44 @@ const ProfileDetails: React.FC = () => {
         </div>
       </div>
 
-      <div id='kt_account_profile_details' className='collapse show'>
-        <form onSubmit={formik.handleSubmit} noValidate className='form'>
+      <div
+        id='kt_account_profile_details'
+        className='collapse show'
+      >
+        <form
+          onSubmit={formik.handleSubmit}
+          noValidate
+          className='form'
+        >
           <div className='card-body border-top p-9'>
             <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label fw-bold fs-6'>Avatar</label>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                Avatar
+              </label>
               <div className='col-lg-8'>
                 <div
                   className='image-input image-input-outline'
                   data-kt-image-input='true'
-                  style={{backgroundImage: `url(${toAbsoluteUrl('/media/avatars/blank.png')})`}}
+                  style={{
+                    backgroundImage: `url(${toAbsoluteUrl(
+                      "/media/avatars/blank.png"
+                    )})`,
+                  }}
                 >
                   <div
                     className='image-input-wrapper w-125px h-125px'
-                    style={{backgroundImage: `url(${toAbsoluteUrl(data.avatar)})`}}
+                    style={{
+                      backgroundImage: `url(${toAbsoluteUrl(data.avatar)})`,
+                    }}
                   ></div>
                 </div>
               </div>
             </div>
 
             <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label required fw-bold fs-6'>Full Name</label>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                Full Name
+              </label>
 
               <div className='col-lg-8'>
                 <div className='row'>
@@ -84,11 +104,13 @@ const ProfileDetails: React.FC = () => {
                       type='text'
                       className='form-control form-control-lg form-control-solid mb-3 mb-lg-0'
                       placeholder='First name'
-                      {...formik.getFieldProps('fName')}
+                      {...formik.getFieldProps("fName")}
                     />
                     {formik.touched.fName && formik.errors.fName && (
                       <div className='fv-plugins-message-container'>
-                        <div className='fv-help-block'>{formik.errors.fName}</div>
+                        <div className='fv-help-block'>
+                          {formik.errors.fName}
+                        </div>
                       </div>
                     )}
                   </div>
@@ -98,11 +120,13 @@ const ProfileDetails: React.FC = () => {
                       type='text'
                       className='form-control form-control-lg form-control-solid'
                       placeholder='Last name'
-                      {...formik.getFieldProps('lName')}
+                      {...formik.getFieldProps("lName")}
                     />
                     {formik.touched.lName && formik.errors.lName && (
                       <div className='fv-plugins-message-container'>
-                        <div className='fv-help-block'>{formik.errors.lName}</div>
+                        <div className='fv-help-block'>
+                          {formik.errors.lName}
+                        </div>
                       </div>
                     )}
                   </div>
@@ -111,14 +135,16 @@ const ProfileDetails: React.FC = () => {
             </div>
 
             <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label required fw-bold fs-6'>Company</label>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                Company
+              </label>
 
               <div className='col-lg-8 fv-row'>
                 <input
                   type='text'
                   className='form-control form-control-lg form-control-solid'
                   placeholder='Company name'
-                  {...formik.getFieldProps('company')}
+                  {...formik.getFieldProps("company")}
                 />
                 {formik.touched.company && formik.errors.company && (
                   <div className='fv-plugins-message-container'>
@@ -138,11 +164,13 @@ const ProfileDetails: React.FC = () => {
                   type='tel'
                   className='form-control form-control-lg form-control-solid'
                   placeholder='Phone number'
-                  {...formik.getFieldProps('contactPhone')}
+                  {...formik.getFieldProps("contactPhone")}
                 />
                 {formik.touched.contactPhone && formik.errors.contactPhone && (
                   <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.contactPhone}</div>
+                    <div className='fv-help-block'>
+                      {formik.errors.contactPhone}
+                    </div>
                   </div>
                 )}
               </div>
@@ -158,11 +186,13 @@ const ProfileDetails: React.FC = () => {
                   type='text'
                   className='form-control form-control-lg form-control-solid'
                   placeholder='Company website'
-                  {...formik.getFieldProps('companySite')}
+                  {...formik.getFieldProps("companySite")}
                 />
                 {formik.touched.companySite && formik.errors.companySite && (
                   <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.companySite}</div>
+                    <div className='fv-help-block'>
+                      {formik.errors.companySite}
+                    </div>
                   </div>
                 )}
               </div>
@@ -176,7 +206,7 @@ const ProfileDetails: React.FC = () => {
               <div className='col-lg-8 fv-row'>
                 <select
                   className='form-select form-select-solid form-select-lg fw-bold'
-                  {...formik.getFieldProps('country')}
+                  {...formik.getFieldProps("country")}
                 >
                   <option value=''>Select a Country...</option>
                   <option value='AF'>Afghanistan</option>
@@ -230,7 +260,9 @@ const ProfileDetails: React.FC = () => {
                   <option value='CO'>Colombia</option>
                   <option value='KM'>Comoros</option>
                   <option value='CG'>Congo</option>
-                  <option value='CD'>Congo, the Democratic Republic of the</option>
+                  <option value='CD'>
+                    Congo, the Democratic Republic of the
+                  </option>
                   <option value='CK'>Cook Islands</option>
                   <option value='CR'>Costa Rica</option>
                   <option value='CI'>Côte d'Ivoire</option>
@@ -296,7 +328,9 @@ const ProfileDetails: React.FC = () => {
                   <option value='KZ'>Kazakhstan</option>
                   <option value='KE'>Kenya</option>
                   <option value='KI'>Kiribati</option>
-                  <option value='KP'>Korea, Democratic People's Republic of</option>
+                  <option value='KP'>
+                    Korea, Democratic People's Republic of
+                  </option>
                   <option value='KW'>Kuwait</option>
                   <option value='KG'>Kyrgyzstan</option>
                   <option value='LA'>Lao People's Democratic Republic</option>
@@ -309,7 +343,9 @@ const ProfileDetails: React.FC = () => {
                   <option value='LT'>Lithuania</option>
                   <option value='LU'>Luxembourg</option>
                   <option value='MO'>Macao</option>
-                  <option value='MK'>Macedonia, the former Yugoslav Republic of</option>
+                  <option value='MK'>
+                    Macedonia, the former Yugoslav Republic of
+                  </option>
                   <option value='MG'>Madagascar</option>
                   <option value='MW'>Malawi</option>
                   <option value='MY'>Malaysia</option>
@@ -363,7 +399,9 @@ const ProfileDetails: React.FC = () => {
                   <option value='RU'>Russian Federation</option>
                   <option value='RW'>Rwanda</option>
                   <option value='BL'>Saint Barthélemy</option>
-                  <option value='SH'>Saint Helena, Ascension and Tristan da Cunha</option>
+                  <option value='SH'>
+                    Saint Helena, Ascension and Tristan da Cunha
+                  </option>
                   <option value='KN'>Saint Kitts and Nevis</option>
                   <option value='LC'>Saint Lucia</option>
                   <option value='MF'>Saint Martin (French part)</option>
@@ -384,7 +422,9 @@ const ProfileDetails: React.FC = () => {
                   <option value='SB'>Solomon Islands</option>
                   <option value='SO'>Somalia</option>
                   <option value='ZA'>South Africa</option>
-                  <option value='GS'>South Georgia and the South Sandwich Islands</option>
+                  <option value='GS'>
+                    South Georgia and the South Sandwich Islands
+                  </option>
                   <option value='KR'>South Korea</option>
                   <option value='SS'>South Sudan</option>
                   <option value='ES'>Spain</option>
@@ -436,11 +476,13 @@ const ProfileDetails: React.FC = () => {
             </div>
 
             <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label required fw-bold fs-6'>Language</label>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                Language
+              </label>
               <div className='col-lg-8 fv-row'>
                 <select
                   className='form-select form-select-solid form-select-lg'
-                  {...formik.getFieldProps('language')}
+                  {...formik.getFieldProps("language")}
                 >
                   <option value=''>Select a Language...</option>
                   <option value='id'>Bahasa Indonesia - Indonesian</option>
@@ -492,29 +534,36 @@ const ProfileDetails: React.FC = () => {
                 </select>
                 {formik.touched.language && formik.errors.language && (
                   <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.language}</div>
+                    <div className='fv-help-block'>
+                      {formik.errors.language}
+                    </div>
                   </div>
                 )}
 
                 <div className='form-text'>
-                  Please select a preferred language, including date, time, and number formatting.
+                  Please select a preferred language, including date, time, and
+                  number formatting.
                 </div>
               </div>
             </div>
 
             <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label required fw-bold fs-6'>Time Zone</label>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                Time Zone
+              </label>
 
               <div className='col-lg-8 fv-row'>
                 <select
                   className='form-select form-select-solid form-select-lg'
-                  {...formik.getFieldProps('timeZone')}
+                  {...formik.getFieldProps("timeZone")}
                 >
                   <option value=''>Select a Timezone..</option>
                   <option value='International Date Line West'>
                     (GMT-11:00) International Date Line West
                   </option>
-                  <option value='Midway Island'>(GMT-11:00) Midway Island</option>
+                  <option value='Midway Island'>
+                    (GMT-11:00) Midway Island
+                  </option>
                   <option value='Samoa'>(GMT-11:00) Samoa</option>
                   <option value='Hawaii'>(GMT-10:00) Hawaii</option>
                   <option value='Alaska'>(GMT-08:00) Alaska</option>
@@ -529,7 +578,9 @@ const ProfileDetails: React.FC = () => {
                   <option value='Chihuahua'>(GMT-06:00) Chihuahua</option>
                   <option value='Mazatlan'>(GMT-06:00) Mazatlan</option>
                   <option value='Saskatchewan'>(GMT-06:00) Saskatchewan</option>
-                  <option value='Central America'>(GMT-06:00) Central America</option>
+                  <option value='Central America'>
+                    (GMT-06:00) Central America
+                  </option>
                   <option value='Central Time (US &amp; Canada)'>
                     (GMT-05:00) Central Time (US &amp; Canada)
                   </option>
@@ -542,18 +593,24 @@ const ProfileDetails: React.FC = () => {
                   <option value='Eastern Time (US &amp; Canada)'>
                     (GMT-04:00) Eastern Time (US &amp; Canada)
                   </option>
-                  <option value='Indiana (East)'>(GMT-04:00) Indiana (East)</option>
+                  <option value='Indiana (East)'>
+                    (GMT-04:00) Indiana (East)
+                  </option>
                   <option value='Caracas'>(GMT-04:00) Caracas</option>
                   <option value='La Paz'>(GMT-04:00) La Paz</option>
                   <option value='Georgetown'>(GMT-04:00) Georgetown</option>
-                  <option value='Atlantic Time (Canada)'>(GMT-03:00) Atlantic Time (Canada)</option>
+                  <option value='Atlantic Time (Canada)'>
+                    (GMT-03:00) Atlantic Time (Canada)
+                  </option>
                   <option value='Santiago'>(GMT-03:00) Santiago</option>
                   <option value='Brasilia'>(GMT-03:00) Brasilia</option>
                   <option value='Buenos Aires'>(GMT-03:00) Buenos Aires</option>
                   <option value='Newfoundland'>(GMT-02:30) Newfoundland</option>
                   <option value='Greenland'>(GMT-02:00) Greenland</option>
                   <option value='Mid-Atlantic'>(GMT-02:00) Mid-Atlantic</option>
-                  <option value='Cape Verde Is.'>(GMT-01:00) Cape Verde Is.</option>
+                  <option value='Cape Verde Is.'>
+                    (GMT-01:00) Cape Verde Is.
+                  </option>
                   <option value='Azores'>(GMT) Azores</option>
                   <option value='Monrovia'>(GMT) Monrovia</option>
                   <option value='UTC'>(GMT) UTC</option>
@@ -562,7 +619,9 @@ const ProfileDetails: React.FC = () => {
                   <option value='Lisbon'>(GMT+01:00) Lisbon</option>
                   <option value='London'>(GMT+01:00) London</option>
                   <option value='Casablanca'>(GMT+01:00) Casablanca</option>
-                  <option value='West Central Africa'>(GMT+01:00) West Central Africa</option>
+                  <option value='West Central Africa'>
+                    (GMT+01:00) West Central Africa
+                  </option>
                   <option value='Belgrade'>(GMT+02:00) Belgrade</option>
                   <option value='Bratislava'>(GMT+02:00) Bratislava</option>
                   <option value='Budapest'>(GMT+02:00) Budapest</option>
@@ -598,7 +657,9 @@ const ProfileDetails: React.FC = () => {
                   <option value='Minsk'>(GMT+03:00) Minsk</option>
                   <option value='Jerusalem'>(GMT+03:00) Jerusalem</option>
                   <option value='Moscow'>(GMT+03:00) Moscow</option>
-                  <option value='St. Petersburg'>(GMT+03:00) St. Petersburg</option>
+                  <option value='St. Petersburg'>
+                    (GMT+03:00) St. Petersburg
+                  </option>
                   <option value='Volgograd'>(GMT+03:00) Volgograd</option>
                   <option value='Kuwait'>(GMT+03:00) Kuwait</option>
                   <option value='Riyadh'>(GMT+03:00) Riyadh</option>
@@ -619,7 +680,9 @@ const ProfileDetails: React.FC = () => {
                   <option value='Kolkata'>(GMT+05:30) Kolkata</option>
                   <option value='Mumbai'>(GMT+05:30) Mumbai</option>
                   <option value='New Delhi'>(GMT+05:30) New Delhi</option>
-                  <option value='Sri Jayawardenepura'>(GMT+05:30) Sri Jayawardenepura</option>
+                  <option value='Sri Jayawardenepura'>
+                    (GMT+05:30) Sri Jayawardenepura
+                  </option>
                   <option value='Kathmandu'>(GMT+05:45) Kathmandu</option>
                   <option value='Astana'>(GMT+06:00) Astana</option>
                   <option value='Dhaka'>(GMT+06:00) Dhaka</option>
@@ -657,7 +720,9 @@ const ProfileDetails: React.FC = () => {
                   <option value='Port Moresby'>(GMT+10:00) Port Moresby</option>
                   <option value='Solomon Is.'>(GMT+10:00) Solomon Is.</option>
                   <option value='Magadan'>(GMT+11:00) Magadan</option>
-                  <option value='New Caledonia'>(GMT+11:00) New Caledonia</option>
+                  <option value='New Caledonia'>
+                    (GMT+11:00) New Caledonia
+                  </option>
                   <option value='Fiji'>(GMT+12:00) Fiji</option>
                   <option value='Kamchatka'>(GMT+12:00) Kamchatka</option>
                   <option value='Marshall Is.'>(GMT+12:00) Marshall Is.</option>
@@ -667,19 +732,23 @@ const ProfileDetails: React.FC = () => {
                 </select>
                 {formik.touched.timeZone && formik.errors.timeZone && (
                   <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.timeZone}</div>
+                    <div className='fv-help-block'>
+                      {formik.errors.timeZone}
+                    </div>
                   </div>
                 )}
               </div>
             </div>
 
             <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label required fw-bold fs-6'>Currency</label>
+              <label className='col-lg-4 col-form-label required fw-bold fs-6'>
+                Currency
+              </label>
 
               <div className='col-lg-8 fv-row'>
                 <select
                   className='form-select form-select-solid form-select-lg'
-                  {...formik.getFieldProps('currency')}
+                  {...formik.getFieldProps("currency")}
                 >
                   <option value=''>Select a currency..</option>
                   <option value='USD'>USD - USA dollar</option>
@@ -692,14 +761,18 @@ const ProfileDetails: React.FC = () => {
                 </select>
                 {formik.touched.currencyCode && formik.errors.currencyCode && (
                   <div className='fv-plugins-message-container'>
-                    <div className='fv-help-block'>{formik.errors.currencyCode}</div>
+                    <div className='fv-help-block'>
+                      {formik.errors.currencyCode}
+                    </div>
                   </div>
                 )}
               </div>
             </div>
 
             <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label fw-bold fs-6'>Communication</label>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                Communication
+              </label>
 
               <div className='col-lg-8 fv-row'>
                 <div className='d-flex align-items-center mt-3'>
@@ -715,7 +788,7 @@ const ProfileDetails: React.FC = () => {
                             email: !data.communications?.email,
                             phone: data.communications?.phone,
                           },
-                        })
+                        });
                       }}
                     />
                     <span className='fw-bold ps-2 fs-6'>Email</span>
@@ -733,7 +806,7 @@ const ProfileDetails: React.FC = () => {
                             email: data.communications?.email,
                             phone: !data.communications?.phone,
                           },
-                        })
+                        });
                       }}
                     />
                     <span className='fw-bold ps-2 fs-6'>Phone</span>
@@ -743,7 +816,9 @@ const ProfileDetails: React.FC = () => {
             </div>
 
             <div className='row mb-0'>
-              <label className='col-lg-4 col-form-label fw-bold fs-6'>Allow Marketing</label>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                Allow Marketing
+              </label>
 
               <div className='col-lg-8 d-flex align-items-center'>
                 <div className='form-check form-check-solid form-switch fv-row'>
@@ -753,7 +828,7 @@ const ProfileDetails: React.FC = () => {
                     id='allowmarketing'
                     defaultChecked={data.allowMarketing}
                     onChange={() => {
-                      updateData({allowMarketing: !data.allowMarketing})
+                      updateData({ allowMarketing: !data.allowMarketing });
                     }}
                   />
                   <label className='form-check-label'></label>
@@ -763,11 +838,18 @@ const ProfileDetails: React.FC = () => {
           </div>
 
           <div className='card-footer d-flex justify-content-end py-6 px-9'>
-            <button type='submit' className='btn btn-primary' disabled={loading}>
-              {!loading && 'Save Changes'}
+            <button
+              type='submit'
+              className='btn btn-primary'
+              disabled={loading}
+            >
+              {!loading && "Save Changes"}
               {loading && (
-                <span className='indicator-progress' style={{display: 'block'}}>
-                  Please wait...{' '}
+                <span
+                  className='indicator-progress'
+                  style={{ display: "block" }}
+                >
+                  Please wait...{" "}
                   <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                 </span>
               )}
@@ -776,7 +858,7 @@ const ProfileDetails: React.FC = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {ProfileDetails}
+export { ProfileDetails };

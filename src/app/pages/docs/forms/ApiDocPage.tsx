@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React from "react";
 
 const ApiDocPage: React.FC = () => {
-
   return (
     <>
       {/*<RedocStandalone*/}
@@ -20,7 +19,7 @@ const ApiDocPage: React.FC = () => {
       {/*  }}*/}
       {/*/>*/}
     </>
-  )
-}
+  );
+};
 
-export {ApiDocPage}
+export { ApiDocPage };

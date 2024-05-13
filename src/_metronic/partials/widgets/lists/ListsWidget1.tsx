@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
-import {KTSVG} from '../../../helpers'
-import {Dropdown1} from '../../content/dropdown/Dropdown1'
+import React from "react";
+import { KTSVG } from "../../../helpers";
+import { Dropdown1 } from "../../content/dropdown/Dropdown1";
 
 type Props = {
-  className: string
-}
+  className: string;
+};
 
-const ListsWidget1: React.FC<Props> = ({className}) => {
+const ListsWidget1: React.FC<Props> = ({ className }) => {
   return (
     <div className={`card ${className}`}>
       {/* begin::Header */}
@@ -26,7 +26,10 @@ const ListsWidget1: React.FC<Props> = ({className}) => {
             data-kt-menu-placement='bottom-end'
             data-kt-menu-flip='top-end'
           >
-            <KTSVG path='/media/icons/duotune/general/gen024.svg' className='svg-icon-2' />
+            <KTSVG
+              path='/media/icons/duotune/general/gen024.svg'
+              className='svg-icon-2'
+            />
           </button>
           <Dropdown1 />
           {/* end::Menu */}
@@ -50,7 +53,10 @@ const ListsWidget1: React.FC<Props> = ({className}) => {
           {/* end::Symbol */}
           {/* begin::Text */}
           <div className='d-flex flex-column'>
-            <a href='#' className='text-dark text-hover-primary fs-6 fw-bolder'>
+            <a
+              href='#'
+              className='text-dark text-hover-primary fs-6 fw-bolder'
+            >
               Project Briefing
             </a>
             <span className='text-muted fw-bold'>Project Manager</span>
@@ -72,7 +78,10 @@ const ListsWidget1: React.FC<Props> = ({className}) => {
           {/* end::Symbol */}
           {/* begin::Text */}
           <div className='d-flex flex-column'>
-            <a href='#' className='text-dark text-hover-primary fs-6 fw-bolder'>
+            <a
+              href='#'
+              className='text-dark text-hover-primary fs-6 fw-bolder'
+            >
               Concept Design
             </a>
             <span className='text-muted fw-bold'>Art Director</span>
@@ -94,7 +103,10 @@ const ListsWidget1: React.FC<Props> = ({className}) => {
           {/* end::Symbol */}
           {/* begin::Text */}
           <div className='d-flex flex-column'>
-            <a href='#' className='text-dark text-hover-primary fs-6 fw-bolder'>
+            <a
+              href='#'
+              className='text-dark text-hover-primary fs-6 fw-bolder'
+            >
               Functional Logics
             </a>
             <span className='text-muted fw-bold'>Lead Developer</span>
@@ -116,7 +128,10 @@ const ListsWidget1: React.FC<Props> = ({className}) => {
           {/* end::Symbol */}
           {/* begin::Text */}
           <div className='d-flex flex-column'>
-            <a href='#' className='text-dark text-hover-primary fs-6 fw-bolder'>
+            <a
+              href='#'
+              className='text-dark text-hover-primary fs-6 fw-bolder'
+            >
               Development
             </a>
             <span className='text-muted fw-bold'>DevOps</span>
@@ -138,7 +153,10 @@ const ListsWidget1: React.FC<Props> = ({className}) => {
           {/* end::Symbol */}
           {/* begin::Text */}
           <div className='d-flex flex-column'>
-            <a href='#' className='text-dark text-hover-primary fs-6 fw-bolder'>
+            <a
+              href='#'
+              className='text-dark text-hover-primary fs-6 fw-bolder'
+            >
               Testing
             </a>
             <span className='text-muted fw-bold'>QA Managers</span>
@@ -149,7 +167,7 @@ const ListsWidget1: React.FC<Props> = ({className}) => {
       </div>
       {/* end::Body */}
     </div>
-  )
-}
+  );
+};
 
-export {ListsWidget1}
+export { ListsWidget1 };

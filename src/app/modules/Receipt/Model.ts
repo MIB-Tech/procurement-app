@@ -1,37 +1,38 @@
-import {AbstractModel} from '../../../_custom/types/types';
-import {ReceiptProductModel} from '../ReceiptProduct';
-import {VendorModel} from '../Vendor';
-import {PurchaseOrderModel} from '../PurchaseOrder';
-import {LineType, PurchaseOrderPrint} from '../PurchaseOrder/Model';
-import {PaymentModalityModel} from '../PaymentModality';
-import {ClinicModel} from '../Clinic'
-
+import { AbstractModel } from "../../../_custom/types/types";
+import { ReceiptProductModel } from "../ReceiptProduct";
+import { VendorModel } from "../Vendor";
+import { PurchaseOrderModel } from "../PurchaseOrder";
+import { LineType, PurchaseOrderPrint } from "../PurchaseOrder/Model";
+import { PaymentModalityModel } from "../PaymentModality";
+import { ClinicModel } from "../Clinic";
 
 type Model = {
-  receiptNumber: string
-  receivedAt?: string
-  externalRef?: string
-  receiptProducts: Array<ReceiptProductModel>
-  readonly vendor: VendorModel
-  readonly paymentModality: PaymentModalityModel
-  readonly purchaseOrders: Array<PurchaseOrderModel>
-} & AbstractModel
+  receiptNumber: string;
+  receivedAt?: string;
+  externalRef?: string;
+  receiptProducts: Array<ReceiptProductModel>;
+  readonly vendor: VendorModel;
+  readonly paymentModality: PaymentModalityModel;
+  readonly purchaseOrders: Array<PurchaseOrderModel>;
+} & AbstractModel;
 
 export type ReceiptLineProductPrint = {
-  type: LineType.Product
-  reference: string
-  designation: string
-  desiredProductQuantity: number
-} & Pick<ReceiptProductModel, 'quantity'>
+  type: LineType.Product;
+  reference: string;
+  designation: string;
+  desiredProductQuantity: number;
+} & Pick<ReceiptProductModel, "quantity">;
 export type ReceiptLineComponentPrint = {
-  type: LineType.Component
-} & Omit<ReceiptLineProductPrint, 'type'>
-export type ReceiptPrintLine = ReceiptLineProductPrint | ReceiptLineComponentPrint
+  type: LineType.Component;
+} & Omit<ReceiptLineProductPrint, "type">;
+export type ReceiptPrintLine =
+  | ReceiptLineProductPrint
+  | ReceiptLineComponentPrint;
 export type ReceiptPrint = {
-  lines: Array<ReceiptPrintLine>
-  clinic?: Pick<ClinicModel, 'name' |'address'>
-} & Pick<Model, 'receiptNumber' | 'receivedAt'>
-  & Pick<PurchaseOrderPrint, 'vendor' | 'paymentModality' | 'comment'>
+  lines: Array<ReceiptPrintLine>;
+  clinic?: Pick<ClinicModel, "name" | "address">;
+} & Pick<Model, "receiptNumber" | "receivedAt"> &
+  Pick<PurchaseOrderPrint, "vendor" | "paymentModality" | "comment">;
 
 // const EXAMPLE: ReceiptPrint = {
 //   'address': '',

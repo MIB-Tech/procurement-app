@@ -1,51 +1,60 @@
-import {ColumnMapping, ListingViewType, ModelMapping, ViewEnum} from '../../_custom/types/ModelMapping';
-import {StringFormat} from '../../_custom/Column/String/StringColumn';
-import axios from 'axios';
-import React from 'react';
-import {NumberFormat} from '../../_custom/Column/Number/NumberColumn';
-import {ColumnTypeEnum} from '../../_custom/types/types';
-import {toAbsoluteApi} from './utils';
-import moment from 'moment/moment';
-
+import {
+  ColumnMapping,
+  ListingViewType,
+  ModelMapping,
+  ViewEnum,
+} from "../../_custom/types/ModelMapping";
+import { StringFormat } from "../../_custom/Column/String/StringColumn";
+import axios from "axios";
+import React from "react";
+import { NumberFormat } from "../../_custom/Column/Number/NumberColumn";
+import { ColumnTypeEnum } from "../../_custom/types/types";
+import { toAbsoluteApi } from "./utils";
+import moment from "moment/moment";
 
 export const CREATED_AT_COLUMN: ColumnMapping<any> = {
   type: ColumnTypeEnum.String,
   format: StringFormat.Datetime,
-  title: 'CREATE_TIME',
+  title: "CREATE_TIME",
   nullable: true,
-  min: moment().format()
+  min: moment().format(),
 };
-
 
 export const ABSTRACT_FILE_LISTING_VIEW: ListingViewType<any> = {
   type: ViewEnum.Listing,
   sortColumns: {
     originalName: true,
-    size: true
+    size: true,
   },
   filterColumns: {
     originalName: true,
-    size: true
+    size: true,
   },
   columns: {
     originalName: {
-      render: ({item}) => {
-        const {contentUrl, originalName} = item;
+      render: ({ item }) => {
+        const { contentUrl, originalName } = item;
         if (!contentUrl) {
-
           return <span>{originalName}</span>;
         }
 
         return (
           <a
             href='#'
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
-              axios.post('/custom/download', {contentUrl}, {responseType: 'blob'})
+              axios
+                .post(
+                  "/custom/download",
+                  { contentUrl },
+                  { responseType: "blob" }
+                )
                 .then((response) => {
-                  const link = document.createElement('a');
-                  link.href = window.URL.createObjectURL(new Blob([response.data]));
-                  link.setAttribute('download', originalName || 'file');
+                  const link = document.createElement("a");
+                  link.href = window.URL.createObjectURL(
+                    new Blob([response.data])
+                  );
+                  link.setAttribute("download", originalName || "file");
                   document.body.appendChild(link);
                   link.click();
                 });
@@ -54,49 +63,51 @@ export const ABSTRACT_FILE_LISTING_VIEW: ListingViewType<any> = {
             {originalName}
           </a>
         );
-      }
+      },
     },
-    size: true
-  }
+    size: true,
+  },
 };
 export const ABSTRACT_IMAGE_LISTING_VIEW: ListingViewType<any> = {
   ...ABSTRACT_FILE_LISTING_VIEW,
   columns: {
     preview: {
-      render: ({item: {contentUrl}}) => (
+      render: ({ item: { contentUrl } }) => (
         <>
-          {
-            contentUrl && (
-              <div className='symbol symbol-50px bg-light'>
-                <img src={toAbsoluteApi(contentUrl)} alt=''/>
-              </div>
-            )
-          }
+          {contentUrl && (
+            <div className='symbol symbol-50px bg-light'>
+              <img
+                src={toAbsoluteApi(contentUrl)}
+                alt=''
+              />
+            </div>
+          )}
         </>
-      )
+      ),
     },
     ...ABSTRACT_FILE_LISTING_VIEW.columns,
-    dimensions: true
-  }
+    dimensions: true,
+  },
 };
-export const ABSTRACT_FILE_MAPPING: Omit<ModelMapping<any>, 'recoilState' | 'modelName'> = {
+export const ABSTRACT_FILE_MAPPING: Omit<
+  ModelMapping<any>,
+  "recoilState" | "modelName"
+> = {
   uploadable: true,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     originalName: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     size: {
       type: ColumnTypeEnum.Number,
-      format: NumberFormat.DecimalUnit
-    }
+      format: NumberFormat.DecimalUnit,
+    },
   },
-  views: [
-    ABSTRACT_FILE_LISTING_VIEW
-  ]
+  views: [ABSTRACT_FILE_LISTING_VIEW],
 };

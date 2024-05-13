@@ -1,18 +1,20 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
+import React from "react";
+import { KTSVG, toAbsoluteUrl } from "../../../helpers";
 
 type Props = {
-  className: string
-}
+  className: string;
+};
 
-const TablesWidget10: React.FC<Props> = ({className}) => {
+const TablesWidget10: React.FC<Props> = ({ className }) => {
   return (
     <div className={`card ${className}`}>
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
         <h3 className='card-title align-items-start flex-column'>
-          <span className='card-label fw-bolder fs-3 mb-1'>Members Statistics</span>
+          <span className='card-label fw-bolder fs-3 mb-1'>
+            Members Statistics
+          </span>
           <span className='text-muted mt-1 fw-bold fs-7'>Over 500 members</span>
         </h3>
         <div
@@ -28,7 +30,10 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
             // data-bs-toggle='modal'
             // data-bs-target='#kt_modal_invite_friends'
           >
-            <KTSVG path='media/icons/duotune/arrows/arr075.svg' className='svg-icon-3' />
+            <KTSVG
+              path='media/icons/duotune/arrows/arr075.svg'
+              className='svg-icon-3'
+            />
             New Member
           </a>
         </div>
@@ -66,16 +71,26 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
               <tr>
                 <td>
                   <div className='form-check form-check-sm form-check-custom form-check-solid'>
-                    <input className='form-check-input widget-9-check' type='checkbox' value='1' />
+                    <input
+                      className='form-check-input widget-9-check'
+                      type='checkbox'
+                      value='1'
+                    />
                   </div>
                 </td>
                 <td>
                   <div className='d-flex align-items-center'>
                     <div className='symbol symbol-45px me-5'>
-                      <img src={toAbsoluteUrl('/media/avatars/150-11.jpg')} alt='' />
+                      <img
+                        src={toAbsoluteUrl("/media/avatars/150-11.jpg")}
+                        alt=''
+                      />
                     </div>
                     <div className='d-flex justify-content-start flex-column'>
-                      <a href='#' className='text-dark fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-dark fw-bolder text-hover-primary fs-6'
+                      >
                         Ana Simmons
                       </a>
                       <span className='text-muted fw-bold text-muted d-block fs-7'>
@@ -85,7 +100,10 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                   </div>
                 </td>
                 <td>
-                  <a href='#' className='text-dark fw-bolder text-hover-primary d-block fs-6'>
+                  <a
+                    href='#'
+                    className='text-dark fw-bolder text-hover-primary d-block fs-6'
+                  >
                     Intertico
                   </a>
                   <span className='text-muted fw-bold text-muted d-block fs-7'>
@@ -101,7 +119,7 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                       <div
                         className='progress-bar bg-primary'
                         role='progressbar'
-                        style={{width: '50%'}}
+                        style={{ width: "50%" }}
                       ></div>
                     </div>
                   </div>
@@ -121,7 +139,10 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                       href='#'
                       className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
                     >
-                      <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
+                      <KTSVG
+                        path='/media/icons/duotune/art/art005.svg'
+                        className='svg-icon-3'
+                      />
                     </a>
                     <a
                       href='#'
@@ -138,16 +159,26 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
               <tr>
                 <td>
                   <div className='form-check form-check-sm form-check-custom form-check-solid'>
-                    <input className='form-check-input widget-9-check' type='checkbox' value='1' />
+                    <input
+                      className='form-check-input widget-9-check'
+                      type='checkbox'
+                      value='1'
+                    />
                   </div>
                 </td>
                 <td>
                   <div className='d-flex align-items-center'>
                     <div className='symbol symbol-45px me-5'>
-                      <img src={toAbsoluteUrl('/media/avatars/150-3.jpg')} alt='' />
+                      <img
+                        src={toAbsoluteUrl("/media/avatars/150-3.jpg")}
+                        alt=''
+                      />
                     </div>
                     <div className='d-flex justify-content-start flex-column'>
-                      <a href='#' className='text-dark fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-dark fw-bolder text-hover-primary fs-6'
+                      >
                         Jessie Clarcson
                       </a>
                       <span className='text-muted fw-bold text-muted d-block fs-7'>
@@ -157,7 +188,10 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                   </div>
                 </td>
                 <td>
-                  <a href='#' className='text-dark fw-bolder text-hover-primary d-block fs-6'>
+                  <a
+                    href='#'
+                    className='text-dark fw-bolder text-hover-primary d-block fs-6'
+                  >
                     Agoda
                   </a>
                   <span className='text-muted fw-bold text-muted d-block fs-7'>
@@ -173,7 +207,7 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                       <div
                         className='progress-bar bg-danger'
                         role='progressbar'
-                        style={{width: '70%'}}
+                        style={{ width: "70%" }}
                       ></div>
                     </div>
                   </div>
@@ -193,7 +227,10 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                       href='#'
                       className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
                     >
-                      <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
+                      <KTSVG
+                        path='/media/icons/duotune/art/art005.svg'
+                        className='svg-icon-3'
+                      />
                     </a>
                     <a
                       href='#'
@@ -210,16 +247,26 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
               <tr>
                 <td>
                   <div className='form-check form-check-sm form-check-custom form-check-solid'>
-                    <input className='form-check-input widget-9-check' type='checkbox' value='1' />
+                    <input
+                      className='form-check-input widget-9-check'
+                      type='checkbox'
+                      value='1'
+                    />
                   </div>
                 </td>
                 <td>
                   <div className='d-flex align-items-center'>
                     <div className='symbol symbol-45px me-5'>
-                      <img src={toAbsoluteUrl('/media/avatars/150-4.jpg')} alt='' />
+                      <img
+                        src={toAbsoluteUrl("/media/avatars/150-4.jpg")}
+                        alt=''
+                      />
                     </div>
                     <div className='d-flex justify-content-start flex-column'>
-                      <a href='#' className='text-dark fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-dark fw-bolder text-hover-primary fs-6'
+                      >
                         Lebron Wayde
                       </a>
                       <span className='text-muted fw-bold text-muted d-block fs-7'>
@@ -229,10 +276,15 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                   </div>
                 </td>
                 <td>
-                  <a href='#' className='text-dark fw-bolder text-hover-primary d-block fs-6'>
+                  <a
+                    href='#'
+                    className='text-dark fw-bolder text-hover-primary d-block fs-6'
+                  >
                     RoadGee
                   </a>
-                  <span className='text-muted fw-bold text-muted d-block fs-7'>Transportation</span>
+                  <span className='text-muted fw-bold text-muted d-block fs-7'>
+                    Transportation
+                  </span>
                 </td>
                 <td className='text-end'>
                   <div className='d-flex flex-column w-100 me-2'>
@@ -243,7 +295,7 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                       <div
                         className='progress-bar bg-success'
                         role='progressbar'
-                        style={{width: '60%'}}
+                        style={{ width: "60%" }}
                       ></div>
                     </div>
                   </div>
@@ -263,7 +315,10 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                       href='#'
                       className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
                     >
-                      <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
+                      <KTSVG
+                        path='/media/icons/duotune/art/art005.svg'
+                        className='svg-icon-3'
+                      />
                     </a>
                     <a
                       href='#'
@@ -280,16 +335,26 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
               <tr>
                 <td>
                   <div className='form-check form-check-sm form-check-custom form-check-solid'>
-                    <input className='form-check-input widget-9-check' type='checkbox' value='1' />
+                    <input
+                      className='form-check-input widget-9-check'
+                      type='checkbox'
+                      value='1'
+                    />
                   </div>
                 </td>
                 <td>
                   <div className='d-flex align-items-center'>
                     <div className='symbol symbol-45px me-5'>
-                      <img src={toAbsoluteUrl('/media/avatars/150-5.jpg')} alt='' />
+                      <img
+                        src={toAbsoluteUrl("/media/avatars/150-5.jpg")}
+                        alt=''
+                      />
                     </div>
                     <div className='d-flex justify-content-start flex-column'>
-                      <a href='#' className='text-dark fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-dark fw-bolder text-hover-primary fs-6'
+                      >
                         Natali Goodwin
                       </a>
                       <span className='text-muted fw-bold text-muted d-block fs-7'>
@@ -299,10 +364,15 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                   </div>
                 </td>
                 <td>
-                  <a href='#' className='text-dark fw-bolder text-hover-primary d-block fs-6'>
+                  <a
+                    href='#'
+                    className='text-dark fw-bolder text-hover-primary d-block fs-6'
+                  >
                     The Hill
                   </a>
-                  <span className='text-muted fw-bold text-muted d-block fs-7'>Insurance</span>
+                  <span className='text-muted fw-bold text-muted d-block fs-7'>
+                    Insurance
+                  </span>
                 </td>
                 <td className='text-end'>
                   <div className='d-flex flex-column w-100 me-2'>
@@ -313,7 +383,7 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                       <div
                         className='progress-bar bg-warning'
                         role='progressbar'
-                        style={{width: '50%'}}
+                        style={{ width: "50%" }}
                       ></div>
                     </div>
                   </div>
@@ -333,7 +403,10 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                       href='#'
                       className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
                     >
-                      <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
+                      <KTSVG
+                        path='/media/icons/duotune/art/art005.svg'
+                        className='svg-icon-3'
+                      />
                     </a>
                     <a
                       href='#'
@@ -350,16 +423,26 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
               <tr>
                 <td>
                   <div className='form-check form-check-sm form-check-custom form-check-solid'>
-                    <input className='form-check-input widget-9-check' type='checkbox' value='1' />
+                    <input
+                      className='form-check-input widget-9-check'
+                      type='checkbox'
+                      value='1'
+                    />
                   </div>
                 </td>
                 <td>
                   <div className='d-flex align-items-center'>
                     <div className='symbol symbol-45px me-5'>
-                      <img src={toAbsoluteUrl('/media/avatars/150-6.jpg')} alt='' />
+                      <img
+                        src={toAbsoluteUrl("/media/avatars/150-6.jpg")}
+                        alt=''
+                      />
                     </div>
                     <div className='d-flex justify-content-start flex-column'>
-                      <a href='#' className='text-dark fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-dark fw-bolder text-hover-primary fs-6'
+                      >
                         Kevin Leonard
                       </a>
                       <span className='text-muted fw-bold text-muted d-block fs-7'>
@@ -369,10 +452,15 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                   </div>
                 </td>
                 <td>
-                  <a href='#' className='text-dark fw-bolder text-hover-primary d-block fs-6'>
+                  <a
+                    href='#'
+                    className='text-dark fw-bolder text-hover-primary d-block fs-6'
+                  >
                     RoadGee
                   </a>
-                  <span className='text-muted fw-bold text-muted d-block fs-7'>Art Director</span>
+                  <span className='text-muted fw-bold text-muted d-block fs-7'>
+                    Art Director
+                  </span>
                 </td>
                 <td className='text-end'>
                   <div className='d-flex flex-column w-100 me-2'>
@@ -383,7 +471,7 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                       <div
                         className='progress-bar bg-info'
                         role='progressbar'
-                        style={{width: '90%'}}
+                        style={{ width: "90%" }}
                       ></div>
                     </div>
                   </div>
@@ -403,7 +491,10 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
                       href='#'
                       className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
                     >
-                      <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
+                      <KTSVG
+                        path='/media/icons/duotune/art/art005.svg'
+                        className='svg-icon-3'
+                      />
                     </a>
                     <a
                       href='#'
@@ -426,7 +517,7 @@ const TablesWidget10: React.FC<Props> = ({className}) => {
       </div>
       {/* begin::Body */}
     </div>
-  )
-}
+  );
+};
 
-export {TablesWidget10}
+export { TablesWidget10 };

@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React, {Fragment} from 'react'
-import {AsideMenuItem} from './AsideMenuItem'
-import {useAuth} from '../../../../_custom/hooks/UseAuth'
-import {ViewEnum} from '../../../../_custom/types/ModelMapping'
-import {Trans} from '../../../../_custom/components/Trans'
-import {CUSTOM_ROUTES} from '../../../../app/routing/PrivateRoutes'
-import {getRoutePrefix} from '../../../../_custom/utils'
-import {DisplayEnum} from '../../../../app/routing/Enums/DisplayEnum'
+import React, { Fragment } from "react";
+import { AsideMenuItem } from "./AsideMenuItem";
+import { useAuth } from "../../../../_custom/hooks/UseAuth";
+import { ViewEnum } from "../../../../_custom/types/ModelMapping";
+import { Trans } from "../../../../_custom/components/Trans";
+import { CUSTOM_ROUTES } from "../../../../app/routing/PrivateRoutes";
+import { getRoutePrefix } from "../../../../_custom/utils";
+import { DisplayEnum } from "../../../../app/routing/Enums/DisplayEnum";
 
 // const GROUPS = [
 //   {
@@ -21,15 +21,20 @@ import {DisplayEnum} from '../../../../app/routing/Enums/DisplayEnum'
 // ];
 
 export function AsideMenuMain() {
-  const auth = useAuth()
+  const auth = useAuth();
   const operations = auth.operations
-    .filter(({operationType, isMenuItem}) => isMenuItem && operationType === ViewEnum.Listing)
-    .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
+    .filter(
+      ({ operationType, isMenuItem }) =>
+        isMenuItem && operationType === ViewEnum.Listing
+    )
+    .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex);
 
   return (
     <>
       {CUSTOM_ROUTES.filter(
-        (route) => auth.isGranted(route.granted) && route.display.includes(DisplayEnum.SIDE_MENU)
+        (route) =>
+          auth.isGranted(route.granted) &&
+          route.display.includes(DisplayEnum.SIDE_MENU)
       ).map((route) => {
         return (
           <AsideMenuItem
@@ -38,11 +43,14 @@ export function AsideMenuMain() {
             title={<Trans id={route.title} />}
             icon={route.icon}
           />
-        )
+        );
       })}
 
       {operations
-        .filter(({operationType, isMenuItem}) => isMenuItem && operationType === ViewEnum.Listing)
+        .filter(
+          ({ operationType, isMenuItem }) =>
+            isMenuItem && operationType === ViewEnum.Listing
+        )
         .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
         .map((operation) => (
           <AsideMenuItem
@@ -208,5 +216,5 @@ export function AsideMenuMain() {
       {/*  </a>*/}
       {/*</div>*/}
     </>
-  )
+  );
 }

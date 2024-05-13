@@ -1,58 +1,66 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping'
-import {ColumnTypeEnum} from '../../../_custom/types/types'
-import {ModelEnum} from '../types'
-import {SelectField} from '../../../_custom/Column/controls/fields/SelectField/SelectField'
-import {StringFormat} from '../../../_custom/Column/String/StringColumn'
-import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn'
-import {PRODUCT_TYPES, ProductTypeEnum} from './Model'
-import React from 'react'
-import {FieldProps} from '../../../_custom/Column/controls/fields'
-import {useTrans} from '../../../_custom/components/Trans'
-import {I18nMessageKey} from '../../../_custom/i18n/I18nMessages'
-import {useFormikContext} from "formik";
-import {ModelAutocompleteField} from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
+import { SelectField } from "../../../_custom/Column/controls/fields/SelectField/SelectField";
+import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
+import { PRODUCT_TYPES, ProductTypeEnum } from "./Model";
+import React from "react";
+import { FieldProps } from "../../../_custom/Column/controls/fields";
+import { useTrans } from "../../../_custom/components/Trans";
+import { I18nMessageKey } from "../../../_custom/i18n/I18nMessages";
+import { useFormikContext } from "formik";
+import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
 import {
   CompoundFilter,
   CompoundFilterOperator,
-  PropertyFilterOperator
+  PropertyFilterOperator,
 } from "../../../_custom/ListingView/Filter/Filter.types";
-import {CategoryModel} from "../Category";
+import { CategoryModel } from "../Category";
 
 const ProductTypeField = (props: FieldProps & { disabled?: boolean }) => {
-  const {trans} = useTrans()
+  const { trans } = useTrans();
 
   return (
     <SelectField
-      options={PRODUCT_TYPES.map(productType => productType.id)}
-      getOptionLabel={option => trans({id: PRODUCT_TYPES.find(o => o.id === option)?.label || (option as I18nMessageKey)})}
-      getOptionVariant={option => PRODUCT_TYPES.find(o => o.id === option)?.color}
+      options={PRODUCT_TYPES.map((productType) => productType.id)}
+      getOptionLabel={(option) =>
+        trans({
+          id:
+            PRODUCT_TYPES.find((o) => o.id === option)?.label ||
+            (option as I18nMessageKey),
+        })
+      }
+      getOptionVariant={(option) =>
+        PRODUCT_TYPES.find((o) => o.id === option)?.color
+      }
       {...props}
       size='sm'
     />
-  )
-}
+  );
+};
 
-const SubCategoryField = ({...props}: FieldProps) => (
+const SubCategoryField = ({ ...props }: FieldProps) => (
   <ModelAutocompleteField
     modelName={ModelEnum.Category}
     {...props}
     size='sm'
-    getParams={filter => {
+    getParams={(filter) => {
       const _filter: CompoundFilter<ModelEnum.Category> = {
         operator: CompoundFilterOperator.And,
         filters: [
           filter,
           {
-            property: 'parent',
-            operator: PropertyFilterOperator.IsNotNull
-          }
-        ]
-      }
+            property: "parent",
+            operator: PropertyFilterOperator.IsNotNull,
+          },
+        ],
+      };
 
-      return _filter
+      return _filter;
     }}
   />
-)
+);
 
 const mapping: ModelMapping<ModelEnum.Product> = {
   modelName: ModelEnum.Product,
@@ -102,7 +110,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     category: {
       type: ModelEnum.Category,
       nullable: true,
-      title:'SUB_CATEGORY'
+      title: "SUB_CATEGORY",
     },
     components: {
       type: ModelEnum.Component,
@@ -150,11 +158,11 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     },
     {
       type: ViewEnum.Create,
-      slotProps: {item: {sm: 4, md: 3, lg: 2}},
+      slotProps: { item: { sm: 4, md: 3, lg: 2 } },
       fields: {
         productType: {
           defaultValue: ProductTypeEnum.Simple,
-          render: ({fieldProps, item}) => (
+          render: ({ fieldProps, item }) => (
             <ProductTypeField
               {...fieldProps}
               disabled={item.components.length > 0}
@@ -162,63 +170,63 @@ const mapping: ModelMapping<ModelEnum.Product> = {
           ),
         },
         designation: {
-          slotProps: {root: {sm: 8, md: 6, lg: 4}},
+          slotProps: { root: { sm: 8, md: 6, lg: 4 } },
         },
         accountingAccount: true,
         measurementUnit: {
-          defaultValue: 'U',
+          defaultValue: "U",
         },
         vatRate: {
-          defaultValue: .2,
-          render: ({fieldProps}) => (
+          defaultValue: 0.2,
+          render: ({ fieldProps }) => (
             <SelectField
-              size="sm"
-              options={[0, .07, .1, .14, .2]}
-              getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
-              placeholder="TVA"
+              size='sm'
+              options={[0, 0.07, 0.1, 0.14, 0.2]}
+              getOptionLabel={(varRate) => `${(varRate * 100).toFixed(0)} %`}
+              placeholder='TVA'
               {...fieldProps}
             />
           ),
         },
         ref: true,
         category: {
-          render: ({fieldProps}) => <SubCategoryField {...fieldProps} />
+          render: ({ fieldProps }) => <SubCategoryField {...fieldProps} />,
         },
         section: true,
         mobilised: {
-          slotProps: {root: {sm: 2, md: 1.5, lg: 1}},
+          slotProps: { root: { sm: 2, md: 1.5, lg: 1 } },
         },
         stockable: {
-          slotProps: {root: {sm: 2, md: 1.5, lg: 1}},
+          slotProps: { root: { sm: 2, md: 1.5, lg: 1 } },
         },
         note: {
-          slotProps: {root: {sm: 12, md: 12, lg: 12}},
+          slotProps: { root: { sm: 12, md: 12, lg: 12 } },
         },
         components: {
-          display: ({item}) => item.productType === ProductTypeEnum.Combined,
-          slotProps: {root: {sm: 12, md: 12, lg: 12}},
+          display: ({ item }) => item.productType === ProductTypeEnum.Combined,
+          slotProps: { root: { sm: 12, md: 12, lg: 12 } },
         },
       },
     },
     {
       type: ViewEnum.Update,
-      slotProps: {item: {sm: 4, md: 3, lg: 2}},
+      slotProps: { item: { sm: 4, md: 3, lg: 2 } },
       fields: {
         designation: {
-          slotProps: {root: {sm: 8, md: 6, lg: 4}},
+          slotProps: { root: { sm: 8, md: 6, lg: 4 } },
         },
         accountingAccount: true,
         measurementUnit: {
-          defaultValue: 'U',
+          defaultValue: "U",
         },
         vatRate: {
-          defaultValue: .2,
-          render: ({fieldProps}) => (
+          defaultValue: 0.2,
+          render: ({ fieldProps }) => (
             <SelectField
-              size="sm"
-              options={[0, .07, .1, .14, .2]}
-              getOptionLabel={varRate => `${(varRate * 100).toFixed(0)} %`}
-              placeholder="TVA"
+              size='sm'
+              options={[0, 0.07, 0.1, 0.14, 0.2]}
+              getOptionLabel={(varRate) => `${(varRate * 100).toFixed(0)} %`}
+              placeholder='TVA'
               {...fieldProps}
             />
           ),
@@ -227,17 +235,17 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         category: true,
         section: true,
         mobilised: {
-          slotProps: {root: {sm: 2, md: 1.5, lg: 1}},
+          slotProps: { root: { sm: 2, md: 1.5, lg: 1 } },
         },
         stockable: {
-          slotProps: {root: {sm: 2, md: 1.5, lg: 1}},
+          slotProps: { root: { sm: 2, md: 1.5, lg: 1 } },
         },
         note: {
-          slotProps: {root: {sm: 12, md: 12, lg: 12}},
+          slotProps: { root: { sm: 12, md: 12, lg: 12 } },
         },
         components: {
-          display: ({item}) => item.productType === ProductTypeEnum.Combined,
-          slotProps: {root: {sm: 12, md: 12, lg: 12}},
+          display: ({ item }) => item.productType === ProductTypeEnum.Combined,
+          slotProps: { root: { sm: 12, md: 12, lg: 12 } },
         },
       },
     },
@@ -258,6 +266,6 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       },
     },
   ],
-}
+};
 
-export default mapping
+export default mapping;

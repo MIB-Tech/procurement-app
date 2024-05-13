@@ -1,1 +1,1 @@
-export {SliderField} from './SliderField'
+export { SliderField } from "./SliderField";

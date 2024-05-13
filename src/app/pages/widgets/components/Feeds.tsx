@@ -1,11 +1,11 @@
-import React, {FC} from 'react'
+import React, { FC } from "react";
 import {
   FeedsWidget2,
   FeedsWidget3,
   FeedsWidget4,
   FeedsWidget5,
   FeedsWidget6,
-} from '../../../../_metronic/partials/widgets'
+} from "../../../../_metronic/partials/widgets";
 
 const Feeds: FC = () => {
   return (
@@ -28,7 +28,7 @@ const Feeds: FC = () => {
       </div>
       {/* end::Col */}
     </div>
-  )
-}
+  );
+};
 
-export {Feeds}
+export { Feeds };

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC, useState} from 'react'
-import clsx from 'clsx'
+import { FC, useState } from "react";
+import clsx from "clsx";
 import {
   toAbsoluteUrl,
   defaultMessages,
@@ -8,96 +8,105 @@ import {
   MessageModel,
   UserInfoModel,
   messageFromClient,
-} from '../../helpers'
+} from "../../helpers";
 
 type Props = {
-  isDrawer?: boolean
-}
+  isDrawer?: boolean;
+};
 
-const bufferMessages = defaultMessages
+const bufferMessages = defaultMessages;
 
-const ChatInner: FC<Props> = ({isDrawer = false}) => {
-  const [chatUpdateFlag, toggleChatUpdateFlat] = useState<boolean>(false)
-  const [message, setMessage] = useState<string>('')
-  const [messages, setMessages] = useState<MessageModel[]>(bufferMessages)
-  const [userInfos] = useState<UserInfoModel[]>(defaultUserInfos)
+const ChatInner: FC<Props> = ({ isDrawer = false }) => {
+  const [chatUpdateFlag, toggleChatUpdateFlat] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+  const [messages, setMessages] = useState<MessageModel[]>(bufferMessages);
+  const [userInfos] = useState<UserInfoModel[]>(defaultUserInfos);
 
   const sendMessage = () => {
     const newMessage: MessageModel = {
       user: 2,
-      type: 'out',
+      type: "out",
       text: message,
-      time: 'Just now',
-    }
+      time: "Just now",
+    };
 
-    bufferMessages.push(newMessage)
-    setMessages(bufferMessages)
-    toggleChatUpdateFlat(!chatUpdateFlag)
-    setMessage('')
+    bufferMessages.push(newMessage);
+    setMessages(bufferMessages);
+    toggleChatUpdateFlat(!chatUpdateFlag);
+    setMessage("");
     setTimeout(() => {
-      bufferMessages.push(messageFromClient)
-      setMessages(() => bufferMessages)
-      toggleChatUpdateFlat((flag) => !flag)
-    }, 1000)
-  }
+      bufferMessages.push(messageFromClient);
+      setMessages(() => bufferMessages);
+      toggleChatUpdateFlat((flag) => !flag);
+    }, 1000);
+  };
 
   const onEnterPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.keyCode === 13 && e.shiftKey === false) {
-      e.preventDefault()
-      sendMessage()
+      e.preventDefault();
+      sendMessage();
     }
-  }
+  };
 
   return (
     <div
       className='card-body'
-      id={isDrawer ? 'kt_drawer_chat_messenger_body' : 'kt_chat_messenger_body'}
+      id={isDrawer ? "kt_drawer_chat_messenger_body" : "kt_chat_messenger_body"}
     >
       <div
-        className={clsx('scroll-y me-n5 pe-5', {'h-300px h-lg-auto': !isDrawer})}
+        className={clsx("scroll-y me-n5 pe-5", {
+          "h-300px h-lg-auto": !isDrawer,
+        })}
         data-kt-element='messages'
         data-kt-scroll='true'
         data-kt-scroll-activate='{default: false, lg: true}'
         data-kt-scroll-max-height='auto'
         data-kt-scroll-dependencies={
           isDrawer
-            ? '#kt_drawer_chat_messenger_header, #kt_drawer_chat_messenger_footer'
-            : '#kt_header, #kt_toolbar, #kt_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer'
+            ? "#kt_drawer_chat_messenger_header, #kt_drawer_chat_messenger_footer"
+            : "#kt_header, #kt_toolbar, #kt_footer, #kt_chat_messenger_header, #kt_chat_messenger_footer"
         }
         data-kt-scroll-wrappers={
-          isDrawer ? '#kt_drawer_chat_messenger_body' : '#kt_content, #kt_chat_messenger_body'
+          isDrawer
+            ? "#kt_drawer_chat_messenger_body"
+            : "#kt_content, #kt_chat_messenger_body"
         }
-        data-kt-scroll-offset={isDrawer ? '0px' : '-2px'}
+        data-kt-scroll-offset={isDrawer ? "0px" : "-2px"}
       >
         {messages.map((message, index) => {
-          const userInfo = userInfos[message.user]
-          const state = message.type === 'in' ? 'info' : 'primary'
-          const templateAttr = {}
+          const userInfo = userInfos[message.user];
+          const state = message.type === "in" ? "info" : "primary";
+          const templateAttr = {};
           if (message.template) {
-            Object.defineProperty(templateAttr, 'data-kt-element', {
+            Object.defineProperty(templateAttr, "data-kt-element", {
               value: `template-${message.type}`,
-            })
+            });
           }
-          const contentClass = `${isDrawer ? '' : 'd-flex'} justify-content-${
-            message.type === 'in' ? 'start' : 'end'
-          } mb-10`
+          const contentClass = `${isDrawer ? "" : "d-flex"} justify-content-${
+            message.type === "in" ? "start" : "end"
+          } mb-10`;
           return (
             <div
               key={`message${index}`}
-              className={clsx('d-flex', contentClass, 'mb-10', {'d-none': message.template})}
+              className={clsx("d-flex", contentClass, "mb-10", {
+                "d-none": message.template,
+              })}
               {...templateAttr}
             >
               <div
                 className={clsx(
-                  'd-flex flex-column align-items',
-                  `align-items-${message.type === 'in' ? 'start' : 'end'}`
+                  "d-flex flex-column align-items",
+                  `align-items-${message.type === "in" ? "start" : "end"}`
                 )}
               >
                 <div className='d-flex align-items-center mb-2'>
-                  {message.type === 'in' ? (
+                  {message.type === "in" ? (
                     <>
                       <div className='symbol  symbol-35px symbol-circle '>
-                        <img alt='Pic' src={toAbsoluteUrl(`/media/${userInfo.avatar}`)} />
+                        <img
+                          alt='Pic'
+                          src={toAbsoluteUrl(`/media/${userInfo.avatar}`)}
+                        />
                       </div>
                       <div className='ms-3'>
                         <a
@@ -106,13 +115,17 @@ const ChatInner: FC<Props> = ({isDrawer = false}) => {
                         >
                           {userInfo.name}
                         </a>
-                        <span className='text-muted fs-7 mb-1'>{message.time}</span>
+                        <span className='text-muted fs-7 mb-1'>
+                          {message.time}
+                        </span>
                       </div>
                     </>
                   ) : (
                     <>
                       <div className='me-3'>
-                        <span className='text-muted fs-7 mb-1'>{message.time}</span>
+                        <span className='text-muted fs-7 mb-1'>
+                          {message.time}
+                        </span>
                         <a
                           href='#'
                           className='fs-5 fw-bolder text-gray-900 text-hover-primary ms-1'
@@ -121,7 +134,10 @@ const ChatInner: FC<Props> = ({isDrawer = false}) => {
                         </a>
                       </div>
                       <div className='symbol  symbol-35px symbol-circle '>
-                        <img alt='Pic' src={toAbsoluteUrl(`/media/${userInfo.avatar}`)} />
+                        <img
+                          alt='Pic'
+                          src={toAbsoluteUrl(`/media/${userInfo.avatar}`)}
+                        />
                       </div>
                     </>
                   )}
@@ -129,23 +145,27 @@ const ChatInner: FC<Props> = ({isDrawer = false}) => {
 
                 <div
                   className={clsx(
-                    'p-5 rounded',
+                    "p-5 rounded",
                     `bg-light-${state}`,
-                    'text-dark fw-bold mw-lg-400px',
-                    `text-${message.type === 'in' ? 'start' : 'end'}`
+                    "text-dark fw-bold mw-lg-400px",
+                    `text-${message.type === "in" ? "start" : "end"}`
                   )}
                   data-kt-element='message-text'
-                  dangerouslySetInnerHTML={{__html: message.text}}
+                  dangerouslySetInnerHTML={{ __html: message.text }}
                 ></div>
               </div>
             </div>
-          )
+          );
         })}
       </div>
 
       <div
         className='card-footer pt-4'
-        id={isDrawer ? 'kt_drawer_chat_messenger_footer' : 'kt_chat_messenger_footer'}
+        id={
+          isDrawer
+            ? "kt_drawer_chat_messenger_footer"
+            : "kt_chat_messenger_footer"
+        }
       >
         <textarea
           className='form-control form-control-flush mb-3'
@@ -187,7 +207,7 @@ const ChatInner: FC<Props> = ({isDrawer = false}) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {ChatInner}
+export { ChatInner };

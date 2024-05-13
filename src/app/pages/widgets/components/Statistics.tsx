@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, { FC } from "react";
 import {
   StatisticsWidget1,
   StatisticsWidget2,
@@ -6,7 +6,7 @@ import {
   StatisticsWidget4,
   StatisticsWidget5,
   StatisticsWidget6,
-} from '../../../../_metronic/partials/widgets'
+} from "../../../../_metronic/partials/widgets";
 
 const Statistics: FC = () => {
   return (
@@ -263,7 +263,7 @@ const Statistics: FC = () => {
       </div>
       {/* end::Row */}
     </>
-  )
-}
+  );
+};
 
-export {Statistics}
+export { Statistics };

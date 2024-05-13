@@ -1,16 +1,16 @@
-import React, {FC, HTMLAttributes, useRef, useState} from 'react'
-import {Overlay, Tooltip} from 'react-bootstrap'
-import {nanoid} from '@reduxjs/toolkit'
-import {OverlayTriggerProps} from 'react-bootstrap/OverlayTrigger'
-
+import React, { FC, HTMLAttributes, useRef, useState } from "react";
+import { Overlay, Tooltip } from "react-bootstrap";
+import { nanoid } from "@reduxjs/toolkit";
+import { OverlayTriggerProps } from "react-bootstrap/OverlayTrigger";
 
 type HelpProps = {
-  overlay?: any
-  duration?: number
-} & Omit<OverlayTriggerProps, 'overlay' | 'children'> & HTMLAttributes<HTMLSpanElement>
-const Help: FC<HelpProps> = ({overlay, ...props}) => {
-  const [show, setShow] = useState(false)
-  const target = useRef(null)
+  overlay?: any;
+  duration?: number;
+} & Omit<OverlayTriggerProps, "overlay" | "children"> &
+  HTMLAttributes<HTMLSpanElement>;
+const Help: FC<HelpProps> = ({ overlay, ...props }) => {
+  const [show, setShow] = useState(false);
+  const target = useRef(null);
 
   return (
     <>
@@ -24,13 +24,13 @@ const Help: FC<HelpProps> = ({overlay, ...props}) => {
       <Overlay
         target={target.current}
         show={show}
-        placement="top"
+        placement='top'
         onEnter={() => {
-          setShow(true)
+          setShow(true);
         }}
         {...props}
       >
-        {tooltipProps => (
+        {(tooltipProps) => (
           <Tooltip
             id={nanoid()}
             {...tooltipProps}
@@ -40,6 +40,6 @@ const Help: FC<HelpProps> = ({overlay, ...props}) => {
         )}
       </Overlay>
     </>
-  )
-}
-export {Help}
+  );
+};
+export { Help };

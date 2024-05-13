@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC} from 'react'
-import {KTSVG} from '../../../helpers'
+import { FC } from "react";
+import { KTSVG } from "../../../helpers";
 
 const Item8: FC = () => {
   return (
@@ -19,8 +19,11 @@ const Item8: FC = () => {
       <div className='timeline-content mt-n1'>
         <div className='pe-3 mb-5'>
           <div className='fs-5 fw-bold mb-2'>
-            New order{' '}
-            <a href='#' className='text-primary fw-bolder me-1'>
+            New order{" "}
+            <a
+              href='#'
+              className='text-primary fw-bolder me-1'
+            >
               #67890
             </a>
             is placed for Workshow Planning & Budget Estimation
@@ -29,14 +32,17 @@ const Item8: FC = () => {
           <div className='d-flex align-items-center mt-1 fs-6'>
             <div className='text-muted me-2 fs-7'>Placed at 4:23 PM by</div>
 
-            <a href='#' className='text-primary fw-bolder me-1'>
+            <a
+              href='#'
+              className='text-primary fw-bolder me-1'
+            >
               Jimmy Bold
             </a>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {Item8}
+export { Item8 };

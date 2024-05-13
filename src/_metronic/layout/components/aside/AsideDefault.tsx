@@ -1,21 +1,21 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {FC} from 'react'
-import {Link} from 'react-router-dom'
-import clsx from 'clsx'
-import {useLayout} from '../../core'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
-import {AsideMenu} from './AsideMenu'
-import { Logo } from '../../../../_custom/components/Logo';
+import React, { FC } from "react";
+import { Link } from "react-router-dom";
+import clsx from "clsx";
+import { useLayout } from "../../core";
+import { KTSVG, toAbsoluteUrl } from "../../../helpers";
+import { AsideMenu } from "./AsideMenu";
+import { Logo } from "../../../../_custom/components/Logo";
 
 const AsideDefault: FC = () => {
-  const {config, classes} = useLayout()
-  const {aside} = config
+  const { config, classes } = useLayout();
+  const { aside } = config;
 
   return (
     <div
       id='kt_aside'
-      className={clsx('aside', classes.aside.join(' '))}
+      className={clsx("aside", classes.aside.join(" "))}
       data-kt-drawer='true'
       data-kt-drawer-name='aside'
       data-kt-drawer-activate='{default: true, lg: false}'
@@ -25,12 +25,13 @@ const AsideDefault: FC = () => {
       data-kt-drawer-toggle='#kt_aside_mobile_toggle'
     >
       {/* begin::Brand */}
-      <div className='aside-logo flex-column-auto' id='kt_aside_logo'>
+      <div
+        className='aside-logo flex-column-auto'
+        id='kt_aside_logo'
+      >
         {/* begin::Logo */}
         <Link to='/'>
-          <Logo
-            className='h-40px logo'
-          />
+          <Logo className='h-40px logo' />
         </Link>
         {/* end::Logo */}
 
@@ -45,8 +46,8 @@ const AsideDefault: FC = () => {
             data-kt-toggle-name='aside-minimize'
           >
             <KTSVG
-              path={'/media/icons/duotune/arrows/arr080.svg'}
-              className={'svg-icon-1 rotate-180'}
+              path={"/media/icons/duotune/arrows/arr080.svg"}
+              className={"svg-icon-1 rotate-180"}
             />
           </div>
         )}
@@ -79,7 +80,7 @@ const AsideDefault: FC = () => {
       {/*</div>*/}
       {/* end::Footer */}
     </div>
-  )
-}
+  );
+};
 
-export {AsideDefault}
+export { AsideDefault };

@@ -1,71 +1,70 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-import {OPERATIONS_TYPE_OPTIONS} from "./Model";
-import {StringFormat} from "../../../_custom/Column/String/StringColumn";
-
+import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
+import { OPERATIONS_TYPE_OPTIONS } from "./Model";
+import { StringFormat } from "../../../_custom/Column/String/StringColumn";
 
 const mapping: ModelMapping<ModelEnum.Operation> = {
   modelName: ModelEnum.Operation,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     title: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     operationType: {
       type: ColumnTypeEnum.String,
-      format:StringFormat.Select,
-      options: OPERATIONS_TYPE_OPTIONS
+      format: StringFormat.Select,
+      options: OPERATIONS_TYPE_OPTIONS,
     },
     isMenuItem: {
       type: ColumnTypeEnum.Boolean,
-      nullable: true
+      nullable: true,
     },
     suffix: {
       type: ColumnTypeEnum.String,
-      readOnly: true
+      readOnly: true,
     },
     icon: {
       type: ColumnTypeEnum.String,
-      readOnly: true
+      readOnly: true,
     },
     resource: {
-      type: ModelEnum.Resource
+      type: ModelEnum.Resource,
     },
     roles: {
       type: ModelEnum.Role,
-      multiple: true
-    }
+      multiple: true,
+    },
   },
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {},
     },
     {
       type: ViewEnum.Create,
-      slotProps: {item: {sm: 4}},
+      slotProps: { item: { sm: 4 } },
       fields: {
         title: true,
         operationType: true,
         resource: true,
-        isMenuItem: true
-      }
+        isMenuItem: true,
+      },
     },
     {
       type: ViewEnum.Update,
-      slotProps: {item: {sm: 4}},
+      slotProps: { item: { sm: 4 } },
       fields: {
         title: true,
         operationType: true,
         resource: true,
-        isMenuItem: true
-      }
+        isMenuItem: true,
+      },
     },
     {
       type: ViewEnum.Detail,
@@ -74,10 +73,10 @@ const mapping: ModelMapping<ModelEnum.Operation> = {
         operationType: true,
         roles: true,
         resource: true,
-        isMenuItem: true
-      }
-    }
-  ]
+        isMenuItem: true,
+      },
+    },
+  ],
 };
 
 export default mapping;

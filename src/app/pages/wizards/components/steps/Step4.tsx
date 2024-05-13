@@ -1,6 +1,6 @@
-import React, {FC} from 'react'
-import {KTSVG, toAbsoluteUrl} from '../../../../../_metronic/helpers'
-import {Field, ErrorMessage} from 'formik'
+import React, { FC } from "react";
+import { KTSVG, toAbsoluteUrl } from "../../../../../_metronic/helpers";
+import { Field, ErrorMessage } from "formik";
 
 const Step4: FC = () => {
   return (
@@ -10,8 +10,11 @@ const Step4: FC = () => {
 
         <div className='text-gray-400 fw-bold fs-6'>
           If you need more info, please check out
-          <a href='/dashboard' className='text-primary fw-bolder'>
-            {' '}
+          <a
+            href='/dashboard'
+            className='text-primary fw-bolder'
+          >
+            {" "}
             Help Page
           </a>
           .
@@ -40,7 +43,9 @@ const Step4: FC = () => {
       </div>
 
       <div className='d-flex flex-column mb-7 fv-row'>
-        <label className='required fs-6 fw-bold form-label mb-2'>Card Number</label>
+        <label className='required fs-6 fw-bold form-label mb-2'>
+          Card Number
+        </label>
 
         <div className='position-relative'>
           <Field
@@ -54,14 +59,18 @@ const Step4: FC = () => {
           </div>
 
           <div className='position-absolute translate-middle-y top-50 end-0 me-5'>
-            <img src={toAbsoluteUrl('/media/svg/card-logos/visa.svg')} alt='' className='h-25px' />
             <img
-              src={toAbsoluteUrl('/media/svg/card-logos/mastercard.svg')}
+              src={toAbsoluteUrl("/media/svg/card-logos/visa.svg")}
               alt=''
               className='h-25px'
             />
             <img
-              src={toAbsoluteUrl('/media/svg/card-logos/american-express.svg')}
+              src={toAbsoluteUrl("/media/svg/card-logos/mastercard.svg")}
+              alt=''
+              className='h-25px'
+            />
+            <img
+              src={toAbsoluteUrl("/media/svg/card-logos/american-express.svg")}
               alt=''
               className='h-25px'
             />
@@ -71,11 +80,17 @@ const Step4: FC = () => {
 
       <div className='row mb-10'>
         <div className='col-md-8 fv-row'>
-          <label className='required fs-6 fw-bold form-label mb-2'>Expiration Date</label>
+          <label className='required fs-6 fw-bold form-label mb-2'>
+            Expiration Date
+          </label>
 
           <div className='row fv-row'>
             <div className='col-6'>
-              <Field as='select' name='cardExpiryMonth' className='form-select form-select-solid'>
+              <Field
+                as='select'
+                name='cardExpiryMonth'
+                className='form-select form-select-solid'
+              >
                 <option></option>
                 <option value='1'>1</option>
                 <option value='2'>2</option>
@@ -96,7 +111,11 @@ const Step4: FC = () => {
             </div>
 
             <div className='col-6'>
-              <Field as='select' name='cardExpiryYear' className='form-select form-select-solid'>
+              <Field
+                as='select'
+                name='cardExpiryYear'
+                className='form-select form-select-solid'
+              >
                 <option></option>
                 <option value='2021'>2021</option>
                 <option value='2022'>2022</option>
@@ -141,7 +160,10 @@ const Step4: FC = () => {
             </div>
 
             <div className='position-absolute translate-middle-y top-50 end-0 me-3'>
-              <KTSVG path='/media/icons/duotune/finance/fin002.svg' className='svg-icon-2hx' />
+              <KTSVG
+                path='/media/icons/duotune/finance/fin002.svg'
+                className='svg-icon-2hx'
+              />
             </div>
           </div>
         </div>
@@ -149,19 +171,28 @@ const Step4: FC = () => {
 
       <div className='d-flex flex-stack'>
         <div className='me-5'>
-          <label className='fs-6 fw-bold form-label'>Save Card for further billing?</label>
+          <label className='fs-6 fw-bold form-label'>
+            Save Card for further billing?
+          </label>
           <div className='fs-7 fw-bold text-gray-400'>
             If you need more info, please check budget planning
           </div>
         </div>
 
         <label className='form-check form-switch form-check-custom form-check-solid'>
-          <Field className='form-check-input' type='checkbox' value='1' checked={true} />
-          <span className='form-check-label fw-bold text-gray-400'>Save Card</span>
+          <Field
+            className='form-check-input'
+            type='checkbox'
+            value='1'
+            checked={true}
+          />
+          <span className='form-check-label fw-bold text-gray-400'>
+            Save Card
+          </span>
         </label>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {Step4}
+export { Step4 };

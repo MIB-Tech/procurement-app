@@ -1,45 +1,44 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-import {StringFormat} from '../../../_custom/Column/String/StringColumn';
-
+import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
+import { StringFormat } from "../../../_custom/Column/String/StringColumn";
 
 const mapping: ModelMapping<ModelEnum.VendorOffer> = {
   modelName: ModelEnum.VendorOffer,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     status: {
       type: ColumnTypeEnum.String,
     },
     receiveAt: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Datetime
+      format: StringFormat.Datetime,
     },
     quoteDate: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Date
+      format: StringFormat.Date,
     },
     VATIncluded: {
-      type: ColumnTypeEnum.Boolean
+      type: ColumnTypeEnum.Boolean,
     },
     quoteNumber: {
       type: ColumnTypeEnum.Number,
     },
     note: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     vendor: {
       type: ModelEnum.Vendor,
     },
     vendorOfferProducts: {
       type: ModelEnum.VendorOffer,
-      multiple: true
-    }
+      multiple: true,
+    },
   },
   views: [
     {
@@ -52,7 +51,7 @@ const mapping: ModelMapping<ModelEnum.VendorOffer> = {
         receiveAt: true,
         status: true,
         VATIncluded: true,
-      }
+      },
     },
     {
       type: ViewEnum.Create,
@@ -64,7 +63,7 @@ const mapping: ModelMapping<ModelEnum.VendorOffer> = {
         receiveAt: true,
         status: true,
         VATIncluded: true,
-      }
+      },
     },
     {
       type: ViewEnum.Update,
@@ -72,9 +71,9 @@ const mapping: ModelMapping<ModelEnum.VendorOffer> = {
         note: true,
         vatIncluded: true,
         status: true,
-      }
-    }
-  ]
+      },
+    },
+  ],
 };
 
 export default mapping;

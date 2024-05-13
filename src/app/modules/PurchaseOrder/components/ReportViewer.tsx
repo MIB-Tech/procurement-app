@@ -1,27 +1,32 @@
-import React, {useEffect} from 'react';
-import {Stimulsoft} from 'stimulsoft-reports-js/Scripts/stimulsoft.viewer';
-import {toAbsoluteUrl} from '../../../../_metronic/helpers';
-import {v4} from 'uuid';
+import React, { useEffect } from "react";
+import { Stimulsoft } from "stimulsoft-reports-js/Scripts/stimulsoft.viewer";
+import { toAbsoluteUrl } from "../../../../_metronic/helpers";
+import { v4 } from "uuid";
 
 type ReportViewerProps = {
-  fileName: string
-  params?: object
-}
+  fileName: string;
+  params?: object;
+};
 
 const id = v4();
 
-const ReportViewer: React.FC<ReportViewerProps> = ({fileName, params}) => {
+const ReportViewer: React.FC<ReportViewerProps> = ({ fileName, params }) => {
   useEffect(() => {
     const report = new Stimulsoft.Report.StiReport();
     report.loadFile(toAbsoluteUrl(`/stimulsoft/reports/${fileName}`));
-    report.regData('JsonData', 'JsonData', params);
-    const viewer = new Stimulsoft.Viewer.StiViewer(undefined, 'StiViewer', false);
-    viewer.options.toolbar.viewMode = Stimulsoft.Viewer.StiWebViewMode.Continuous;
+    report.regData("JsonData", "JsonData", params);
+    const viewer = new Stimulsoft.Viewer.StiViewer(
+      undefined,
+      "StiViewer",
+      false
+    );
+    viewer.options.toolbar.viewMode =
+      Stimulsoft.Viewer.StiWebViewMode.Continuous;
     viewer.report = report;
     viewer.renderHtml(id);
   }, [fileName, params]);
 
-  return <div id={id}/>;
+  return <div id={id} />;
 };
 
 export default ReportViewer;

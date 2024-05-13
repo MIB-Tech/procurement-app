@@ -1,53 +1,57 @@
-import {CreateViewType, ModelMapping, UpdateViewType, ViewEnum} from '../../../_custom/types/ModelMapping'
-import {ColumnTypeEnum} from '../../../_custom/types/types'
-import {ModelEnum} from '../types'
-import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField'
-
+import {
+  CreateViewType,
+  ModelMapping,
+  UpdateViewType,
+  ViewEnum,
+} from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
+import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
 
 const mapping: ModelMapping<ModelEnum.Vendor> = {
   modelName: ModelEnum.Vendor,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     name: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     code: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     ice: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     email: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     phoneNumber: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     secondaryPhoneNumber: {
       type: ColumnTypeEnum.String,
-      nullable: true
+      nullable: true,
     },
     defaultAddress: {
-      type: ModelEnum.VendorAddress
+      type: ModelEnum.VendorAddress,
     },
     productPricing: {
       type: ModelEnum.ProductPricing,
-      multiple: true
+      multiple: true,
     },
     addresses: {
       type: ModelEnum.VendorAddress,
       multiple: true,
-      embeddedForm: true
+      embeddedForm: true,
     },
     paymentModality: {
       type: ModelEnum.PaymentModality,
       nullable: true,
-    }
+    },
   },
   views: [
     {
@@ -55,12 +59,12 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
       columns: {
         code: true,
         ice: true,
-        phoneNumber: true
-      }
+        phoneNumber: true,
+      },
     },
     {
       type: ViewEnum.Create,
-      slotProps: {item: {sm: 4}},
+      slotProps: { item: { sm: 4 } },
       fields: {
         name: true,
         code: true,
@@ -70,7 +74,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         secondaryPhoneNumber: true,
         paymentModality: true,
         addresses: {
-          slotProps: {root: {sm: 12}}
+          slotProps: { root: { sm: 12 } },
         },
         // addresses: {
         //   render: ({fieldProps}) => (
@@ -89,11 +93,11 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         //     />
         //   )
         // },
-      }
+      },
     },
     {
       type: ViewEnum.Update,
-      slotProps: {item: {sm: 4}},
+      slotProps: { item: { sm: 4 } },
       fields: {
         name: true,
         code: true,
@@ -103,7 +107,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         secondaryPhoneNumber: true,
         paymentModality: true,
         addresses: {
-          slotProps: {root: {sm: 12}}
+          slotProps: { root: { sm: 12 } },
         },
         // addresses: {
         //   render: ({fieldProps}) => (
@@ -122,7 +126,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         //     />
         //   )
         // },
-      }
+      },
     },
     {
       type: ViewEnum.Detail,
@@ -135,10 +139,10 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         phoneNumber: true,
         secondaryPhoneNumber: true,
         productPricing: true,
-        paymentModality: true
-      }
-    }
-  ]
+        paymentModality: true,
+      },
+    },
+  ],
 };
 
 export default mapping;

@@ -1,15 +1,19 @@
-import {FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping'
-import {ColumnTypeEnum} from '../../../_custom/types/types'
-import {ModelEnum} from '../types'
-import {StringFormat} from '../../../_custom/Column/String/StringColumn'
-import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField'
-import React from 'react'
-import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField'
-import moment from 'moment'
-import {ArraySchema} from 'yup'
-import {PrintReceiptButton} from './PrintReceiptButton'
-import {PurchaseOrdersField} from './PurchaseOrdersField'
-import {ReceiptModel} from './index'
+import {
+  FormFields,
+  ModelMapping,
+  ViewEnum,
+} from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
+import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import React from "react";
+import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
+import moment from "moment";
+import { ArraySchema } from "yup";
+import { PrintReceiptButton } from "./PrintReceiptButton";
+import { PurchaseOrdersField } from "./PurchaseOrdersField";
+import { ReceiptModel } from "./index";
 
 // const ReceiptProducts = ({item}: { item: Model<ModelEnum.Receipt> }) => {
 //   const {collection} = useCollectionQuery({
@@ -92,81 +96,81 @@ import {ReceiptModel} from './index'
 const formFields: FormFields<ModelEnum.Receipt> = {
   externalRef: true,
   receivedAt: {
-    defaultValue: moment().format()
+    defaultValue: moment().format(),
   },
   vendor: {
     slotProps: {
       root: {
-        sm: 3
-      }
+        sm: 3,
+      },
     },
-    render: ({fieldProps, item}) => (
+    render: ({ fieldProps, item }) => (
       <ModelAutocompleteField
         size='sm'
         modelName={ModelEnum.Vendor}
         {...fieldProps}
         disabled={item.purchaseOrders.length > 0}
       />
-    )
+    ),
   },
   purchaseOrders: {
     slotProps: {
       root: {
-        sm: 9
-      }
+        sm: 9,
+      },
     },
-    render: ({fieldProps}) => <PurchaseOrdersField {...fieldProps}/>
+    render: ({ fieldProps }) => <PurchaseOrdersField {...fieldProps} />,
   },
   receiptProducts: {
     slotProps: {
       root: {
-        sm: 12
-      }
+        sm: 12,
+      },
     },
     // display: ({item}) => item.purchaseOrders.length > 0,
-    render: ({item, fieldProps}) => (
+    render: ({ item, fieldProps }) => (
       <NestedArrayField
         modelName={ModelEnum.ReceiptProduct}
         disableInsert
         disableDelete
         {...fieldProps}
       />
-    )
-  }
-}
+    ),
+  },
+};
 
 const mapping: ModelMapping<ModelEnum.Receipt> = {
   modelName: ModelEnum.Receipt,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     receiptNumber: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     receivedAt: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Date,
-      nullable: true
+      nullable: true,
     },
     externalRef: {
       type: ColumnTypeEnum.String,
-      nullable: true
+      nullable: true,
     },
     vendor: {
       type: ModelEnum.Vendor,
-      readOnly: true
+      readOnly: true,
     },
     paymentModality: {
       type: ModelEnum.PaymentModality,
-      readOnly: true
+      readOnly: true,
     },
     purchaseOrders: {
       type: ModelEnum.PurchaseOrder,
-      multiple: true
+      multiple: true,
     },
     receiptProducts: {
       type: ModelEnum.ReceiptProduct,
@@ -174,67 +178,75 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
       embeddedForm: true,
       disableInsert: true,
       min: 1,
-      schema: (schema: ArraySchema<any>) => schema.test(
-        'VALIDATION.RECEIPT.RECEIPT_PRODUCTS',
-        'VALIDATION.RECEIPT.RECEIPT_PRODUCTS',
-        (_, {parent}) => {
-          const receipt = parent as ReceiptModel
-          if (receipt.id) return true
+      schema: (schema: ArraySchema<any>) =>
+        schema.test(
+          "VALIDATION.RECEIPT.RECEIPT_PRODUCTS",
+          "VALIDATION.RECEIPT.RECEIPT_PRODUCTS",
+          (_, { parent }) => {
+            const receipt = parent as ReceiptModel;
+            if (receipt.id) return true;
 
-          return receipt.receiptProducts.some(({received, components}) => {
-            return received || components.some(component => component.received)
-          });
-        }
-      )
-    }
+            return receipt.receiptProducts.some(({ received, components }) => {
+              return (
+                received || components.some((component) => component.received)
+              );
+            });
+          }
+        ),
+    },
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
         receivedAt: true,
-        purchaseOrders: true
-      }
+        purchaseOrders: true,
+      },
     },
     {
       type: ViewEnum.Detail,
       customActions: [
-        {render: ({item}) => <PrintReceiptButton item={item}/>},
+        { render: ({ item }) => <PrintReceiptButton item={item} /> },
       ],
       columns: {
         receiptNumber: true,
         externalRef: true,
         receivedAt: true,
         receiptProducts: true,
-      }
+      },
     },
     {
       type: ViewEnum.Create,
-      getMutateInput: ({vendor, purchaseOrders, ...item}) => ({
+      getMutateInput: ({ vendor, purchaseOrders, ...item }) => ({
         ...item,
-        receiptProducts: item.receiptProducts?.map(receiptProduct => ({
-          ...receiptProduct,
-          // @ts-ignore
-          desiredProduct: receiptProduct.desiredProduct['@id'],
-          quantity: receiptProduct.received ? receiptProduct.quantity : 0,
-          note: receiptProduct.received ? receiptProduct.note : '',
-          components: receiptProduct.components
-            .filter(component => component.received)
-            .map(component => ({
-              ...component,
-              // @ts-ignore
-              purchaseOrderProductComponent: component.purchaseOrderProductComponent['@id']
-            }))
-        })).filter(receiptProduct => {
-          return receiptProduct.received || receiptProduct.components.length > 0;
-        })
+        receiptProducts: item.receiptProducts
+          ?.map((receiptProduct) => ({
+            ...receiptProduct,
+            // @ts-ignore
+            desiredProduct: receiptProduct.desiredProduct["@id"],
+            quantity: receiptProduct.received ? receiptProduct.quantity : 0,
+            note: receiptProduct.received ? receiptProduct.note : "",
+            components: receiptProduct.components
+              .filter((component) => component.received)
+              .map((component) => ({
+                ...component,
+                // @ts-ignore
+                purchaseOrderProductComponent:
+                  component.purchaseOrderProductComponent["@id"],
+              })),
+          }))
+          .filter((receiptProduct) => {
+            return (
+              receiptProduct.received || receiptProduct.components.length > 0
+            );
+          }),
       }),
       slotProps: {
         item: {
-          sm: 6
-        }
+          sm: 6,
+        },
       },
-      fields: formFields
+      fields: formFields,
     },
     {
       type: ViewEnum.Update,
@@ -244,24 +256,24 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
         receiptProducts: {
           slotProps: {
             root: {
-              sm: 12
-            }
+              sm: 12,
+            },
           },
-        }
+        },
       },
       slotProps: {
         item: {
-          sm: 6
-        }
-      }
+          sm: 6,
+        },
+      },
     },
     {
       type: ViewEnum.Detail,
       columns: {
-        receiptProducts: true
-      }
-    }
-  ]
+        receiptProducts: true,
+      },
+    },
+  ],
 };
 
 export default mapping;

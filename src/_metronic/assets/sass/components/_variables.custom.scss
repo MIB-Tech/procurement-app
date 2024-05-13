@@ -8,7 +8,7 @@
 // Primary
 $primary: if(isDarkMode(), #209dd5, #1599d4);
 $primary-active: if(isDarkMode(), #3e98be, #49a7d2);
-$primary-light: if(isDarkMode(), #1C2C5D, #ecf6fd);
+$primary-light: if(isDarkMode(), #1c2c5d, #ecf6fd);
 $primary-inverse: #ffffff;
 
 // Success
@@ -35,7 +35,6 @@ $warning-active: if(isDarkMode(), #ee9d01, #f1bc00);
 $warning-light: if(isDarkMode(), #392f28, #fff8dd);
 $warning-inverse: #ffffff;
 
-
 $enable-validation-icons: false !default;
 //$form-feedback-icon-invalid: url('./media/icons/duotune/arrows/arr066.svg');
 
@@ -52,28 +51,28 @@ $card-px: 1rem !default;
 
 // Header
 $header-config: (
-// Default Mode
+  // Default Mode
   default:
-  (
-    height: (
-      desktop: 65px,
-      tablet-and-mobile: 55px,
+    (
+      height: (
+        desktop: 65px,
+        tablet-and-mobile: 55px,
+      ),
+      bg-color: if(isDarkMode(), #1e1e2d, #ffffff),
     ),
-    bg-color: if(isDarkMode(), #1e1e2d, #ffffff),
-  ),
   // Fixed Mode
   fixed:
-  (
-    height: (
-      desktop: 45px,
-      tablet-and-mobile: 45px,
-    ),
-    z-index: 100,
-    bg-color: if(isDarkMode(), #1e1e2d, #ffffff),
-    box-shadow: if(isDarkMode(), none, 0px 10px 30px 0px rgba(82, 63, 105, 0.05)),
-  )
+    (
+      height: (
+        desktop: 45px,
+        tablet-and-mobile: 45px,
+      ),
+      z-index: 100,
+      bg-color: if(isDarkMode(), #1e1e2d, #ffffff),
+      box-shadow:
+        if(isDarkMode(), none, 0px 10px 30px 0px rgba(82, 63, 105, 0.05)),
+    )
 ) !default;
-
 
 // Aside
 $aside-config: (
@@ -93,14 +92,15 @@ $aside-config: (
   // Aside minimized width for desktop mode
   box-shadow: if(isDarkMode(), none, 0 0 28px 0 rgba(82, 63, 105, 0.05)),
   // Aside box shadow
-  minimized-hover-box-shadow: if(isDarkMode(), none, 5px 0px 10px rgba(70, 78, 95, 0.075))
-  // Monimized hover box shadow,
+  minimized-hover-box-shadow:
+    if(isDarkMode(), none, 5px 0px 10px rgba(70, 78, 95, 0.075))
+    // Monimized hover box shadow,,
 ) !default;
 
 $content-spacing: (
   desktop: 10px,
   // Padding for desktop mode
-  tablet-and-mobile: 7.5px // Padding for tablet and mobile modes,
+  tablet-and-mobile: 7.5px // Padding for tablet and mobile modes,,
 ) !default;
 
 $code-margin: 0px !default;
@@ -137,18 +137,18 @@ $form-check-input-width-lg: 1.75rem !default;
 
 $modal-inner-padding: 1rem !default;
 $grid-breakpoints: (
-        xs: 0,
-        sm: 576px,
-        md: 768px,
-        lg: 992px,
-        xl: 1300px,
-        xxl: 1600px,
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1300px,
+  xxl: 1600px,
 ) !default;
 $container-max-widths: (
-        xs: 0,
-        sm: 576px,
-        md: 768px,
-        lg: 992px,
-        xl: 1300px,
-        xxl: 1600px,
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1300px,
+  xxl: 1600px,
 ) !default;

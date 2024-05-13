@@ -1,26 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useEffect, useRef} from 'react'
-import {Carousel} from 'bootstrap'
+import React, { useEffect, useRef } from "react";
+import { Carousel } from "bootstrap";
 
 type Props = {
-  className: string
-  innerPadding?: string
-}
+  className: string;
+  innerPadding?: string;
+};
 
-const StatsWidget9: React.FC<Props> = ({className, innerPadding = '', children}) => {
-  const carouselRef = useRef<HTMLDivElement | null>(null)
+const StatsWidget9: React.FC<Props> = ({
+  className,
+  innerPadding = "",
+  children,
+}) => {
+  const carouselRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    const element = carouselRef.current
+    const element = carouselRef.current;
     if (!element) {
-      return
+      return;
     }
 
-    const carousel = new Carousel(element)
+    const carousel = new Carousel(element);
     return function cleanUp() {
-      carousel.dispose()
-    }
-  }, [])
+      carousel.dispose();
+    };
+  }, []);
 
   return (
     <div className={`card ${className}`}>
@@ -69,7 +73,9 @@ const StatsWidget9: React.FC<Props> = ({className, innerPadding = '', children})
                   UI/UX Design Updates
                 </h3>
 
-                <p className='text-primary fs-1 fw-bolder pt-3 mb-0'>11:15AM - 12:30PM</p>
+                <p className='text-primary fs-1 fw-bolder pt-3 mb-0'>
+                  11:15AM - 12:30PM
+                </p>
               </div>
             </div>
 
@@ -79,7 +85,9 @@ const StatsWidget9: React.FC<Props> = ({className, innerPadding = '', children})
                   UI/UX Design Updates
                 </h3>
 
-                <p className='text-primary fs-1 fw-bolder pt-3 mb-0'>16:15AM - 11:20PM</p>
+                <p className='text-primary fs-1 fw-bolder pt-3 mb-0'>
+                  16:15AM - 11:20PM
+                </p>
               </div>
             </div>
 
@@ -89,7 +97,9 @@ const StatsWidget9: React.FC<Props> = ({className, innerPadding = '', children})
                   UI/UX Design Updates
                 </h3>
 
-                <p className='text-primary fs-1 fw-bolder pt-3 mb-0'>13:15AM - 14:30PM</p>
+                <p className='text-primary fs-1 fw-bolder pt-3 mb-0'>
+                  13:15AM - 14:30PM
+                </p>
               </div>
             </div>
           </div>
@@ -104,7 +114,7 @@ const StatsWidget9: React.FC<Props> = ({className, innerPadding = '', children})
       </div>
       {/* end::Footer */}
     </div>
-  )
-}
+  );
+};
 
-export {StatsWidget9}
+export { StatsWidget9 };

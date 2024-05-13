@@ -1,19 +1,26 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import clsx from 'clsx'
-import React from 'react'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
-import {Dropdown1} from '../../content/dropdown/Dropdown1'
+import clsx from "clsx";
+import React from "react";
+import { KTSVG, toAbsoluteUrl } from "../../../helpers";
+import { Dropdown1 } from "../../content/dropdown/Dropdown1";
 
 type Props = {
-  className: string
-  color: string
-  image: string
-  title: string
-  date: string
-  progress: string
-}
+  className: string;
+  color: string;
+  image: string;
+  title: string;
+  date: string;
+  progress: string;
+};
 
-const MixedWidget4: React.FC<Props> = ({className, color, image, title, date, progress}) => {
+const MixedWidget4: React.FC<Props> = ({
+  className,
+  color,
+  image,
+  title,
+  date,
+  progress,
+}) => {
   return (
     <div className={`card ${className}`}>
       {/* begin::Body */}
@@ -25,14 +32,21 @@ const MixedWidget4: React.FC<Props> = ({className, color, image, title, date, pr
             {/* begin:Image */}
             <div className='symbol symbol-60px me-5'>
               <span className={clsx(`symbol-label`, `bg-${color}-light`)}>
-                <img src={toAbsoluteUrl(image)} className='h-50 align-self-center' alt='' />
+                <img
+                  src={toAbsoluteUrl(image)}
+                  className='h-50 align-self-center'
+                  alt=''
+                />
               </span>
             </div>
             {/* end:Image */}
 
             {/* begin:Title */}
             <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pr-3'>
-              <a href='#' className='text-dark fw-bolder text-hover-primary fs-5'>
+              <a
+                href='#'
+                className='text-dark fw-bolder text-hover-primary fs-5'
+              >
                 {title}
               </a>
 
@@ -51,7 +65,10 @@ const MixedWidget4: React.FC<Props> = ({className, color, image, title, date, pr
               data-kt-menu-placement='bottom-end'
               data-kt-menu-flip='top-end'
             >
-              <KTSVG path='/media/icons/duotune/general/gen024.svg' className='svg-icon-2' />
+              <KTSVG
+                path='/media/icons/duotune/general/gen024.svg'
+                className='svg-icon-2'
+              />
             </button>
             <Dropdown1 />
           </div>
@@ -67,7 +84,7 @@ const MixedWidget4: React.FC<Props> = ({className, color, image, title, date, pr
             <div
               className={`progress-bar bg-${color}`}
               role='progressbar'
-              style={{width: progress}}
+              style={{ width: progress }}
             ></div>
           </div>
         </div>
@@ -84,7 +101,10 @@ const MixedWidget4: React.FC<Props> = ({className, color, image, title, date, pr
               data-bs-toggle='tooltip'
               title='Ana Stone'
             >
-              <img src={toAbsoluteUrl('/media/avatars/150-1.jpg')} alt='' />
+              <img
+                src={toAbsoluteUrl("/media/avatars/150-1.jpg")}
+                alt=''
+              />
             </a>
 
             <a
@@ -93,7 +113,10 @@ const MixedWidget4: React.FC<Props> = ({className, color, image, title, date, pr
               data-bs-toggle='tooltip'
               title='Mark Larson'
             >
-              <img src={toAbsoluteUrl('/media/avatars/150-4.jpg')} alt='' />
+              <img
+                src={toAbsoluteUrl("/media/avatars/150-4.jpg")}
+                alt=''
+              />
             </a>
 
             <a
@@ -102,11 +125,22 @@ const MixedWidget4: React.FC<Props> = ({className, color, image, title, date, pr
               data-bs-toggle='tooltip'
               title='Sam Harris'
             >
-              <img src={toAbsoluteUrl('/media/avatars/150-8.jpg')} alt='' />
+              <img
+                src={toAbsoluteUrl("/media/avatars/150-8.jpg")}
+                alt=''
+              />
             </a>
 
-            <a href='#' className='symbol symbol-35px' data-bs-toggle='tooltip' title='Alice Micto'>
-              <img src={toAbsoluteUrl('/media/avatars/150-9.jpg')} alt='' />
+            <a
+              href='#'
+              className='symbol symbol-35px'
+              data-bs-toggle='tooltip'
+              title='Alice Micto'
+            >
+              <img
+                src={toAbsoluteUrl("/media/avatars/150-9.jpg")}
+                alt=''
+              />
             </a>
           </div>
         </div>
@@ -114,7 +148,7 @@ const MixedWidget4: React.FC<Props> = ({className, color, image, title, date, pr
       </div>
       {/* end::Body */}
     </div>
-  )
-}
+  );
+};
 
-export {MixedWidget4}
+export { MixedWidget4 };

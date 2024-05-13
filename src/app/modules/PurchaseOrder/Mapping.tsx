@@ -1,33 +1,40 @@
-import {FormFields, ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping'
-import {ColumnTypeEnum} from '../../../_custom/types/types'
-import {ModelEnum} from '../types'
-import {StringFormat} from '../../../_custom/Column/String/StringColumn'
-import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn'
-import {RadioField} from '../../../_custom/Column/controls/fields/RadioField/RadioField'
+import {
+  FormFields,
+  ModelMapping,
+  ViewEnum,
+} from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
+import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
+import { RadioField } from "../../../_custom/Column/controls/fields/RadioField/RadioField";
 import {
   CLINIC_STATUS_OPTIONS,
   QUANTITY_STATUS_OPTIONS,
   QuantityStatusEnum,
   VALIDATION_STATUS_OPTIONS,
   ValidationStatusEnum,
-} from './Model'
-import moment from 'moment/moment'
-import React from 'react'
-import {PrintPurchaseOrderButton} from './components/PrintPurchaseOrderButton'
-import {GenerateReceiptButton} from './components/GenerateReceiptButton'
-import {GenerateInvoiceButton} from './components/GenerateInvoiceButton'
-import {ModelAutocompleteField} from '../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField'
-import {RoleKeyEnum} from '../Role/Model'
-import {CompoundFilterOperator, PropertyFilterOperator} from '../../../_custom/ListingView/Filter/Filter.types'
-import {NumberUnit} from '../../../_custom/components/NumberUnit'
+} from "./Model";
+import moment from "moment/moment";
+import React from "react";
+import { PrintPurchaseOrderButton } from "./components/PrintPurchaseOrderButton";
+import { GenerateReceiptButton } from "./components/GenerateReceiptButton";
+import { GenerateInvoiceButton } from "./components/GenerateInvoiceButton";
+import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import { RoleKeyEnum } from "../Role/Model";
+import {
+  CompoundFilterOperator,
+  PropertyFilterOperator,
+} from "../../../_custom/ListingView/Filter/Filter.types";
+import { NumberUnit } from "../../../_custom/components/NumberUnit";
 
 const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   vendor: {
-    render: ({fieldProps, item}) => (
+    render: ({ fieldProps, item }) => (
       <ModelAutocompleteField
         modelName={ModelEnum.Vendor}
         {...fieldProps}
-        size="sm"
+        size='sm'
         disabled={item.purchaseOrderProducts.length > 0}
       />
     ),
@@ -37,12 +44,12 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   },
   taxIncluded: {
     defaultValue: true,
-    render: ({item: {purchaseOrderProducts}}) => (
+    render: ({ item: { purchaseOrderProducts } }) => (
       <RadioField
-        size="sm"
-        name="taxIncluded"
+        size='sm'
+        name='taxIncluded'
         options={[true, false]}
-        getOptionLabel={taxIncluded => taxIncluded ? 'TTC' : 'HT'}
+        getOptionLabel={(taxIncluded) => (taxIncluded ? "TTC" : "HT")}
         disabled={purchaseOrderProducts.length > 0}
         scrollDisabled
       />
@@ -51,16 +58,16 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   ref: true,
   externalRef: true,
   desiredDeliveryDate: {
-    defaultValue: moment().add(1, 'days').format(),
+    defaultValue: moment().add(1, "days").format(),
   },
   currency: true,
   category: true,
   clinic: {
-    render: ({fieldProps, item}) => (
+    render: ({ fieldProps, item }) => (
       <ModelAutocompleteField
         modelName={ModelEnum.Clinic}
         {...fieldProps}
-        size="sm"
+        size='sm'
         disabled={item.purchaseOrderProducts.length > 0}
       />
     ),
@@ -72,13 +79,13 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
         lg: 4,
         md: 4,
         xl: 4,
-      }
-    }
+      },
+    },
   },
   validationStatus: {
     grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin],
     defaultValue: ValidationStatusEnum.Pending,
-    display: props => !!props.item.id,
+    display: (props) => !!props.item.id,
   },
   purchaseOrderProducts: {
     slotProps: {
@@ -89,7 +96,8 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
         xl: 12,
       },
     },
-    display: ({item}) => typeof item.taxIncluded === 'boolean' && !!item.vendor && !!item.clinic,
+    display: ({ item }) =>
+      typeof item.taxIncluded === "boolean" && !!item.vendor && !!item.clinic,
   },
   comment: {
     slotProps: {
@@ -107,9 +115,9 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
         sm: 6,
         lg: 6,
         md: 6,
-        xl: 6
-      }
-    }
+        xl: 6,
+      },
+    },
   },
   attachments: {
     slotProps: {
@@ -121,8 +129,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrder> = {
       },
     },
   },
-}
-
+};
 
 const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
   modelName: ModelEnum.PurchaseOrder,
@@ -206,7 +213,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     comment: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Text,
-      nullable: true
+      nullable: true,
     },
     createdAt: {
       type: ColumnTypeEnum.String,
@@ -217,7 +224,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     status: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Select,
-      title: 'DELIVERY_STATUS',
+      title: "DELIVERY_STATUS",
       options: QUANTITY_STATUS_OPTIONS,
     },
     buyer: {
@@ -237,7 +244,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     category: {
       type: ModelEnum.PurchaseOrderCategory,
       nullable: true,
-      title: 'NATURE',
+      title: "NATURE",
       //exportable: true
     },
     paymentModality: {
@@ -263,21 +270,22 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
     },
     referents: {
       type: ModelEnum.User,
-      multiple: true
-    }
+      multiple: true,
+    },
   },
   views: [
     {
       type: ViewEnum.Listing,
-      itemOperationRoutes: ({operations, item}) => operations.filter(({operationType}) => {
-        switch (operationType) {
-          case ViewEnum.Update:
-          case ViewEnum.Delete:
-            return item.status === QuantityStatusEnum.Unreceived
-          default:
-            return true
-        }
-      }),
+      itemOperationRoutes: ({ operations, item }) =>
+        operations.filter(({ operationType }) => {
+          switch (operationType) {
+            case ViewEnum.Update:
+            case ViewEnum.Delete:
+              return item.status === QuantityStatusEnum.Unreceived;
+            default:
+              return true;
+          }
+        }),
       filterColumns: {
         orderNumber: true,
         ref: true,
@@ -295,7 +303,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           quickFilter: true,
         },
         buyer: true,
-        clinic: true
+        clinic: true,
       },
       sortColumns: {
         createdAt: true,
@@ -308,7 +316,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         createdAt: true,
         desiredDeliveryDate: true,
         totalExclTax: {
-          render: ({item}) => (
+          render: ({ item }) => (
             <NumberUnit
               value={item.totalExclTax}
               unit={item.currency?.code}
@@ -316,7 +324,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           ),
         },
         totalInclTax: {
-          render: ({item}) => (
+          render: ({ item }) => (
             <NumberUnit
               value={item.totalInclTax}
               unit={item.currency?.code}
@@ -336,14 +344,16 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         validationStatus: true,
         validatedBy: {
           grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Buyer],
-          display: ({item}) => item.validationStatus === ValidationStatusEnum.Validated,
+          display: ({ item }) =>
+            item.validationStatus === ValidationStatusEnum.Validated,
         },
         validatedAt: {
-          display: ({item}) => item.validationStatus === ValidationStatusEnum.Validated,
+          display: ({ item }) =>
+            item.validationStatus === ValidationStatusEnum.Validated,
         },
         status: true,
         taxIncluded: {
-          render: ({item: {taxIncluded}}) => taxIncluded ? 'TTC' : 'HT',
+          render: ({ item: { taxIncluded } }) => (taxIncluded ? "TTC" : "HT"),
         },
         ref: true,
         externalRef: true,
@@ -358,7 +368,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         paymentModality: true,
         invoice: true,
         totalExclTax: {
-          render: ({item}) => (
+          render: ({ item }) => (
             <NumberUnit
               value={item.totalExclTax}
               unit={item.currency?.code}
@@ -366,7 +376,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           ),
         },
         totalVatTax: {
-          render: ({item}) => (
+          render: ({ item }) => (
             <NumberUnit
               value={item.totalVatTax}
               unit={item.currency?.code}
@@ -374,7 +384,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           ),
         },
         totalDiscount: {
-          render: ({item}) => (
+          render: ({ item }) => (
             <NumberUnit
               value={item.totalDiscount}
               unit={item.currency?.code}
@@ -382,7 +392,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           ),
         },
         totalInclTax: {
-          render: ({item}) => (
+          render: ({ item }) => (
             <NumberUnit
               value={item.totalInclTax}
               unit={item.currency?.code}
@@ -391,47 +401,49 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         },
         clinic: true,
         clinicStatus: true,
-        referents: true
+        referents: true,
       },
       customActions: [
         {
-          render: ({item}) => {
-            const {validationStatus} = item;
-            if (validationStatus !== ValidationStatusEnum.Validated) return null;
+          render: ({ item }) => {
+            const { validationStatus } = item;
+            if (validationStatus !== ValidationStatusEnum.Validated)
+              return null;
 
-            return <PrintPurchaseOrderButton item={item}/>;
+            return <PrintPurchaseOrderButton item={item} />;
           },
-
         },
         {
-          render: ({item}) => {
-            const {status, invoice} = item
-            if (status !== QuantityStatusEnum.FullyReceived || invoice) return
+          render: ({ item }) => {
+            const { status, invoice } = item;
+            if (status !== QuantityStatusEnum.FullyReceived || invoice) return;
 
-            return <GenerateInvoiceButton item={item}/>
+            return <GenerateInvoiceButton item={item} />;
           },
-
         },
         {
-          render: ({item}) => {
-            const {status, validationStatus} = item
+          render: ({ item }) => {
+            const { status, validationStatus } = item;
 
-            return status !== QuantityStatusEnum.FullyReceived &&
-              validationStatus === ValidationStatusEnum.Validated &&
-                <GenerateReceiptButton item={item}/>
-
+            return (
+              status !== QuantityStatusEnum.FullyReceived &&
+              validationStatus === ValidationStatusEnum.Validated && (
+                <GenerateReceiptButton item={item} />
+              )
+            );
           },
         },
       ],
-      itemOperationRoutes: ({operations, item}) => operations.filter(({operationType}) => {
-        switch (operationType) {
-          case ViewEnum.Update:
-          case ViewEnum.Delete:
-            return item.status === QuantityStatusEnum.Unreceived
-          default:
-            return true
-        }
-      }),
+      itemOperationRoutes: ({ operations, item }) =>
+        operations.filter(({ operationType }) => {
+          switch (operationType) {
+            case ViewEnum.Update:
+            case ViewEnum.Delete:
+              return item.status === QuantityStatusEnum.Unreceived;
+            default:
+              return true;
+          }
+        }),
     },
     {
       type: ViewEnum.Create,
@@ -442,27 +454,33 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         },
       },
-      getMutateInput: purchaseOrder => ({
+      getMutateInput: (purchaseOrder) => ({
         ...purchaseOrder,
-        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(purchaseOrderProduct => ({
-          ...purchaseOrderProduct,
-          components: purchaseOrderProduct.components.map(component => ({
-            ...component,
-            // @ts-ignore
-            product: component.product['@id'],
-          })),
-        })),
+        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(
+          (purchaseOrderProduct) => ({
+            ...purchaseOrderProduct,
+            components: purchaseOrderProduct.components.map((component) => ({
+              ...component,
+              // @ts-ignore
+              product: component.product["@id"],
+            })),
+          })
+        ),
       }),
       fields: formFields,
     },
     {
       type: ViewEnum.Update,
-      submittable: ({formik, isGranted}) => {
-        const {validationStatus, status, invoice} = formik.initialValues
-        const isPendingValidation = validationStatus === ValidationStatusEnum.Pending
-        const granted = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin])
+      submittable: ({ formik, isGranted }) => {
+        const { validationStatus, status, invoice } = formik.initialValues;
+        const isPendingValidation =
+          validationStatus === ValidationStatusEnum.Pending;
+        const granted = isGranted([RoleKeyEnum.Admin, RoleKeyEnum.SuperAdmin]);
 
-        return (granted && status === QuantityStatusEnum.Unreceived && !invoice) || isPendingValidation
+        return (
+          (granted && status === QuantityStatusEnum.Unreceived && !invoice) ||
+          isPendingValidation
+        );
       },
       slotProps: {
         item: {
@@ -471,24 +489,26 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         },
       },
-      getMutateInput: purchaseOrder => ({
+      getMutateInput: (purchaseOrder) => ({
         ...purchaseOrder,
-        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(purchaseOrderProduct => ({
-          ...purchaseOrderProduct,
-          components: purchaseOrderProduct.components.map(component => ({
-            ...component,
-            // @ts-ignore
-            product: component.product['@id'],
-          })),
-        })),
+        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(
+          (purchaseOrderProduct) => ({
+            ...purchaseOrderProduct,
+            components: purchaseOrderProduct.components.map((component) => ({
+              ...component,
+              // @ts-ignore
+              product: component.product["@id"],
+            })),
+          })
+        ),
       }),
       fields: {
         vendor: {
-          render: ({fieldProps, item}) => (
+          render: ({ fieldProps, item }) => (
             <ModelAutocompleteField
               modelName={ModelEnum.Vendor}
               {...fieldProps}
-              size="sm"
+              size='sm'
               disabled={item.purchaseOrderProducts.length > 0}
             />
           ),
@@ -498,12 +518,12 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         },
         taxIncluded: {
           defaultValue: false,
-          render: ({item: {purchaseOrderProducts}}) => (
+          render: ({ item: { purchaseOrderProducts } }) => (
             <RadioField
-              size="sm"
-              name="taxIncluded"
+              size='sm'
+              name='taxIncluded'
               options={[true, false]}
-              getOptionLabel={taxIncluded => taxIncluded ? 'TTC' : 'HT'}
+              getOptionLabel={(taxIncluded) => (taxIncluded ? "TTC" : "HT")}
               disabled={purchaseOrderProducts.length > 0}
               scrollDisabled
             />
@@ -512,7 +532,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
         ref: true,
         externalRef: true,
         desiredDeliveryDate: {
-          defaultValue: moment().add(1, 'days').format(),
+          defaultValue: moment().add(1, "days").format(),
         },
         currency: true,
         category: true,
@@ -524,16 +544,16 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
               lg: 4,
               md: 4,
               xl: 4,
-            }
-          }
+            },
+          },
         },
         buyer: {
-          render: ({fieldProps}) => (
+          render: ({ fieldProps }) => (
             <ModelAutocompleteField
               modelName={ModelEnum.User}
               {...fieldProps}
               size='sm'
-              getParams={filter => ({
+              getParams={(filter) => ({
                 operator: CompoundFilterOperator.And,
                 filters: [
                   filter,
@@ -541,26 +561,26 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
                     operator: CompoundFilterOperator.Or,
                     filters: [
                       {
-                        property: 'role.roleKey',
+                        property: "role.roleKey",
                         operator: PropertyFilterOperator.Equal,
-                        value: RoleKeyEnum.Admin
+                        value: RoleKeyEnum.Admin,
                       },
                       {
-                        property: 'role.roleKey',
+                        property: "role.roleKey",
                         operator: PropertyFilterOperator.Equal,
-                        value: RoleKeyEnum.Buyer
-                      }
-                    ]
-                  }
-                ]
+                        value: RoleKeyEnum.Buyer,
+                      },
+                    ],
+                  },
+                ],
               })}
             />
-          )
+          ),
         },
         validationStatus: {
           grantedRoles: [RoleKeyEnum.SuperAdmin, RoleKeyEnum.Admin],
           defaultValue: ValidationStatusEnum.Pending,
-          display: ({item}) => !!item.id,
+          display: ({ item }) => !!item.id,
         },
         purchaseOrderProducts: {
           slotProps: {
@@ -571,7 +591,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
               xl: 12,
             },
           },
-          display: ({item}) => typeof item.taxIncluded === 'boolean' && !!item.vendor,
+          display: ({ item }) =>
+            typeof item.taxIncluded === "boolean" && !!item.vendor,
         },
         comment: {
           slotProps: {
@@ -589,9 +610,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
               sm: 6,
               lg: 6,
               md: 6,
-              xl: 6
-            }
-          }
+              xl: 6,
+            },
+          },
         },
         attachments: {
           slotProps: {
@@ -606,6 +627,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
       },
     },
   ],
-}
+};
 
-export default mapping
+export default mapping;

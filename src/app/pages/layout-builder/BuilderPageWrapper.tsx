@@ -1,6 +1,6 @@
-import React, {FC} from 'react'
-import {PageTitle} from '../../../_metronic/layout/core'
-import {BuilderPage} from './BuilderPage'
+import React, { FC } from "react";
+import { PageTitle } from "../../../_metronic/layout/core";
+import { BuilderPage } from "./BuilderPage";
 
 const BuilderPageWrapper: FC = () => {
   return (
@@ -8,7 +8,7 @@ const BuilderPageWrapper: FC = () => {
       <PageTitle breadcrumbs={[]}>Layout Builder</PageTitle>
       <BuilderPage />
     </>
-  )
-}
+  );
+};
 
-export default BuilderPageWrapper
+export default BuilderPageWrapper;

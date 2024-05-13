@@ -1,1 +1,1 @@
-export {QRCodeInput} from './QRCodeInput'
+export { QRCodeInput } from "./QRCodeInput";

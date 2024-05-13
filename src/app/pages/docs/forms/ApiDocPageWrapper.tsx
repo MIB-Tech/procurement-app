@@ -1,14 +1,16 @@
-import React, {FC} from 'react'
-import {PageTitle} from '../../../../_metronic/layout/core'
-import {ApiDocPage} from './ApiDocPage'
+import React, { FC } from "react";
+import { PageTitle } from "../../../../_metronic/layout/core";
+import { ApiDocPage } from "./ApiDocPage";
 
 const ApiDocPageWrapper: FC = () => {
   return (
     <>
-      <PageTitle breadcrumbs={[{title: 'Formik', path: '#', isActive: true}]}>Docs</PageTitle>
+      <PageTitle breadcrumbs={[{ title: "Formik", path: "#", isActive: true }]}>
+        Docs
+      </PageTitle>
       <ApiDocPage />
     </>
-  )
-}
+  );
+};
 
-export default ApiDocPageWrapper
+export default ApiDocPageWrapper;

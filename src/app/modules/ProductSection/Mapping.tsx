@@ -1,45 +1,44 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-
+import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
 
 const mapping: ModelMapping<ModelEnum.ProductSection> = {
   modelName: ModelEnum.ProductSection,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     name: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     rupture: {
       type: ColumnTypeEnum.String,
-      nullable: true
+      nullable: true,
     },
     code: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     sortIndex: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     products: {
       type: ModelEnum.Product,
-      multiple: true
+      multiple: true,
     },
     productSectionsBudgets: {
       type: ModelEnum.ProductSectionBudget,
-      multiple: true
-    }
+      multiple: true,
+    },
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
         code: true,
-      }
+      },
     },
     {
       type: ViewEnum.Create,
@@ -47,8 +46,8 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
         code: true,
         name: true,
         sortIndex: true,
-        rupture: true
-      }
+        rupture: true,
+      },
     },
     {
       type: ViewEnum.Update,
@@ -57,19 +56,19 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
         name: true,
         sortIndex: true,
         rupture: true,
-      }
+      },
     },
     {
       type: ViewEnum.Detail,
       columns: {
-        name: {render:props => props.item.name.toUpperCase()},
+        name: { render: (props) => props.item.name.toUpperCase() },
         sortIndex: true,
         rupture: true,
         products: true,
-        productSectionsBudgets: true
-      }
-    }
-  ]
+        productSectionsBudgets: true,
+      },
+    },
+  ],
 };
 
 export default mapping;

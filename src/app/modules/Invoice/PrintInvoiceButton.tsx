@@ -1,42 +1,54 @@
-import React, {FC, useMemo, useState} from 'react';
-import {CustomItemActionProps} from '../../../_custom/types/ModelMapping';
-import {ModelEnum} from '../types';
-import {useUri} from '../../../_custom/hooks/UseUri';
-import {useItemQuery} from '../../../_custom/hooks/UseItemQuery';
-import {getNumberUnit} from '../../../_custom/components/NumberUnit';
-import moment from 'moment';
-import {Button} from '../../../_custom/components/Button';
-import {Trans} from '../../../_custom/components/Trans';
-import {Modal} from 'react-bootstrap';
-import ReportViewer from '../PurchaseOrder/components/ReportViewer';
-import {DiscountType} from '../PurchaseOrderProduct/Model';
-import {PurchaseOrderProductModel} from '../PurchaseOrderProduct';
-import {VendorModel} from '../Vendor';
-import {InvoicePrint} from './Model';
-import {LineType} from '../PurchaseOrder/Model';
+import React, { FC, useMemo, useState } from "react";
+import { CustomItemActionProps } from "../../../_custom/types/ModelMapping";
+import { ModelEnum } from "../types";
+import { useUri } from "../../../_custom/hooks/UseUri";
+import { useItemQuery } from "../../../_custom/hooks/UseItemQuery";
+import { getNumberUnit } from "../../../_custom/components/NumberUnit";
+import moment from "moment";
+import { Button } from "../../../_custom/components/Button";
+import { Trans } from "../../../_custom/components/Trans";
+import { Modal } from "react-bootstrap";
+import ReportViewer from "../PurchaseOrder/components/ReportViewer";
+import { DiscountType } from "../PurchaseOrderProduct/Model";
+import { PurchaseOrderProductModel } from "../PurchaseOrderProduct";
+import { VendorModel } from "../Vendor";
+import { InvoicePrint } from "./Model";
+import { LineType } from "../PurchaseOrder/Model";
 
-export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = ({...props}) => {
+export const PrintInvoiceButton: FC<
+  CustomItemActionProps<ModelEnum.Invoice>
+> = ({ ...props }) => {
   const [open, setOpen] = useState<boolean>();
   const modelName = ModelEnum.Invoice;
-  const uri = useUri({modelName});
-  const {item, isLoading} = useItemQuery<ModelEnum.Invoice>({
+  const uri = useUri({ modelName });
+  const { item, isLoading } = useItemQuery<ModelEnum.Invoice>({
     modelName,
     path: `/print${uri}`,
-    enabled: open
+    enabled: open,
   });
   const params = useMemo<InvoicePrint | undefined>(() => {
     if (!item) return undefined;
-    const {purchaseOrders} = item;
+    const { purchaseOrders } = item;
 
-    const unit = /*item.currency?.code || */'DH'; // TODO
+    const unit = /*item.currency?.code || */ "DH"; // TODO
     const totalExclTax = purchaseOrders.reduce((a, b) => a + b.totalInclTax, 0);
     const totalInclTax = purchaseOrders.reduce((a, b) => a + b.totalInclTax, 0);
     const totalVatTax = purchaseOrders.reduce((a, b) => a + b.totalVatTax, 0);
-    const totalDiscount = purchaseOrders.reduce((a, b) => a + b.totalDiscount, 0);
-    const purchaseOrderProducts = purchaseOrders.reduce((a, b) => [...a, ...b.purchaseOrderProducts], [] as PurchaseOrderProductModel[]);
+    const totalDiscount = purchaseOrders.reduce(
+      (a, b) => a + b.totalDiscount,
+      0
+    );
+    const purchaseOrderProducts = purchaseOrders.reduce(
+      (a, b) => [...a, ...b.purchaseOrderProducts],
+      [] as PurchaseOrderProductModel[]
+    );
     // @ts-ignore
-    const paymentModalities = purchaseOrders.map(({paymentModality}) => paymentModality['@title']).join(', ');
-    const orderNumber = purchaseOrders.map(({orderNumber}) => orderNumber).join(', ');
+    const paymentModalities = purchaseOrders
+      .map(({ paymentModality }) => paymentModality["@title"])
+      .join(", ");
+    const orderNumber = purchaseOrders
+      .map(({ orderNumber }) => orderNumber)
+      .join(", ");
     const vendor = purchaseOrders.at(0)?.vendor as VendorModel;
 
     const result: InvoicePrint = {
@@ -45,15 +57,15 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
       bill: item.invoiceNumber,
       orderNumber,
       paymentModality: {
-        name: paymentModalities
+        name: paymentModalities,
       },
       vendor,
-      totalExclTax: getNumberUnit({value: totalExclTax, precision: 2, unit}),
-      totalInclTax: getNumberUnit({value: totalInclTax, precision: 2}),
-      totalVatTax: getNumberUnit({value: totalVatTax, precision: 2}),
-      totalDiscount: getNumberUnit({value: totalDiscount, precision: 2}),
-      createdAt: moment(item.createdAt).format('L'),
-      lines: purchaseOrderProducts.map(purchaseOrderProduct => {
+      totalExclTax: getNumberUnit({ value: totalExclTax, precision: 2, unit }),
+      totalInclTax: getNumberUnit({ value: totalInclTax, precision: 2 }),
+      totalVatTax: getNumberUnit({ value: totalVatTax, precision: 2 }),
+      totalDiscount: getNumberUnit({ value: totalDiscount, precision: 2 }),
+      createdAt: moment(item.createdAt).format("L"),
+      lines: purchaseOrderProducts.map((purchaseOrderProduct) => {
         const precision = 2;
         const {
           designation,
@@ -63,29 +75,31 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
           priceExclTax,
           vatRate,
           grossPrice,
-          priceInclTax
+          priceInclTax,
         } = purchaseOrderProduct;
         const isPercentCentDiscount = discountType === DiscountType.Percent;
 
         return {
           ...purchaseOrderProduct,
           type: LineType.Product,
-          designation: `${designation}${note ? `\n\n${note}` : ''}`,
-          netPriceExclTax: getNumberUnit({value: priceExclTax, precision}),
-          netPriceInclTax: getNumberUnit({value: priceInclTax, precision}),
+          designation: `${designation}${note ? `\n\n${note}` : ""}`,
+          netPriceExclTax: getNumberUnit({ value: priceExclTax, precision }),
+          netPriceInclTax: getNumberUnit({ value: priceInclTax, precision }),
           discount: getNumberUnit({
-            value: isPercentCentDiscount ?
-              discountValue * 100 :
-              discountValue,
-            unit: isPercentCentDiscount ? '%' : unit,
+            value: isPercentCentDiscount ? discountValue * 100 : discountValue,
+            unit: isPercentCentDiscount ? "%" : unit,
             precision: isPercentCentDiscount ? 2 : precision,
           }),
-          vatRate: getNumberUnit({value: vatRate * 100, unit: '%', precision}),
-          grossPrice: getNumberUnit({value: grossPrice, precision}),
+          vatRate: getNumberUnit({
+            value: vatRate * 100,
+            unit: "%",
+            precision,
+          }),
+          grossPrice: getNumberUnit({ value: grossPrice, precision }),
           // netPrice: getNumberUnit({value: netPrice, precision}),
         };
-      })
-    }
+      }),
+    };
 
     return result;
   }, [item]);
@@ -99,7 +113,7 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
           className='bg-white'
           onClick={() => setOpen(true)}
         >
-          <Trans id='PRINT'/>
+          <Trans id='PRINT' />
         </Button>
       </div>
       <Modal
@@ -107,9 +121,9 @@ export const PrintInvoiceButton: FC<CustomItemActionProps<ModelEnum.Invoice>> = 
         show={open}
         onHide={() => setOpen(false)}
       >
-        <Modal.Header closeButton/>
+        <Modal.Header closeButton />
         <Modal.Body>
-          {isLoading && <Trans id='LOADING'/>}
+          {isLoading && <Trans id='LOADING' />}
           {item && params && (
             <ReportViewer
               fileName='purchase-order-invoice.mrt'

@@ -1,11 +1,10 @@
-import {AbstractModel} from '../../../_custom/types/types';
-import {ProductModel} from '../Product';
-
+import { AbstractModel } from "../../../_custom/types/types";
+import { ProductModel } from "../Product";
 
 type Model = {
-  quantity: number
-  product: ProductModel
-  parentProduct: ProductModel
-} & AbstractModel
+  quantity: number;
+  product: ProductModel;
+  parentProduct: ProductModel;
+} & AbstractModel;
 
 export default Model;

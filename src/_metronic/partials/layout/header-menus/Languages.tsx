@@ -1,55 +1,66 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import clsx from 'clsx'
-import React, {FC} from 'react'
-import {toAbsoluteUrl} from '../../../helpers'
-import {useLang, setLanguage} from '../../../i18n/Metronici18n'
-import { Lang } from '../../../../_custom/i18n/I18nMessages';
-import { Trans } from '../../../../_custom/components/Trans';
+import clsx from "clsx";
+import React, { FC } from "react";
+import { toAbsoluteUrl } from "../../../helpers";
+import { useLang, setLanguage } from "../../../i18n/Metronici18n";
+import { Lang } from "../../../../_custom/i18n/I18nMessages";
+import { Trans } from "../../../../_custom/components/Trans";
 
-export const languages:Array<{lang: Lang, name: string, flag: string, upcoming?: boolean}> = [
+export const languages: Array<{
+  lang: Lang;
+  name: string;
+  flag: string;
+  upcoming?: boolean;
+}> = [
   {
-    lang: 'en',
-    name: 'English',
-    flag: toAbsoluteUrl('/media/flags/united-states.svg'),
-    upcoming: true
+    lang: "en",
+    name: "English",
+    flag: toAbsoluteUrl("/media/flags/united-states.svg"),
+    upcoming: true,
   },
   {
-    lang: 'ar',
-    name: 'العربية',
-    flag: toAbsoluteUrl('/media/flags/morocco.svg'),
-    upcoming: true
+    lang: "ar",
+    name: "العربية",
+    flag: toAbsoluteUrl("/media/flags/morocco.svg"),
+    upcoming: true,
   },
   {
-    lang: 'fr',
-    name: 'Français',
-    flag: toAbsoluteUrl('/media/flags/france.svg'),
+    lang: "fr",
+    name: "Français",
+    flag: toAbsoluteUrl("/media/flags/france.svg"),
   },
-]
+];
 
 const Languages: FC = () => {
-  const lang = useLang()
-  const currentLanguage = languages.find(l => l.lang === lang)
+  const lang = useLang();
+  const currentLanguage = languages.find((l) => l.lang === lang);
 
   return (
     <>
-      {languages.map(({ lang, flag, name, upcoming })=>(
+      {languages.map(({ lang, flag, name, upcoming }) => (
         <div
           key={lang}
           onClick={() => {
-            if (!upcoming && (currentLanguage && lang !== currentLanguage.lang)) {
-              setLanguage(lang)
+            if (!upcoming && currentLanguage && lang !== currentLanguage.lang) {
+              setLanguage(lang);
             }
           }}
           className='menu-item px-5'
         >
           <a
             href='#'
-            className={clsx('menu-link d-flex px-5', {active: lang === currentLanguage?.lang})}
-            onClick={e=>e.preventDefault()}
+            className={clsx("menu-link d-flex px-5", {
+              active: lang === currentLanguage?.lang,
+            })}
+            onClick={(e) => e.preventDefault()}
           >
             <span className='menu-text'>
               <span className='symbol symbol-20px me-4'>
-                <img className='rounded-1' src={flag} alt='gmao' />
+                <img
+                  className='rounded-1'
+                  src={flag}
+                  alt='gmao'
+                />
               </span>
               {name}
               {upcoming && (
@@ -62,7 +73,7 @@ const Languages: FC = () => {
         </div>
       ))}
     </>
-  )
+  );
 
   // return (
   //   <div
@@ -115,6 +126,6 @@ const Languages: FC = () => {
   //     </div>
   //   </div>
   // )
-}
+};
 
-export {Languages}
+export { Languages };

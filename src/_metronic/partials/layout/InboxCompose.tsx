@@ -1,19 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useState, useRef} from 'react'
-import {Modal} from 'react-bootstrap'
-import {KTSVG} from '../../helpers'
+import React, { useState, useRef } from "react";
+import { Modal } from "react-bootstrap";
+import { KTSVG } from "../../helpers";
 
 export type Props = {
-  show: boolean
-  handleClose: () => void
-}
+  show: boolean;
+  handleClose: () => void;
+};
 
-const InboxCompose: React.FC<Props> = ({show, handleClose}) => {
-  const composeToRef = useRef<HTMLInputElement | null>(null)
-  const formRef = useRef<HTMLFormElement | null>(null)
-  const [composeCC, setComposeCC] = useState('')
-  const [composeBCC, setComposeBCC] = useState('')
-  const [subject, setSubject] = useState('')
+const InboxCompose: React.FC<Props> = ({ show, handleClose }) => {
+  const composeToRef = useRef<HTMLInputElement | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const [composeCC, setComposeCC] = useState("");
+  const [composeBCC, setComposeBCC] = useState("");
+  const [subject, setSubject] = useState("");
 
   return (
     <Modal
@@ -28,7 +28,11 @@ const InboxCompose: React.FC<Props> = ({show, handleClose}) => {
     >
       <div className='modal-content'>
         {/* begin::Form */}
-        <form ref={formRef} id='kt_inbox_compose_form' onSubmit={() => console.log('submit')}>
+        <form
+          ref={formRef}
+          id='kt_inbox_compose_form'
+          onSubmit={() => console.log("submit")}
+        >
           {/*begin::Header*/}
           <div className='d-flex align-items-center justify-content-between py-5 ps-8 pe-5 border-bottom'>
             <h5 className='fw-bold m-0'>Compose</h5>
@@ -39,7 +43,10 @@ const InboxCompose: React.FC<Props> = ({show, handleClose}) => {
                 data-bs-dismiss='modal'
                 onClick={handleClose}
               >
-                <KTSVG className='svg-icon-1' path='/media/icons/duotune/arrows/arr061.svg' />
+                <KTSVG
+                  className='svg-icon-1'
+                  path='/media/icons/duotune/arrows/arr061.svg'
+                />
               </div>
               {/*end::Close*/}
             </div>
@@ -88,7 +95,10 @@ const InboxCompose: React.FC<Props> = ({show, handleClose}) => {
                   onChange={(e) => setComposeCC(e.target.value)}
                 />
               </div>
-              <span className='btn btn-active-light-primary btn-sm btn-icon' data-inbox='cc-hide'>
+              <span
+                className='btn btn-active-light-primary btn-sm btn-icon'
+                data-inbox='cc-hide'
+              >
                 <i className='la la-close '></i>
               </span>
             </div>
@@ -106,7 +116,10 @@ const InboxCompose: React.FC<Props> = ({show, handleClose}) => {
                   onChange={(e) => setComposeBCC(e.target.value)}
                 />
               </div>
-              <span className='btn btn-active-light-primary btn-sm btn-icon' data-inbox='bcc-hide'>
+              <span
+                className='btn btn-active-light-primary btn-sm btn-icon'
+                data-inbox='bcc-hide'
+              >
                 <i className='la la-close '></i>
               </span>
             </div>
@@ -125,21 +138,36 @@ const InboxCompose: React.FC<Props> = ({show, handleClose}) => {
             {/*end::Subject*/}
 
             {/*begin::Message*/}
-            <div id='kt_inbox_compose_editor' className='border-0 h-125px h-lg-250px'></div>
+            <div
+              id='kt_inbox_compose_editor'
+              className='border-0 h-125px h-lg-250px'
+            ></div>
             {/*end::Message*/}
 
             {/*begin::Attachments*/}
-            <div className='dropzone dropzone-multi px-8 py-4' id='kt_inbox_compose_attachments'>
+            <div
+              className='dropzone dropzone-multi px-8 py-4'
+              id='kt_inbox_compose_attachments'
+            >
               <div className='dropzone-items'>
-                <div className='dropzone-item' style={{display: 'none'}}>
+                <div
+                  className='dropzone-item'
+                  style={{ display: "none" }}
+                >
                   <div className='dropzone-file'>
-                    <div className='dropzone-filename' title='some_image_file_name.jpg'>
-                      <span data-dz-name>some_image_file_name.jpg</span>{' '}
+                    <div
+                      className='dropzone-filename'
+                      title='some_image_file_name.jpg'
+                    >
+                      <span data-dz-name>some_image_file_name.jpg</span>{" "}
                       <strong>
                         (<span data-dz-size>340kb</span>)
                       </strong>
                     </div>
-                    <div className='dropzone-error' data-dz-errormessage></div>
+                    <div
+                      className='dropzone-error'
+                      data-dz-errormessage
+                    ></div>
                   </div>
                   <div className='dropzone-progress'>
                     <div className='progress'>
@@ -154,7 +182,10 @@ const InboxCompose: React.FC<Props> = ({show, handleClose}) => {
                     </div>
                   </div>
                   <div className='dropzone-toolbar'>
-                    <span className='dropzone-delete' data-dz-remove>
+                    <span
+                      className='dropzone-delete'
+                      data-dz-remove
+                    >
                       {/*begin::Close*/}
                       <span
                         className='btn btn-icon btn-sm btn-active-light-primary ms-2'
@@ -189,10 +220,19 @@ const InboxCompose: React.FC<Props> = ({show, handleClose}) => {
                 className='btn btn-icon btn-active-light-primary me-2'
                 id='kt_inbox_compose_attachments_select'
               >
-                <KTSVG className='svg-icon-1' path='/media/icons/duotune/files/fil022.svg' />
+                <KTSVG
+                  className='svg-icon-1'
+                  path='/media/icons/duotune/files/fil022.svg'
+                />
               </a>
-              <a href='#' className='btn btn-icon btn-active-light-primary'>
-                <KTSVG className='svg-icon-1' path='/media/icons/duotune/general/gen018.svg' />
+              <a
+                href='#'
+                className='btn btn-icon btn-active-light-primary'
+              >
+                <KTSVG
+                  className='svg-icon-1'
+                  path='/media/icons/duotune/general/gen018.svg'
+                />
               </a>
               {/*end::Other*/}
             </div>
@@ -205,7 +245,10 @@ const InboxCompose: React.FC<Props> = ({show, handleClose}) => {
                 data-bs-toggle='tooltip'
                 title='More actions'
               >
-                <KTSVG className='svg-icon-1' path='/media/icons/duotune/coding/cod001.svg' />
+                <KTSVG
+                  className='svg-icon-1'
+                  path='/media/icons/duotune/coding/cod001.svg'
+                />
               </button>
             </div>
             {/*end::Toolbar*/}
@@ -215,7 +258,7 @@ const InboxCompose: React.FC<Props> = ({show, handleClose}) => {
         {/*end::Form*/}
       </div>
     </Modal>
-  )
-}
+  );
+};
 
-export {InboxCompose}
+export { InboxCompose };

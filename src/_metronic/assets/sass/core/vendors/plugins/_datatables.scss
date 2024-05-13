@@ -74,7 +74,7 @@ table.dataTable > thead {
       display: inline-block;
       width: 0.75rem;
       height: 0.75rem;
-      content: ' ';
+      content: " ";
       top: 50%;
       bottom: auto;
       right: auto;
@@ -138,7 +138,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control {
     box-shadow: none;
     text-align: center;
     text-indent: 0 !important;
-    content: '+';
+    content: "+";
     color: $gray-700;
     font-family: $font-family-sans-serif;
     background-color: $gray-300;
@@ -146,9 +146,15 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control {
   }
 }
 
-table.dataTable.dtr-inline.collapsed > tbody > tr.parent > td.dtr-control:before,
-table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th.dtr-control:before {
-  content: '-';
+table.dataTable.dtr-inline.collapsed
+  > tbody
+  > tr.parent
+  > td.dtr-control:before,
+table.dataTable.dtr-inline.collapsed
+  > tbody
+  > tr.parent
+  > th.dtr-control:before {
+  content: "-";
   background-color: $primary;
   color: $primary-inverse;
 }

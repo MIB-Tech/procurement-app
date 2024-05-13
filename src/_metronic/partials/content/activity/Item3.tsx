@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC} from 'react'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
+import { FC } from "react";
+import { KTSVG, toAbsoluteUrl } from "../../../helpers";
 
 const Item3: FC = () => {
   return (
@@ -18,7 +18,10 @@ const Item3: FC = () => {
 
       <div className='timeline-content mb-10 mt-n1'>
         <div className='mb-5 pe-3'>
-          <a href='#' className='fs-5 fw-bold text-gray-800 text-hover-primary mb-2'>
+          <a
+            href='#'
+            className='fs-5 fw-bold text-gray-800 text-hover-primary mb-2'
+          >
             3 New Incoming Project Files:
           </a>
 
@@ -32,7 +35,10 @@ const Item3: FC = () => {
               data-bs-placement='top'
               title='Jan Hummer'
             >
-              <img src={toAbsoluteUrl('/media/avatars/150-6.jpg')} alt='img' />
+              <img
+                src={toAbsoluteUrl("/media/avatars/150-6.jpg")}
+                alt='img'
+              />
             </div>
           </div>
         </div>
@@ -40,10 +46,17 @@ const Item3: FC = () => {
         <div className='overflow-auto pb-5'>
           <div className='d-flex align-items-center border border-dashed border-gray-300 rounded min-w-700px p-5'>
             <div className='d-flex flex-aligns-center pe-10 pe-lg-20'>
-              <img alt='' className='w-30px me-3' src={toAbsoluteUrl('/media/svg/files/pdf.svg')} />
+              <img
+                alt=''
+                className='w-30px me-3'
+                src={toAbsoluteUrl("/media/svg/files/pdf.svg")}
+              />
 
               <div className='ms-1 fw-bold'>
-                <a href='#' className='fs-6 text-hover-primary fw-bolder'>
+                <a
+                  href='#'
+                  className='fs-6 text-hover-primary fw-bolder'
+                >
                   Finance KPI App Guidelines
                 </a>
 
@@ -52,10 +65,17 @@ const Item3: FC = () => {
             </div>
 
             <div className='d-flex flex-aligns-center pe-10 pe-lg-20'>
-              <img alt='' className='w-30px me-3' src={toAbsoluteUrl('/media/svg/files/doc.svg')} />
+              <img
+                alt=''
+                className='w-30px me-3'
+                src={toAbsoluteUrl("/media/svg/files/doc.svg")}
+              />
 
               <div className='ms-1 fw-bold'>
-                <a href='#' className='fs-6 text-hover-primary fw-bolder'>
+                <a
+                  href='#'
+                  className='fs-6 text-hover-primary fw-bolder'
+                >
                   Client UAT Testing Results
                 </a>
 
@@ -64,10 +84,17 @@ const Item3: FC = () => {
             </div>
 
             <div className='d-flex flex-aligns-center'>
-              <img alt='' className='w-30px me-3' src={toAbsoluteUrl('/media/svg/files/css.svg')} />
+              <img
+                alt=''
+                className='w-30px me-3'
+                src={toAbsoluteUrl("/media/svg/files/css.svg")}
+              />
 
               <div className='ms-1 fw-bold'>
-                <a href='#' className='fs-6 text-hover-primary fw-bolder'>
+                <a
+                  href='#'
+                  className='fs-6 text-hover-primary fw-bolder'
+                >
                   Finance Reports
                 </a>
 
@@ -78,7 +105,7 @@ const Item3: FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {Item3}
+export { Item3 };

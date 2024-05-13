@@ -1,33 +1,35 @@
-import clsx from 'clsx'
-import React, {FC} from 'react'
-import {Link, matchPath, useLocation} from 'react-router-dom'
-import {useLayout, usePageData} from '../../../core'
-import {useAuth} from '../../../../../_custom/hooks/UseAuth'
-import {SVG} from '../../../../../_custom/components/SVG/SVG'
-import {OperationModel} from '../../../../../app/modules/Operation'
+import clsx from "clsx";
+import React, { FC } from "react";
+import { Link, matchPath, useLocation } from "react-router-dom";
+import { useLayout, usePageData } from "../../../core";
+import { useAuth } from "../../../../../_custom/hooks/UseAuth";
+import { SVG } from "../../../../../_custom/components/SVG/SVG";
+import { OperationModel } from "../../../../../app/modules/Operation";
 
 export const useCurrentOperation: () => OperationModel | undefined = () => {
-  const {operations, getPath} = useAuth()
-  const {pathname} = useLocation()
-  console.log('pathname', pathname)
-  const pathnameParts = pathname.split('/').filter((part) => part !== '')
-  const partCount = ['update', 'delete'].includes(pathnameParts.at(2) || '') ? 3 : 2
-  const parts = pathnameParts.slice(0, partCount)
+  const { operations, getPath } = useAuth();
+  const { pathname } = useLocation();
+  console.log("pathname", pathname);
+  const pathnameParts = pathname.split("/").filter((part) => part !== "");
+  const partCount = ["update", "delete"].includes(pathnameParts.at(2) || "")
+    ? 3
+    : 2;
+  const parts = pathnameParts.slice(0, partCount);
 
-  const newPathname = `/${parts.join('/')}`
+  const newPathname = `/${parts.join("/")}`;
 
-  return operations.find(({suffix, resource}) => {
-    const path = getPath({suffix, resourceName: resource.name})
+  return operations.find(({ suffix, resource }) => {
+    const path = getPath({ suffix, resourceName: resource.name });
 
-    return matchPath(path, newPathname)
-  })
-}
+    return matchPath(path, newPathname);
+  });
+};
 
 const DefaultTitle: FC = () => {
-  const {pageTitle, pageDescription, pageBreadcrumbs} = usePageData()
-  const {config, classes} = useLayout()
-  const currentOperation = useCurrentOperation()
-  const icon = currentOperation?.icon
+  const { pageTitle, pageDescription, pageBreadcrumbs } = usePageData();
+  const { config, classes } = useLayout();
+  const currentOperation = useCurrentOperation();
+  const icon = currentOperation?.icon;
 
   return (
     <div
@@ -35,21 +37,31 @@ const DefaultTitle: FC = () => {
       data-kt-swapper='true'
       data-kt-swapper-mode='prepend'
       // data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
-      className={clsx('page-title d-flex', classes.pageTitle.join(' '))}
+      className={clsx("page-title d-flex", classes.pageTitle.join(" "))}
     >
       {icon && (
         <div>
-          <SVG path={icon} variant='primary' size='1' className='me-3' />
+          <SVG
+            path={icon}
+            variant='primary'
+            size='1'
+            className='me-3'
+          />
         </div>
       )}
       <div className='d-flex align-items-center text-dark fw-bolder fs-3'>
         {currentOperation?.title || pageTitle}
-        {pageTitle && pageDescription && config.pageTitle && config.pageTitle.description && (
-          <>
-            <span className='h-20px border-gray-200 border-start ms-3 mx-2' />
-            <small className='text-muted fs-7 fw-bold my-1 ms-1'>{pageDescription}</small>
-          </>
-        )}
+        {pageTitle &&
+          pageDescription &&
+          config.pageTitle &&
+          config.pageTitle.description && (
+            <>
+              <span className='h-20px border-gray-200 border-start ms-3 mx-2' />
+              <small className='text-muted fs-7 fw-bold my-1 ms-1'>
+                {pageDescription}
+              </small>
+            </>
+          )}
       </div>
 
       {pageBreadcrumbs &&
@@ -57,20 +69,23 @@ const DefaultTitle: FC = () => {
         config.pageTitle &&
         config.pageTitle.breadCrumbs && (
           <>
-            {config.pageTitle.direction === 'row' && (
+            {config.pageTitle.direction === "row" && (
               <span className='h-20px border-gray-200 border-start mx-4' />
             )}
             <ul className='breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1'>
               {Array.from(pageBreadcrumbs).map((item, index) => (
                 <li
-                  className={clsx('breadcrumb-item', {
-                    'text-dark': !item.isSeparator && item.isActive,
-                    'text-muted': !item.isSeparator && !item.isActive,
+                  className={clsx("breadcrumb-item", {
+                    "text-dark": !item.isSeparator && item.isActive,
+                    "text-muted": !item.isSeparator && !item.isActive,
                   })}
                   key={`${item.path}${index}`}
                 >
                   {!item.isSeparator ? (
-                    <Link className='text-muted text-hover-primary' to={item.path}>
+                    <Link
+                      className='text-muted text-hover-primary'
+                      to={item.path}
+                    >
                       {item.title}
                     </Link>
                   ) : (
@@ -83,7 +98,7 @@ const DefaultTitle: FC = () => {
           </>
         )}
     </div>
-  )
-}
+  );
+};
 
-export {DefaultTitle}
+export { DefaultTitle };

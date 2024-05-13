@@ -1,68 +1,70 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-import {DateFormatEnum, StringFormat} from '../../../_custom/Column/String/StringColumn';
-import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn';
-
+import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
+import {
+  DateFormatEnum,
+  StringFormat,
+} from "../../../_custom/Column/String/StringColumn";
+import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
 
 const mapping: ModelMapping<ModelEnum.ProductPricing> = {
   modelName: ModelEnum.ProductPricing,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     applicatedAt: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Date,
-      dateFormat: DateFormatEnum.Local
+      dateFormat: DateFormatEnum.Local,
     },
     bidPriceInclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       validation: {
-        min: 0
+        min: 0,
       },
     },
     discountValue: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Percent,
-      precision: 7
+      precision: 7,
     },
     purchasePriceExclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       validation: {
-        min: 0
+        min: 0,
       },
     },
     purchasePriceInclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
       validation: {
-        min: 0
+        min: 0,
       },
     },
     vendor: {
-      type: ModelEnum.Vendor
+      type: ModelEnum.Vendor,
     },
     product: {
-      type: ModelEnum.Product
-    }
+      type: ModelEnum.Product,
+    },
   },
   views: [
     {
       type: ViewEnum.Listing,
       filterColumns: {
         product: {
-          quickFilter: true
+          quickFilter: true,
         },
         vendor: {
-          quickFilter: true
+          quickFilter: true,
         },
-        applicatedAt: true
+        applicatedAt: true,
       },
       columns: {
         purchasePriceExclTax: true,
@@ -71,37 +73,37 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
         applicatedAt: true,
         discountValue: true,
         product: {
-          render: props => {
+          render: (props) => {
             return props.item.product.designation;
-          }
-        }
-      }
+          },
+        },
+      },
     },
     {
       type: ViewEnum.Create,
-      slotProps: {item: {sm: 3}},
+      slotProps: { item: { sm: 3 } },
       fields: {
-        product: {slotProps: {root: {sm: 4}}},
-        vendor: {slotProps: {root: {sm: 4}}},
-        applicatedAt: {slotProps: {root: {sm: 4}}},
+        product: { slotProps: { root: { sm: 4 } } },
+        vendor: { slotProps: { root: { sm: 4 } } },
+        applicatedAt: { slotProps: { root: { sm: 4 } } },
         purchasePriceExclTax: true,
         purchasePriceInclTax: true,
         bidPriceInclTax: true,
         discountValue: true,
-      }
+      },
     },
     {
       type: ViewEnum.Update,
-      slotProps: {item: {sm: 3}},
+      slotProps: { item: { sm: 3 } },
       fields: {
-        product: {slotProps: {root: {sm: 4}}},
-        vendor: {slotProps: {root: {sm: 4}}},
-        applicatedAt: {slotProps: {root: {sm: 4}}},
+        product: { slotProps: { root: { sm: 4 } } },
+        vendor: { slotProps: { root: { sm: 4 } } },
+        applicatedAt: { slotProps: { root: { sm: 4 } } },
         purchasePriceExclTax: true,
         purchasePriceInclTax: true,
         bidPriceInclTax: true,
         discountValue: true,
-      }
+      },
     },
     {
       type: ViewEnum.Detail,
@@ -113,10 +115,9 @@ const mapping: ModelMapping<ModelEnum.ProductPricing> = {
         bidPriceInclTax: true,
         discountValue: true,
         applicatedAt: true,
-      }
-    }
-
-  ]
+      },
+    },
+  ],
 };
 
 export default mapping;

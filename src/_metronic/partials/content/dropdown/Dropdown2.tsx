@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC} from 'react'
+import { FC } from "react";
 
 const Dropdown2: FC = () => {
   return (
@@ -8,19 +8,27 @@ const Dropdown2: FC = () => {
       data-kt-menu='true'
     >
       <div className='menu-item px-3'>
-        <div className='menu-content fs-6 text-dark fw-bolder px-3 py-4'>Quick Actions</div>
+        <div className='menu-content fs-6 text-dark fw-bolder px-3 py-4'>
+          Quick Actions
+        </div>
       </div>
 
       <div className='separator mb-3 opacity-75'></div>
 
       <div className='menu-item px-3'>
-        <a href='#' className='menu-link px-3'>
+        <a
+          href='#'
+          className='menu-link px-3'
+        >
           New Ticket
         </a>
       </div>
 
       <div className='menu-item px-3'>
-        <a href='#' className='menu-link px-3'>
+        <a
+          href='#'
+          className='menu-link px-3'
+        >
           New Customer
         </a>
       </div>
@@ -31,26 +39,38 @@ const Dropdown2: FC = () => {
         data-kt-menu-placement='right-start'
         data-kt-menu-flip='left-start, top'
       >
-        <a href='#' className='menu-link px-3'>
+        <a
+          href='#'
+          className='menu-link px-3'
+        >
           <span className='menu-title'>New Group</span>
           <span className='menu-arrow'></span>
         </a>
 
         <div className='menu-sub menu-sub-dropdown w-175px py-4'>
           <div className='menu-item px-3'>
-            <a href='#' className='menu-link px-3'>
+            <a
+              href='#'
+              className='menu-link px-3'
+            >
               Admin Group
             </a>
           </div>
 
           <div className='menu-item px-3'>
-            <a href='#' className='menu-link px-3'>
+            <a
+              href='#'
+              className='menu-link px-3'
+            >
               Staff Group
             </a>
           </div>
 
           <div className='menu-item px-3'>
-            <a href='#' className='menu-link px-3'>
+            <a
+              href='#'
+              className='menu-link px-3'
+            >
               Member Group
             </a>
           </div>
@@ -58,7 +78,10 @@ const Dropdown2: FC = () => {
       </div>
 
       <div className='menu-item px-3'>
-        <a href='#' className='menu-link px-3'>
+        <a
+          href='#'
+          className='menu-link px-3'
+        >
           New Contact
         </a>
       </div>
@@ -67,13 +90,16 @@ const Dropdown2: FC = () => {
 
       <div className='menu-item px-3'>
         <div className='menu-content px-3 py-3'>
-          <a className='btn btn-primary  btn-sm px-4' href='#'>
+          <a
+            className='btn btn-primary  btn-sm px-4'
+            href='#'
+          >
             Generate Reports
           </a>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {Dropdown2}
+export { Dropdown2 };

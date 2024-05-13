@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
-import {Card5} from '../../../../_metronic/partials/content/cards/Card5'
+import React from "react";
+import { Card5 } from "../../../../_metronic/partials/content/cards/Card5";
 
 export function Campaigns() {
   return (
@@ -26,7 +26,11 @@ export function Campaigns() {
               <option value='4'>1 Year</option>
             </select>
           </div>
-          <button className='btn btn-primary btn-sm' data-bs-toggle='tooltip' title='Coming soon'>
+          <button
+            className='btn btn-primary btn-sm'
+            data-bs-toggle='tooltip'
+            title='Coming soon'
+          >
             Add Campaign
           </button>
         </div>
@@ -132,58 +136,84 @@ export function Campaigns() {
       </div>
 
       <div className='d-flex flex-stack flex-wrap pt-10'>
-        <div className='fs-6 fw-bold text-gray-700'>Showing 1 to 10 of 50 entries</div>
+        <div className='fs-6 fw-bold text-gray-700'>
+          Showing 1 to 10 of 50 entries
+        </div>
 
         <ul className='pagination'>
           <li className='page-item previous'>
-            <a href='src/app/pages/profile/components/Campaigns#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Campaigns#'
+              className='page-link'
+            >
               <i className='previous'></i>
             </a>
           </li>
 
           <li className='page-item active'>
-            <a href='src/app/pages/profile/components/Campaigns#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Campaigns#'
+              className='page-link'
+            >
               1
             </a>
           </li>
 
           <li className='page-item'>
-            <a href='src/app/pages/profile/components/Campaigns#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Campaigns#'
+              className='page-link'
+            >
               2
             </a>
           </li>
 
           <li className='page-item'>
-            <a href='src/app/pages/profile/components/Campaigns#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Campaigns#'
+              className='page-link'
+            >
               3
             </a>
           </li>
 
           <li className='page-item'>
-            <a href='src/app/pages/profile/components/Campaigns#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Campaigns#'
+              className='page-link'
+            >
               4
             </a>
           </li>
 
           <li className='page-item'>
-            <a href='src/app/pages/profile/components/Campaigns#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Campaigns#'
+              className='page-link'
+            >
               5
             </a>
           </li>
 
           <li className='page-item'>
-            <a href='src/app/pages/profile/components/Campaigns#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Campaigns#'
+              className='page-link'
+            >
               6
             </a>
           </li>
 
           <li className='page-item next'>
-            <a href='src/app/pages/profile/components/Campaigns#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Campaigns#'
+              className='page-link'
+            >
               <i className='next'></i>
             </a>
           </li>
         </ul>
       </div>
     </>
-  )
+  );
 }
