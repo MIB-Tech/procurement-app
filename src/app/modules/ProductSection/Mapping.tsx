@@ -39,7 +39,6 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
       type: ViewEnum.Listing,
       columns: {
         code: true,
-        name: true,
       }
     },
     {
@@ -63,7 +62,7 @@ const mapping: ModelMapping<ModelEnum.ProductSection> = {
     {
       type: ViewEnum.Detail,
       columns: {
-        name: true,
+        name: {render:props => props.item.name.toUpperCase()},
         sortIndex: true,
         rupture: true,
         products: true,
