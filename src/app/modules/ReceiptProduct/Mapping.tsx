@@ -8,9 +8,9 @@ import React from 'react';
 import {QuantityStatusEnum} from '../PurchaseOrder/Model';
 import {ref} from 'yup';
 import {NestedArrayField} from '../../../_custom/Column/Model/Nested/NestedArrayField';
-import {DesiredProductModel} from '../DesiredProduct';
 import {StringFormat} from "../../../_custom/Column/String/StringColumn";
 import {COMPLIANCE_STATUS_OPTIONS} from "./Model";
+import {DesiredProductModel} from "../DesiredProduct";
 
 
 const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
@@ -22,6 +22,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
       uid: {
         type: ColumnTypeEnum.String
       },
+
       quantity: {
         type: ColumnTypeEnum.Number,
         schema: schema => schema.when('id', {
@@ -31,8 +32,6 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
             is: (desiredProduct?: DesiredProductModel) => {
               if (!desiredProduct) return true
               const {id, status, restQuantity} = desiredProduct
-              if (id) return true
-
               return status !== QuantityStatusEnum.FullyReceived && restQuantity > 0
             },
             then: schema => schema.positive().max(ref('desiredProduct.restQuantity')),
@@ -95,6 +94,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
           complianceUpdatedBy: true,
           complianceReserve: true,
         }
+
       },
       {
         type: ViewEnum.Create,
