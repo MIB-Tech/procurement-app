@@ -27,7 +27,7 @@ import { DivToggle } from "../../ListingView/Filter/DivToggle";
 
 type StringFieldProps = {
   className?: string;
-  column: StringColumn;
+  column: StringColumn<any>;
   hideIcon?: boolean;
   disabled?: boolean;
 } & FieldProps;

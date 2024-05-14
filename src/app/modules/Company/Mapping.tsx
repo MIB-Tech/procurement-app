@@ -13,7 +13,9 @@ const mapping: ModelMapping<ModelEnum.Company> = {
     },
     code: {
       type: ColumnTypeEnum.String,
-      uppercase: true,
+      validation: {
+        uppercase: true,
+      },
     },
     name: {
       type: ColumnTypeEnum.String,

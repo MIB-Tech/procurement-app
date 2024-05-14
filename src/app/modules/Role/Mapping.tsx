@@ -17,7 +17,9 @@ const mapping: ModelMapping<ModelEnum.Role> = {
     },
     roleKey: {
       type: ColumnTypeEnum.String,
-      uppercase: true,
+      validation: {
+        uppercase: true,
+      },
       schema: string()
         .matches(/[A-Z.]+$/, { message: { id: "VALIDATION.STRING.UPPERCASE" } })
         .test(
