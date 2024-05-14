@@ -514,6 +514,7 @@ export const fr: I18nLanguage = {
   MANUFACTURER: "Marque",
   MATERIALIZED_PATH_TREE: "Materialized path tree",
   MAX: "Max",
+  NOT_FOUND: "Non résultats trouvés",
   MEMBERS: "Membres",
   MIN_QUANTITY: "Quantité minimum",
   MODEL: "Model",

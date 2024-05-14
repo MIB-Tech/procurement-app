@@ -51,6 +51,7 @@ type I18nMessageKey =
   | "EXPORT"
   | "BUDGET_MONITORING"
   | "DASHBOARD"
+  | "NOT_FOUND"
   | "GENERATE_INVOICE"
   | "VALIDATED"
   | "SHOW"
