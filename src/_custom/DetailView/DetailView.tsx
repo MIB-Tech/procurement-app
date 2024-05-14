@@ -24,7 +24,6 @@ import { useItemQuery } from "../hooks/UseItemQuery";
 import { useUri } from "../hooks/UseUri";
 import { ColumnTypeEnum } from "../types/types";
 import { ModelEnum } from "../../app/modules/types";
-import { isClinicColumn } from "../ListingView/ListingView.utils";
 import { ItemOverview } from "./ItemOverview";
 
 export const DEFAULT_DETAIL_VIEW: DetailViewType<any> = {
@@ -37,7 +36,7 @@ export const DetailView = <M extends ModelEnum>({
   modelName: M;
 }) => {
   const { columnDef, views } = useMapping<M>({ modelName });
-  const { isGranted, clinic } = useAuth();
+  const { isGranted } = useAuth();
   const view = (views?.find((view) => view.type === ViewEnum.Detail) ||
     DEFAULT_DETAIL_VIEW) as DetailViewType<M>;
   const { property } = useProperty<M>();
@@ -76,10 +75,6 @@ export const DetailView = <M extends ModelEnum>({
     Object.keys(columns) as Array<keyof typeof columns>
   ).filter((columnName) => {
     const column = property && columns[columnName];
-
-    if (clinic && isClinicColumn({ modelName, columnName })) {
-      return false;
-    }
 
     if (typeof column === "boolean") {
       return column;

@@ -4,6 +4,7 @@ import { Trans, useTrans } from "../components/Trans";
 import { GoBackButton } from "../components/Button/GoBackButton";
 import { Button } from "../components/Button";
 import {
+  FormField,
   FormFields,
   Model,
   MutationMode,
@@ -21,6 +22,9 @@ import {
 import { useCustomMutation } from "../hooks/UseCustomMutation";
 import { useCustomQuery } from "../hooks/UseCustomQuery";
 import { ModelEnum } from "../../app/modules/types";
+import { getColumnMapping } from "../ListingView/Filter/Filter.utils";
+import { get } from "lodash";
+import { HydraItem } from "../types/hydra.types";
 import { isClinicColumn } from "../ListingView/ListingView.utils";
 
 export const FormView = <M extends ModelEnum>({
@@ -40,26 +44,24 @@ export const FormView = <M extends ModelEnum>({
   const query = useCustomQuery({ modelName, enabled: !isCreateMode });
   const { isGranted, clinic, operations } = useAuth();
   const _fields = view?.fields || getDefaultFields(columnDef);
-  const fields = (Object.keys(_fields) as Array<keyof Model<M> | string>)
-    .filter((columnName) => {
-      return !clinic || !isClinicColumn({ modelName, columnName });
-    })
-    .reduce((obj, columnName) => {
-      const field = _fields[columnName];
+  const fields = (
+    Object.keys(_fields) as Array<keyof Model<M> | string>
+  ).reduce((obj, columnName) => {
+    const field = _fields[columnName] as boolean | FormField<M>;
 
-      if (typeof field === "boolean") {
-        if (!field) {
-          return obj;
-        }
-      } else {
-        const grantedRoles = field?.grantedRoles;
-        if (grantedRoles && !isGranted(grantedRoles)) {
-          return obj;
-        }
+    if (typeof field === "boolean") {
+      if (!field) {
+        return obj;
       }
+    } else {
+      const grantedRoles = field?.grantedRoles;
+      if (grantedRoles && !isGranted(grantedRoles)) {
+        return obj;
+      }
+    }
 
-      return { ...obj, [columnName]: field };
-    }, {} as FormFields<M>);
+    return { ...obj, [columnName]: field };
+  }, {} as FormFields<M>);
   const initialValues = useMemo(() => {
     if (!isCreateMode && query.item) {
       return query.item;
@@ -115,17 +117,32 @@ export const FormView = <M extends ModelEnum>({
     }
   }, [mutation.validationErrors]);
 
-  // const _operations = useMemo(() => {
-  //   if (!initialValues) {
-  //     return [];
-  //   }
-  //
-  //   const itemOperations = operations.filter(({resource, operationType}) => {
-  //     return resource.name === modelName && [ViewEnum.Listing, ViewEnum.Detail, ViewEnum.Delete].includes(operationType);
-  //   });
-  //
-  //   return /*itemOperationRoutes?.({ item, operations: itemOperations }) ||*/ itemOperations;
-  // }, [initialValues]);
+  useEffect(() => {
+    if (!clinic) return;
+
+    (Object.keys(fields) as Array<keyof Model<M> | string>).forEach(
+      (columnName) => {
+        if (isClinicColumn({ modelName, columnName })) {
+          const value = get(formik.values, columnName);
+          const def = getColumnMapping({ modelName, columnName });
+          let newValue:
+            | HydraItem<ModelEnum.Clinic>
+            | Array<HydraItem<ModelEnum.Clinic>> = value;
+          if ("multiple" in def) {
+            if ((value as Array<HydraItem<ModelEnum.Clinic>>).length === 0) {
+              newValue = [clinic];
+            }
+          } else {
+            if (!value) {
+              newValue = clinic;
+            }
+          }
+
+          formik.setFieldValue(columnName.toString(), newValue);
+        }
+      }
+    );
+  }, [clinic]);
 
   return (
     <FormikProvider value={formik}>
@@ -154,9 +171,7 @@ export const FormView = <M extends ModelEnum>({
         modelName={modelName}
         item={formik.values}
         view={view}
-        setItem={(item) => {
-          formik.setValues(item, false);
-        }}
+        setItem={(item) => formik.setValues(item, false)}
       />
     </FormikProvider>
   );
