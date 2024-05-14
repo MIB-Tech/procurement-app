@@ -100,7 +100,7 @@ export const getValidationSchema = <M extends ModelEnum>({
                 fieldSchema = datetime().nullable();
                 break;
               case StringFormat.Select:
-                fieldSchema = mixed().oneOf(
+                fieldSchema = string().oneOf(
                   columnMapping.options.map((option) => option.id),
                   {
                     id: "VALIDATION.MIXED.ONE_OF",
