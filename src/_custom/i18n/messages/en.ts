@@ -69,6 +69,7 @@ export const en: I18nLanguage = {
   "VALIDATION.STRING.PHONE_NUMBER": "Must be a valid phone number",
   "WORK_ORDERS.DETAIL.STATUS": "Status (Click to Update)",
   PASSWORD_CHANGED_SUCCESSFULLY: "Password changed successfully",
+  NOT_FOUND: "No results found",
   SETTINGS: "Settings",
   ACTION: "Action",
   ACTIONS: "Actions",

@@ -8,6 +8,7 @@ import { Header } from "./Header";
 import { DefaultTitle } from "./page-title/DefaultTitle";
 import { Topbar } from "./Topbar";
 import { Logo } from "../../../../_custom/components/Logo";
+import { Search } from "../../../partials";
 
 export function HeaderWrapper() {
   const { config, classes, attributes } = useLayout();

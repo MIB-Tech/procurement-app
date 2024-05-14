@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { FC, useState } from "react";
 import { KTSVG } from "../../../helpers";
-import { HeaderUserMenu, QuickLinks } from "../../../partials";
+import { HeaderUserMenu, QuickLinks, Search } from "../../../partials";
 import { useLayout } from "../../core";
 import { ClickAwayListener } from "@mui/material";
 import { useAuth } from "../../../../_custom/hooks/UseAuth";
@@ -52,11 +52,6 @@ const Topbar: FC = () => {
             toolbarButtonMarginClass
           )}
         >
-          {/*{activelocation ?*/}
-          {/*  <ModelCell item={activelocation} />:*/}
-          {/*  <Trans id='location' />*/}
-          {/*}*/}
-          {/* begin::Menu wrapper */}
           <Button
             flush
             // size='sm'
