@@ -137,7 +137,6 @@ export const getStringValidation = <M extends ModelEnum>({
   schema?: StringSchema;
 }) => {
   const { max = 255 } = { ...validation };
-  console.log(schema);
   schema = schema.max(
     typeof max === "number" ? max : getReference(max.toString())
   );

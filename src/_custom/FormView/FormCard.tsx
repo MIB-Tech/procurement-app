@@ -64,7 +64,7 @@ export const FormCard = <M extends ModelEnum>({
     if (query.item) {
       setItem(query.item);
     }
-  }, [query.item, setItem]);
+  }, [query.item]);
 
   // return (
   //   <div className='flex-grow-1'>
