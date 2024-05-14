@@ -1,9 +1,13 @@
-import { StringSchema } from "yup";
+import { number, NumberSchema, string, StringSchema } from "yup";
 import { I18nMessageKey } from "../../i18n/I18nMessages";
 import { RoleKeyEnum } from "../../../app/modules/Role/Model";
 import { ColumnTypeEnum } from "../../types/types";
 import { Model } from "../../types/ModelMapping";
 import { ModelEnum } from "../../../app/modules/types";
+import { Limit, NumberValidation } from "../Number/NumberColumn";
+import { M } from "@fullcalendar/core/internal-common";
+
+import { getReference } from "../../getReference";
 
 export enum StringFormat {
   Email = "EMAIL",
@@ -20,11 +24,18 @@ export enum StringFormat {
   // RichText = 'RICH_TEXT',
 }
 
-export type StringBaseColumn = {
+type StringValidation<M extends ModelEnum> = {
+  length?: Limit<M>;
+  matches?: RegExp;
+  uppercase?: boolean;
+  lowercase?: boolean;
+  capitalize?: boolean;
+} & Pick<NumberValidation<M>, "min" | "max">;
+
+export type StringBaseColumn<M extends ModelEnum> = {
   type: ColumnTypeEnum.String;
   schema?: StringSchema;
-  length?: number;
-  uppercase?: true;
+  validation?: StringValidation<M>;
 };
 
 export enum DateFormatEnum {
@@ -94,7 +105,7 @@ export type StringPasswordColumn = {
   format: StringFormat.Password;
   meter?: boolean;
 };
-export type StringColumn = StringBaseColumn &
+export type StringColumn<M extends ModelEnum> = StringBaseColumn<M> &
   (
     | StringBaselessColumn
     | StringDatetimeColumn
@@ -116,4 +127,40 @@ export const STRING_FORMAT_CONFIG: Record<StringFormat, { icon: string }> = {
   [StringFormat.Icon]: { icon: "/general/gen017.svg" },
   [StringFormat.Link]: { icon: "/coding/cod007.svg" },
   [StringFormat.Qrcode]: { icon: "/ecommerce/ecm010.svg" },
+};
+
+export const getStringValidation = <M extends ModelEnum>({
+  validation,
+  schema = string(),
+}: {
+  validation?: StringValidation<M>;
+  schema?: StringSchema;
+}) => {
+  const { max = 255 } = { ...validation };
+  schema = schema.max(
+    typeof max === "number" ? max : getReference(max.toString())
+  );
+  if (!validation) {
+    return schema;
+  }
+
+  const { min, length, capitalize, uppercase, lowercase, matches } = validation;
+
+  if (min) schema = schema.min(getReference(min.toString()));
+  if (length) schema = schema.max(getReference(length.toString()));
+  if (matches) schema = schema.matches(matches);
+  if (uppercase)
+    schema = schema.matches(/[A-Z.]+$/, {
+      message: { id: "VALIDATION.STRING.UPPERCASE" },
+    });
+  if (lowercase)
+    schema = schema.matches(/[a-z.]+$/, {
+      message: { id: "VALIDATION.STRING.LOWERCASE" },
+    });
+  if (capitalize)
+    schema = schema.matches(/[a-z.]+$/, {
+      message: { id: "VALIDATION.STRING.CAPITALIZE" },
+    });
+
+  return schema;
 };

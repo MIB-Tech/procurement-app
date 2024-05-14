@@ -21,7 +21,9 @@ const mapping: ModelMapping<ModelEnum.Clinic> = {
     },
     abbreviation: {
       type: ColumnTypeEnum.String,
-      uppercase: true,
+      validation: {
+        uppercase: true,
+      },
     },
     address: {
       type: ColumnTypeEnum.String,

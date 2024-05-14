@@ -41,7 +41,7 @@ export type ViewColumn<M extends ModelEnum> = {
 };
 export type TypeColum<M extends ModelEnum = any> =
   | NumberColumn<M>
-  | StringColumn
+  | StringColumn<M>
   | ModelColumn<M>
   | BooleanColumn
   | ArrayColumn;

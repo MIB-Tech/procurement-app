@@ -16,11 +16,13 @@ import {
   number,
   object,
   ObjectSchema,
-  ref,
   string,
   StringSchema,
 } from "yup";
-import { StringFormat } from "./Column/String/StringColumn";
+import {
+  getStringValidation,
+  StringFormat,
+} from "./Column/String/StringColumn";
 import { MODEL_MAPPINGS } from "../app/modules";
 import {
   ColumnTypeEnum,
@@ -30,7 +32,7 @@ import {
 import "yup-phone";
 import { ModelEnum } from "../app/modules/types";
 import { datetime, relation } from "./yup";
-import Reference from "yup/lib/Reference";
+import { getNumberValidation } from "./Column/Number/NumberColumn";
 
 export const camelCaseToDash = (str: string) =>
   str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
@@ -47,9 +49,6 @@ export const camelCaseToPascalCase = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);
 export const pascalCaseToCamelCase = (str: string) =>
   str.charAt(0).toLowerCase() + str.slice(1);
-const getReference = (value: string | number) => {
-  return typeof value === "number" ? value : (ref(value) as Reference<number>);
-};
 export const getValidationSchema = <M extends ModelEnum>({
   columnDef,
   trans,
@@ -78,30 +77,12 @@ export const getValidationSchema = <M extends ModelEnum>({
       } else {
         switch (type) {
           case ColumnTypeEnum.Number:
-            fieldSchema = number();
-            const { validation } = columnMapping;
-            if (validation) {
-              const { min, max, lessThan, moreThan, positive, negative } =
-                validation;
-              if (min)
-                fieldSchema = fieldSchema.min(getReference(min.toString()));
-              if (max)
-                fieldSchema = fieldSchema.max(getReference(max.toString()));
-              if (lessThan)
-                fieldSchema = fieldSchema.lessThan(
-                  getReference(lessThan.toString())
-                );
-              if (moreThan)
-                fieldSchema = fieldSchema.lessThan(
-                  getReference(moreThan.toString())
-                );
-              if (positive) fieldSchema = fieldSchema.positive();
-              if (negative) fieldSchema = fieldSchema.negative();
-            }
-
+            fieldSchema = columnMapping.validation
+              ? getNumberValidation({ validation: columnMapping.validation })
+              : number();
             break;
           case ColumnTypeEnum.String:
-            const { format, length, uppercase } = columnMapping;
+            const { format } = columnMapping;
             switch (format) {
               case StringFormat.Email:
                 fieldSchema = string().email();
@@ -137,14 +118,11 @@ export const getValidationSchema = <M extends ModelEnum>({
                 fieldSchema = string();
             }
 
-            if (length) {
-              fieldSchema = (fieldSchema as StringSchema).length(length);
-            }
-            if (uppercase) {
-              fieldSchema = (fieldSchema as StringSchema).matches(/[A-Z.]+$/, {
-                message: { id: "VALIDATION.STRING.UPPERCASE" },
-              });
-            }
+            fieldSchema = getStringValidation({
+              schema: fieldSchema as StringSchema,
+              validation: columnMapping.validation,
+            });
+
             break;
           case ColumnTypeEnum.Boolean:
             fieldSchema = bool();
