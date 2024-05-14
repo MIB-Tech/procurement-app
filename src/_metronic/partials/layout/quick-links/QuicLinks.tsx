@@ -1,14 +1,14 @@
-import React, { FC, useEffect, useMemo, useRef, useState } from "react";
-import { SearchComponent } from "../../../assets/ts/components";
-import { KTSVG, toAbsoluteUrl } from "../../../helpers";
+import React, { FC, useEffect, useState } from "react";
+import { KTSVG } from "../../../helpers";
 import { useAuth } from "../../../../_custom/hooks/UseAuth";
 import { useDispatch } from "react-redux";
 import { HydraItem } from "../../../../_custom/types/hydra.types";
 import * as auth from "../../../../app/pages/auth/redux/AuthRedux";
-import { Trans } from "../../../../_custom/components/Trans";
+import { Trans, useTrans } from "../../../../_custom/components/Trans";
 import clsx from "clsx";
 import { Button } from "../../../../_custom/components/Button";
-import { ClickAwayListener } from "@mui/material";
+import { ModelCell } from "../../../../_custom/ListingView/views/Table/ModelCell";
+import { Input } from "../../../../_custom/Column/String/InputBase/Input";
 
 const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
   const { clinic: activeClinic, user } = useAuth();
@@ -16,6 +16,8 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
   const [searchResults, setSearchResults] = useState<Array<HydraItem>>([
     ...user.clinics,
   ]);
+
+  const { trans } = useTrans();
 
   const dispatch = useDispatch();
 
@@ -34,7 +36,7 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
   return (
     <div
       className={clsx(
-        "menu menu-sub menu-sub-dropdown p-3 w-325px w-md-375px",
+        "menu menu-sub menu-sub-dropdown p-2 w-250px w-md-300px",
         { show }
       )}
       style={{
@@ -46,39 +48,47 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
       }}
       data-kt-menu='true'
     >
-      <div
-        // className={`${show ? "" : "d-none"}`}
-        className={``}
-        // ref={wrapperElement}
-        // data-kt-search-element='wrapper'
-      >
-        <form
-          // data-kt-search-element='form'
-          className='w-100 position-relative mb-3'
-          autoComplete='off'
-        >
-          <KTSVG
-            path='/media/icons/duotune/general/gen021.svg'
-            className='svg-icon-2 svg-icon-lg-1 svg-icon-gray-500 position-absolute top-50 translate-middle-y ms-0'
-          />
-
-          <input
-            type='text'
-            className='form-control form-control-flush ps-10'
-            name='search'
-            placeholder='Search...'
-            // data-kt-search-element='input'
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-
-          <span
-            className='position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-1'
-            data-kt-search-element='spinner'
+      <div className={``}>
+        <div className=' d-flex  '>
+          <form
+            className='w-100 position-relative mb-2 mx-2'
+            autoComplete='off'
           >
-            <span className='spinner-border h-15px w-15px align-middle text-gray-400' />
-          </span>
-        </form>
+            <KTSVG
+              path='/media/icons/duotune/general/gen021.svg'
+              className='svg-icon-1 position-absolute top-50 translate-middle-y ms-0'
+            />
+
+            <Input
+              className='form-control-flush ps-10'
+              size='sm'
+              placeholder={trans({ id: "SEARCH" })}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+
+            <span
+              className='position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-1'
+              data-kt-search-element='spinner'
+            >
+              <span className='spinner-border h-15px w-15px align-middle text-gray-400' />
+            </span>
+          </form>
+          <Button
+            icon
+            variant='light-primary'
+            size='sm'
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(auth.actions.setClinic(undefined));
+            }}
+          >
+            <KTSVG
+              path='/media/icons/duotune/arrows/arr029.svg'
+              className='svg-icon-3 '
+            />
+          </Button>
+        </div>
 
         {searchResults.length === 0 && (
           <div className='text-center '>
@@ -97,122 +107,31 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
           </div>
         )}
 
-        <div
-          // ref={suggestionsElement}
-          className='mb-4'
-          // data-kt-search-element='main'
-        >
-          <div className='scroll-y mh-200px mh-lg-325px'>
-            {(searchResults as Array<HydraItem>).map((clinic) => {
-              const active = clinic.id === activeClinic?.id;
+        <div className='scroll-y mh-200px mh-lg-325px'>
+          {(searchResults as Array<HydraItem>).map((clinic) => {
+            const active = clinic.id === activeClinic?.id;
 
-              // console.log(active);
-
-              return (
-                <div
-                  className={`d-flex align-items-center mb-3 p-2 rounded-2 bg-hover-lighten ${
-                    active && " bg-primary bg-opacity-10"
-                  }`}
-                  key={clinic["@id"]}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    dispatch(
-                      auth.actions.setClinic(active ? undefined : clinic)
-                    );
-                  }}
-                >
-                  <div className='symbol symbol-40px me-4'>
-                    <span className='symbol-label bg-light'>
-                      <KTSVG
-                        path={`/media/icons/duotune/${clinic["@icon"]}`}
-                        className='svg-icon-2 svg-icon-primary'
-                      />
-                    </span>
-                  </div>
-
-                  <div className='d-flex flex-column'>
-                    <a
-                      href='/#'
-                      className={`fs-6 text-gray-700 text-hover-primary fw-bold ${
-                        active && "text-primary "
-                      }`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        dispatch(
-                          auth.actions.setClinic(active ? undefined : clinic)
-                        );
-                      }}
-                    >
-                      {clinic["@title"]}
-                    </a>
-                    <span className='fs-7 text-muted fw-bold'>
-                      {clinic["@subTitle"]}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+            return (
+              <div
+                key={clinic["@id"]}
+                className={clsx(
+                  "d-flex align-items-center mb-2 p-1 rounded-2 bg-hover-light",
+                  active &&
+                    "bg-light-primary border border-primary border-opacity-50"
+                )}
+                onClick={() => {
+                  dispatch(auth.actions.setClinic(active ? undefined : clinic));
+                }}
+              >
+                <ModelCell
+                  item={clinic}
+                  readOnly
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
-
-      {/*<div*/}
-      {/*  ref={resultsElement}*/}
-      {/*  data-kt-search-element='results'*/}
-      {/*  className='d-none'*/}
-      {/*>*/}
-      {/*  <div className='scroll-y mh-200px mh-lg-325px'>*/}
-      {/*    {(searchResults as Array<HydraItem>).map((clinic) => {*/}
-      {/*      const active = clinic.id === activeClinic?.id;*/}
-
-      {/*      // console.log(active);*/}
-
-      {/*      return (*/}
-      {/*        <div*/}
-      {/*          className={`d-flex align-items-center mb-3 p-2 rounded-2 bg-hover-lighten ${*/}
-      {/*            active && " bg-primary bg-opacity-10"*/}
-      {/*          }`}*/}
-      {/*          key={clinic["@id"]}*/}
-      {/*          onClick={(e) => {*/}
-      {/*            e.preventDefault();*/}
-      {/*            dispatch(*/}
-      {/*              auth.actions.setClinic(active ? undefined : clinic)*/}
-      {/*            );*/}
-      {/*          }}*/}
-      {/*        >*/}
-      {/*          <div className='symbol symbol-40px me-4'>*/}
-      {/*            <span className='symbol-label bg-light'>*/}
-      {/*              <KTSVG*/}
-      {/*                path={`/media/icons/duotune/${clinic["@icon"]}`}*/}
-      {/*                className='svg-icon-2 svg-icon-primary'*/}
-      {/*              />*/}
-      {/*            </span>*/}
-      {/*          </div>*/}
-
-      {/*          <div className='d-flex flex-column'>*/}
-      {/*            <a*/}
-      {/*              href='/#'*/}
-      {/*              className={`fs-6 text-gray-700 text-hover-primary fw-bold ${*/}
-      {/*                active && "text-primary "*/}
-      {/*              }`}*/}
-      {/*              onClick={(e) => {*/}
-      {/*                e.preventDefault();*/}
-      {/*                dispatch(*/}
-      {/*                  auth.actions.setClinic(active ? undefined : clinic)*/}
-      {/*                );*/}
-      {/*              }}*/}
-      {/*            >*/}
-      {/*              {clinic["@title"]}*/}
-      {/*            </a>*/}
-      {/*            <span className='fs-7 text-muted fw-bold'>*/}
-      {/*              {clinic["@subTitle"]}*/}
-      {/*            </span>*/}
-      {/*          </div>*/}
-      {/*        </div>*/}
-      {/*      );*/}
-      {/*    })}*/}
-      {/*  </div>*/}
-      {/*</div>*/}
     </div>
   );
 };
