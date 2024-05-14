@@ -9,7 +9,6 @@ import { OperationModel } from "../../../../../app/modules/Operation";
 export const useCurrentOperation: () => OperationModel | undefined = () => {
   const { operations, getPath } = useAuth();
   const { pathname } = useLocation();
-  console.log("pathname", pathname);
   const pathnameParts = pathname.split("/").filter((part) => part !== "");
   const partCount = ["update", "delete"].includes(pathnameParts.at(2) || "")
     ? 3

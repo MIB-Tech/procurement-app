@@ -47,7 +47,7 @@ import { GridView } from "./views/Grid/GridView";
 import { Help } from "../components/Help";
 import { DetailViewColumnContent } from "../DetailView/DetailViewColumnContent";
 import { ItemView } from "../components/ItemView";
-import { DEFAULT_VIEW, isClinicColumn } from "./ListingView.utils";
+import { DEFAULT_VIEW } from "./ListingView.utils";
 import { BasicFilterToolbar } from "./Filter/BasicFilterToolbar";
 import {
   getAdvancedPropertyFilter,
@@ -235,11 +235,7 @@ export const ListingView = <M extends ModelEnum>({
   });
 
   const isColumnHidden = (columnName: string | keyof Model<M>) => {
-    if (parentModelName === columnName) {
-      return true;
-    }
-
-    return clinic && isClinicColumn({ modelName, columnName });
+    return parentModelName === columnName;
   };
 
   const sortColumNames = (

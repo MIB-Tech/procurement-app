@@ -16,7 +16,6 @@ import { useCustomQuery } from "../hooks/UseCustomQuery";
 import { getDefaultFields } from "../utils";
 import { ModelEnum } from "../../app/modules/types";
 import { Grid } from "@mui/material";
-import { isClinicColumn } from "../ListingView/ListingView.utils";
 
 export const FormCard = <M extends ModelEnum>({
   modelName,
@@ -39,10 +38,6 @@ export const FormCard = <M extends ModelEnum>({
   const columnNames = (
     Object.keys(fields) as Array<keyof Model<M> | string>
   ).filter((columnName) => {
-    if (clinic && isClinicColumn({ modelName, columnName })) {
-      return false;
-    }
-
     const field = fields[columnName];
     if (typeof field === "boolean") {
       return field;
