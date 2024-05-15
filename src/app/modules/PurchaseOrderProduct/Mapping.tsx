@@ -137,27 +137,6 @@ const DesiredProductsField = ({ ...fieldProps }: FieldProps) => {
     />
   );
 };
-const GrossPriceField = ({ ...props }: Pick<FieldProps, "name">) => {
-  const { name } = props;
-  const [field] = useField({ name });
-  const [{ value: grossPrice }, , { setValue: setGrossPrice }] =
-    useField<number>({ name });
-
-  return (
-    <NumberColumnField
-      {...props}
-      size='sm'
-      onChange={async (event) => {
-        field.onChange(event);
-
-        const price = event.target.value as unknown as number;
-        if (price < 0) {
-          await setGrossPrice(price);
-        }
-      }}
-    />
-  );
-};
 
 const QuantityField = ({ ...props }: Pick<FieldProps, "name">) => {
   const { name } = props;
