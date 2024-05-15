@@ -70,7 +70,7 @@ export const en: I18nLanguage = {
   "WORK_ORDERS.DETAIL.STATUS": "Status (Click to Update)",
   PASSWORD_CHANGED_SUCCESSFULLY: "Password changed successfully",
   NOT_FOUND: "No results found",
-  SETTINGS: "Settings",
+  SETTINGS: "Change password",
   ACTION: "Action",
   ACTIONS: "Actions",
   ASSET_MODEL: "Asset Model",
