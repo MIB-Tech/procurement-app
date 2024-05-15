@@ -3,7 +3,6 @@ import { PurchaseOrderModel } from "../PurchaseOrder";
 import { VendorModel } from "../Vendor";
 import {
   PurchaseOrderComponentPrint,
-  PurchaseOrderLinePrint,
   PurchaseOrderPrint,
   PurchaseOrderProductPrint,
 } from "../PurchaseOrder/Model";
