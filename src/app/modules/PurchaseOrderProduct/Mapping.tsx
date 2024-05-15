@@ -215,19 +215,21 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
       {
         console.log("editable", item.editablePrice);
       }
-      if (!item.editablePrice) {
+
+      if (item.editablePrice === false) {
         return (
           <NumberColumnField
             {...fieldProps}
             size='sm'
           />
         );
+      } else if (item.editablePrice === undefined) {
+        return <PurchaseOrderNumberUnit value={item.grossPrice} />;
       } else {
         return <PurchaseOrderNumberUnit value={item.grossPrice} />;
       }
     },
   },
-
   note: true,
   discountType: {
     defaultValue: DiscountType.Percent,
@@ -532,7 +534,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
         },
         grossPrice: {
           render: ({ item, fieldProps }) => {
-            if (item.editablePrice && !item.id) {
+            if (
+              item.editablePrice === undefined ||
+              (item.editablePrice && !item.id)
+            ) {
               return <PurchaseOrderNumberUnit value={item.grossPrice} />;
             } else if (item.id) {
               return <PurchaseOrderNumberUnit value={item.grossPrice} />;
@@ -546,6 +551,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
             }
           },
         },
+
         note: true,
         discountType: {
           defaultValue: DiscountType.Percent,
