@@ -83,6 +83,14 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
       },
     },
     {
+      type: ViewEnum.Update,
+
+      fields: {
+        invoiceNumber: true,
+        vendor: true,
+      },
+    },
+    {
       type: ViewEnum.Detail,
       customActions: [
         { render: ({ item }) => <PrintInvoiceButton item={item} /> },
