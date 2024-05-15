@@ -65,6 +65,7 @@ export const ProductField = ({ ...props }: Pick<FieldProps, "name">) => {
     priceInclTax: 0,
     desiredProducts: [],
     components: [],
+    editablePrice: false,
   };
 
   const setValue = async (suffix: string, value: any) => {
@@ -142,7 +143,10 @@ export const ProductField = ({ ...props }: Pick<FieldProps, "name">) => {
                 : pricing.purchasePriceExclTax
             );
             await setValue("discountValue", pricing.discountValue);
+
+            await setValue("editablePrice", true);
           }
+
           // components
           const componentUri = getRoutePrefix(ModelEnum.Component);
           const componentFilter: PropertyFilter<ModelEnum.Component> = {

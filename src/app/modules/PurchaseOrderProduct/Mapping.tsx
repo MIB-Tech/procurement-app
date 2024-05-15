@@ -137,6 +137,27 @@ const DesiredProductsField = ({ ...fieldProps }: FieldProps) => {
     />
   );
 };
+const GrossPriceField = ({ ...props }: Pick<FieldProps, "name">) => {
+  const { name } = props;
+  const [field] = useField({ name });
+  const [{ value: grossPrice }, , { setValue: setGrossPrice }] =
+    useField<number>({ name });
+
+  return (
+    <NumberColumnField
+      {...props}
+      size='sm'
+      onChange={async (event) => {
+        field.onChange(event);
+
+        const price = event.target.value as unknown as number;
+        if (price < 0) {
+          await setGrossPrice(price);
+        }
+      }}
+    />
+  );
+};
 
 const QuantityField = ({ ...props }: Pick<FieldProps, "name">) => {
   const { name } = props;
@@ -173,7 +194,6 @@ const QuantityField = ({ ...props }: Pick<FieldProps, "name">) => {
 
 const PurchaseOrderNumberUnit: FC<CurrencyProps> = (props) => {
   const formik = useFormikContext<Partial<PurchaseOrderModel>>();
-
   return (
     <NumberUnit
       {...props}
@@ -181,6 +201,7 @@ const PurchaseOrderNumberUnit: FC<CurrencyProps> = (props) => {
     />
   );
 };
+
 const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
   product: {
     render: ({ fieldProps }) => <ProductField {...fieldProps} />,
@@ -190,8 +211,23 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
     render: ({ fieldProps }) => <QuantityField {...fieldProps} />,
   },
   grossPrice: {
-    render: ({ item }) => <PurchaseOrderNumberUnit value={item.grossPrice} />,
+    render: ({ item, fieldProps }) => {
+      {
+        console.log("editable", item.editablePrice);
+      }
+      if (!item.editablePrice) {
+        return (
+          <NumberColumnField
+            {...fieldProps}
+            size='sm'
+          />
+        );
+      } else {
+        return <PurchaseOrderNumberUnit value={item.grossPrice} />;
+      }
+    },
   },
+
   note: true,
   discountType: {
     defaultValue: DiscountType.Percent,
@@ -370,6 +406,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       type: ColumnTypeEnum.Boolean,
       readOnly: true,
     },
+    editablePrice: {
+      type: ColumnTypeEnum.Boolean,
+      readOnly: true,
+    },
     priceInclTax: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
@@ -482,7 +522,119 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
     },
     {
       type: ViewEnum.Update,
-      fields: formFields,
+      fields: {
+        product: {
+          render: ({ fieldProps }) => <ProductField {...fieldProps} />,
+        },
+        designation: true,
+        quantity: {
+          render: ({ fieldProps }) => <QuantityField {...fieldProps} />,
+        },
+        grossPrice: {
+          render: ({ item, fieldProps }) => {
+            if (item.editablePrice && !item.id) {
+              return <PurchaseOrderNumberUnit value={item.grossPrice} />;
+            } else if (item.id) {
+              return <PurchaseOrderNumberUnit value={item.grossPrice} />;
+            } else {
+              return (
+                <NumberColumnField
+                  {...fieldProps}
+                  size='sm'
+                />
+              );
+            }
+          },
+        },
+        note: true,
+        discountType: {
+          defaultValue: DiscountType.Percent,
+        },
+        discountValue: {
+          render: ({ item, fieldProps }) => (
+            <NumberColumnField
+              format={
+                item.discountType === DiscountType.Percent
+                  ? NumberFormat.Percent
+                  : NumberFormat.Amount
+              }
+              {...fieldProps}
+              size='sm'
+              min={0}
+              precision={7}
+            />
+          ),
+        },
+        vatRate: {
+          defaultValue: 0.2,
+          render: ({ fieldProps }) => (
+            <SelectField
+              size='sm'
+              options={[0, 0.07, 0.1, 0.14, 0.2]}
+              getOptionLabel={(varRate) => `${(varRate * 100).toFixed(0)} %`}
+              placeholder='TVA'
+              {...fieldProps}
+            />
+          ),
+        },
+        priceExclTax: {
+          render: ({ item }) => (
+            <AmountUnit
+              getValue={(taxIncluded) =>
+                getPriceExclTax({ ...item, taxIncluded })
+              }
+            />
+          ),
+        },
+        priceInclTax: {
+          render: ({ item }) => (
+            <AmountUnit
+              getValue={(taxIncluded) =>
+                getPriceInclTax({ ...item, taxIncluded })
+              }
+            />
+          ),
+        },
+        desiredProducts: {
+          display: ({ item }) => !!item.product,
+          render: ({ fieldProps }) => <DesiredProductsField {...fieldProps} />,
+        },
+        components: {
+          display: () => false, // TODO
+          render: ({ item, fieldProps }) => {
+            const view:
+              | CreateViewType<ModelEnum.PurchaseOrderProductComponent>
+              | UpdateViewType<ModelEnum.PurchaseOrderProductComponent> = {
+              type: item.id ? ViewEnum.Update : ViewEnum.Create,
+              fields: {
+                product: {
+                  render: ({ fieldProps }) => (
+                    <div className='mw-250px'>
+                      <ModelAutocompleteField
+                        modelName={ModelEnum.Product}
+                        size='sm'
+                        {...fieldProps}
+                        disabled
+                      />
+                    </div>
+                  ),
+                },
+                designation: true,
+                quantity: true,
+              },
+            };
+
+            return (
+              <NestedArrayField
+                modelName={ModelEnum.PurchaseOrderProductComponent}
+                {...fieldProps}
+                disableInsert
+                view={view}
+              />
+            );
+          },
+        },
+      },
     },
   ],
 };
