@@ -67,6 +67,8 @@ const mapping: ModelMapping<ModelEnum.User> = {
     },
     passwordChangedAt: {
       type: ColumnTypeEnum.String,
+      format: StringFormat.Datetime,
+      nullable: true,
     },
     currentPassword: {
       type: ColumnTypeEnum.String,
