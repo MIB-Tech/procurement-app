@@ -202,6 +202,11 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
         receivedAt: true,
         purchaseOrders: true,
       },
+      filterColumns: {
+        receiptNumber: true,
+        receivedAt: true,
+        externalRef: true,
+      },
     },
     {
       type: ViewEnum.Detail,
