@@ -60,6 +60,7 @@
     "mobx": "^6.3.13",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
+    "moment-timezone": "^0.5.45",
     "nouislider": "^15.2.0",
     "numeral": "^2.0.6",
     "object-path": "^0.11.5",
