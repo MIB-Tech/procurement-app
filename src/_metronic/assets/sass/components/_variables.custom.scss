@@ -94,13 +94,13 @@ $aside-config: (
   // Aside box shadow
   minimized-hover-box-shadow:
     if(isDarkMode(), none, 5px 0px 10px rgba(70, 78, 95, 0.075))
-    // Monimized hover box shadow,,,
+    // Monimized hover box shadow,,,,
 ) !default;
 
 $content-spacing: (
   desktop: 10px,
   // Padding for desktop mode
-  tablet-and-mobile: 7.5px // Padding for tablet and mobile modes,,,
+  tablet-and-mobile: 7.5px // Padding for tablet and mobile modes,,,,
 ) !default;
 
 $code-margin: 0px !default;

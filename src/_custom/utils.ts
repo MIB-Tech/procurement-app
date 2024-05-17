@@ -12,7 +12,6 @@ import {
 import {
   array,
   bool,
-  mixed,
   number,
   object,
   ObjectSchema,

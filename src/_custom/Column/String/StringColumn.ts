@@ -1,11 +1,10 @@
-import { number, NumberSchema, string, StringSchema } from "yup";
+import { string, StringSchema } from "yup";
 import { I18nMessageKey } from "../../i18n/I18nMessages";
 import { RoleKeyEnum } from "../../../app/modules/Role/Model";
 import { ColumnTypeEnum } from "../../types/types";
 import { Model } from "../../types/ModelMapping";
 import { ModelEnum } from "../../../app/modules/types";
 import { Limit, NumberValidation } from "../Number/NumberColumn";
-import { M } from "@fullcalendar/core/internal-common";
 
 import { getReference } from "../../getReference";
 
