@@ -1,11 +1,13 @@
 import React, { Suspense } from "react";
-import { BrowserRouter } from "react-router-dom";
 import { I18nProvider } from "../_metronic/i18n/i18nProvider";
 import { LayoutProvider, LayoutSplashScreen } from "../_metronic/layout/core";
 import AuthInit from "./pages/auth/redux/AuthInit";
 import { AppRoutes } from "./routing/AppRoutes";
 import { ToastProvider } from "../_custom/Toastr/Toastr.provider";
 import { RecoilRoot } from "recoil";
+import moment from "moment-timezone";
+
+moment.tz.setDefault("Etc/UTC");
 
 type Props = {
   basename: string;
