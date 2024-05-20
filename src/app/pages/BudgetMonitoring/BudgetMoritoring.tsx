@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { FC, ReactNode, useEffect } from "react";
+import React, { FC, ReactNode, useEffect, useState } from "react";
 import { usePageData } from "../../../_metronic/layout/core";
 import { useTrans } from "../../../_custom/components/Trans";
 import { useQuery } from "react-query";
@@ -7,6 +7,11 @@ import axios from "axios";
 import { useAuth } from "../../../_custom/hooks/UseAuth";
 import { NumberUnit } from "../../../_custom/components/NumberUnit";
 import { KTSVG } from "../../../_metronic/helpers";
+import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
+import { ModelEnum } from "../../modules/types";
+import { getRoutePrefix } from "../../../_custom/utils";
+import { HydraItem } from "../../../_custom/types/hydra.types";
+import { Modal } from "react-bootstrap";
 
 type Props = {
   className: string;
@@ -53,26 +58,50 @@ const StatisticsWidget5: React.FC<Props> = ({
 export const BudgetMonitoringPage: FC = () => {
   const { setPageTitle } = usePageData();
   const { clinic } = useAuth();
+  const [selectedClinic, setSelectedClinic] =
+    useState<HydraItem<ModelEnum.Clinic> | null>();
   const { data, isLoading } = useQuery({
     queryKey: ["BUDGET_MONITORING", clinic?.id],
     queryFn: () =>
       axios.get<
         Array<{
-          productSectionName: string;
-          amount: number;
+          clinicId: number;
+          sectionId: number;
+          amount: string;
           committed: string;
         }>
-      >("/custom/statistics/product-section-budgets", {
-        params: {
-          clinicId: clinic?.id,
-        },
-      }),
+      >("/custom/statistics/budgets-details"),
   });
+
+  const clinicCollectionQuery = useCollectionQuery<ModelEnum.Clinic>({
+    modelName: ModelEnum.Clinic,
+    queryKey: ["BUDGET_TRACKING_CLINICS"],
+    path: "/budget-tracking" + getRoutePrefix(ModelEnum.Clinic),
+  });
+  const sectionCollectionQuery = useCollectionQuery<ModelEnum.ProductSection>({
+    modelName: ModelEnum.ProductSection,
+    queryKey: ["BUDGET_TRACKING_SECTIONS"],
+    path: "/base" + getRoutePrefix(ModelEnum.ProductSection),
+  });
+  /* const [clinics, setClinics] = useState<Clinics[]>([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:84/clinics")
+      .then((response) => {
+        const clinicsData: Clinics[] = response.data["hydra:member"];
+        setClinics(clinicsData);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la requête GET:", error);
+      });
+  }, []);
+*/
   const { trans } = useTrans();
 
   useEffect(() => {
     setPageTitle(trans({ id: "BUDGET_MONITORING" }));
   }, []);
+
   const collection = data?.data || [];
   const totalAmount = collection.reduce((totalAmount, current) => {
     const amount =
@@ -92,11 +121,16 @@ export const BudgetMonitoringPage: FC = () => {
     0
   );
   const totalRest = totalAmount - totalCommitted;
+  const moyen = totalCommitted / totalAmount;
+  const clinicTotals = clinicCollectionQuery.collection.map(() => ({
+    amount: 0,
+    committed: 0,
+  }));
 
   return (
     <>
       <div className='row'>
-        <div className='col-4'>
+        <div className='col-3'>
           <StatisticsWidget5
             className='card-bordered'
             svgIcon='/media/icons/duotune/general/gen032.svg'
@@ -111,7 +145,7 @@ export const BudgetMonitoringPage: FC = () => {
             description='Total (Budgeté)'
           />
         </div>
-        <div className='col-4'>
+        <div className='col-3'>
           <StatisticsWidget5
             className='card-bordered'
             svgIcon='/media/icons/duotune/general/gen032.svg'
@@ -126,7 +160,7 @@ export const BudgetMonitoringPage: FC = () => {
             description='Total (Engagé)'
           />
         </div>
-        <div className='col-4'>
+        <div className='col-3'>
           <StatisticsWidget5
             className='card-bordered'
             svgIcon='/media/icons/duotune/general/gen032.svg'
@@ -139,6 +173,21 @@ export const BudgetMonitoringPage: FC = () => {
               />
             }
             description='Total (Reste)'
+          />
+        </div>
+        <div className='col-3'>
+          <StatisticsWidget5
+            className='card-bordered'
+            svgIcon='/media/icons/duotune/general/gen032.svg'
+            color='white'
+            iconColor='primary'
+            title={
+              <NumberUnit
+                value={moyen}
+                precision={2}
+              />
+            }
+            description='% Moyen Engagé'
           />
         </div>
       </div>
@@ -155,33 +204,145 @@ export const BudgetMonitoringPage: FC = () => {
               <thead className='fs-7 text-gray-400 text-uppercase'>
                 <tr>
                   <th>Section Budgétaire</th>
-                  <th className='text-end'>Budgeté</th>
-                  <th className='text-end'>Engagé</th>
-                  <th className='text-end'>Reste</th>
+                  {clinicCollectionQuery.collection.map((clinic) => (
+                    <th
+                      key={clinic.id}
+                      className='text-end fw-bold'
+                    >
+                      <a
+                        href='#'
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setSelectedClinic(clinic);
+                        }}
+                      >
+                        <div className='fw-bold'>{clinic["@title"]}</div>
+                        <div className='text-nowrap'>{clinic.city.name}</div>
+                      </a>
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {(data?.data || []).map(
-                  ({ productSectionName, amount, committed }) => (
-                    <tr key={productSectionName}>
-                      <td>{productSectionName}</td>
-                      <td className='text-end'>
-                        <NumberUnit value={amount} />
-                      </td>
-                      <td className='text-end'>
-                        <NumberUnit value={parseFloat(committed)} />
-                      </td>
-                      <td className='text-end'>
-                        <NumberUnit value={amount - parseFloat(committed)} />
-                      </td>
-                    </tr>
-                  )
-                )}
+                {sectionCollectionQuery.collection.map((section) => (
+                  <tr key={section.id}>
+                    <td>{section["@title"]}</td>
+                    {clinicCollectionQuery.collection.map(
+                      (clinic, clinicIndex) => {
+                        const amountObj = collection.find(
+                          (amountObj) =>
+                            section.id === amountObj.sectionId &&
+                            clinic.id === amountObj.clinicId
+                        );
+                        const amount = amountObj
+                          ? parseFloat(amountObj.amount)
+                          : 0;
+
+                        clinicTotals[clinicIndex].amount += amount;
+                        clinicTotals[clinicIndex].committed += totalCommitted;
+
+                        return (
+                          <td
+                            key={section.id + "." + clinic.id}
+                            className='text-end'
+                          >
+                            <NumberUnit value={amount} />
+                          </td>
+                        );
+                      }
+                    )}
+                  </tr>
+                ))}
               </tbody>
+
+              <tfoot>
+                <tr>
+                  <td className='text-danger'>Total Projet TTC</td>
+                  {clinicCollectionQuery.collection.map(
+                    (clinic, clinicIndex) => (
+                      <td
+                        key={clinic.id}
+                        className='text-end'
+                      >
+                        <NumberUnit value={clinicTotals[clinicIndex].amount} />
+                      </td>
+                    )
+                  )}
+                </tr>
+                <tr>
+                  <td className='text-danger'>Total Committed</td>
+                  {clinicCollectionQuery.collection.map(
+                    (clinic, clinicIndex) => (
+                      <td
+                        key={clinic.id}
+                        className='text-end'
+                      >
+                        <NumberUnit
+                          value={clinicTotals[clinicIndex].committed}
+                        />
+                      </td>
+                    )
+                  )}
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>
       </div>
+      {selectedClinic && (
+        <Modal
+          show
+          onHide={() => setSelectedClinic(null)}
+        >
+          <Modal.Body>
+            <div className='table-responsive'>
+              <table className='table table-sm table-row-bordered table-row-dark gy-1 align-middle mb-0'>
+                <thead className='fs-7 text-gray-400 text-uppercase'>
+                  <tr>
+                    <th>Section Budgétaire</th>
+                    <th className='text-end'>Budgeté</th>
+                    <th className='text-end'>Engagé</th>
+                    <th className='text-end'>Reste</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sectionCollectionQuery.collection.map((section) => {
+                    const filteredAmounts = collection.filter(
+                      ({ clinicId, sectionId }) =>
+                        sectionId === section.id &&
+                        clinicId === selectedClinic.id
+                    );
+                    const amount: number = filteredAmounts.reduce(
+                      (previousValue, currentValue) =>
+                        previousValue + parseFloat(currentValue.amount),
+                      0
+                    );
+                    const committed: number = filteredAmounts.reduce(
+                      (previousValue, currentValue) =>
+                        previousValue + parseFloat(currentValue.committed),
+                      0
+                    );
+                    return (
+                      <tr key={section.id}>
+                        <td>{section["@title"]}</td>
+                        <td className='text-end'>
+                          <NumberUnit value={amount} />
+                        </td>
+                        <td className='text-end'>
+                          <NumberUnit value={committed} />
+                        </td>
+                        <td className='text-end'>
+                          <NumberUnit value={amount - committed} />
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </Modal.Body>
+        </Modal>
+      )}
     </>
   );
 };
