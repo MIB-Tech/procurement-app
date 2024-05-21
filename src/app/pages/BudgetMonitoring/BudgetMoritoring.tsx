@@ -12,6 +12,8 @@ import { ModelEnum } from "../../modules/types";
 import { getRoutePrefix } from "../../../_custom/utils";
 import { HydraItem } from "../../../_custom/types/hydra.types";
 import { Modal } from "react-bootstrap";
+import { ModelCell } from "../../../_custom/ListingView/views/Table/ModelCell";
+import { Statistics } from "../widgets/components/Statistics";
 
 type Props = {
   className: string;
@@ -57,11 +59,10 @@ const StatisticsWidget5: React.FC<Props> = ({
 
 export const BudgetMonitoringPage: FC = () => {
   const { setPageTitle } = usePageData();
-  const { clinic } = useAuth();
   const [selectedClinic, setSelectedClinic] =
     useState<HydraItem<ModelEnum.Clinic> | null>();
   const { data, isLoading } = useQuery({
-    queryKey: ["BUDGET_MONITORING", clinic?.id],
+    queryKey: "BUDGET_MONITORING",
     queryFn: () =>
       axios.get<
         Array<{
@@ -120,12 +121,20 @@ export const BudgetMonitoringPage: FC = () => {
     (totalCommitted, current) => totalCommitted + parseFloat(current.committed),
     0
   );
-  const totalRest = totalAmount - totalCommitted;
-  const moyen = totalCommitted / totalAmount;
-  const clinicTotals = clinicCollectionQuery.collection.map(() => ({
-    amount: 0,
-    committed: 0,
-  }));
+
+  const selectedClinicAmounts = collection.filter(
+    ({ clinicId }) => clinicId === selectedClinic?.id
+  );
+  const selectedClinicTotalAmount: number = selectedClinicAmounts.reduce(
+    (previousValue, currentValue) =>
+      previousValue + parseFloat(currentValue.amount),
+    0
+  );
+  const selectedClinicTotalCommitted: number = selectedClinicAmounts.reduce(
+    (previousValue, currentValue) =>
+      previousValue + parseFloat(currentValue.committed),
+    0
+  );
 
   return (
     <>
@@ -168,7 +177,7 @@ export const BudgetMonitoringPage: FC = () => {
             iconColor='primary'
             title={
               <NumberUnit
-                value={totalRest}
+                value={totalAmount - totalCommitted}
                 precision={0}
               />
             }
@@ -183,8 +192,9 @@ export const BudgetMonitoringPage: FC = () => {
             iconColor='primary'
             title={
               <NumberUnit
-                value={moyen}
+                value={(100 * totalCommitted) / totalAmount}
                 precision={2}
+                unit='%'
               />
             }
             description='% Moyen Engagé'
@@ -200,7 +210,7 @@ export const BudgetMonitoringPage: FC = () => {
         {/*</div>*/}
         <div className='card-body py-1 px-3'>
           <div className='table-responsive'>
-            <table className='table table-sm table-row-bordered table-row-dark gy-1 align-middle mb-0'>
+            <table className='table table-sm table-row-bordered table-row-dark gy-1 align-middle mb-0 text-nowrap'>
               <thead className='fs-7 text-gray-400 text-uppercase'>
                 <tr>
                   <th>Section Budgétaire</th>
@@ -217,7 +227,7 @@ export const BudgetMonitoringPage: FC = () => {
                         }}
                       >
                         <div className='fw-bold'>{clinic["@title"]}</div>
-                        <div className='text-nowrap'>{clinic.city.name}</div>
+                        <div>{clinic.city.name}</div>
                       </a>
                     </th>
                   ))}
@@ -238,9 +248,6 @@ export const BudgetMonitoringPage: FC = () => {
                           ? parseFloat(amountObj.amount)
                           : 0;
 
-                        clinicTotals[clinicIndex].amount += amount;
-                        clinicTotals[clinicIndex].committed += totalCommitted;
-
                         return (
                           <td
                             key={section.id + "." + clinic.id}
@@ -255,33 +262,91 @@ export const BudgetMonitoringPage: FC = () => {
                 ))}
               </tbody>
 
-              <tfoot>
+              <tfoot className='fw-boldest'>
                 <tr>
-                  <td className='text-danger'>Total Projet TTC</td>
+                  <td className='pt-10'>Total Projet TTC</td>
                   {clinicCollectionQuery.collection.map(
-                    (clinic, clinicIndex) => (
-                      <td
-                        key={clinic.id}
-                        className='text-end'
-                      >
-                        <NumberUnit value={clinicTotals[clinicIndex].amount} />
-                      </td>
-                    )
+                    (clinic, clinicIndex) => {
+                      const totalAmount = collection.reduce(
+                        (totalAmount, { amount, clinicId }) => {
+                          if (clinic.id !== clinicId) return totalAmount;
+
+                          return totalAmount + parseFloat(amount);
+                        },
+                        0
+                      );
+
+                      return (
+                        <td
+                          key={clinic.id}
+                          className='text-end pt-10'
+                        >
+                          <NumberUnit value={totalAmount} />
+                        </td>
+                      );
+                    }
                   )}
                 </tr>
                 <tr>
-                  <td className='text-danger'>Total Committed</td>
+                  <td>Total Engagé TTC</td>
                   {clinicCollectionQuery.collection.map(
-                    (clinic, clinicIndex) => (
-                      <td
-                        key={clinic.id}
-                        className='text-end'
-                      >
-                        <NumberUnit
-                          value={clinicTotals[clinicIndex].committed}
-                        />
-                      </td>
-                    )
+                    (clinic, clinicIndex) => {
+                      const totalCommitted = collection.reduce(
+                        (sum, { committed, clinicId }) => {
+                          if (clinic.id !== clinicId) return sum;
+
+                          return sum + parseFloat(committed);
+                        },
+                        0
+                      );
+
+                      return (
+                        <td
+                          key={clinic.id}
+                          className='text-end'
+                        >
+                          <NumberUnit value={totalCommitted} />
+                        </td>
+                      );
+                    }
+                  )}
+                </tr>
+                <tr>
+                  <td>% Engagé</td>
+                  {clinicCollectionQuery.collection.map(
+                    (clinic, clinicIndex) => {
+                      const totalAmount = collection.reduce(
+                        (sum, { amount, clinicId }) => {
+                          if (clinic.id !== clinicId) return sum;
+
+                          return sum + parseFloat(amount);
+                        },
+                        0
+                      );
+                      const totalCommitted = collection.reduce(
+                        (sum, { committed, clinicId }) => {
+                          if (clinic.id !== clinicId) return sum;
+
+                          return sum + parseFloat(committed);
+                        },
+                        0
+                      );
+                      return (
+                        <td
+                          key={clinic.id}
+                          className='text-end'
+                        >
+                          <NumberUnit
+                            value={
+                              totalAmount !== 0
+                                ? (100 * totalCommitted) / totalAmount
+                                : 0
+                            }
+                            unit='%'
+                          />
+                        </td>
+                      );
+                    }
                   )}
                 </tr>
               </tfoot>
@@ -289,56 +354,108 @@ export const BudgetMonitoringPage: FC = () => {
           </div>
         </div>
       </div>
+
       {selectedClinic && (
         <Modal
           show
+          size='lg'
           onHide={() => setSelectedClinic(null)}
         >
+          <Modal.Header closeButton>
+            <Modal.Title>
+              <ModelCell item={selectedClinic} />
+            </Modal.Title>
+          </Modal.Header>
           <Modal.Body>
-            <div className='table-responsive'>
-              <table className='table table-sm table-row-bordered table-row-dark gy-1 align-middle mb-0'>
-                <thead className='fs-7 text-gray-400 text-uppercase'>
-                  <tr>
-                    <th>Section Budgétaire</th>
-                    <th className='text-end'>Budgeté</th>
-                    <th className='text-end'>Engagé</th>
-                    <th className='text-end'>Reste</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sectionCollectionQuery.collection.map((section) => {
-                    const filteredAmounts = collection.filter(
-                      ({ clinicId, sectionId }) =>
-                        sectionId === section.id &&
-                        clinicId === selectedClinic.id
-                    );
-                    const amount: number = filteredAmounts.reduce(
-                      (previousValue, currentValue) =>
-                        previousValue + parseFloat(currentValue.amount),
-                      0
-                    );
-                    const committed: number = filteredAmounts.reduce(
-                      (previousValue, currentValue) =>
-                        previousValue + parseFloat(currentValue.committed),
-                      0
-                    );
-                    return (
-                      <tr key={section.id}>
-                        <td>{section["@title"]}</td>
-                        <td className='text-end'>
-                          <NumberUnit value={amount} />
-                        </td>
-                        <td className='text-end'>
-                          <NumberUnit value={committed} />
-                        </td>
-                        <td className='text-end'>
-                          <NumberUnit value={amount - committed} />
-                        </td>
+            <div className='d-flex'>
+              <div className='me-5'>
+                <StatisticsWidget5
+                  className='card-bordered mb-3'
+                  svgIcon='/media/icons/duotune/general/gen032.svg'
+                  color='white'
+                  iconColor='primary'
+                  title={
+                    <NumberUnit
+                      value={selectedClinicTotalAmount}
+                      precision={0}
+                    />
+                  }
+                  description='Total (Budgeté)'
+                />
+                <StatisticsWidget5
+                  className='card-bordered mb-3'
+                  svgIcon='/media/icons/duotune/general/gen032.svg'
+                  color='white'
+                  iconColor='primary'
+                  title={
+                    <NumberUnit
+                      value={selectedClinicTotalCommitted}
+                      precision={0}
+                    />
+                  }
+                  description='Total (Engagé)'
+                />
+                <StatisticsWidget5
+                  className='card-bordered'
+                  svgIcon='/media/icons/duotune/general/gen032.svg'
+                  color='white'
+                  iconColor='primary'
+                  title={
+                    <NumberUnit
+                      value={
+                        selectedClinicTotalAmount - selectedClinicTotalCommitted
+                      }
+                      precision={0}
+                    />
+                  }
+                  description='Total (Reste)'
+                />
+              </div>
+              <div className='flex-grow-1'>
+                <div className='table-responsive'>
+                  <table className='table table-sm table-row-bordered table-row-dark gy-1 align-middle mb-0'>
+                    <thead className='fs-7 text-gray-400 text-uppercase'>
+                      <tr>
+                        <th>Section Budgétaire</th>
+                        <th className='text-end'>Budgeté</th>
+                        <th className='text-end'>Engagé</th>
+                        <th className='text-end'>Reste</th>
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                    </thead>
+                    <tbody>
+                      {sectionCollectionQuery.collection.map((section) => {
+                        const filteredAmounts = selectedClinicAmounts.filter(
+                          ({ sectionId }) => sectionId === section.id
+                        );
+                        const amount: number = filteredAmounts.reduce(
+                          (previousValue, currentValue) =>
+                            previousValue + parseFloat(currentValue.amount),
+                          0
+                        );
+                        const committed: number = filteredAmounts.reduce(
+                          (previousValue, currentValue) =>
+                            previousValue + parseFloat(currentValue.committed),
+                          0
+                        );
+                        return (
+                          <tr key={section.id}>
+                            <td>{section["@title"]}</td>
+                            <td className='text-end'>
+                              <NumberUnit value={amount} />
+                            </td>
+                            <td className='text-end'>
+                              <NumberUnit value={committed} />
+                            </td>
+                            <td className='text-end'>
+                              <NumberUnit value={amount - committed} />
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </Modal.Body>
         </Modal>
