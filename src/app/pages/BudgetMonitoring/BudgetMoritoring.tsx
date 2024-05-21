@@ -4,7 +4,6 @@ import { usePageData } from "../../../_metronic/layout/core";
 import { useTrans } from "../../../_custom/components/Trans";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { useAuth } from "../../../_custom/hooks/UseAuth";
 import { NumberUnit } from "../../../_custom/components/NumberUnit";
 import { KTSVG } from "../../../_metronic/helpers";
 import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
@@ -13,7 +12,6 @@ import { getRoutePrefix } from "../../../_custom/utils";
 import { HydraItem } from "../../../_custom/types/hydra.types";
 import { Modal } from "react-bootstrap";
 import { ModelCell } from "../../../_custom/ListingView/views/Table/ModelCell";
-import { Statistics } from "../widgets/components/Statistics";
 
 type Props = {
   className: string;
@@ -396,7 +394,7 @@ export const BudgetMonitoringPage: FC = () => {
                   description='Total (Engagé)'
                 />
                 <StatisticsWidget5
-                  className='card-bordered'
+                  className='card-bordered mb-3'
                   svgIcon='/media/icons/duotune/general/gen032.svg'
                   color='white'
                   iconColor='primary'
@@ -409,6 +407,23 @@ export const BudgetMonitoringPage: FC = () => {
                     />
                   }
                   description='Total (Reste)'
+                />
+                <StatisticsWidget5
+                  className='card-bordered'
+                  svgIcon='/media/icons/duotune/general/gen032.svg'
+                  color='white'
+                  iconColor='primary'
+                  title={
+                    <NumberUnit
+                      value={
+                        (selectedClinicTotalCommitted /
+                          selectedClinicTotalAmount) *
+                        100
+                      }
+                      unit='%'
+                    />
+                  }
+                  description='% Moyen Engagé'
                 />
               </div>
               <div className='flex-grow-1'>
