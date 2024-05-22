@@ -356,7 +356,7 @@ export const BudgetMonitoringPage: FC = () => {
       {selectedClinic && (
         <Modal
           show
-          size='lg'
+          size='xl'
           onHide={() => setSelectedClinic(null)}
         >
           <Modal.Header closeButton>
