@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { GrantedLink, useAuth } from "../../_custom/hooks/UseAuth";
+import { useAuth } from "../../_custom/hooks/UseAuth";
 import {
   DetailViewType,
   Model,
@@ -71,6 +71,21 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
     element: <SettingsWrapper />,
   },
   {
+    path: "budget-monitoring",
+    title: "BUDGET_MONITORING",
+    icon: "/graphs/gra004.svg",
+    display: [DisplayEnum.SIDE_MENU],
+
+    granted: [
+      RoleKeyEnum.SuperAdmin,
+      RoleKeyEnum.Admin,
+      RoleKeyEnum.Viewer,
+      RoleKeyEnum.Treso,
+      RoleKeyEnum.Finances,
+    ],
+    element: <BudgetMonitoring_V1_Page />,
+  },
+  {
     path: "budget-tracking",
     title: "BUDGET_TRACKING",
     icon: "/graphs/gra004.svg",
@@ -84,21 +99,6 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
       RoleKeyEnum.Finances,
     ],
     element: <BudgetMonitoringPage />,
-  },
-  {
-    path: "budget-monitoring",
-    title: "BUDGET_MONITORING",
-    icon: "",
-    display: [DisplayEnum.SIDE_MENU],
-
-    granted: [
-      RoleKeyEnum.SuperAdmin,
-      RoleKeyEnum.Admin,
-      RoleKeyEnum.Viewer,
-      RoleKeyEnum.Treso,
-      RoleKeyEnum.Finances,
-    ],
-    element: <BudgetMonitoring_V1_Page />,
   },
   {
     path: "extraction",
