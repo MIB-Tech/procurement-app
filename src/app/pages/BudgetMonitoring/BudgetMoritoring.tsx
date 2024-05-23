@@ -60,7 +60,7 @@ export const BudgetMonitoringPage: FC = () => {
   const [selectedClinic, setSelectedClinic] =
     useState<HydraItem<ModelEnum.Clinic> | null>();
   const { data, isLoading } = useQuery({
-    queryKey: "BUDGET_MONITORING",
+    queryKey: "BUDGET_TRACKING",
     queryFn: () =>
       axios.get<
         Array<{
@@ -98,7 +98,7 @@ export const BudgetMonitoringPage: FC = () => {
   const { trans } = useTrans();
 
   useEffect(() => {
-    setPageTitle(trans({ id: "BUDGET_MONITORING" }));
+    setPageTitle(trans({ id: "BUDGET_TRACKING" }));
   }, []);
 
   const collection = data?.data || [];
@@ -185,7 +185,7 @@ export const BudgetMonitoringPage: FC = () => {
         <div className='col-3'>
           <StatisticsWidget5
             className='card-bordered'
-            svgIcon='/media/icons/duotune/general/gen032.svg'
+            svgIcon='/media/icons/duotune/graphs/gra003.svg'
             color='white'
             iconColor='primary'
             title={
@@ -410,7 +410,7 @@ export const BudgetMonitoringPage: FC = () => {
                 />
                 <StatisticsWidget5
                   className='card-bordered'
-                  svgIcon='/media/icons/duotune/general/gen032.svg'
+                  svgIcon='/media/icons/duotune/graphs/gra003.svg'
                   color='white'
                   iconColor='primary'
                   title={

@@ -30,6 +30,7 @@ import { HydraItem } from "../../_custom/types/hydra.types";
 import { ReceiptCompliancePage } from "../pages/ReceiptCompliance/ReceiptCompliance";
 import { DisplayEnum } from "./Enums/DisplayEnum";
 import { SettingsWrapper } from "../pages/settings/SettingsWrapper";
+import { BudgetMonitoring_V1_Page } from "../pages/BudgetMonitoring_V1/BudgetMonitoring_V1";
 
 type CustomRoute = {
   title: I18nMessageKey;
@@ -70,8 +71,8 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
     element: <SettingsWrapper />,
   },
   {
-    path: "budget-monitoring",
-    title: "BUDGET_MONITORING",
+    path: "budget-tracking",
+    title: "BUDGET_TRACKING",
     icon: "/graphs/gra004.svg",
     display: [DisplayEnum.SIDE_MENU],
 
@@ -83,6 +84,21 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
       RoleKeyEnum.Finances,
     ],
     element: <BudgetMonitoringPage />,
+  },
+  {
+    path: "budget-monitoring",
+    title: "BUDGET_MONITORING",
+    icon: "",
+    display: [DisplayEnum.SIDE_MENU],
+
+    granted: [
+      RoleKeyEnum.SuperAdmin,
+      RoleKeyEnum.Admin,
+      RoleKeyEnum.Viewer,
+      RoleKeyEnum.Treso,
+      RoleKeyEnum.Finances,
+    ],
+    element: <BudgetMonitoring_V1_Page />,
   },
   {
     path: "extraction",
