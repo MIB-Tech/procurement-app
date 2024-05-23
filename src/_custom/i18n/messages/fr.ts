@@ -1,6 +1,7 @@
 import { I18nLanguage } from "../I18nMessages";
 
 export const fr: I18nLanguage = {
+  BUDGET_TRACKING: "Suivi budgétaire",
   SETTINGS: "Changer le mot de passe",
   PRODUCT_SECTIONS_BUDGETS: "Budgets des sections produits",
   COMPLIANCE_UPDATED_AT: "Date du mise à jour",
@@ -42,7 +43,7 @@ export const fr: I18nLanguage = {
   NUMBER: "Number",
   STRING: "String",
   EXPORT: "Export",
-  BUDGET_MONITORING: "Suivi budgétaire",
+  BUDGET_MONITORING: "Contrôle budgétaire",
   DASHBOARD: "Tableau de bord",
   AMOUNT_PRODUCT_SECTION: "Montant",
   PRODUCT_SECTION_BUDGET: "Budget de la section produit",
