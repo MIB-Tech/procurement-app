@@ -50,6 +50,7 @@ type I18nMessageKey =
   | "OPERATION"
   | "EXPORT"
   | "BUDGET_MONITORING"
+  | "BUDGET_TRACKING"
   | "DASHBOARD"
   | "NOT_FOUND"
   | "GENERATE_INVOICE"

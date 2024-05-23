@@ -1,6 +1,7 @@
 import { I18nLanguage } from "../I18nMessages";
 
 export const fr: I18nLanguage = {
+  BUDGET_TRACKING: "Suivi budgétaire (V2)",
   SETTINGS: "Changer le mot de passe",
   PRODUCT_SECTIONS_BUDGETS: "Budgets des sections produits",
   COMPLIANCE_UPDATED_AT: "Date du mise à jour",
