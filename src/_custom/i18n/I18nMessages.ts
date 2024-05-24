@@ -534,8 +534,9 @@ type I18nMessageKey =
   | "COMPLIANCE_UPDATED_AT"
   | "PRODUCT_SECTIONS_BUDGETS"
   | "SETTINGS"
-  | "NEW_PASSWORD"
-  | "OLD_PASSWORD";
+  | "CURRENT_PASSWORD"
+  | "PLAIN_PASSWORD";
+
 type I18nLanguage = Record<I18nMessageKey, string>;
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = { ar, en, fr };
