@@ -182,6 +182,8 @@ export type CreateViewType<M extends ModelEnum> = {
 } & Omit<FormViewType<M>, "mode">;
 export type UpdateViewType<M extends ModelEnum> = {
   type: ViewEnum.Update;
+  fetchUri?: string;
+  mutateUri?: string;
 } & Omit<FormViewType<M>, "mode">;
 export type DeleteViewType = {
   type: ViewEnum.Delete;

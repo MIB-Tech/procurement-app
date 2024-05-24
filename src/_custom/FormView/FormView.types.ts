@@ -13,9 +13,10 @@ export type FormViewProps<M extends ModelEnum> = {
   view: CreateViewType<M> | UpdateViewType<M>;
   modelName: M;
   initialValues?: Partial<Model<M>>;
+  onMutate?: (item: Model<M>) => void;
 };
 export type EditQueryProps<M extends ModelEnum> = {
   modelName: M;
   enabled?: boolean;
-  url?: string;
+  url: string;
 };
