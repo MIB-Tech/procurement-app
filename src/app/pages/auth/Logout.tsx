@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'
-import {useDispatch} from 'react-redux'
-import * as auth from './redux/AuthRedux'
-import { Navigate, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import * as auth from "./redux/AuthRedux";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 export function Logout() {
   const dispatch = useDispatch();
@@ -12,7 +12,10 @@ export function Logout() {
 
   return (
     <Routes>
-      <Route path='*' element={<Navigate to="/auth/login"/>} />
+      <Route
+        path='*'
+        element={<Navigate to='/auth/login' />}
+      />
     </Routes>
   );
 }

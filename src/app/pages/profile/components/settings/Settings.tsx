@@ -1,12 +1,12 @@
-import React, {useState} from 'react'
-import {defaultSettings, ISettings} from './SettingsModel'
+import React, { useState } from "react";
+import { defaultSettings, ISettings } from "./SettingsModel";
 
 export function Settings() {
-  const [data, setData] = useState<ISettings>(defaultSettings)
+  const [data, setData] = useState<ISettings>(defaultSettings);
   const updateData = (fieldsToUpdate: Partial<ISettings>) => {
-    const updatedData = {...data, ...fieldsToUpdate}
-    setData(updatedData)
-  }
+    const updatedData = { ...data, ...fieldsToUpdate };
+    setData(updatedData);
+  };
 
   return (
     <div className='card'>
@@ -34,7 +34,8 @@ export function Settings() {
                     updateData({
                       setupEmailNotifications: {
                         ...data.setupEmailNotifications,
-                        emailNotifications: !data.setupEmailNotifications.emailNotifications,
+                        emailNotifications:
+                          !data.setupEmailNotifications.emailNotifications,
                       },
                     })
                   }
@@ -86,7 +87,10 @@ export function Settings() {
                   className='form-check-input'
                   type='checkbox'
                   id='kt_checkbox_1'
-                  checked={data.activityRelatedEmail.whenToEmail.youHaveNewNotifications}
+                  checked={
+                    data.activityRelatedEmail.whenToEmail
+                      .youHaveNewNotifications
+                  }
                   onChange={() =>
                     updateData({
                       activityRelatedEmail: {
@@ -94,13 +98,17 @@ export function Settings() {
                         whenToEmail: {
                           ...data.activityRelatedEmail.whenToEmail,
                           youHaveNewNotifications:
-                            !data.activityRelatedEmail.whenToEmail.youHaveNewNotifications,
+                            !data.activityRelatedEmail.whenToEmail
+                              .youHaveNewNotifications,
                         },
                       },
                     })
                   }
                 />
-                <label className='form-check-label fw-bold text-gray-600' htmlFor='kt_checkbox_1'>
+                <label
+                  className='form-check-label fw-bold text-gray-600'
+                  htmlFor='kt_checkbox_1'
+                >
                   You have new notifications
                 </label>
               </div>
@@ -109,7 +117,9 @@ export function Settings() {
                   className='form-check-input'
                   type='checkbox'
                   id='kt_checkbox_2'
-                  checked={data.activityRelatedEmail.whenToEmail.youAreADirectMessage}
+                  checked={
+                    data.activityRelatedEmail.whenToEmail.youAreADirectMessage
+                  }
                   onChange={() =>
                     updateData({
                       activityRelatedEmail: {
@@ -117,13 +127,17 @@ export function Settings() {
                         whenToEmail: {
                           ...data.activityRelatedEmail.whenToEmail,
                           youAreADirectMessage:
-                            !data.activityRelatedEmail.whenToEmail.youAreADirectMessage,
+                            !data.activityRelatedEmail.whenToEmail
+                              .youAreADirectMessage,
                         },
                       },
                     })
                   }
                 />
-                <label className='form-check-label fw-bold text-gray-600' htmlFor='kt_checkbox_2'>
+                <label
+                  className='form-check-label fw-bold text-gray-600'
+                  htmlFor='kt_checkbox_2'
+                >
                   You're sent a direct message
                 </label>
               </div>
@@ -132,7 +146,10 @@ export function Settings() {
                   className='form-check-input'
                   type='checkbox'
                   id='kt_checkbox_3'
-                  checked={data.activityRelatedEmail.whenToEmail.someoneAddsYouAsAConnection}
+                  checked={
+                    data.activityRelatedEmail.whenToEmail
+                      .someoneAddsYouAsAConnection
+                  }
                   onChange={() =>
                     updateData({
                       activityRelatedEmail: {
@@ -140,13 +157,17 @@ export function Settings() {
                         whenToEmail: {
                           ...data.activityRelatedEmail.whenToEmail,
                           someoneAddsYouAsAConnection:
-                            !data.activityRelatedEmail.whenToEmail.someoneAddsYouAsAConnection,
+                            !data.activityRelatedEmail.whenToEmail
+                              .someoneAddsYouAsAConnection,
                         },
                       },
                     })
                   }
                 />
-                <label className='form-check-label fw-bold text-gray-600' htmlFor='kt_checkbox_3'>
+                <label
+                  className='form-check-label fw-bold text-gray-600'
+                  htmlFor='kt_checkbox_3'
+                >
                   Someone adds you as a connection
                 </label>
               </div>
@@ -163,7 +184,9 @@ export function Settings() {
                   className='form-check-input'
                   type='checkbox'
                   id='kt_checkbox_4'
-                  checked={data.activityRelatedEmail.whenToEscalateEmails.uponNewOrder}
+                  checked={
+                    data.activityRelatedEmail.whenToEscalateEmails.uponNewOrder
+                  }
                   onChange={() =>
                     updateData({
                       activityRelatedEmail: {
@@ -171,13 +194,17 @@ export function Settings() {
                         whenToEscalateEmails: {
                           ...data.activityRelatedEmail.whenToEscalateEmails,
                           uponNewOrder:
-                            !data.activityRelatedEmail.whenToEscalateEmails.uponNewOrder,
+                            !data.activityRelatedEmail.whenToEscalateEmails
+                              .uponNewOrder,
                         },
                       },
                     })
                   }
                 />
-                <label className='form-check-label fw-bold text-gray-600' htmlFor='kt_checkbox_4'>
+                <label
+                  className='form-check-label fw-bold text-gray-600'
+                  htmlFor='kt_checkbox_4'
+                >
                   Upon new order
                 </label>
               </div>
@@ -186,7 +213,10 @@ export function Settings() {
                   className='form-check-input'
                   type='checkbox'
                   id='kt_checkbox_5'
-                  checked={data.activityRelatedEmail.whenToEscalateEmails.newMembershipApproval}
+                  checked={
+                    data.activityRelatedEmail.whenToEscalateEmails
+                      .newMembershipApproval
+                  }
                   onChange={() =>
                     updateData({
                       activityRelatedEmail: {
@@ -194,13 +224,17 @@ export function Settings() {
                         whenToEscalateEmails: {
                           ...data.activityRelatedEmail.whenToEscalateEmails,
                           newMembershipApproval:
-                            !data.activityRelatedEmail.whenToEscalateEmails.newMembershipApproval,
+                            !data.activityRelatedEmail.whenToEscalateEmails
+                              .newMembershipApproval,
                         },
                       },
                     })
                   }
                 />
-                <label className='form-check-label fw-bold text-gray-600' htmlFor='kt_checkbox_5'>
+                <label
+                  className='form-check-label fw-bold text-gray-600'
+                  htmlFor='kt_checkbox_5'
+                >
                   New membership approval
                 </label>
               </div>
@@ -209,7 +243,10 @@ export function Settings() {
                   className='form-check-input'
                   type='checkbox'
                   id='kt_checkbox_6'
-                  checked={data.activityRelatedEmail.whenToEscalateEmails.memberRegistration}
+                  checked={
+                    data.activityRelatedEmail.whenToEscalateEmails
+                      .memberRegistration
+                  }
                   onChange={() =>
                     updateData({
                       activityRelatedEmail: {
@@ -217,13 +254,17 @@ export function Settings() {
                         whenToEscalateEmails: {
                           ...data.activityRelatedEmail.whenToEscalateEmails,
                           memberRegistration:
-                            !data.activityRelatedEmail.whenToEscalateEmails.memberRegistration,
+                            !data.activityRelatedEmail.whenToEscalateEmails
+                              .memberRegistration,
                         },
                       },
                     })
                   }
                 />
-                <label className='form-check-label fw-bold text-gray-600' htmlFor='kt_checkbox_6'>
+                <label
+                  className='form-check-label fw-bold text-gray-600'
+                  htmlFor='kt_checkbox_6'
+                >
                   Member registration
                 </label>
               </div>
@@ -254,12 +295,16 @@ export function Settings() {
                     updateData({
                       updatesFromKeenthemes: {
                         ...data.updatesFromKeenthemes,
-                        newsAboutKTProducts: !data.updatesFromKeenthemes.newsAboutKTProducts,
+                        newsAboutKTProducts:
+                          !data.updatesFromKeenthemes.newsAboutKTProducts,
                       },
                     })
                   }
                 />
-                <label className='form-check-label fw-bold text-gray-600' htmlFor='kt_checkbox_7'>
+                <label
+                  className='form-check-label fw-bold text-gray-600'
+                  htmlFor='kt_checkbox_7'
+                >
                   News about Keenthemes products and feature updates
                 </label>
               </div>
@@ -273,12 +318,16 @@ export function Settings() {
                     updateData({
                       updatesFromKeenthemes: {
                         ...data.updatesFromKeenthemes,
-                        tipsOnGettingMore: !data.updatesFromKeenthemes.tipsOnGettingMore,
+                        tipsOnGettingMore:
+                          !data.updatesFromKeenthemes.tipsOnGettingMore,
                       },
                     })
                   }
                 />
-                <label className='form-check-label fw-bold text-gray-600' htmlFor='kt_checkbox_8'>
+                <label
+                  className='form-check-label fw-bold text-gray-600'
+                  htmlFor='kt_checkbox_8'
+                >
                   Tips on getting more out of Keen
                 </label>
               </div>
@@ -292,12 +341,16 @@ export function Settings() {
                     updateData({
                       updatesFromKeenthemes: {
                         ...data.updatesFromKeenthemes,
-                        tipsOnGettingMore: !data.updatesFromKeenthemes.thingsYouMissed,
+                        tipsOnGettingMore:
+                          !data.updatesFromKeenthemes.thingsYouMissed,
                       },
                     })
                   }
                 />
-                <label className='form-check-label fw-bold text-gray-600' htmlFor='kt_checkbox_9'>
+                <label
+                  className='form-check-label fw-bold text-gray-600'
+                  htmlFor='kt_checkbox_9'
+                >
                   Things you missed since you last logged into Keen
                 </label>
               </div>
@@ -311,12 +364,16 @@ export function Settings() {
                     updateData({
                       updatesFromKeenthemes: {
                         ...data.updatesFromKeenthemes,
-                        newsAboutKTPartners: !data.updatesFromKeenthemes.newsAboutKTPartners,
+                        newsAboutKTPartners:
+                          !data.updatesFromKeenthemes.newsAboutKTPartners,
                       },
                     })
                   }
                 />
-                <label className='form-check-label fw-bold text-gray-600' htmlFor='kt_checkbox_10'>
+                <label
+                  className='form-check-label fw-bold text-gray-600'
+                  htmlFor='kt_checkbox_10'
+                >
                   News about Keenthemes on partner products and other services
                 </label>
               </div>
@@ -327,7 +384,10 @@ export function Settings() {
           <div className='mb-8 row pt-10'>
             <label className='col-lg-3 col-form-label'></label>
             <div className='col-lg-9'>
-              <button type='reset' className='btn btn-primary fw-bolder px-6 py-3 me-3'>
+              <button
+                type='reset'
+                className='btn btn-primary fw-bolder px-6 py-3 me-3'
+              >
                 Save Changes
               </button>
               <button
@@ -343,5 +403,5 @@ export function Settings() {
       </form>
       {/* end::Form*/}
     </div>
-  )
+  );
 }

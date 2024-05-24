@@ -1,9 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
+import React from "react";
 
 export function Dropdown1() {
   return (
-    <div className='menu menu-sub menu-sub-dropdown w-250px w-md-300px' data-kt-menu='true'>
+    <div
+      className='menu menu-sub menu-sub-dropdown w-250px w-md-300px'
+      data-kt-menu='true'
+    >
       <div className='px-7 py-5'>
         <div className='fs-5 text-dark fw-bolder'>Filter Options</div>
       </div>
@@ -20,7 +23,7 @@ export function Dropdown1() {
               data-kt-select2='true'
               data-placeholder='Select option'
               data-allow-clear='true'
-              defaultValue={'1'}
+              defaultValue={"1"}
             >
               <option></option>
               <option value='1'>Approved</option>
@@ -36,12 +39,21 @@ export function Dropdown1() {
 
           <div className='d-flex'>
             <label className='form-check form-check-sm form-check-custom form-check-solid me-5'>
-              <input className='form-check-input' type='checkbox' value='1' />
+              <input
+                className='form-check-input'
+                type='checkbox'
+                value='1'
+              />
               <span className='form-check-label'>Author</span>
             </label>
 
             <label className='form-check form-check-sm form-check-custom form-check-solid'>
-              <input className='form-check-input' type='checkbox' value='2' defaultChecked={true} />
+              <input
+                className='form-check-input'
+                type='checkbox'
+                value='2'
+                defaultChecked={true}
+              />
               <span className='form-check-label'>Customer</span>
             </label>
           </div>
@@ -71,11 +83,15 @@ export function Dropdown1() {
             Reset
           </button>
 
-          <button type='submit' className='btn btn-sm btn-primary' data-kt-menu-dismiss='true'>
+          <button
+            type='submit'
+            className='btn btn-sm btn-primary'
+            data-kt-menu-dismiss='true'
+          >
             Apply
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }

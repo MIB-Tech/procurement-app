@@ -1,60 +1,58 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-
+import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
 
 const mapping: ModelMapping<ModelEnum.Component> = {
   modelName: ModelEnum.Component,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     quantity: {
       type: ColumnTypeEnum.Number,
       validation: {
-        positive: true
-      }
+        positive: true,
+      },
     },
     parentProduct: {
       type: ModelEnum.Product,
-      title: 'PRODUCT'
+      title: "PRODUCT",
     },
     product: {
       type: ModelEnum.Product,
-    }
+    },
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
-        quantity: true
-      }
+        quantity: true,
+      },
     },
     {
       type: ViewEnum.Create,
       fields: {
         product: true,
         quantity: true,
-      }
+      },
     },
     {
       type: ViewEnum.Update,
       fields: {
         product: true,
         quantity: true,
-      }
+      },
     },
     {
       type: ViewEnum.Detail,
       columns: {
         product: true,
-      }
+      },
     },
-
-  ]
+  ],
 };
 
 export default mapping;

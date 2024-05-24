@@ -1,52 +1,53 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-
+import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
 
 const mapping: ModelMapping<ModelEnum.Company> = {
   modelName: ModelEnum.Company,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     code: {
       type: ColumnTypeEnum.String,
-      uppercase: true
+      validation: {
+        uppercase: true,
+      },
     },
     name: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     purchaseNeeds: {
       type: ModelEnum.PurchaseNeed,
-      multiple: true
-    }
+      multiple: true,
+    },
   },
   views: [
     {
       type: ViewEnum.Listing,
       columns: {
         name: true,
-        code: true
-      }
+        code: true,
+      },
     },
     {
       type: ViewEnum.Create,
       fields: {
         name: true,
-        code: true
-      }
+        code: true,
+      },
     },
     {
       type: ViewEnum.Update,
       fields: {
         name: true,
-        code: true
-      }
-    }
-  ]
+        code: true,
+      },
+    },
+  ],
 };
 
 export default mapping;

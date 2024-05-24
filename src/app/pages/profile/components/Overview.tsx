@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   FeedsWidget2,
   FeedsWidget3,
@@ -8,7 +8,7 @@ import {
   ChartsWidget1,
   ListsWidget5,
   ListsWidget2,
-} from '../../../../_metronic/partials/widgets'
+} from "../../../../_metronic/partials/widgets";
 
 export function Overview() {
   return (
@@ -33,5 +33,5 @@ export function Overview() {
         <ListsWidget2 className='mb-5 mb-xxl-8' />
       </div>
     </div>
-  )
+  );
 }

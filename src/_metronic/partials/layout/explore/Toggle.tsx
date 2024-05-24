@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, { FC } from "react";
 
 const Toggle: FC = () => (
   <button
@@ -11,6 +11,6 @@ const Toggle: FC = () => (
   >
     <span id='kt_explore_toggle_label'>Explore</span>
   </button>
-)
+);
 
-export {Toggle}
+export { Toggle };

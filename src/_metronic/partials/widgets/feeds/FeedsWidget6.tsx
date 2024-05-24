@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
-import {Dropdown1} from '../../content/dropdown/Dropdown1'
+import React from "react";
+import { KTSVG, toAbsoluteUrl } from "../../../helpers";
+import { Dropdown1 } from "../../content/dropdown/Dropdown1";
 
 type Props = {
-  className: string
-}
+  className: string;
+};
 
-const FeedsWidget6: React.FC<Props> = ({className}) => {
+const FeedsWidget6: React.FC<Props> = ({ className }) => {
   return (
     <div className={`card ${className}`}>
       {/* begin::Body */}
@@ -18,13 +18,19 @@ const FeedsWidget6: React.FC<Props> = ({className}) => {
           <div className='d-flex align-items-center flex-grow-1'>
             {/* begin::Avatar */}
             <div className='symbol symbol-45px me-5'>
-              <img src={toAbsoluteUrl('/media/avatars/150-17.jpg')} alt='' />
+              <img
+                src={toAbsoluteUrl("/media/avatars/150-17.jpg")}
+                alt=''
+              />
             </div>
             {/* end::Avatar */}
 
             {/* begin::Info */}
             <div className='d-flex flex-column'>
-              <a href='#' className='text-gray-800 text-hover-primary fs-6 fw-bolder'>
+              <a
+                href='#'
+                className='text-gray-800 text-hover-primary fs-6 fw-bolder'
+              >
                 Mat Dillon
               </a>
               <span className='text-gray-400 fw-bold'>Last month</span>
@@ -42,7 +48,10 @@ const FeedsWidget6: React.FC<Props> = ({className}) => {
               data-kt-menu-placement='bottom-end'
               data-kt-menu-flip='top-end'
             >
-              <KTSVG path='/media/icons/duotune/general/gen024.svg' className='svg-icon-2' />
+              <KTSVG
+                path='/media/icons/duotune/general/gen024.svg'
+                className='svg-icon-2'
+              />
             </button>
             <Dropdown1 />
           </div>
@@ -54,7 +63,8 @@ const FeedsWidget6: React.FC<Props> = ({className}) => {
         <div className='mb-6'>
           {/* begin::Text */}
           <div className='text-gray-800 fs-6 fw-normal mb-5'>
-            Outlines keep you honest. They stop you from indulging in poorly thought-out metaphors
+            Outlines keep you honest. They stop you from indulging in poorly
+            thought-out metaphors
           </div>
           {/* end::Text */}
 
@@ -75,7 +85,10 @@ const FeedsWidget6: React.FC<Props> = ({className}) => {
               href='#'
               className='btn btn-sm btn-light btn-color-muted btn-active-light-success px-4 py-2 me-4'
             >
-              <KTSVG path='/media/icons/duotune/communication/com012.svg' className='svg-icon-3' />
+              <KTSVG
+                path='/media/icons/duotune/communication/com012.svg'
+                className='svg-icon-3'
+              />
               189
             </a>
 
@@ -83,7 +96,10 @@ const FeedsWidget6: React.FC<Props> = ({className}) => {
               href='#'
               className='btn btn-sm btn-light btn-color-muted btn-active-light-danger px-4 py-2'
             >
-              <KTSVG path='/media/icons/duotune/general/gen030.svg' className='svg-icon-2' />
+              <KTSVG
+                path='/media/icons/duotune/general/gen030.svg'
+                className='svg-icon-2'
+              />
               229
             </a>
           </div>
@@ -113,7 +129,10 @@ const FeedsWidget6: React.FC<Props> = ({className}) => {
             </span>
 
             <span className='btn btn-icon btn-sm btn-active-color-primary ps-0'>
-              <KTSVG path='/media/icons/duotune/general/gen018.svg' className='svg-icon-2 mb-3' />
+              <KTSVG
+                path='/media/icons/duotune/general/gen018.svg'
+                className='svg-icon-2 mb-3'
+              />
             </span>
           </div>
         </form>
@@ -121,7 +140,7 @@ const FeedsWidget6: React.FC<Props> = ({className}) => {
       </div>
       {/* end::Body */}
     </div>
-  )
-}
+  );
+};
 
-export {FeedsWidget6}
+export { FeedsWidget6 };

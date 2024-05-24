@@ -1,58 +1,54 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-import {StringFormat} from '../../../_custom/Column/String/StringColumn';
-
+import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
+import { StringFormat } from "../../../_custom/Column/String/StringColumn";
 
 const mapping: ModelMapping<ModelEnum.Step> = {
   modelName: ModelEnum.Step,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     name: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     strategy: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Select,
-      options: [
-        {id: 'OR'},
-        {id: 'AND'},
-      ]
+      options: [{ id: "OR" }, { id: "AND" }],
     },
     sortIndex: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     users: {
       type: ModelEnum.User,
-      multiple: true
+      multiple: true,
     },
     validationPath: {
-      type: ModelEnum.ValidationPath
-    }
+      type: ModelEnum.ValidationPath,
+    },
   },
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {}
+      columns: {},
     },
     {
-      type: ViewEnum.Detail
+      type: ViewEnum.Detail,
     },
     {
-      type: ViewEnum.Delete
+      type: ViewEnum.Delete,
     },
     {
-      type: ViewEnum.Create
+      type: ViewEnum.Create,
     },
     {
-      type: ViewEnum.Update
-    }
-  ]
+      type: ViewEnum.Update,
+    },
+  ],
 };
 
 export default mapping;

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
-import {Card3} from '../../../../_metronic/partials/content/cards/Card3'
+import React from "react";
+import { Card3 } from "../../../../_metronic/partials/content/cards/Card3";
 
 export function Connections() {
   return (
@@ -144,58 +144,84 @@ export function Connections() {
       </div>
 
       <div className='d-flex flex-stack flex-wrap pt-10'>
-        <div className='fs-6 fw-bold text-gray-700'>Showing 1 to 10 of 50 entries</div>
+        <div className='fs-6 fw-bold text-gray-700'>
+          Showing 1 to 10 of 50 entries
+        </div>
 
         <ul className='pagination'>
           <li className='page-item previous'>
-            <a href='src/app/pages/profile/components/Connections#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Connections#'
+              className='page-link'
+            >
               <i className='previous'></i>
             </a>
           </li>
 
           <li className='page-item active'>
-            <a href='src/app/pages/profile/components/Connections#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Connections#'
+              className='page-link'
+            >
               1
             </a>
           </li>
 
           <li className='page-item'>
-            <a href='src/app/pages/profile/components/Connections#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Connections#'
+              className='page-link'
+            >
               2
             </a>
           </li>
 
           <li className='page-item'>
-            <a href='src/app/pages/profile/components/Connections#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Connections#'
+              className='page-link'
+            >
               3
             </a>
           </li>
 
           <li className='page-item'>
-            <a href='src/app/pages/profile/components/Connections#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Connections#'
+              className='page-link'
+            >
               4
             </a>
           </li>
 
           <li className='page-item'>
-            <a href='src/app/pages/profile/components/Connections#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Connections#'
+              className='page-link'
+            >
               5
             </a>
           </li>
 
           <li className='page-item'>
-            <a href='src/app/pages/profile/components/Connections#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Connections#'
+              className='page-link'
+            >
               6
             </a>
           </li>
 
           <li className='page-item next'>
-            <a href='src/app/pages/profile/components/Connections#' className='page-link'>
+            <a
+              href='src/app/pages/profile/components/Connections#'
+              className='page-link'
+            >
               <i className='next'></i>
             </a>
           </li>
         </ul>
       </div>
     </>
-  )
+  );
 }

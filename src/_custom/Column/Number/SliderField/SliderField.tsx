@@ -1,38 +1,48 @@
-import React, {FC} from 'react'
-import {useField} from 'formik'
-import clsx from 'clsx'
-import {Field, FieldProps} from '../../controls/fields'
-import {RangeProps, Slider} from '../Slider/Slider'
-import {toPrecision} from '../InputNumber/InputNumber'
-
+import React, { FC } from "react";
+import { useField } from "formik";
+import clsx from "clsx";
+import { Field, FieldProps } from "../../controls/fields";
+import { RangeProps, Slider } from "../Slider/Slider";
+import { toPrecision } from "../InputNumber/InputNumber";
 
 export type SliderFieldProps = {
-  precision?: number
-} & FieldProps & RangeProps
+  precision?: number;
+} & FieldProps &
+  RangeProps;
 
-export const SliderField: FC<SliderFieldProps> = ({name, feedbackLabel, precision, className, ...props}) => {
-  const [field, meta, helpers] = useField({name})
-  const {error} = meta
+export const SliderField: FC<SliderFieldProps> = ({
+  name,
+  feedbackLabel,
+  precision,
+  className,
+  ...props
+}) => {
+  const [field, meta, helpers] = useField({ name });
+  const { error } = meta;
 
   return (
-    <Field name={name} feedbackLabel={feedbackLabel}>
-      <div className="px-5">
+    <Field
+      name={name}
+      feedbackLabel={feedbackLabel}
+    >
+      <div className='px-5'>
         <Slider
-          className={clsx(className, error && 'text-danger')}
+          className={clsx(className, error && "text-danger")}
           {...field}
           onChange={(event, value) => {
-            let newValue = value
+            let newValue = value;
             if (precision) {
-              newValue = typeof value === 'number' ?
-                toPrecision(value, precision) :
-                value.map(val => toPrecision(val, precision))
+              newValue =
+                typeof value === "number"
+                  ? toPrecision(value, precision)
+                  : value.map((val) => toPrecision(val, precision));
             }
 
-            helpers.setValue(newValue)
+            helpers.setValue(newValue);
           }}
           {...props}
         />
       </div>
     </Field>
-  )
-}
+  );
+};

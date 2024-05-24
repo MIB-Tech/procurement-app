@@ -1,12 +1,14 @@
-import React, {FC, useEffect} from 'react'
+import React, { FC, useEffect } from "react";
 
-
-export const EffectListener: FC<{execute: boolean, handler: () => void}> = ({execute, handler}) => {
+export const EffectListener: FC<{ execute: boolean; handler: () => void }> = ({
+  execute,
+  handler,
+}) => {
   useEffect(() => {
     if (execute) {
-      handler()
+      handler();
     }
-  }, [execute])
+  }, [execute]);
 
-  return <></>
-}
+  return <></>;
+};

@@ -3,14 +3,14 @@
 //
 
 // Custom functions & mixins
-@import './core/base/functions';
-@import './core/base/mixins';
-@import './core/components/mixins';
-@import './core/vendors/plugins/mixins';
+@import "./core/base/functions";
+@import "./core/base/mixins";
+@import "./core/components/mixins";
+@import "./core/vendors/plugins/mixins";
 
 // Custom variables
-@import 'components/variables.custom';
-@import './core/components/variables';
+@import "components/variables.custom";
+@import "./core/components/variables";
 
 // Bootstrap initializaton
 @import "~bootstrap/scss/functions";
@@ -23,9 +23,9 @@
 @import "~bootstrap/scss/utilities/api";
 
 // 3rd-Party plugins variables
-@import './core/vendors/plugins/variables';
-@import './core/vendors/plugins/vis-timeline';
+@import "./core/vendors/plugins/variables";
+@import "./core/vendors/plugins/vis-timeline";
 
 // Custom layout variables
-@import 'layout/variables';
-@import './core/layout/docs/variables';
+@import "layout/variables";
+@import "./core/layout/docs/variables";

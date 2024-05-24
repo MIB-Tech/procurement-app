@@ -1,14 +1,15 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping'
-import {ColumnTypeEnum} from '../../../_custom/types/types'
-import {ModelEnum} from '../types'
-import {StringFormat, StringSelectOption} from '../../../_custom/Column/String/StringColumn'
-import {I18nMessageKey} from '../../../_custom/i18n/I18nMessages'
-import {InputField} from '../../../_custom/Column/String/InputField'
-import {NumberFormat} from '../../../_custom/Column/Number/NumberColumn'
-import {StringField} from '../../../_custom/Column/String/StringField'
-import Model from './Model'
-
-
+import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
+import {
+  StringFormat,
+  StringSelectOption,
+} from "../../../_custom/Column/String/StringColumn";
+import { I18nMessageKey } from "../../../_custom/i18n/I18nMessages";
+import { InputField } from "../../../_custom/Column/String/InputField";
+import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
+import { StringField } from "../../../_custom/Column/String/StringField";
+import Model from "./Model";
 
 const mapping: ModelMapping<ModelEnum.QueryParam> = {
   modelName: ModelEnum.QueryParam,
@@ -29,14 +30,16 @@ const mapping: ModelMapping<ModelEnum.QueryParam> = {
       type: ColumnTypeEnum.String,
       format: StringFormat.Select,
       options: [
-        {id: ColumnTypeEnum.String},
-        {id: ColumnTypeEnum.Number},
-        {id: ColumnTypeEnum.Boolean},
-        {id: StringFormat.Date},
-        {id: StringFormat.Datetime},
-        ...Object.values(ModelEnum).map(type => ({
+        { id: ColumnTypeEnum.String },
+        { id: ColumnTypeEnum.Number },
+        { id: ColumnTypeEnum.Boolean },
+        { id: StringFormat.Date },
+        { id: StringFormat.Datetime },
+        ...Object.values(ModelEnum).map((type) => ({
           id: type,
-          label: (type.charAt(0) + type.slice(1).replace(/([A-Z])/g, '_$1')).toUpperCase() as I18nMessageKey,
+          label: (
+            type.charAt(0) + type.slice(1).replace(/([A-Z])/g, "_$1")
+          ).toUpperCase() as I18nMessageKey,
         })),
       ],
     },
@@ -50,7 +53,13 @@ const mapping: ModelMapping<ModelEnum.QueryParam> = {
       fields: {
         label: true,
         name: {
-          render: ({fieldProps}) => <InputField {...fieldProps} disabled size="sm" />,
+          render: ({ fieldProps }) => (
+            <InputField
+              {...fieldProps}
+              disabled
+              size='sm'
+            />
+          ),
         },
         paramType: true,
       },
@@ -60,12 +69,18 @@ const mapping: ModelMapping<ModelEnum.QueryParam> = {
       fields: {
         label: true,
         name: {
-          render: ({fieldProps}) => <InputField {...fieldProps} disabled size="sm" />,
+          render: ({ fieldProps }) => (
+            <InputField
+              {...fieldProps}
+              disabled
+              size='sm'
+            />
+          ),
         },
         paramType: true,
       },
     },
   ],
-}
+};
 
-export default mapping
+export default mapping;

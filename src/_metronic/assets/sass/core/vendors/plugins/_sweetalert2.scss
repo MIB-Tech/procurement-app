@@ -4,7 +4,9 @@
 
 // Base
 html.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown),
-body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown):not(.modal-open) {
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown):not(
+    .modal-open
+  ) {
   overflow-y: initial !important;
 
   &:not(.sweetalert2-nopadding) {
@@ -79,7 +81,7 @@ body.swal2-height-auto {
     border-color: $danger;
     color: $danger;
 
-    [class^='swal2-x-mark-line'] {
+    [class^="swal2-x-mark-line"] {
       background-color: rgba($danger, 0.75);
     }
   }
@@ -89,7 +91,7 @@ body.swal2-height-auto {
     border-color: $success;
     color: $success;
 
-    [class^='swal2-success-line'] {
+    [class^="swal2-success-line"] {
       background-color: $success;
     }
 

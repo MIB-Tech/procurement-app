@@ -1,11 +1,12 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React, {Fragment} from 'react'
-import {AsideMenuItem} from './AsideMenuItem'
-import {useAuth} from '../../../../_custom/hooks/UseAuth'
-import {ViewEnum} from '../../../../_custom/types/ModelMapping'
-import {Trans} from '../../../../_custom/components/Trans'
-import {CUSTOM_ROUTES} from '../../../../app/routing/PrivateRoutes'
-import {getRoutePrefix} from '../../../../_custom/utils'
+import React, { Fragment } from "react";
+import { AsideMenuItem } from "./AsideMenuItem";
+import { useAuth } from "../../../../_custom/hooks/UseAuth";
+import { ViewEnum } from "../../../../_custom/types/ModelMapping";
+import { Trans } from "../../../../_custom/components/Trans";
+import { CUSTOM_ROUTES } from "../../../../app/routing/PrivateRoutes";
+import { getRoutePrefix } from "../../../../_custom/utils";
+import { DisplayEnum } from "../../../../app/routing/Enums/DisplayEnum";
 
 // const GROUPS = [
 //   {
@@ -19,17 +20,22 @@ import {getRoutePrefix} from '../../../../_custom/utils'
 //   }
 // ];
 
-
 export function AsideMenuMain() {
   const auth = useAuth();
   const operations = auth.operations
-    .filter(({operationType, isMenuItem}) => isMenuItem && operationType === ViewEnum.Listing)
+    .filter(
+      ({ operationType, isMenuItem }) =>
+        isMenuItem && operationType === ViewEnum.Listing
+    )
     .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex);
 
   return (
     <>
-      {CUSTOM_ROUTES.filter(route => auth.isGranted(route.granted)).map(route => {
-
+      {CUSTOM_ROUTES.filter(
+        (route) =>
+          auth.isGranted(route.granted) &&
+          route.display.includes(DisplayEnum.SIDE_MENU)
+      ).map((route) => {
         return (
           <AsideMenuItem
             key={route.path}
@@ -37,12 +43,22 @@ export function AsideMenuMain() {
             title={<Trans id={route.title} />}
             icon={route.icon}
           />
-        )
+        );
       })}
 
-      {operations.filter(({operationType, isMenuItem}) => isMenuItem && operationType === ViewEnum.Listing)
+      {operations
+        .filter(
+          ({ operationType, isMenuItem }) =>
+            isMenuItem && operationType === ViewEnum.Listing
+        )
         .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
-        .map(operation => <AsideMenuItem key={operation.id} {...operation} path={getRoutePrefix(operation.resource.name)} />)}
+        .map((operation) => (
+          <AsideMenuItem
+            key={operation.id}
+            {...operation}
+            path={getRoutePrefix(operation.resource.name)}
+          />
+        ))}
       {/*{GROUPS.map(group => {*/}
       {/*  const _ope = operations.filter(({resource}) => group.operations.includes(resource.name));*/}
       {/*  if (_ope.length === 0) return <Fragment key={group.title} />*/}
@@ -97,7 +113,6 @@ export function AsideMenuMain() {
       {/*    return <AsideMenuItem key={id} {...route} />;*/}
       {/*  })*/}
       {/*}*/}
-
 
       {/*<AsideMenuItem*/}
       {/*  to='/builder'*/}
@@ -201,5 +216,5 @@ export function AsideMenuMain() {
       {/*  </a>*/}
       {/*</div>*/}
     </>
-  )
+  );
 }

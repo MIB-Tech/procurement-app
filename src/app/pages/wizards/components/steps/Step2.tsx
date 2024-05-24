@@ -1,6 +1,6 @@
-import React, {FC} from 'react'
-import {KTSVG} from '../../../../../_metronic/helpers'
-import {Field, ErrorMessage} from 'formik'
+import React, { FC } from "react";
+import { KTSVG } from "../../../../../_metronic/helpers";
+import { Field, ErrorMessage } from "formik";
 
 const Step2: FC = () => {
   return (
@@ -10,8 +10,11 @@ const Step2: FC = () => {
 
         <div className='text-gray-400 fw-bold fs-6'>
           If you need more info, please check out
-          <a href='/dashboard' className='link-primary fw-bolder'>
-            {' '}
+          <a
+            href='/dashboard'
+            className='link-primary fw-bolder'
+          >
+            {" "}
             Help Page
           </a>
           .
@@ -28,7 +31,10 @@ const Step2: FC = () => {
           ></i>
         </label>
 
-        <div className='row mb-2' data-kt-buttons='true'>
+        <div
+          className='row mb-2'
+          data-kt-buttons='true'
+        >
           <div className='col'>
             <Field
               type='radio'
@@ -145,7 +151,12 @@ const Step2: FC = () => {
             </span>
 
             <span className='form-check form-check-custom form-check-solid'>
-              <Field className='form-check-input' type='radio' name='accountPlan' value='1' />
+              <Field
+                className='form-check-input'
+                type='radio'
+                name='accountPlan'
+                value='1'
+              />
             </span>
           </label>
 
@@ -164,12 +175,19 @@ const Step2: FC = () => {
                 <span className='fw-bolder text-gray-800 text-hover-primary fs-5'>
                   Developer Account
                 </span>
-                <span className='fs-6 fw-bold text-gray-400'>Use images to your post time</span>
+                <span className='fs-6 fw-bold text-gray-400'>
+                  Use images to your post time
+                </span>
               </span>
             </span>
 
             <span className='form-check form-check-custom form-check-solid'>
-              <Field className='form-check-input' type='radio' name='accountPlan' value='2' />
+              <Field
+                className='form-check-input'
+                type='radio'
+                name='accountPlan'
+                value='2'
+              />
             </span>
           </label>
 
@@ -195,13 +213,18 @@ const Step2: FC = () => {
             </span>
 
             <span className='form-check form-check-custom form-check-solid'>
-              <Field className='form-check-input' type='radio' name='accountPlan' value='3' />
+              <Field
+                className='form-check-input'
+                type='radio'
+                name='accountPlan'
+                value='3'
+              />
             </span>
           </label>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {Step2}
+export { Step2 };

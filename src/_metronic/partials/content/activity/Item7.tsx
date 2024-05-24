@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC} from 'react'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
+import { FC } from "react";
+import { KTSVG, toAbsoluteUrl } from "../../../helpers";
 
 const Item7: FC = () => {
   return (
@@ -18,7 +18,9 @@ const Item7: FC = () => {
 
       <div className='timeline-content mb-10 mt-n1'>
         <div className='pe-3 mb-5'>
-          <div className='fs-5 fw-bold mb-2'>You have received a new order:</div>
+          <div className='fs-5 fw-bold mb-2'>
+            You have received a new order:
+          </div>
 
           <div className='d-flex align-items-center mt-1 fs-6'>
             <div className='text-muted me-2 fs-7'>Placed at 5:05 AM by</div>
@@ -30,7 +32,10 @@ const Item7: FC = () => {
               data-bs-placement='top'
               title='Robert Rich'
             >
-              <img src={toAbsoluteUrl('/media/avatars/150-14.jpg')} alt='img' />
+              <img
+                src={toAbsoluteUrl("/media/avatars/150-14.jpg")}
+                alt='img'
+              />
             </div>
           </div>
         </div>
@@ -43,12 +48,18 @@ const Item7: FC = () => {
             />
             <div className='d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap'>
               <div className='mb-3 mb-md-0 fw-bold'>
-                <h4 className='text-gray-800 fw-bolder'>Database Backup Process Completed!</h4>
+                <h4 className='text-gray-800 fw-bolder'>
+                  Database Backup Process Completed!
+                </h4>
                 <div className='fs-6 text-gray-600 pe-7'>
-                  Login into Metronic Admin Dashboard to make sure the data integrity is OK
+                  Login into Metronic Admin Dashboard to make sure the data
+                  integrity is OK
                 </div>
               </div>
-              <a href='#' className='btn btn-primary px-6 align-self-center text-nowrap'>
+              <a
+                href='#'
+                className='btn btn-primary px-6 align-self-center text-nowrap'
+              >
                 Proceed
               </a>
             </div>
@@ -56,7 +67,7 @@ const Item7: FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {Item7}
+export { Item7 };

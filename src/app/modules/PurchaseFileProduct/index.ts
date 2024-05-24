@@ -1,2 +1,2 @@
-export {default as PURCHASEFILEPRODUCT_MAPPING} from './Mapping';
-export type {default as PurchaseFileProductModel} from './Model';
+export { default as PURCHASEFILEPRODUCT_MAPPING } from "./Mapping";
+export type { default as PurchaseFileProductModel } from "./Model";

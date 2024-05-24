@@ -1,27 +1,27 @@
-import React from 'react'
-import {Route} from 'react-router-dom'
-import {PageLink, PageTitle} from '../../../_metronic/layout/core'
-import {Overview} from './components/Overview'
-import {Projects} from './components/Projects'
-import {Campaigns} from './components/Campaigns'
-import {Documents} from './components/Documents'
-import {Connections} from './components/Connections'
-import {ProfileHeader} from './ProfileHeader'
+import React from "react";
+import { Route } from "react-router-dom";
+import { PageLink, PageTitle } from "../../../_metronic/layout/core";
+import { Overview } from "./components/Overview";
+import { Projects } from "./components/Projects";
+import { Campaigns } from "./components/Campaigns";
+import { Documents } from "./components/Documents";
+import { Connections } from "./components/Connections";
+import { ProfileHeader } from "./ProfileHeader";
 
 const profileBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Profile',
-    path: '/crafted/pages/profile/overview',
+    title: "Profile",
+    path: "/crafted/pages/profile/overview",
     isSeparator: false,
     isActive: false,
   },
   {
-    title: '',
-    path: '',
+    title: "",
+    path: "",
     isSeparator: true,
     isActive: false,
   },
-]
+];
 
 const ProfilePage: React.FC = () => {
   return (
@@ -52,7 +52,7 @@ const ProfilePage: React.FC = () => {
       {/*  <Redirect to='/crafted/pages/profile/overview' />*/}
       {/*</Switch>*/}
     </>
-  )
-}
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;

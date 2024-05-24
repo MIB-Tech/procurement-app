@@ -1,5 +1,4 @@
-import React from 'react'
-import {Context} from './Toastr.provider'
+import React from "react";
+import { Context } from "./Toastr.provider";
 
-
-export const useToastr = () => React.useContext(Context)
+export const useToastr = () => React.useContext(Context);

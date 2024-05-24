@@ -1,22 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC} from 'react'
-import {Link} from 'react-router-dom'
-import {IconUserModel} from '../../../../app/pages/profile/ProfileModels'
-import {UsersList} from '../../../../app/pages/profile/components/UsersList'
-import {toAbsoluteUrl} from '../../../helpers'
+import { FC } from "react";
+import { Link } from "react-router-dom";
+import { IconUserModel } from "../../../../app/pages/profile/ProfileModels";
+import { UsersList } from "../../../../app/pages/profile/components/UsersList";
+import { toAbsoluteUrl } from "../../../helpers";
 
 type Props = {
-  icon: string
-  badgeColor: string
-  status: string
-  statusColor: string
-  title: string
-  description: string
-  date: string
-  budget: string
-  progress: number
-  users?: Array<IconUserModel>
-}
+  icon: string;
+  badgeColor: string;
+  status: string;
+  statusColor: string;
+  title: string;
+  description: string;
+  date: string;
+  budget: string;
+  progress: number;
+  users?: Array<IconUserModel>;
+};
 
 const Card2: FC<Props> = ({
   icon,
@@ -38,12 +38,18 @@ const Card2: FC<Props> = ({
       <div className='card-header border-0 pt-9'>
         <div className='card-title m-0'>
           <div className='symbol symbol-50px w-50px bg-light'>
-            <img src={toAbsoluteUrl(icon)} alt='card2' className='p-3' />
+            <img
+              src={toAbsoluteUrl(icon)}
+              alt='card2'
+              className='p-3'
+            />
           </div>
         </div>
 
         <div className='card-toolbar'>
-          <span className={`badge badge-light-${badgeColor} fw-bolder me-auto px-4 py-3`}>
+          <span
+            className={`badge badge-light-${badgeColor} fw-bolder me-auto px-4 py-3`}
+          >
             {status}
           </span>
         </div>
@@ -74,14 +80,14 @@ const Card2: FC<Props> = ({
           <div
             className={`bg-${statusColor} rounded h-4px`}
             role='progressbar'
-            style={{width: `${progress}%`}}
+            style={{ width: `${progress}%` }}
           ></div>
         </div>
 
         <UsersList users={users} />
       </div>
     </Link>
-  )
-}
+  );
+};
 
-export {Card2}
+export { Card2 };

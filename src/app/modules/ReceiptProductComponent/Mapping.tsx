@@ -1,42 +1,48 @@
-import {ModelMapping} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-import {ref} from 'yup';
-import {DesiredProductModel} from '../DesiredProduct';
-import {QuantityStatusEnum} from '../PurchaseOrder/Model';
-import {PurchaseOrderProductComponentModel} from '../PurchaseOrderProductComponent';
-
+import { ModelMapping } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
+import { ref } from "yup";
+import { DesiredProductModel } from "../DesiredProduct";
+import { QuantityStatusEnum } from "../PurchaseOrder/Model";
+import { PurchaseOrderProductComponentModel } from "../PurchaseOrderProductComponent";
 
 const mapping: ModelMapping<ModelEnum.ReceiptProductComponent> = {
   modelName: ModelEnum.ReceiptProductComponent,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     quantity: {
       type: ColumnTypeEnum.Number,
-      schema: schema => schema.when(['restQuantity', 'purchaseOrderProductComponent'], {
-        is: (restQuantity: number, purchaseOrderProductComponent: PurchaseOrderProductComponentModel) =>  {
-          return purchaseOrderProductComponent.status !== QuantityStatusEnum.FullyReceived && restQuantity > 0
-        },
-        then: schema => schema.positive().max(ref('restQuantity')),
-      })
+      schema: (schema) =>
+        schema.when(["restQuantity", "purchaseOrderProductComponent"], {
+          is: (
+            restQuantity: number,
+            purchaseOrderProductComponent: PurchaseOrderProductComponentModel
+          ) => {
+            return (
+              purchaseOrderProductComponent.status !==
+                QuantityStatusEnum.FullyReceived && restQuantity > 0
+            );
+          },
+          then: (schema) => schema.positive().max(ref("restQuantity")),
+        }),
     },
     restQuantity: {
       type: ColumnTypeEnum.Number,
     },
     received: {
       type: ColumnTypeEnum.Boolean,
-      nullable: true
+      nullable: true,
     },
     receiptProduct: {
-      type: ModelEnum.ReceiptProduct
+      type: ModelEnum.ReceiptProduct,
     },
     purchaseOrderProductComponent: {
-      type: ModelEnum.PurchaseOrderProductComponent
+      type: ModelEnum.PurchaseOrderProductComponent,
     },
   },
 };

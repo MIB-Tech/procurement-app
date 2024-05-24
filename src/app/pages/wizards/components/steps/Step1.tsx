@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {FC} from 'react'
-import {KTSVG} from '../../../../../_metronic/helpers'
-import {Field, ErrorMessage} from 'formik'
+import React, { FC } from "react";
+import { KTSVG } from "../../../../../_metronic/helpers";
+import { Field, ErrorMessage } from "formik";
 
 const Step1: FC = () => {
   return (
@@ -18,8 +18,11 @@ const Step1: FC = () => {
 
         <div className='text-gray-400 fw-bold fs-6'>
           If you need more info, please check out
-          <a href='/dashboard' className='link-primary fw-bolder'>
-            {' '}
+          <a
+            href='/dashboard'
+            className='link-primary fw-bolder'
+          >
+            {" "}
             Help Page
           </a>
           .
@@ -46,7 +49,9 @@ const Step1: FC = () => {
               />
 
               <span className='d-block fw-bold text-start'>
-                <div className='text-dark fw-bolder fs-4 mb-2'>Personal Account</div>
+                <div className='text-dark fw-bolder fs-4 mb-2'>
+                  Personal Account
+                </div>
                 <span className='text-gray-400 fw-bold fs-6'>
                   If you need more info, please check it out
                 </span>
@@ -66,10 +71,15 @@ const Step1: FC = () => {
               className='btn btn-outline btn-outline-dashed btn-outline-default p-7 d-flex align-items-center'
               htmlFor='kt_create_account_form_account_type_corporate'
             >
-              <KTSVG path='/media/icons/duotune/finance/fin006.svg' className='svg-icon-3x me-5' />
+              <KTSVG
+                path='/media/icons/duotune/finance/fin006.svg'
+                className='svg-icon-3x me-5'
+              />
 
               <span className='d-block fw-bold text-start'>
-                <div className='text-dark fw-bolder fs-4 mb-2'>Corporate Account</div>
+                <div className='text-dark fw-bolder fs-4 mb-2'>
+                  Corporate Account
+                </div>
                 <span className='text-gray-400 fw-bold fs-6'>
                   Create corporate account to mane users
                 </span>
@@ -83,7 +93,7 @@ const Step1: FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {Step1}
+export { Step1 };

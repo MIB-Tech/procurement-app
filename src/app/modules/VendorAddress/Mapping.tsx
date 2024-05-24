@@ -1,33 +1,32 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-
+import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
 
 const mapping: ModelMapping<ModelEnum.VendorAddress> = {
   modelName: ModelEnum.VendorAddress,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     postalCode: {
       type: ColumnTypeEnum.String,
-      nullable: true
+      nullable: true,
     },
     address: {
       type: ColumnTypeEnum.String,
     },
     cityName: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     isMain: {
-      type: ColumnTypeEnum.Boolean
+      type: ColumnTypeEnum.Boolean,
     },
     vendor: {
-      type: ModelEnum.Vendor
-    }
+      type: ModelEnum.Vendor,
+    },
   },
   views: [
     {
@@ -37,7 +36,7 @@ const mapping: ModelMapping<ModelEnum.VendorAddress> = {
         cityName: true,
         address: true,
         isMain: true,
-      }
+      },
     },
     {
       type: ViewEnum.Create,
@@ -47,7 +46,7 @@ const mapping: ModelMapping<ModelEnum.VendorAddress> = {
         cityName: true,
         isMain: true,
         // vendor: true
-      }
+      },
     },
     {
       type: ViewEnum.Update,
@@ -57,7 +56,7 @@ const mapping: ModelMapping<ModelEnum.VendorAddress> = {
         cityName: true,
         isMain: true,
         // vendor: true
-      }
+      },
     },
     {
       type: ViewEnum.Detail,
@@ -65,10 +64,10 @@ const mapping: ModelMapping<ModelEnum.VendorAddress> = {
         address: true,
         postalCode: true,
         cityName: true,
-        isMain: true
-      }
-    }
-  ]
+        isMain: true,
+      },
+    },
+  ],
 };
 
 export default mapping;

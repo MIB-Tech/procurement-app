@@ -1,10 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { FC } from 'react';
+import React, { FC } from "react";
 
-
-const EmptyPage: FC = ({...props}) => {
-
-
+const EmptyPage: FC = ({ ...props }) => {
   return (
     <>
       This page has no content
@@ -14,7 +11,7 @@ const EmptyPage: FC = ({...props}) => {
       {/*  </div>*/}
       {/*</div>*/}
     </>
-  )
-}
+  );
+};
 
-export {EmptyPage}
+export { EmptyPage };

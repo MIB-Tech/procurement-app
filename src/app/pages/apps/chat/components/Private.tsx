@@ -1,15 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {FC} from 'react'
-import {KTSVG, toAbsoluteUrl} from '../../../../../_metronic/helpers'
-import {Dropdown1, ChatInner} from '../../../../../_metronic/partials'
+import React, { FC } from "react";
+import { KTSVG, toAbsoluteUrl } from "../../../../../_metronic/helpers";
+import { Dropdown1, ChatInner } from "../../../../../_metronic/partials";
 
 const Private: FC = () => {
   return (
     <div className='d-flex flex-column flex-lg-row'>
       <div className='flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0'>
         <div className='card card-flush'>
-          <div className='card-header pt-7' id='kt_chat_contacts_header'>
-            <form className='w-100 position-relative' autoComplete='off'>
+          <div
+            className='card-header pt-7'
+            id='kt_chat_contacts_header'
+          >
+            <form
+              className='w-100 position-relative'
+              autoComplete='off'
+            >
               <KTSVG
                 path='/media/icons/duotune/general/gen021.svg'
                 className='svg-icon-2 svg-icon-lg-1 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y'
@@ -24,7 +30,10 @@ const Private: FC = () => {
             </form>
           </div>
 
-          <div className='card-body pt-5' id='kt_chat_contacts_body'>
+          <div
+            className='card-body pt-5'
+            id='kt_chat_contacts_body'
+          >
             <div
               className='scroll-y me-n5 pe-5 h-200px h-lg-auto'
               data-kt-scroll='true'
@@ -43,10 +52,15 @@ const Private: FC = () => {
                   </div>
 
                   <div className='ms-5'>
-                    <a href='src/app/pages/apps/chat/components/Private#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
+                    <a
+                      href='src/app/pages/apps/chat/components/Private#'
+                      className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'
+                    >
                       Melody Macy
                     </a>
-                    <div className='fw-bold text-gray-400'>melody@altbox.com</div>
+                    <div className='fw-bold text-gray-400'>
+                      melody@altbox.com
+                    </div>
                   </div>
                 </div>
 
@@ -60,11 +74,17 @@ const Private: FC = () => {
               <div className='d-flex flex-stack py-4'>
                 <div className='d-flex align-items-center'>
                   <div className='symbol symbol-45px symbol-circle'>
-                    <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-2.jpg')} />
+                    <img
+                      alt='Pic'
+                      src={toAbsoluteUrl("/media/avatars/150-2.jpg")}
+                    />
                   </div>
 
                   <div className='ms-5'>
-                    <a href='src/app/pages/apps/chat/components/Private#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
+                    <a
+                      href='src/app/pages/apps/chat/components/Private#'
+                      className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'
+                    >
                       Max Smith
                     </a>
                     <div className='fw-bold text-gray-400'>max@kt.com</div>
@@ -81,20 +101,30 @@ const Private: FC = () => {
               <div className='d-flex flex-stack py-4'>
                 <div className='d-flex align-items-center'>
                   <div className='symbol symbol-45px symbol-circle'>
-                    <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-4.jpg')} />
+                    <img
+                      alt='Pic'
+                      src={toAbsoluteUrl("/media/avatars/150-4.jpg")}
+                    />
                   </div>
 
                   <div className='ms-5'>
-                    <a href='src/app/pages/apps/chat/components/Private#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
+                    <a
+                      href='src/app/pages/apps/chat/components/Private#'
+                      className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'
+                    >
                       Sean Bean
                     </a>
-                    <div className='fw-bold text-gray-400'>sean@dellito.com</div>
+                    <div className='fw-bold text-gray-400'>
+                      sean@dellito.com
+                    </div>
                   </div>
                 </div>
 
                 <div className='d-flex flex-column align-items-end ms-2'>
                   <span className='text-muted fs-7 mb-1'>20 hrs</span>
-                  <span className='badge badge-sm badge-circle badge-light-success'>6</span>
+                  <span className='badge badge-sm badge-circle badge-light-success'>
+                    6
+                  </span>
                 </div>
               </div>
 
@@ -103,14 +133,22 @@ const Private: FC = () => {
               <div className='d-flex flex-stack py-4'>
                 <div className='d-flex align-items-center'>
                   <div className='symbol symbol-45px symbol-circle'>
-                    <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-15.jpg')} />
+                    <img
+                      alt='Pic'
+                      src={toAbsoluteUrl("/media/avatars/150-15.jpg")}
+                    />
                   </div>
 
                   <div className='ms-5'>
-                    <a href='src/app/pages/apps/chat/components/Private#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
+                    <a
+                      href='src/app/pages/apps/chat/components/Private#'
+                      className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'
+                    >
                       Brian Cox
                     </a>
-                    <div className='fw-bold text-gray-400'>brian@exchange.com</div>
+                    <div className='fw-bold text-gray-400'>
+                      brian@exchange.com
+                    </div>
                   </div>
                 </div>
 
@@ -130,10 +168,15 @@ const Private: FC = () => {
                   </div>
 
                   <div className='ms-5'>
-                    <a href='src/app/pages/apps/chat/components/Private#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
+                    <a
+                      href='src/app/pages/apps/chat/components/Private#'
+                      className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'
+                    >
                       Mikaela Collins
                     </a>
-                    <div className='fw-bold text-gray-400'>mikaela@pexcom.com</div>
+                    <div className='fw-bold text-gray-400'>
+                      mikaela@pexcom.com
+                    </div>
                   </div>
                 </div>
 
@@ -147,20 +190,30 @@ const Private: FC = () => {
               <div className='d-flex flex-stack py-4'>
                 <div className='d-flex align-items-center'>
                   <div className='symbol symbol-45px symbol-circle'>
-                    <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-8.jpg')} />
+                    <img
+                      alt='Pic'
+                      src={toAbsoluteUrl("/media/avatars/150-8.jpg")}
+                    />
                   </div>
 
                   <div className='ms-5'>
-                    <a href='src/app/pages/apps/chat/components/Private#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
+                    <a
+                      href='src/app/pages/apps/chat/components/Private#'
+                      className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'
+                    >
                       Francis Mitcham
                     </a>
-                    <div className='fw-bold text-gray-400'>f.mitcham@kpmg.com.au</div>
+                    <div className='fw-bold text-gray-400'>
+                      f.mitcham@kpmg.com.au
+                    </div>
                   </div>
                 </div>
 
                 <div className='d-flex flex-column align-items-end ms-2'>
                   <span className='text-muted fs-7 mb-1'>5 hrs</span>
-                  <span className='badge badge-sm badge-circle badge-light-success'>6</span>
+                  <span className='badge badge-sm badge-circle badge-light-success'>
+                    6
+                  </span>
                 </div>
               </div>
 
@@ -176,10 +229,15 @@ const Private: FC = () => {
                   </div>
 
                   <div className='ms-5'>
-                    <a href='src/app/pages/apps/chat/components/Private#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
+                    <a
+                      href='src/app/pages/apps/chat/components/Private#'
+                      className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'
+                    >
                       Olivia Wild
                     </a>
-                    <div className='fw-bold text-gray-400'>olivia@corpmail.com</div>
+                    <div className='fw-bold text-gray-400'>
+                      olivia@corpmail.com
+                    </div>
                   </div>
                 </div>
 
@@ -199,16 +257,23 @@ const Private: FC = () => {
                   </div>
 
                   <div className='ms-5'>
-                    <a href='src/app/pages/apps/chat/components/Private#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
+                    <a
+                      href='src/app/pages/apps/chat/components/Private#'
+                      className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'
+                    >
                       Neil Owen
                     </a>
-                    <div className='fw-bold text-gray-400'>owen.neil@gmail.com</div>
+                    <div className='fw-bold text-gray-400'>
+                      owen.neil@gmail.com
+                    </div>
                   </div>
                 </div>
 
                 <div className='d-flex flex-column align-items-end ms-2'>
                   <span className='text-muted fs-7 mb-1'>20 hrs</span>
-                  <span className='badge badge-sm badge-circle badge-light-success'>6</span>
+                  <span className='badge badge-sm badge-circle badge-light-success'>
+                    6
+                  </span>
                 </div>
               </div>
 
@@ -217,20 +282,30 @@ const Private: FC = () => {
               <div className='d-flex flex-stack py-4'>
                 <div className='d-flex align-items-center'>
                   <div className='symbol symbol-45px symbol-circle'>
-                    <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-6.jpg')} />
+                    <img
+                      alt='Pic'
+                      src={toAbsoluteUrl("/media/avatars/150-6.jpg")}
+                    />
                   </div>
 
                   <div className='ms-5'>
-                    <a href='src/app/pages/apps/chat/components/Private#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
+                    <a
+                      href='src/app/pages/apps/chat/components/Private#'
+                      className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'
+                    >
                       Dan Wilson
                     </a>
-                    <div className='fw-bold text-gray-400'>dam@consilting.com</div>
+                    <div className='fw-bold text-gray-400'>
+                      dam@consilting.com
+                    </div>
                   </div>
                 </div>
 
                 <div className='d-flex flex-column align-items-end ms-2'>
                   <span className='text-muted fs-7 mb-1'>2 weeks</span>
-                  <span className='badge badge-sm badge-circle badge-light-warning'>9</span>
+                  <span className='badge badge-sm badge-circle badge-light-warning'>
+                    9
+                  </span>
                 </div>
               </div>
 
@@ -246,10 +321,15 @@ const Private: FC = () => {
                   </div>
 
                   <div className='ms-5'>
-                    <a href='src/app/pages/apps/chat/components/Private#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
+                    <a
+                      href='src/app/pages/apps/chat/components/Private#'
+                      className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'
+                    >
                       Emma Bold
                     </a>
-                    <div className='fw-bold text-gray-400'>emma@intenso.com</div>
+                    <div className='fw-bold text-gray-400'>
+                      emma@intenso.com
+                    </div>
                   </div>
                 </div>
 
@@ -263,8 +343,14 @@ const Private: FC = () => {
       </div>
 
       <div className='flex-lg-row-fluid ms-lg-7 ms-xl-10'>
-        <div className='card' id='kt_chat_messenger'>
-          <div className='card-header' id='kt_chat_messenger_header'>
+        <div
+          className='card'
+          id='kt_chat_messenger'
+        >
+          <div
+            className='card-header'
+            id='kt_chat_messenger_header'
+          >
             <div className='card-title'>
               <div className='symbol-group symbol-hover'></div>
               <div className='d-flex justify-content-center flex-column me-3'>
@@ -300,7 +386,7 @@ const Private: FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {Private}
+export { Private };

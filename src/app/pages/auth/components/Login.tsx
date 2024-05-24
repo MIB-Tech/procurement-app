@@ -1,26 +1,25 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import * as Yup from 'yup';
-import { FormikProvider, useFormik } from 'formik';
-import * as auth from '../redux/AuthRedux';
-import { getToken, LoginCredentials } from '../redux/AuthCRUD';
-import { Trans } from '../../../../_custom/components/Trans';
-import { InputField } from '../../../../_custom/Column/String/InputField';
-import { Button } from '../../../../_custom/components/Button';
-import { PasswordField } from '../../../../_custom/Column/String/PasswordField';
-import { AxiosError } from 'axios';
-import { JWTResponseMessage } from '../../../../setup/axios/SetupAxios';
-
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import * as Yup from "yup";
+import { FormikProvider, useFormik } from "formik";
+import * as auth from "../redux/AuthRedux";
+import { getToken, LoginCredentials } from "../redux/AuthCRUD";
+import { Trans } from "../../../../_custom/components/Trans";
+import { InputField } from "../../../../_custom/Column/String/InputField";
+import { Button } from "../../../../_custom/components/Button";
+import { PasswordField } from "../../../../_custom/Column/String/PasswordField";
+import { AxiosError } from "axios";
+import { JWTResponseMessage } from "../../../../setup/axios/SetupAxios";
 
 const loginSchema = Yup.object().shape({
   username: Yup.string().min(3).required(),
-  password: Yup.string().min(3).required()
+  password: Yup.string().min(3).required(),
 });
 
 const initialValues: LoginCredentials = {
-  username: process.env.REACT_APP_LOGIN_USER || '',
-  password: process.env.REACT_APP_LOGIN_PASSWORD || ''
+  username: process.env.REACT_APP_LOGIN_USER || "",
+  password: process.env.REACT_APP_LOGIN_PASSWORD || "",
 };
 
 /*
@@ -30,24 +29,34 @@ const initialValues: LoginCredentials = {
 */
 
 export function Login() {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const formik = useFormik<LoginCredentials>({
     initialValues,
     validationSchema: loginSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
       setLoading(true);
-      getToken(values).then(({ data }) => {
-        setLoading(false);
-        dispatch(auth.actions.login(data));
-      }).catch((error: AxiosError<{ code: string, message: JWTResponseMessage.Failure }>) => {
-        const message = error.response?.data.message || JWTResponseMessage.Failure;
-        setLoading(false);
-        setSubmitting(false);
-        setStatus(<Trans id={message} />);
-      });
+      getToken(values)
+        .then(({ data }) => {
+          setLoading(false);
+          dispatch(auth.actions.login(data));
+        })
+        .catch(
+          (
+            error: AxiosError<{
+              code: string;
+              message: JWTResponseMessage.Failure;
+            }>
+          ) => {
+            const message =
+              error.response?.data.message || JWTResponseMessage.Failure;
+            setLoading(false);
+            setSubmitting(false);
+            setStatus(<Trans id={message} />);
+          }
+        );
     },
-  })
+  });
 
   return (
     <FormikProvider value={formik}>
@@ -59,7 +68,7 @@ export function Login() {
       >
         <div className='text-center mb-10'>
           <h1 className='text-dark mb-3'>
-            <Trans id={'AUTH.LOGIN.TITLE'} />
+            <Trans id={"AUTH.LOGIN.TITLE"} />
           </h1>
         </div>
         {formik.status && (
@@ -106,5 +115,5 @@ export function Login() {
         </div>
       </form>
     </FormikProvider>
-  )
+  );
 }

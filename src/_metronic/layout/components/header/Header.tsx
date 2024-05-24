@@ -1,7 +1,7 @@
-import React, {FC} from 'react'
-import { DefaultTitle } from './page-title/DefaultTitle';
-import { MegaMenu } from './MegaMenu';
-import { MenuInner } from './MenuInner';
+import React, { FC } from "react";
+import { DefaultTitle } from "./page-title/DefaultTitle";
+import { MegaMenu } from "./MegaMenu";
+import { MenuInner } from "./MenuInner";
 
 const Header: FC = () => {
   return (
@@ -47,7 +47,7 @@ const Header: FC = () => {
         {/*<MenuInner />*/}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {Header}
+export { Header };

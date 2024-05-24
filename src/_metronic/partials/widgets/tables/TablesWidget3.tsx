@@ -1,20 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
-import {KTSVG} from '../../../helpers'
-import {Dropdown1} from '../../content/dropdown/Dropdown1'
+import React from "react";
+import { KTSVG } from "../../../helpers";
+import { Dropdown1 } from "../../content/dropdown/Dropdown1";
 
 type Props = {
-  className: string
-}
+  className: string;
+};
 
-const TablesWidget3: React.FC<Props> = ({className}) => {
+const TablesWidget3: React.FC<Props> = ({ className }) => {
   return (
     <div className={`card ${className}`}>
       {/* begin::Header */}
       <div className='card-header border-0 pt-5'>
         <h3 className='card-title align-items-start flex-column'>
           <span className='card-label fw-bolder fs-3 mb-1'>Files</span>
-          <span className='text-muted mt-1 fw-bold fs-7'>Over 100 pending files</span>
+          <span className='text-muted mt-1 fw-bold fs-7'>
+            Over 100 pending files
+          </span>
         </h3>
         <div className='card-toolbar'>
           {/* begin::Menu */}
@@ -25,7 +27,10 @@ const TablesWidget3: React.FC<Props> = ({className}) => {
             data-kt-menu-placement='bottom-end'
             data-kt-menu-flip='top-end'
           >
-            <KTSVG path='/media/icons/duotune/general/gen024.svg' className='svg-icon-2' />
+            <KTSVG
+              path='/media/icons/duotune/general/gen024.svg'
+              className='svg-icon-2'
+            />
           </button>
           <Dropdown1 />
           {/* end::Menu */}
@@ -63,13 +68,18 @@ const TablesWidget3: React.FC<Props> = ({className}) => {
                   </div>
                 </td>
                 <td>
-                  <a href='#' className='text-dark fw-bolder text-hover-primary mb-1 fs-6'>
+                  <a
+                    href='#'
+                    className='text-dark fw-bolder text-hover-primary mb-1 fs-6'
+                  >
                     Top Authors
                   </a>
                 </td>
                 <td className='text-end text-muted fw-bold'>ReactJs, HTML</td>
                 <td className='text-end text-muted fw-bold'>4600 Users</td>
-                <td className='text-end text-dark fw-bolder fs-6 pe-0'>5.4MB</td>
+                <td className='text-end text-dark fw-bolder fs-6 pe-0'>
+                  5.4MB
+                </td>
               </tr>
               <tr>
                 <td>
@@ -83,13 +93,18 @@ const TablesWidget3: React.FC<Props> = ({className}) => {
                   </div>
                 </td>
                 <td>
-                  <a href='#' className='text-dark fw-bolder text-hover-primary mb-1 fs-6'>
+                  <a
+                    href='#'
+                    className='text-dark fw-bolder text-hover-primary mb-1 fs-6'
+                  >
                     Popular Authors
                   </a>
                 </td>
                 <td className='text-end text-muted fw-bold'>Python, MySQL</td>
                 <td className='text-end text-muted fw-bold'>7200 Users</td>
-                <td className='text-end text-dark fw-bolder fs-6 pe-0'>2.8MB</td>
+                <td className='text-end text-dark fw-bolder fs-6 pe-0'>
+                  2.8MB
+                </td>
               </tr>
               <tr>
                 <td>
@@ -103,13 +118,20 @@ const TablesWidget3: React.FC<Props> = ({className}) => {
                   </div>
                 </td>
                 <td>
-                  <a href='#' className='text-dark fw-bolder text-hover-primary mb-1 fs-6'>
+                  <a
+                    href='#'
+                    className='text-dark fw-bolder text-hover-primary mb-1 fs-6'
+                  >
                     New Users
                   </a>
                 </td>
-                <td className='text-end text-muted fw-bold'>Laravel, Metronic</td>
+                <td className='text-end text-muted fw-bold'>
+                  Laravel, Metronic
+                </td>
                 <td className='text-end text-muted fw-bold'>890 Users</td>
-                <td className='text-end text-dark fw-bolder fs-6 pe-0'>1.5MB</td>
+                <td className='text-end text-dark fw-bolder fs-6 pe-0'>
+                  1.5MB
+                </td>
               </tr>
               <tr>
                 <td>
@@ -123,13 +145,18 @@ const TablesWidget3: React.FC<Props> = ({className}) => {
                   </div>
                 </td>
                 <td>
-                  <a href='#' className='text-dark fw-bolder text-hover-primary mb-1 fs-6'>
+                  <a
+                    href='#'
+                    className='text-dark fw-bolder text-hover-primary mb-1 fs-6'
+                  >
                     Active Customers
                   </a>
                 </td>
                 <td className='text-end text-muted fw-bold'>AngularJS, C#</td>
                 <td className='text-end text-muted fw-bold'>4600 Users</td>
-                <td className='text-end text-dark fw-bolder fs-6 pe-0'>5.4MB</td>
+                <td className='text-end text-dark fw-bolder fs-6 pe-0'>
+                  5.4MB
+                </td>
               </tr>
               <tr>
                 <td>
@@ -143,13 +170,18 @@ const TablesWidget3: React.FC<Props> = ({className}) => {
                   </div>
                 </td>
                 <td>
-                  <a href='#' className='text-dark fw-bolder text-hover-primary mb-1 fs-6'>
+                  <a
+                    href='#'
+                    className='text-dark fw-bolder text-hover-primary mb-1 fs-6'
+                  >
                     Active Customers
                   </a>
                 </td>
                 <td className='text-end text-muted fw-bold'>ReactJS, Ruby</td>
                 <td className='text-end text-muted fw-bold'>354 Users</td>
-                <td className='text-end text-dark fw-bolder fs-6 pe-0'>500KB</td>
+                <td className='text-end text-dark fw-bolder fs-6 pe-0'>
+                  500KB
+                </td>
               </tr>
             </tbody>
             {/* end::Table body */}
@@ -160,7 +192,7 @@ const TablesWidget3: React.FC<Props> = ({className}) => {
       </div>
       {/* begin::Body */}
     </div>
-  )
-}
+  );
+};
 
-export {TablesWidget3}
+export { TablesWidget3 };

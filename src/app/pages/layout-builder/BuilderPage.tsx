@@ -1,41 +1,46 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import clsx from 'clsx'
-import React, {useState} from 'react'
-import {KTSVG} from '../../../_metronic/helpers'
-import {getLayout, ILayout, LayoutSetup, useLayout} from '../../../_metronic/layout/core'
+import clsx from "clsx";
+import React, { useState } from "react";
+import { KTSVG } from "../../../_metronic/helpers";
+import {
+  getLayout,
+  ILayout,
+  LayoutSetup,
+  useLayout,
+} from "../../../_metronic/layout/core";
 
 const BuilderPage: React.FC = () => {
-  const {setLayout} = useLayout()
-  const [tab, setTab] = useState('Header')
-  const [config, setConfig] = useState<ILayout>(getLayout())
-  const [configLoading, setConfigLoading] = useState<boolean>(false)
-  const [resetLoading, setResetLoading] = useState<boolean>(false)
+  const { setLayout } = useLayout();
+  const [tab, setTab] = useState("Header");
+  const [config, setConfig] = useState<ILayout>(getLayout());
+  const [configLoading, setConfigLoading] = useState<boolean>(false);
+  const [resetLoading, setResetLoading] = useState<boolean>(false);
 
   const updateData = (fieldsToUpdate: Partial<ILayout>) => {
-    const updatedData = {...config, ...fieldsToUpdate}
-    setConfig(updatedData)
-  }
+    const updatedData = { ...config, ...fieldsToUpdate };
+    setConfig(updatedData);
+  };
 
   const updateConfig = () => {
-    setConfigLoading(true)
+    setConfigLoading(true);
     try {
-      LayoutSetup.setConfig(config)
+      LayoutSetup.setConfig(config);
     } catch (error) {
-      setConfig(getLayout())
+      setConfig(getLayout());
     }
     setTimeout(() => {
-      setLayout(config)
-      setConfigLoading(false)
-    }, 1000)
-  }
+      setLayout(config);
+      setConfigLoading(false);
+    }, 1000);
+  };
 
   const reset = () => {
-    setResetLoading(true)
+    setResetLoading(true);
     setTimeout(() => {
-      setConfig(getLayout())
-      setResetLoading(false)
-    }, 1000)
-  }
+      setConfig(getLayout());
+      setResetLoading(false);
+    }, 1000);
+  };
 
   return (
     <>
@@ -58,11 +63,13 @@ const BuilderPage: React.FC = () => {
           {/* begin::Description */}
           <div className='ms-6'>
             <p className='list-unstyled text-gray-600 fw-bold fs-6 p-0 m-0'>
-              The layout builder is to assist your set and configure your preferred project layout
-              specifications and preview it in real-time and export the HTML template with its
-              includable partials of this demo. The downloaded version does not include the assets
-              folder since the layout builder's main purpose is to help to generate the final HTML
-              code without hassle. Layout builder changes don't affect pages with layout wrappers.
+              The layout builder is to assist your set and configure your
+              preferred project layout specifications and preview it in
+              real-time and export the HTML template with its includable
+              partials of this demo. The downloaded version does not include the
+              assets folder since the layout builder's main purpose is to help
+              to generate the final HTML code without hassle. Layout builder
+              changes don't affect pages with layout wrappers.
             </p>
           </div>
           {/* end::Description */}
@@ -76,8 +83,10 @@ const BuilderPage: React.FC = () => {
           >
             <li className='nav-item'>
               <a
-                className={clsx(`nav-link cursor-pointer`, {active: tab === 'Header'})}
-                onClick={() => setTab('Header')}
+                className={clsx(`nav-link cursor-pointer`, {
+                  active: tab === "Header",
+                })}
+                onClick={() => setTab("Header")}
                 role='tab'
               >
                 Header
@@ -85,8 +94,10 @@ const BuilderPage: React.FC = () => {
             </li>
             <li className='nav-item'>
               <a
-                className={clsx(`nav-link cursor-pointer`, {active: tab === 'Toolbar'})}
-                onClick={() => setTab('Toolbar')}
+                className={clsx(`nav-link cursor-pointer`, {
+                  active: tab === "Toolbar",
+                })}
+                onClick={() => setTab("Toolbar")}
                 role='tab'
               >
                 Toolbar
@@ -94,8 +105,10 @@ const BuilderPage: React.FC = () => {
             </li>
             <li className='nav-item'>
               <a
-                className={clsx(`nav-link cursor-pointer`, {active: tab === 'PageTitle'})}
-                onClick={() => setTab('PageTitle')}
+                className={clsx(`nav-link cursor-pointer`, {
+                  active: tab === "PageTitle",
+                })}
+                onClick={() => setTab("PageTitle")}
                 role='tab'
               >
                 Page Title
@@ -103,8 +116,10 @@ const BuilderPage: React.FC = () => {
             </li>
             <li className='nav-item'>
               <a
-                className={clsx(`nav-link cursor-pointer`, {active: tab === 'Aside'})}
-                onClick={() => setTab('Aside')}
+                className={clsx(`nav-link cursor-pointer`, {
+                  active: tab === "Aside",
+                })}
+                onClick={() => setTab("Aside")}
                 role='tab'
               >
                 Aside
@@ -112,8 +127,10 @@ const BuilderPage: React.FC = () => {
             </li>
             <li className='nav-item'>
               <a
-                className={clsx(`nav-link cursor-pointer`, {active: tab === 'Content'})}
-                onClick={() => setTab('Content')}
+                className={clsx(`nav-link cursor-pointer`, {
+                  active: tab === "Content",
+                })}
+                onClick={() => setTab("Content")}
                 role='tab'
               >
                 Content
@@ -121,8 +138,10 @@ const BuilderPage: React.FC = () => {
             </li>
             <li className='nav-item'>
               <a
-                className={clsx(`nav-link cursor-pointer`, {active: tab === 'Footer'})}
-                onClick={() => setTab('Footer')}
+                className={clsx(`nav-link cursor-pointer`, {
+                  active: tab === "Footer",
+                })}
+                onClick={() => setTab("Footer")}
                 role='tab'
               >
                 Footer
@@ -137,9 +156,11 @@ const BuilderPage: React.FC = () => {
           {/* begin::Body */}
           <div className='card-body'>
             <div className='tab-content pt-3'>
-              <div className={clsx('tab-pane', {active: tab === 'Header'})}>
+              <div className={clsx("tab-pane", { active: tab === "Header" })}>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Fixed Header:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Fixed Header:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <label className='form-check form-check-custom form-check-solid form-switch mb-5'>
                       <input
@@ -159,7 +180,9 @@ const BuilderPage: React.FC = () => {
                           })
                         }
                       />
-                      <span className='form-check-label text-muted'>Desktop</span>
+                      <span className='form-check-label text-muted'>
+                        Desktop
+                      </span>
                     </label>
 
                     <label className='form-check form-check-custom form-check-solid form-switch mb-3'>
@@ -173,20 +196,27 @@ const BuilderPage: React.FC = () => {
                               ...config.header,
                               fixed: {
                                 ...config.header.fixed,
-                                tabletAndMobile: !config.header.fixed.tabletAndMobile,
+                                tabletAndMobile:
+                                  !config.header.fixed.tabletAndMobile,
                               },
                             },
                           })
                         }
                       />
-                      <span className='form-check-label text-muted'>Tablet & Mobile</span>
+                      <span className='form-check-label text-muted'>
+                        Tablet & Mobile
+                      </span>
                     </label>
 
-                    <div className='form-text text-muted'>Enable fixed header</div>
+                    <div className='form-text text-muted'>
+                      Enable fixed header
+                    </div>
                   </div>
                 </div>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Left Content:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Left Content:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <select
                       className='form-select form-select-solid'
@@ -196,7 +226,7 @@ const BuilderPage: React.FC = () => {
                         updateData({
                           header: {
                             ...config.header,
-                            left: e.target.value as 'menu' | 'page-title',
+                            left: e.target.value as "menu" | "page-title",
                           },
                         })
                       }
@@ -204,11 +234,15 @@ const BuilderPage: React.FC = () => {
                       <option value='menu'>Menu</option>
                       <option value='fixed'>Page title</option>
                     </select>
-                    <div className='form-text text-muted'>Select header left content type.</div>
+                    <div className='form-text text-muted'>
+                      Select header left content type.
+                    </div>
                   </div>
                 </div>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Width:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Width:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <select
                       className='form-select form-select-solid'
@@ -218,7 +252,7 @@ const BuilderPage: React.FC = () => {
                         updateData({
                           header: {
                             ...config.header,
-                            width: e.target.value as 'fixed' | 'fluid',
+                            width: e.target.value as "fixed" | "fluid",
                           },
                         })
                       }
@@ -226,14 +260,18 @@ const BuilderPage: React.FC = () => {
                       <option value='fluid'>Fluid</option>
                       <option value='fixed'>Fixed</option>
                     </select>
-                    <div className='form-text text-muted'>Select header width type.</div>
+                    <div className='form-text text-muted'>
+                      Select header width type.
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className={clsx('tab-pane', {active: tab === 'Toolbar'})}>
+              <div className={clsx("tab-pane", { active: tab === "Toolbar" })}>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Display:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Display:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <div className='form-check form-check-custom form-check-solid form-switch mb-2'>
                       <input
@@ -255,7 +293,9 @@ const BuilderPage: React.FC = () => {
                   </div>
                 </div>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Fixed Toolbar:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Fixed Toolbar:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <label className='form-check form-check-custom form-check-solid form-switch mb-5'>
                       <input
@@ -275,7 +315,9 @@ const BuilderPage: React.FC = () => {
                           })
                         }
                       />
-                      <span className='form-check-label text-muted'>Desktop</span>
+                      <span className='form-check-label text-muted'>
+                        Desktop
+                      </span>
                     </label>
 
                     <label className='form-check form-check-custom form-check-solid form-switch mb-3'>
@@ -289,20 +331,27 @@ const BuilderPage: React.FC = () => {
                               ...config.toolbar,
                               fixed: {
                                 ...config.toolbar.fixed,
-                                tabletAndMobileMode: !config.toolbar.fixed.tabletAndMobileMode,
+                                tabletAndMobileMode:
+                                  !config.toolbar.fixed.tabletAndMobileMode,
                               },
                             },
                           })
                         }
                       />
-                      <span className='form-check-label text-muted'>Tablet & Mobile</span>
+                      <span className='form-check-label text-muted'>
+                        Tablet & Mobile
+                      </span>
                     </label>
 
-                    <div className='form-text text-muted'>Enable fixed toolbar</div>
+                    <div className='form-text text-muted'>
+                      Enable fixed toolbar
+                    </div>
                   </div>
                 </div>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Width:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Width:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <select
                       className='form-select form-select-solid'
@@ -312,7 +361,7 @@ const BuilderPage: React.FC = () => {
                         updateData({
                           toolbar: {
                             ...config.toolbar,
-                            width: e.target.value as 'fixed' | 'fluid',
+                            width: e.target.value as "fixed" | "fluid",
                           },
                         })
                       }
@@ -320,14 +369,20 @@ const BuilderPage: React.FC = () => {
                       <option value='fluid'>Fluid</option>
                       <option value='fixed'>Fixed</option>
                     </select>
-                    <div className='form-text text-muted'>Select layout width type.</div>
+                    <div className='form-text text-muted'>
+                      Select layout width type.
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className={clsx('tab-pane', {active: tab === 'PageTitle'})}>
+              <div
+                className={clsx("tab-pane", { active: tab === "PageTitle" })}
+              >
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Display:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Display:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <div className='form-check form-check-custom form-check-solid form-switch mb-2'>
                       <input
@@ -345,11 +400,15 @@ const BuilderPage: React.FC = () => {
                         }
                       />
                     </div>
-                    <div className='form-text text-muted'>Display page title</div>
+                    <div className='form-text text-muted'>
+                      Display page title
+                    </div>
                   </div>
                 </div>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Breadcrumb:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Breadcrumb:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <div className='form-check form-check-custom form-check-solid form-switch mb-2'>
                       <input
@@ -367,14 +426,18 @@ const BuilderPage: React.FC = () => {
                         }
                       />
                     </div>
-                    <div className='form-text text-muted'>Display page title</div>
+                    <div className='form-text text-muted'>
+                      Display page title
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className={clsx('tab-pane', {active: tab === 'Content'})}>
+              <div className={clsx("tab-pane", { active: tab === "Content" })}>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Width:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Width:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <select
                       className='form-select form-select-solid'
@@ -384,7 +447,7 @@ const BuilderPage: React.FC = () => {
                         updateData({
                           content: {
                             ...config.content,
-                            width: e.target.value as 'fixed' | 'fluid',
+                            width: e.target.value as "fixed" | "fluid",
                           },
                         })
                       }
@@ -392,14 +455,18 @@ const BuilderPage: React.FC = () => {
                       <option value='fluid'>Fluid</option>
                       <option value='fixed'>Fixed</option>
                     </select>
-                    <div className='form-text text-muted'>Select layout width type.</div>
+                    <div className='form-text text-muted'>
+                      Select layout width type.
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className={clsx('tab-pane', {active: tab === 'Aside'})}>
+              <div className={clsx("tab-pane", { active: tab === "Aside" })}>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Display:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Display:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <div className='switch switch-icon'>
                       <div className='form-check form-check-custom form-check-solid form-switch mb-2'>
@@ -423,7 +490,9 @@ const BuilderPage: React.FC = () => {
                   </div>
                 </div>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Theme:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Theme:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <select
                       className='form-select form-select-solid'
@@ -433,7 +502,7 @@ const BuilderPage: React.FC = () => {
                         updateData({
                           aside: {
                             ...config.aside,
-                            theme: e.target.value as 'dark' | 'light',
+                            theme: e.target.value as "dark" | "light",
                           },
                         })
                       }
@@ -441,11 +510,15 @@ const BuilderPage: React.FC = () => {
                       <option value='dark'>Dark</option>
                       <option value='light'>Light</option>
                     </select>
-                    <div className='form-text text-muted'>Select header left content type.</div>
+                    <div className='form-text text-muted'>
+                      Select header left content type.
+                    </div>
                   </div>
                 </div>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Fixed:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Fixed:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <div className='switch switch-icon'>
                       <div className='form-check form-check-custom form-check-solid form-switch mb-2'>
@@ -465,11 +538,15 @@ const BuilderPage: React.FC = () => {
                         />
                       </div>
                     </div>
-                    <div className='form-text text-muted'>Enable fixed aside</div>
+                    <div className='form-text text-muted'>
+                      Enable fixed aside
+                    </div>
                   </div>
                 </div>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Minimize:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Minimize:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <div className='switch switch-icon'>
                       <div className='form-check form-check-custom form-check-solid form-switch mb-2'>
@@ -489,11 +566,15 @@ const BuilderPage: React.FC = () => {
                         />
                       </div>
                     </div>
-                    <div className='form-text text-muted'>Enable aside minimization</div>
+                    <div className='form-text text-muted'>
+                      Enable aside minimization
+                    </div>
                   </div>
                 </div>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Minimized:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Minimized:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <div className='switch switch-icon'>
                       <div className='form-check form-check-custom form-check-solid form-switch mb-2'>
@@ -513,11 +594,15 @@ const BuilderPage: React.FC = () => {
                         />
                       </div>
                     </div>
-                    <div className='form-text text-muted'>Default minimized aside</div>
+                    <div className='form-text text-muted'>
+                      Default minimized aside
+                    </div>
                   </div>
                 </div>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Hoverable:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Hoverable:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <div className='switch switch-icon'>
                       <div className='form-check form-check-custom form-check-solid form-switch mb-2'>
@@ -537,14 +622,18 @@ const BuilderPage: React.FC = () => {
                         />
                       </div>
                     </div>
-                    <div className='form-text text-muted'>Enable hoverable minimized aside</div>
+                    <div className='form-text text-muted'>
+                      Enable hoverable minimized aside
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className={clsx('tab-pane', {active: tab === 'Footer'})}>
+              <div className={clsx("tab-pane", { active: tab === "Footer" })}>
                 <div className='row mb-10'>
-                  <label className='col-lg-3 col-form-label text-lg-end'>Width:</label>
+                  <label className='col-lg-3 col-form-label text-lg-end'>
+                    Width:
+                  </label>
                   <div className='col-lg-9 col-xl-4'>
                     <select
                       className='form-select form-select-solid'
@@ -554,7 +643,7 @@ const BuilderPage: React.FC = () => {
                         updateData({
                           footer: {
                             ...config.footer,
-                            width: e.target.value as 'fixed' | 'fluid',
+                            width: e.target.value as "fixed" | "fluid",
                           },
                         })
                       }
@@ -562,7 +651,9 @@ const BuilderPage: React.FC = () => {
                       <option value='fluid'>Fluid</option>
                       <option value='fixed'>Fixed</option>
                     </select>
-                    <div className='form-text text-muted'>Select layout width type.</div>
+                    <div className='form-text text-muted'>
+                      Select layout width type.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -575,11 +666,20 @@ const BuilderPage: React.FC = () => {
             <div className='row'>
               <div className='col-lg-3'></div>
               <div className='col-lg-9'>
-                <button type='button' onClick={updateConfig} className='btn btn-primary me-2'>
-                  {!configLoading && <span className='indicator-label'>Preview</span>}
+                <button
+                  type='button'
+                  onClick={updateConfig}
+                  className='btn btn-primary me-2'
+                >
+                  {!configLoading && (
+                    <span className='indicator-label'>Preview</span>
+                  )}
                   {configLoading && (
-                    <span className='indicator-progress' style={{display: 'block'}}>
-                      Please wait...{' '}
+                    <span
+                      className='indicator-progress'
+                      style={{ display: "block" }}
+                    >
+                      Please wait...{" "}
                       <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                     </span>
                   )}
@@ -591,10 +691,15 @@ const BuilderPage: React.FC = () => {
                   className='btn btn-active-light btn-color-muted'
                   onClick={reset}
                 >
-                  {!resetLoading && <span className='indicator-label'>Reset</span>}
+                  {!resetLoading && (
+                    <span className='indicator-label'>Reset</span>
+                  )}
                   {resetLoading && (
-                    <span className='indicator-progress' style={{display: 'block'}}>
-                      Please wait...{' '}
+                    <span
+                      className='indicator-progress'
+                      style={{ display: "block" }}
+                    >
+                      Please wait...{" "}
                       <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                     </span>
                   )}
@@ -607,7 +712,7 @@ const BuilderPage: React.FC = () => {
         {/* end::Form */}
       </div>
     </>
-  )
-}
+  );
+};
 
-export {BuilderPage}
+export { BuilderPage };

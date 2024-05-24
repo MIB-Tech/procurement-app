@@ -1,13 +1,13 @@
-import {FC} from 'react'
-import {IconUserModel} from '../ProfileModels'
-import {toAbsoluteUrl} from '../../../../_metronic/helpers'
-import {OverlayTrigger, Tooltip} from 'react-bootstrap'
+import { FC } from "react";
+import { IconUserModel } from "../ProfileModels";
+import { toAbsoluteUrl } from "../../../../_metronic/helpers";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 type Props = {
-  users?: Array<IconUserModel>
-}
+  users?: Array<IconUserModel>;
+};
 
-const UsersList: FC<Props> = ({users = undefined}) => {
+const UsersList: FC<Props> = ({ users = undefined }) => {
   return (
     <>
       {users &&
@@ -19,7 +19,12 @@ const UsersList: FC<Props> = ({users = undefined}) => {
               overlay={<Tooltip id='tooltip-user-name'>{user.name}</Tooltip>}
             >
               <div className='symbol symbol-35px symbol-circle'>
-                {user.avatar && <img src={toAbsoluteUrl(user.avatar)} alt='Pic' />}
+                {user.avatar && (
+                  <img
+                    src={toAbsoluteUrl(user.avatar)}
+                    alt='Pic'
+                  />
+                )}
                 {user.initials && (
                   <span className='symbol-label bg-primary text-inverse-primary fw-bolder'>
                     {user.initials}
@@ -27,10 +32,10 @@ const UsersList: FC<Props> = ({users = undefined}) => {
                 )}
               </div>
             </OverlayTrigger>
-          )
+          );
         })}
     </>
-  )
-}
+  );
+};
 
-export {UsersList}
+export { UsersList };

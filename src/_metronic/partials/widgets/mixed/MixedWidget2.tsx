@@ -1,40 +1,45 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useEffect, useRef} from 'react'
-import ApexCharts, {ApexOptions} from 'apexcharts'
-import {KTSVG} from '../../../helpers'
-import {getCSSVariableValue} from '../../../assets/ts/_utils'
-import {Dropdown1} from '../../content/dropdown/Dropdown1'
+import React, { useEffect, useRef } from "react";
+import ApexCharts, { ApexOptions } from "apexcharts";
+import { KTSVG } from "../../../helpers";
+import { getCSSVariableValue } from "../../../assets/ts/_utils";
+import { Dropdown1 } from "../../content/dropdown/Dropdown1";
 
 type Props = {
-  className: string
-  chartColor: string
-  strokeColor: string
-  chartHeight: string
-}
+  className: string;
+  chartColor: string;
+  strokeColor: string;
+  chartHeight: string;
+};
 
-const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, strokeColor}) => {
-  const chartRef = useRef<HTMLDivElement | null>(null)
+const MixedWidget2: React.FC<Props> = ({
+  className,
+  chartColor,
+  chartHeight,
+  strokeColor,
+}) => {
+  const chartRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!chartRef.current) {
-      return
+      return;
     }
 
     const chart = new ApexCharts(
       chartRef.current,
       chartOptions(chartHeight, chartColor, strokeColor)
-    )
+    );
     if (chart) {
-      chart.render()
+      chart.render();
     }
 
     return () => {
       if (chart) {
-        chart.destroy()
+        chart.destroy();
       }
-    }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chartRef])
+  }, [chartRef]);
 
   return (
     <div className={`card ${className}`}>
@@ -50,7 +55,10 @@ const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, stro
             data-kt-menu-placement='bottom-end'
             data-kt-menu-flip='top-end'
           >
-            <KTSVG path='/media/icons/duotune/general/gen024.svg' className='svg-icon-2' />
+            <KTSVG
+              path='/media/icons/duotune/general/gen024.svg'
+              className='svg-icon-2'
+            />
           </button>
           <Dropdown1 />
           {/* end::Menu */}
@@ -75,7 +83,10 @@ const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, stro
                 path='/media/icons/duotune/general/gen032.svg'
                 className='svg-icon-3x svg-icon-warning d-block my-2'
               />
-              <a href='#' className='text-warning fw-bold fs-6'>
+              <a
+                href='#'
+                className='text-warning fw-bold fs-6'
+              >
                 Weekly Sales
               </a>
             </div>
@@ -86,7 +97,10 @@ const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, stro
                 path='/media/icons/duotune/arrows/arr075.svg'
                 className='svg-icon-3x svg-icon-primary d-block my-2'
               />
-              <a href='#' className='text-primary fw-bold fs-6'>
+              <a
+                href='#'
+                className='text-primary fw-bold fs-6'
+              >
                 New Users
               </a>
             </div>
@@ -101,7 +115,10 @@ const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, stro
                 path='/media/icons/duotune/abstract/abs027.svg'
                 className='svg-icon-3x svg-icon-danger d-block my-2'
               />
-              <a href='#' className='text-danger fw-bold fs-6 mt-2'>
+              <a
+                href='#'
+                className='text-danger fw-bold fs-6 mt-2'
+              >
                 Item Orders
               </a>
             </div>
@@ -112,7 +129,10 @@ const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, stro
                 path='/media/icons/duotune/communication/com010.svg'
                 className='svg-icon-3x svg-icon-success d-block my-2'
               />
-              <a href='#' className='text-success fw-bold fs-6 mt-2'>
+              <a
+                href='#'
+                className='text-success fw-bold fs-6 mt-2'
+              >
                 Bug Reports
               </a>
             </div>
@@ -124,28 +144,28 @@ const MixedWidget2: React.FC<Props> = ({className, chartColor, chartHeight, stro
       </div>
       {/* end::Body */}
     </div>
-  )
-}
+  );
+};
 
 const chartOptions = (
   chartHeight: string,
   chartColor: string,
   strokeColor: string
 ): ApexOptions => {
-  const labelColor = getCSSVariableValue('--bs-gray-500')
-  const borderColor = getCSSVariableValue('--bs-gray-200')
-  const color = getCSSVariableValue('--bs-' + chartColor)
+  const labelColor = getCSSVariableValue("--bs-gray-500");
+  const borderColor = getCSSVariableValue("--bs-gray-200");
+  const color = getCSSVariableValue("--bs-" + chartColor);
 
   return {
     series: [
       {
-        name: 'Net Profit',
+        name: "Net Profit",
         data: [30, 45, 32, 70, 40, 40, 40],
       },
     ],
     chart: {
-      fontFamily: 'inherit',
-      type: 'area',
+      fontFamily: "inherit",
+      type: "area",
       height: chartHeight,
       toolbar: {
         show: false,
@@ -174,17 +194,17 @@ const chartOptions = (
       enabled: false,
     },
     fill: {
-      type: 'solid',
+      type: "solid",
       opacity: 0,
     },
     stroke: {
-      curve: 'smooth',
+      curve: "smooth",
       show: true,
       width: 3,
       colors: [strokeColor],
     },
     xaxis: {
-      categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+      categories: ["Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
       axisBorder: {
         show: false,
       },
@@ -195,12 +215,12 @@ const chartOptions = (
         show: false,
         style: {
           colors: labelColor,
-          fontSize: '12px',
+          fontSize: "12px",
         },
       },
       crosshairs: {
         show: false,
-        position: 'front',
+        position: "front",
         stroke: {
           color: borderColor,
           width: 1,
@@ -215,51 +235,51 @@ const chartOptions = (
         show: false,
         style: {
           colors: labelColor,
-          fontSize: '12px',
+          fontSize: "12px",
         },
       },
     },
     states: {
       normal: {
         filter: {
-          type: 'none',
+          type: "none",
           value: 0,
         },
       },
       hover: {
         filter: {
-          type: 'none',
+          type: "none",
           value: 0,
         },
       },
       active: {
         allowMultipleDataPointsSelection: false,
         filter: {
-          type: 'none',
+          type: "none",
           value: 0,
         },
       },
     },
     tooltip: {
       style: {
-        fontSize: '12px',
+        fontSize: "12px",
       },
       y: {
         formatter: function (val) {
-          return '$' + val + ' thousands'
+          return "$" + val + " thousands";
         },
       },
       marker: {
         show: false,
       },
     },
-    colors: ['transparent'],
+    colors: ["transparent"],
     markers: {
       colors: [color],
       strokeColors: [strokeColor],
       strokeWidth: 3,
     },
-  }
-}
+  };
+};
 
-export {MixedWidget2}
+export { MixedWidget2 };

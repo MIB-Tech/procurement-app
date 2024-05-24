@@ -1,25 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useEffect, useRef} from 'react'
-import {Carousel} from 'bootstrap'
+import React, { useEffect, useRef } from "react";
+import { Carousel } from "bootstrap";
 
 type Props = {
-  className: string
-  innerPadding?: string
-}
+  className: string;
+  innerPadding?: string;
+};
 
-const StatsWidget8: React.FC<Props> = ({className, innerPadding = ''}) => {
-  const carouselRef = useRef<HTMLDivElement | null>(null)
+const StatsWidget8: React.FC<Props> = ({ className, innerPadding = "" }) => {
+  const carouselRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    const element = carouselRef.current
+    const element = carouselRef.current;
     if (!element) {
-      return
+      return;
     }
 
-    const carousel = new Carousel(element)
+    const carousel = new Carousel(element);
     return function cleanUp() {
-      carousel.dispose()
-    }
-  }, [])
+      carousel.dispose();
+    };
+  }, []);
   return (
     <div className={`card card-custom ${className}`}>
       {/* begin::Body */}
@@ -38,9 +38,21 @@ const StatsWidget8: React.FC<Props> = ({className, innerPadding = ''}) => {
             {/* end::Label */}
             {/* begin::Carousel Indicators */}
             <ol className='p-0 m-0 carousel-indicators carousel-indicators-dots'>
-              <li className='ms-1 active' data-bs-target='#widget8_carousel' data-bs-slide-to='0' />
-              <li className='ms-1' data-bs-target='#widget8_carousel' data-bs-slide-to='1' />
-              <li className='ms-1' data-bs-target='#widget8_carousel' data-bs-slide-to='2' />
+              <li
+                className='ms-1 active'
+                data-bs-target='#widget8_carousel'
+                data-bs-slide-to='0'
+              />
+              <li
+                className='ms-1'
+                data-bs-target='#widget8_carousel'
+                data-bs-slide-to='1'
+              />
+              <li
+                className='ms-1'
+                data-bs-target='#widget8_carousel'
+                data-bs-slide-to='2'
+              />
             </ol>
             {/* end::Carousel Indicators */}
           </div>
@@ -53,7 +65,8 @@ const StatsWidget8: React.FC<Props> = ({className, innerPadding = ''}) => {
                   Admin Launch Day
                 </h3>
                 <p className='text-gray-600 fw-bold pt-3 mb-0'>
-                  To start a blog, think of a topic about and first brainstorm ways to write details
+                  To start a blog, think of a topic about and first brainstorm
+                  ways to write details
                 </p>
               </div>
             </div>
@@ -68,7 +81,8 @@ const StatsWidget8: React.FC<Props> = ({className, innerPadding = ''}) => {
 
                 {/* begin::Text */}
                 <p className='text-gray-600 fw-bold pt-3 mb-0'>
-                  To start a blog, think of a topic about and first brainstorm ways to write details
+                  To start a blog, think of a topic about and first brainstorm
+                  ways to write details
                 </p>
                 {/* end::Text */}
               </div>
@@ -109,7 +123,7 @@ const StatsWidget8: React.FC<Props> = ({className, innerPadding = ''}) => {
           <div
             className='progress-bar bg-danger'
             role='progressbar'
-            style={{width: '70%'}}
+            style={{ width: "70%" }}
             aria-valuenow={24}
             aria-valuemin={0}
             aria-valuemax={100}
@@ -119,7 +133,7 @@ const StatsWidget8: React.FC<Props> = ({className, innerPadding = ''}) => {
       </div>
       {/* end::Footer */}
     </div>
-  )
-}
+  );
+};
 
-export {StatsWidget8}
+export { StatsWidget8 };

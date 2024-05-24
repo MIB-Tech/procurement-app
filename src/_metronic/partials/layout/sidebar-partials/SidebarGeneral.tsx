@@ -1,79 +1,79 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import clsx from 'clsx'
-import React, {useState, useEffect} from 'react'
-import ApexCharts from 'apexcharts'
-import {toAbsoluteUrl, KTSVG} from '../../../helpers'
-import {Dropdown1} from '../../content/dropdown/Dropdown1'
+import clsx from "clsx";
+import React, { useState, useEffect } from "react";
+import ApexCharts from "apexcharts";
+import { toAbsoluteUrl, KTSVG } from "../../../helpers";
+import { Dropdown1 } from "../../content/dropdown/Dropdown1";
 
 const chartsData: Array<{
-  tabId: number
-  selector: string
-  values: Array<number>
+  tabId: number;
+  selector: string;
+  values: Array<number>;
 }> = [
   {
     tabId: 0,
-    selector: '#kt_sidebar_tab_1_chart',
+    selector: "#kt_sidebar_tab_1_chart",
     values: [40, 30, 25, 40, 50, 30],
   },
   {
     tabId: 1,
-    selector: '#kt_sidebar_tab_2_chart',
+    selector: "#kt_sidebar_tab_2_chart",
     values: [30, 30, 25, 45, 30, 40],
   },
   {
     tabId: 2,
-    selector: '#kt_sidebar_tab_3_chart',
+    selector: "#kt_sidebar_tab_3_chart",
     values: [25, 30, 40, 30, 35, 30],
   },
   {
     tabId: 3,
-    selector: '#kt_sidebar_tab_4_chart',
+    selector: "#kt_sidebar_tab_4_chart",
     values: [25, 30, 35, 40, 50, 30],
   },
   {
     tabId: 4,
-    selector: '#kt_sidebar_tab_5_chart',
+    selector: "#kt_sidebar_tab_5_chart",
     values: [40, 20, 50, 50, 55, 45],
   },
-]
+];
 
 export function SidebarGeneral() {
-  const [activeTab, setActiveTab] = useState(2)
-  const [activeChart, setActiveChart] = useState<ApexCharts | undefined>()
+  const [activeTab, setActiveTab] = useState(2);
+  const [activeChart, setActiveChart] = useState<ApexCharts | undefined>();
 
   const setTab = (tabId: number) => {
-    setActiveTab(tabId)
-  }
+    setActiveTab(tabId);
+  };
 
   const activateChart = (tabId: number) => {
-    const chartData = chartsData[tabId]
+    const chartData = chartsData[tabId];
     if (!chartData) {
-      return
+      return;
     }
 
     setTimeout(() => {
-      const element = document.querySelector(chartData.selector)
+      const element = document.querySelector(chartData.selector);
       if (!element) {
-        return
+        return;
       }
 
       if (activeChart) {
-        activeChart.destroy()
+        activeChart.destroy();
       }
 
-      const height = parseInt(getCss(element as HTMLElement, 'height'))
+      const height = parseInt(getCss(element as HTMLElement, "height"));
 
       const options = {
         series: [
           {
-            name: 'Profit',
+            name: "Profit",
             data: chartData.values,
           },
         ],
         chart: {
-          fontFamily: 'inherit',
-          type: 'bar',
+          fontFamily: "inherit",
+          type: "bar",
           height: height,
           toolbar: {
             show: false,
@@ -82,8 +82,8 @@ export function SidebarGeneral() {
         plotOptions: {
           bar: {
             horizontal: false,
-            columnWidth: ['30%'],
-            endingShape: 'rounded',
+            columnWidth: ["30%"],
+            endingShape: "rounded",
           },
         },
         legend: {
@@ -95,13 +95,13 @@ export function SidebarGeneral() {
         stroke: {
           show: true,
           width: 2,
-          colors: ['transparent'],
+          colors: ["transparent"],
         },
         xaxis: {
           crosshairs: {
             show: false,
           },
-          categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          categories: ["Feb", "Mar", "Apr", "May", "Jun", "Jul"],
           axisBorder: {
             show: false,
           },
@@ -110,8 +110,8 @@ export function SidebarGeneral() {
           },
           labels: {
             style: {
-              colors: '#823FD9',
-              fontSize: '12px',
+              colors: "#823FD9",
+              fontSize: "12px",
             },
           },
         },
@@ -121,27 +121,27 @@ export function SidebarGeneral() {
           },
           labels: {
             style: {
-              colors: '#823FD9',
-              fontSize: '12px',
+              colors: "#823FD9",
+              fontSize: "12px",
             },
           },
         },
         states: {
           normal: {
             filter: {
-              type: 'none',
+              type: "none",
               value: 0,
             },
           },
           hover: {
             filter: {
-              type: 'none',
+              type: "none",
             },
           },
           active: {
             allowMultipleDataPointsSelection: false,
             filter: {
-              type: 'none',
+              type: "none",
               value: 0,
             },
           },
@@ -151,17 +151,17 @@ export function SidebarGeneral() {
         },
         tooltip: {
           style: {
-            fontSize: '12px',
+            fontSize: "12px",
           },
           y: {
             formatter: (val: string) => {
-              return '$' + val + 'k'
+              return "$" + val + "k";
             },
           },
         },
-        colors: ['#661DC5'],
+        colors: ["#661DC5"],
         grid: {
-          borderColor: '#661DC5',
+          borderColor: "#661DC5",
           strokeDashArray: 4,
           yaxis: {
             lines: {
@@ -169,46 +169,50 @@ export function SidebarGeneral() {
             },
           },
         },
-      }
+      };
 
-      const chart = new ApexCharts(element, options)
-      chart.render()
-      setActiveChart(chart)
-    }, 0)
-  }
+      const chart = new ApexCharts(element, options);
+      chart.render();
+      setActiveChart(chart);
+    }, 0);
+  };
 
   useEffect(() => {
-    setTab(2)
-    activateChart(2)
+    setTab(2);
+    activateChart(2);
 
     return function cleanup() {
       if (activeChart) {
-        activeChart.destroy()
+        activeChart.destroy();
       }
-    }
-  }, [])
+    };
+  }, []);
 
   return (
     <>
       {/* begin::Sidebar Nav */}
-      <ul className='sidebar-nav nav nav-tabs pt-15 pb-5 px-5' id='kt_sidebar_tabs' role='tablist'>
+      <ul
+        className='sidebar-nav nav nav-tabs pt-15 pb-5 px-5'
+        id='kt_sidebar_tabs'
+        role='tablist'
+      >
         <li className='nav-item'>
           <a
             onClick={() => {
-              setTab(0)
-              activateChart(0)
+              setTab(0);
+              activateChart(0);
             }}
-            className={clsx('nav-link', {active: activeTab === 0})}
+            className={clsx("nav-link", { active: activeTab === 0 })}
             id='kt_sidebar_tab_1'
           >
             <img
               alt=''
-              src={toAbsoluteUrl('/media/svg/logo/purple/aven.svg')}
+              src={toAbsoluteUrl("/media/svg/logo/purple/aven.svg")}
               className='default'
             />
             <img
               alt=''
-              src={toAbsoluteUrl('/media/svg/logo/colored/aven.svg')}
+              src={toAbsoluteUrl("/media/svg/logo/colored/aven.svg")}
               className='active'
             />
           </a>
@@ -217,20 +221,20 @@ export function SidebarGeneral() {
         <li className='nav-item'>
           <a
             onClick={() => {
-              setTab(1)
-              activateChart(1)
+              setTab(1);
+              activateChart(1);
             }}
-            className={clsx('nav-link', {active: activeTab === 1})}
+            className={clsx("nav-link", { active: activeTab === 1 })}
             id='kt_sidebar_tab_2'
           >
             <img
               alt=''
-              src={toAbsoluteUrl('/media/svg/logo/purple/kanba.svg')}
+              src={toAbsoluteUrl("/media/svg/logo/purple/kanba.svg")}
               className='default'
             />
             <img
               alt=''
-              src={toAbsoluteUrl('/media/svg/logo/colored/kanba.svg')}
+              src={toAbsoluteUrl("/media/svg/logo/colored/kanba.svg")}
               className='active'
             />
           </a>
@@ -239,20 +243,20 @@ export function SidebarGeneral() {
         <li className='nav-item'>
           <a
             onClick={() => {
-              setTab(2)
-              activateChart(2)
+              setTab(2);
+              activateChart(2);
             }}
-            className={clsx('nav-link', {active: activeTab === 2})}
+            className={clsx("nav-link", { active: activeTab === 2 })}
             id='kt_sidebar_tab_3'
           >
             <img
               alt=''
-              src={toAbsoluteUrl('/media/svg/logo/purple/fox-hub-2.svg')}
+              src={toAbsoluteUrl("/media/svg/logo/purple/fox-hub-2.svg")}
               className='default'
             />
             <img
               alt=''
-              src={toAbsoluteUrl('/media/svg/logo/colored/fox-hub-2.svg')}
+              src={toAbsoluteUrl("/media/svg/logo/colored/fox-hub-2.svg")}
               className='active'
             />
           </a>
@@ -261,20 +265,20 @@ export function SidebarGeneral() {
         <li className='nav-item'>
           <a
             onClick={() => {
-              setTab(3)
-              activateChart(3)
+              setTab(3);
+              activateChart(3);
             }}
-            className={clsx('nav-link', {active: activeTab === 3})}
+            className={clsx("nav-link", { active: activeTab === 3 })}
             id='kt_sidebar_tab_4'
           >
             <img
               alt=''
-              src={toAbsoluteUrl('/media/svg/logo/purple/tower.svg')}
+              src={toAbsoluteUrl("/media/svg/logo/purple/tower.svg")}
               className='default'
             />
             <img
               alt=''
-              src={toAbsoluteUrl('/media/svg/logo/colored/tower.svg')}
+              src={toAbsoluteUrl("/media/svg/logo/colored/tower.svg")}
               className='active'
             />
           </a>
@@ -283,20 +287,20 @@ export function SidebarGeneral() {
         <li className='nav-item'>
           <a
             onClick={() => {
-              setTab(4)
-              activateChart(4)
+              setTab(4);
+              activateChart(4);
             }}
-            className={clsx('nav-link', {active: activeTab === 4})}
+            className={clsx("nav-link", { active: activeTab === 4 })}
             id='kt_sidebar_tab_5'
           >
             <img
               alt=''
-              src={toAbsoluteUrl('/media/svg/logo/purple/treva.svg')}
+              src={toAbsoluteUrl("/media/svg/logo/purple/treva.svg")}
               className='default'
             />
             <img
               alt=''
-              src={toAbsoluteUrl('/media/svg/logo/colored/treva.svg')}
+              src={toAbsoluteUrl("/media/svg/logo/colored/treva.svg")}
               className='active'
             />
           </a>
@@ -306,7 +310,10 @@ export function SidebarGeneral() {
 
       {/* begin::Sidebar Content */}
       {/* begin::Sidebar Content */}
-      <div id='kt_sidebar_content' className='py-10 px-5 px-lg-5'>
+      <div
+        id='kt_sidebar_content'
+        className='py-10 px-5 px-lg-5'
+      >
         <div
           className='hover-scroll-y me-lg-n2 pe-lg-2'
           data-kt-scroll='true'
@@ -317,7 +324,7 @@ export function SidebarGeneral() {
         >
           <div className='tab-content'>
             <div
-              className={clsx('tab-pane', {active: activeTab === 0})}
+              className={clsx("tab-pane", { active: activeTab === 0 })}
               id='kt_sidebar_tab_pane_1'
               role='tabpanel'
             >
@@ -325,7 +332,9 @@ export function SidebarGeneral() {
               <div className='card card-custom bg-transparent'>
                 {/* begin::Header */}
                 <div className='card-header align-items-center border-0'>
-                  <h3 className='card-title fw-bolder text-white fs-3'>Aven Sales</h3>
+                  <h3 className='card-title fw-bolder text-white fs-3'>
+                    Aven Sales
+                  </h3>
                   <div className='card-toolbar'>
                     <button
                       type='button'
@@ -351,7 +360,7 @@ export function SidebarGeneral() {
                   <div
                     id='kt_sidebar_tab_1_chart'
                     className='apexcharts-bar-hover-danger'
-                    style={{height: '250px'}}
+                    style={{ height: "250px" }}
                   ></div>
                   {/* end::Chart */}
                 </div>
@@ -363,7 +372,9 @@ export function SidebarGeneral() {
               <div className='card card-custom bg-transparent'>
                 {/* begin::Header */}
                 <div className='card-header align-items-center border-0'>
-                  <h3 className='card-title fw-bolder text-white fs-3'>Tasks Overview</h3>
+                  <h3 className='card-title fw-bolder text-white fs-3'>
+                    Tasks Overview
+                  </h3>
                   <div className='card-toolbar'>
                     <button
                       type='button'
@@ -391,7 +402,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-1.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-1.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -399,7 +410,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Sunspots
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -416,7 +430,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-2.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-2.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -424,7 +438,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Ocean Drive
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -441,7 +458,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-3.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-3.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -449,7 +466,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Soar, Eco
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -466,7 +486,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-5.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-5.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -474,7 +494,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Cup & Green
                       </a>
                       <span className='text-white opacity-25 fs-7 fw-bold my-1'>
@@ -491,7 +514,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-6.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-6.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -499,7 +522,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Bose QC 35 II
                       </a>
                       <span className='text-white opacity-25 fs-7 fw-bold my-1'>
@@ -516,7 +542,7 @@ export function SidebarGeneral() {
             </div>
 
             <div
-              className={clsx('tab-pane', {active: activeTab === 1})}
+              className={clsx("tab-pane", { active: activeTab === 1 })}
               id='kt_sidebar_tab_pane_2'
               role='tabpanel'
             >
@@ -524,7 +550,9 @@ export function SidebarGeneral() {
               <div className='card card-custom bg-transparent'>
                 {/* begin::Header */}
                 <div className='card-header align-items-center border-0'>
-                  <h3 className='card-title fw-bolder text-white fs-3'>Kanba Sales</h3>
+                  <h3 className='card-title fw-bolder text-white fs-3'>
+                    Kanba Sales
+                  </h3>
                   <div className='card-toolbar'>
                     <button
                       type='button'
@@ -550,7 +578,7 @@ export function SidebarGeneral() {
                   <div
                     id='kt_sidebar_tab_2_chart'
                     className='apexcharts-bar-hover-danger'
-                    style={{height: '250px'}}
+                    style={{ height: "250px" }}
                   ></div>
                   {/* end::Chart */}
                 </div>
@@ -562,7 +590,9 @@ export function SidebarGeneral() {
               <div className='card card-custom bg-transparent'>
                 {/* begin::Header */}
                 <div className='card-header align-items-center border-0'>
-                  <h3 className='card-title fw-bolder text-white fs-3'>Kanba Products</h3>
+                  <h3 className='card-title fw-bolder text-white fs-3'>
+                    Kanba Products
+                  </h3>
                   <div className='card-toolbar'>
                     <button
                       type='button'
@@ -589,7 +619,7 @@ export function SidebarGeneral() {
                     {/* begin::Symbol */}
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
-                        src={toAbsoluteUrl('/media/stock/600x400/img-7.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-7.jpg")}
                         alt=''
                         className='mw-100'
                       />
@@ -598,7 +628,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         BP Industries
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -615,7 +648,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-8.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-8.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -623,7 +656,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Automatica
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -640,7 +676,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-9.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-9.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -648,7 +684,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Python Inc.
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -665,7 +704,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-19.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-19.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -673,7 +712,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Cup & Green
                       </a>
                       <span className='text-white opacity-25 fs-7 fw-bold my-1'>
@@ -690,7 +732,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-6.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-6.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -698,7 +740,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Active Customers
                       </a>
                       <span className='text-white opacity-25 fs-7 fw-bold my-1'>
@@ -715,7 +760,7 @@ export function SidebarGeneral() {
             </div>
 
             <div
-              className={clsx('tab-pane', {active: activeTab === 2})}
+              className={clsx("tab-pane", { active: activeTab === 2 })}
               id='kt_sidebar_tab_pane_3'
               role='tabpanel'
             >
@@ -723,7 +768,9 @@ export function SidebarGeneral() {
               <div className='card card-custom bg-transparent'>
                 {/* begin::Header */}
                 <div className='card-header align-items-center border-0'>
-                  <h3 className='card-title fw-bolder text-white fs-3'>Fox Sales</h3>
+                  <h3 className='card-title fw-bolder text-white fs-3'>
+                    Fox Sales
+                  </h3>
                   <div className='card-toolbar'>
                     <button
                       type='button'
@@ -749,7 +796,7 @@ export function SidebarGeneral() {
                   <div
                     id='kt_sidebar_tab_3_chart'
                     className='apexcharts-bar-hover-danger'
-                    style={{height: '250px'}}
+                    style={{ height: "250px" }}
                   ></div>
                   {/* end::Chart */}
                 </div>
@@ -761,7 +808,9 @@ export function SidebarGeneral() {
               <div className='card card-custom bg-transparent'>
                 {/* begin::Header */}
                 <div className='card-header align-items-center border-0'>
-                  <h3 className='card-title fw-bolder text-white fs-3'>Fox Bestsellers</h3>
+                  <h3 className='card-title fw-bolder text-white fs-3'>
+                    Fox Bestsellers
+                  </h3>
                   <div className='card-toolbar'>
                     <button
                       type='button'
@@ -788,7 +837,7 @@ export function SidebarGeneral() {
                     {/* begin::Symbol */}
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
-                        src={toAbsoluteUrl('/media/stock/600x400/img-17.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-17.jpg")}
                         alt=''
                         className='mw-100'
                       />
@@ -797,7 +846,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Blue Donut
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -814,7 +866,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-10.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-10.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -822,7 +874,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Lovely Hearts
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -839,7 +894,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-1.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-1.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -847,7 +902,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Hands & Yellow
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -864,7 +922,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-9.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-9.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -872,7 +930,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Cup & Green
                       </a>
                       <span className='text-white opacity-25 fs-7 fw-bold my-1'>
@@ -889,7 +950,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-4.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-4.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -897,7 +958,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Bose QC 35 II
                       </a>
                       <span className='text-white opacity-25 fs-7 fw-bold my-1'>
@@ -914,7 +978,7 @@ export function SidebarGeneral() {
             </div>
 
             <div
-              className={clsx('tab-pane', {active: activeTab === 3})}
+              className={clsx("tab-pane", { active: activeTab === 3 })}
               id='kt_sidebar_tab_pane_4'
               role='tabpanel'
             >
@@ -922,7 +986,9 @@ export function SidebarGeneral() {
               <div className='card card-custom bg-transparent'>
                 {/* begin::Header */}
                 <div className='card-header align-items-center border-0'>
-                  <h3 className='card-title fw-bolder text-white fs-3'>Tower Sales</h3>
+                  <h3 className='card-title fw-bolder text-white fs-3'>
+                    Tower Sales
+                  </h3>
                   <div className='card-toolbar'>
                     <button
                       type='button'
@@ -948,7 +1014,7 @@ export function SidebarGeneral() {
                   <div
                     id='kt_sidebar_tab_4_chart'
                     className='apexcharts-bar-hover-danger'
-                    style={{height: '250px'}}
+                    style={{ height: "250px" }}
                   ></div>
                   {/* end::Chart */}
                 </div>
@@ -960,7 +1026,9 @@ export function SidebarGeneral() {
               <div className='card card-custom bg-transparent'>
                 {/* begin::Header */}
                 <div className='card-header align-items-center border-0'>
-                  <h3 className='card-title fw-bolder text-white fs-3'>Tower Latest Products</h3>
+                  <h3 className='card-title fw-bolder text-white fs-3'>
+                    Tower Latest Products
+                  </h3>
                   <div className='card-toolbar'>
                     <button
                       type='button'
@@ -988,7 +1056,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-8.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-8.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -996,7 +1064,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Automatica
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -1013,7 +1084,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-11.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-11.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -1021,7 +1092,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         BP Industries
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -1038,7 +1112,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-19.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-19.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -1046,7 +1120,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Cup & Green
                       </a>
                       <span className='text-white opacity-25 fs-7 fw-bold my-1'>
@@ -1062,7 +1139,7 @@ export function SidebarGeneral() {
                     {/* begin::Symbol */}
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
-                        src={toAbsoluteUrl('/media/stock/600x400/img-9.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-9.jpg")}
                         alt=''
                         className='mw-100'
                       />
@@ -1071,7 +1148,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Python Inc.
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -1088,7 +1168,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-6.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-6.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -1096,7 +1176,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Active Customers
                       </a>
                       <span className='text-white opacity-25 fs-7 fw-bold my-1'>
@@ -1113,7 +1196,7 @@ export function SidebarGeneral() {
             </div>
 
             <div
-              className={clsx('tab-pane', {active: activeTab === 4})}
+              className={clsx("tab-pane", { active: activeTab === 4 })}
               id='kt_sidebar_tab_pane_5'
               role='tabpanel'
             >
@@ -1121,7 +1204,9 @@ export function SidebarGeneral() {
               <div className='card card-custom bg-transparent'>
                 {/* begin::Header */}
                 <div className='card-header align-items-center border-0'>
-                  <h3 className='card-title fw-bolder text-white fs-3'>Treva Sales</h3>
+                  <h3 className='card-title fw-bolder text-white fs-3'>
+                    Treva Sales
+                  </h3>
                   <div className='card-toolbar'>
                     <button
                       type='button'
@@ -1147,7 +1232,7 @@ export function SidebarGeneral() {
                   <div
                     id='kt_sidebar_tab_5_chart'
                     className='apexcharts-bar-hover-danger'
-                    style={{height: '250px'}}
+                    style={{ height: "250px" }}
                   ></div>
                   {/* end::Chart */}
                 </div>
@@ -1159,7 +1244,9 @@ export function SidebarGeneral() {
               <div className='card card-custom bg-transparent'>
                 {/* begin::Header */}
                 <div className='card-header align-items-center border-0'>
-                  <h3 className='card-title fw-bolder text-white fs-3'>Treva's Products</h3>
+                  <h3 className='card-title fw-bolder text-white fs-3'>
+                    Treva's Products
+                  </h3>
                   <div className='card-toolbar'>
                     <button
                       type='button'
@@ -1187,7 +1274,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-12.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-12.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -1195,7 +1282,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Top Authors
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -1212,7 +1302,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-13.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-13.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -1220,7 +1310,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Popular Authors
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -1237,7 +1330,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-14.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-14.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -1245,7 +1338,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         New Users
                       </a>
                       <span className='text-white opacity-25 fw-bold fs-7 my-1'>
@@ -1262,7 +1358,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-15.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-15.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -1270,10 +1366,15 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Active Customers
                       </a>
-                      <span className='text-white opacity-25 fs-7 fw-bold my-1'>Awesome Users</span>
+                      <span className='text-white opacity-25 fs-7 fw-bold my-1'>
+                        Awesome Users
+                      </span>
                     </div>
                     {/* end::Title */}
                   </div>
@@ -1285,7 +1386,7 @@ export function SidebarGeneral() {
                     <div className='symbol symbol-40px symbol-2by3 me-4'>
                       <img
                         alt=''
-                        src={toAbsoluteUrl('/media/stock/600x400/img-16.jpg')}
+                        src={toAbsoluteUrl("/media/stock/600x400/img-16.jpg")}
                         className='mw-100'
                       />
                     </div>
@@ -1293,7 +1394,10 @@ export function SidebarGeneral() {
 
                     {/* begin::Title */}
                     <div className='d-flex flex-column flex-grow-1 my-lg-0 my-2 pe-3'>
-                      <a href='#' className='text-white fw-bolder text-hover-primary fs-6'>
+                      <a
+                        href='#'
+                        className='text-white fw-bolder text-hover-primary fs-6'
+                      >
                         Bose QC 35 II
                       </a>
                       <span className='text-white opacity-25 fs-7 fw-bold my-1'>
@@ -1314,7 +1418,10 @@ export function SidebarGeneral() {
       {/* end::Sidebar Content */}
 
       {/* begin::Sidebar footer */}
-      <div id='kt_sidebar_footer' className='py-2 px-5 pb-md-6 text-center'>
+      <div
+        id='kt_sidebar_footer'
+        className='py-2 px-5 pb-md-6 text-center'
+      >
         <a
           href='#'
           className='btn btn-color-white bg-white  bg-opacity-10 bg-hover-opacity-20 fw-bolder w-100'
@@ -1324,17 +1431,17 @@ export function SidebarGeneral() {
       </div>
       {/* end::Sidebar footer */}
     </>
-  )
+  );
 }
 
 function getCss(el: HTMLElement, styleProp: string) {
-  const defaultView = (el.ownerDocument || document).defaultView
+  const defaultView = (el.ownerDocument || document).defaultView;
   if (!defaultView) {
-    return ''
+    return "";
   }
 
   // sanitize property name to css notation
   // (hyphen separated words eg. font-Size)
-  styleProp = styleProp.replace(/([A-Z])/g, '-$1').toLowerCase()
-  return defaultView.getComputedStyle(el, null).getPropertyValue(styleProp)
+  styleProp = styleProp.replace(/([A-Z])/g, "-$1").toLowerCase();
+  return defaultView.getComputedStyle(el, null).getPropertyValue(styleProp);
 }

@@ -1,20 +1,19 @@
-import {ModelMapping, ViewEnum} from '../../../_custom/types/ModelMapping';
-import {ColumnTypeEnum} from '../../../_custom/types/types';
-import {ModelEnum} from '../types';
-
+import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelEnum } from "../types";
 
 const mapping: ModelMapping<ModelEnum.Currency> = {
   modelName: ModelEnum.Currency,
   columnDef: {
     id: {
-      type: ColumnTypeEnum.Number
+      type: ColumnTypeEnum.Number,
     },
     uid: {
-      type: ColumnTypeEnum.String
+      type: ColumnTypeEnum.String,
     },
     code: {
-      type: ColumnTypeEnum.String
-    }
+      type: ColumnTypeEnum.String,
+    },
   },
   views: [
     {
@@ -22,22 +21,22 @@ const mapping: ModelMapping<ModelEnum.Currency> = {
       columns: {},
       filterColumns: {},
       sortColumns: {
-        code: true
-      }
+        code: true,
+      },
     },
     {
       type: ViewEnum.Create,
       fields: {
-        code: true
-      }
+        code: true,
+      },
     },
     {
       type: ViewEnum.Update,
       fields: {
-        code: true
-      }
-    }
-  ]
+        code: true,
+      },
+    },
+  ],
 };
 
 export default mapping;

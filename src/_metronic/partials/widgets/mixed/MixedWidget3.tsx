@@ -1,37 +1,41 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useEffect, useRef} from 'react'
-import ApexCharts, {ApexOptions} from 'apexcharts'
-import {KTSVG} from '../../../helpers'
-import {getCSSVariableValue} from '../../../assets/ts/_utils'
-import {Dropdown1} from '../../content/dropdown/Dropdown1'
-import clsx from 'clsx'
+import React, { useEffect, useRef } from "react";
+import ApexCharts, { ApexOptions } from "apexcharts";
+import { KTSVG } from "../../../helpers";
+import { getCSSVariableValue } from "../../../assets/ts/_utils";
+import { Dropdown1 } from "../../content/dropdown/Dropdown1";
+import clsx from "clsx";
 
 type Props = {
-  className: string
-  chartColor: string
-  chartHeight: string
-}
+  className: string;
+  chartColor: string;
+  chartHeight: string;
+};
 
-const MixedWidget3: React.FC<Props> = ({className, chartColor, chartHeight}) => {
-  const chartRef = useRef<HTMLDivElement | null>(null)
+const MixedWidget3: React.FC<Props> = ({
+  className,
+  chartColor,
+  chartHeight,
+}) => {
+  const chartRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!chartRef.current) {
-      return
+      return;
     }
 
-    const chart = new ApexCharts(chartRef.current, chartOptions(chartHeight))
+    const chart = new ApexCharts(chartRef.current, chartOptions(chartHeight));
     if (chart) {
-      chart.render()
+      chart.render();
     }
 
     return () => {
       if (chart) {
-        chart.destroy()
+        chart.destroy();
       }
-    }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chartRef])
+  }, [chartRef]);
 
   return (
     <div className={`card ${className}`}>
@@ -44,15 +48,18 @@ const MixedWidget3: React.FC<Props> = ({className, chartColor, chartHeight}) => 
           <button
             type='button'
             className={clsx(
-              'btn btn-sm btn-icon btn-color-white btn-active-white',
+              "btn btn-sm btn-icon btn-color-white btn-active-white",
               `btn-active-color-${chartColor}`,
-              'border-0 me-n3'
+              "border-0 me-n3"
             )}
             data-kt-menu-trigger='click'
             data-kt-menu-placement='bottom-end'
             data-kt-menu-flip='top-end'
           >
-            <KTSVG path='/media/icons/duotune/general/gen024.svg' className='svg-icon-2' />
+            <KTSVG
+              path='/media/icons/duotune/general/gen024.svg'
+              className='svg-icon-2'
+            />
           </button>
           <Dropdown1 />
           {/* end::Menu  */}
@@ -111,27 +118,27 @@ const MixedWidget3: React.FC<Props> = ({className, chartColor, chartHeight}) => 
       </div>
       {/* end::Body  */}
     </div>
-  )
-}
+  );
+};
 
 const chartOptions = (chartHeight: string): ApexOptions => {
-  const labelColor = getCSSVariableValue('--bs-gray-500')
-  const borderColor = getCSSVariableValue('--bs-gray-200')
+  const labelColor = getCSSVariableValue("--bs-gray-500");
+  const borderColor = getCSSVariableValue("--bs-gray-200");
 
   return {
     series: [
       {
-        name: 'Net Profit',
+        name: "Net Profit",
         data: [35, 65, 75, 55, 45, 60, 55],
       },
       {
-        name: 'Revenue',
+        name: "Revenue",
         data: [40, 70, 80, 60, 50, 65, 60],
       },
     ],
     chart: {
-      fontFamily: 'inherit',
-      type: 'bar',
+      fontFamily: "inherit",
+      type: "bar",
       height: chartHeight,
       toolbar: {
         show: false,
@@ -143,7 +150,7 @@ const chartOptions = (chartHeight: string): ApexOptions => {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '30%',
+        columnWidth: "30%",
         borderRadius: 5,
       },
     },
@@ -156,10 +163,10 @@ const chartOptions = (chartHeight: string): ApexOptions => {
     stroke: {
       show: true,
       width: 1,
-      colors: ['transparent'],
+      colors: ["transparent"],
     },
     xaxis: {
-      categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      categories: ["Feb", "Mar", "Apr", "May", "Jun", "Jul"],
       axisBorder: {
         show: false,
       },
@@ -169,7 +176,7 @@ const chartOptions = (chartHeight: string): ApexOptions => {
       labels: {
         style: {
           colors: labelColor,
-          fontSize: '12px',
+          fontSize: "12px",
         },
       },
     },
@@ -179,49 +186,49 @@ const chartOptions = (chartHeight: string): ApexOptions => {
       labels: {
         style: {
           colors: labelColor,
-          fontSize: '12px',
+          fontSize: "12px",
         },
       },
     },
     fill: {
-      type: ['solid', 'solid'],
+      type: ["solid", "solid"],
       opacity: [0.25, 1],
     },
     states: {
       normal: {
         filter: {
-          type: 'none',
+          type: "none",
           value: 0,
         },
       },
       hover: {
         filter: {
-          type: 'none',
+          type: "none",
           value: 0,
         },
       },
       active: {
         allowMultipleDataPointsSelection: false,
         filter: {
-          type: 'none',
+          type: "none",
           value: 0,
         },
       },
     },
     tooltip: {
       style: {
-        fontSize: '12px',
+        fontSize: "12px",
       },
       y: {
         formatter: function (val) {
-          return '$' + val + ' thousands'
+          return "$" + val + " thousands";
         },
       },
       marker: {
         show: false,
       },
     },
-    colors: ['#ffffff', '#ffffff'],
+    colors: ["#ffffff", "#ffffff"],
     grid: {
       borderColor: borderColor,
       strokeDashArray: 4,
@@ -235,7 +242,7 @@ const chartOptions = (chartHeight: string): ApexOptions => {
         right: 20,
       },
     },
-  }
-}
+  };
+};
 
-export {MixedWidget3}
+export { MixedWidget3 };

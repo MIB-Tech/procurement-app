@@ -1,14 +1,13 @@
-import React from 'react';
-import clsx from 'clsx';
-import { useLocation } from 'react-router';
-import { checkIsActive, KTSVG } from '../../../helpers';
-import { useLayout } from '../../core';
-import { OperationModel } from '../../../../app/modules/Operation';
-
+import React from "react";
+import clsx from "clsx";
+import { useLocation } from "react-router";
+import { checkIsActive, KTSVG } from "../../../helpers";
+import { useLayout } from "../../core";
+import { OperationModel } from "../../../../app/modules/Operation";
 
 type Props = {
-  fontIcon?: string
-} & Pick<OperationModel, 'title' | 'icon'>
+  fontIcon?: string;
+} & Pick<OperationModel, "title" | "icon">;
 
 const AsideMenuItemWithSub: React.FC<Props> = ({
   children,
@@ -17,36 +16,45 @@ const AsideMenuItemWithSub: React.FC<Props> = ({
   fontIcon,
 }) => {
   const { pathname } = useLocation();
-  const treePath = 'TODO';
+  const treePath = "TODO";
   const isActive = treePath && checkIsActive(pathname, treePath);
   const { config } = useLayout();
   const { aside } = config;
 
   return (
     <div
-      className={clsx('menu-item', { 'here show': isActive }, 'menu-accordion')}
+      className={clsx("menu-item", { "here show": isActive }, "menu-accordion")}
       data-kt-menu-trigger='click'
     >
       <span className='menu-link'>
         {!icon && (
           <span className='menu-bullet'>
-            <span className='bullet bullet-dot'/>
+            <span className='bullet bullet-dot' />
           </span>
         )}
-        {icon && aside.menuIcon === 'svg' && (
+        {icon && aside.menuIcon === "svg" && (
           <span className='menu-icon'>
-            <KTSVG path={icon} className='svg-icon-2' />
+            <KTSVG
+              path={icon}
+              className='svg-icon-2'
+            />
           </span>
         )}
-        {fontIcon && aside.menuIcon === 'font' && <i className={clsx('bi fs-3', fontIcon)}/>}
+        {fontIcon && aside.menuIcon === "font" && (
+          <i className={clsx("bi fs-3", fontIcon)} />
+        )}
         <span className='menu-title text-truncate d-block'>{title}</span>
-        <span className='menu-arrow'/>
+        <span className='menu-arrow' />
       </span>
-      <div className={clsx('menu-sub menu-sub-accordion', {'menu-active-bg': isActive})}>
+      <div
+        className={clsx("menu-sub menu-sub-accordion", {
+          "menu-active-bg": isActive,
+        })}
+      >
         {children}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export {AsideMenuItemWithSub}
+export { AsideMenuItemWithSub };
