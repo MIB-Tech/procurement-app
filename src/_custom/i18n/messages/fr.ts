@@ -21,6 +21,7 @@ export const fr: I18nLanguage = {
   RECEPTION_DETAIL: "Detail de reception",
   RECEIPT_COMPLIANCE: "Conformité de reception",
   PRODUCT_SECTION_BUDGETS: "Budgets de la section produit",
+  CHANGEPASSWORDWARNING: "Vous devez changer votre mot de passe pour continuer",
   EXTRACTION: "Extraction",
   DATE: "Date",
   DATETIME: "Datetime",

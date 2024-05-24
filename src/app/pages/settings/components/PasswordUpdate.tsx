@@ -11,6 +11,9 @@ import { useToastr } from "../../../../_custom/Toastr/UseToastr";
 import { redirect, useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import { UserModel } from "../../../modules/User";
+import { getAuthenticatedUser } from "../../auth/redux/AuthCRUD";
+import { useDispatch } from "react-redux";
+import { actions } from "../../auth";
 
 const initialValues = {
   currentPassword: "",
@@ -32,20 +35,21 @@ export const PasswordUpdate: FC = () => {
 
   const toastr = useToastr();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const mutation = useMutation<
     AxiosResponse<any>,
     AxiosError<string>,
     UserModel
-  >((data) => axios.put(`/users/${user.uid}/password`, data));
-
-  // handle form success
-  useEffect(() => {
-    if (mutation.isSuccess) {
-      navigate("/");
-      toastr.updateMutationSuccess();
-    }
-  }, [mutation.isSuccess, navigate, toastr]);
+  >((data) => axios.put(`/users/${user.uid}/password`, data), {
+    onSuccess: async () => {
+      const { data: user } = await getAuthenticatedUser();
+      if (user) {
+        dispatch(actions.fulfillUser(user));
+        navigate("/");
+      }
+    },
+  });
 
   // handle form error and validation errors
 
@@ -82,11 +86,12 @@ export const PasswordUpdate: FC = () => {
             </div>
             <div className='card card-bordered'>
               <div className='card-body'>
-                {user.passwordChangedAt === null && (
-                  <div>
-                    <h4 className=' text-danger text-center fw-meduim'>
-                      Please Change your password to continue
-                    </h4>
+                {!user.hasPasswordChanged && (
+                  <div
+                    className='alert alert-warning mb-3 text-center fw-bold'
+                    role='alert'
+                  >
+                    <Trans id='CHANGEPASSWORDWARNING' />
                   </div>
                 )}
                 <div>

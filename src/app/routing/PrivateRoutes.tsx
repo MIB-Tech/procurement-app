@@ -1,5 +1,17 @@
-import React, { ReactNode } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import React, {
+  ComponentType,
+  FC,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { useAuth } from "../../_custom/hooks/UseAuth";
 import {
   DetailViewType,
@@ -128,18 +140,33 @@ export const navigateOnMutate = <M extends ModelEnum>(item: HydraItem<M>) =>
   item["@id"] + "/update";
 export const RELATED_MODELS = [ModelEnum.User, ModelEnum.PurchaseOrder];
 
-function PasswordCheck(Component = Routes) {
+const PasswordCheck = (Component: ComponentType<any> = Routes): FC<any> => {
+  const MemoizedComponent = React.memo(Component);
+
   return function WrappedComponent(props: any) {
     const { user } = useAuth();
     const location = useLocation();
+    const navigate = useNavigate();
 
-    if (user.passwordChangedAt === null && location.pathname !== "/settings") {
+    const [passwordChanged, setPasswordChanged] = useState(
+      user.hasPasswordChanged
+    );
+
+    useEffect(() => {
+      if (user.hasPasswordChanged !== passwordChanged) {
+        setPasswordChanged(user.hasPasswordChanged);
+        navigate("/dashboard");
+        // Add this line to refresh the page
+      }
+    }, [user.hasPasswordChanged, passwordChanged, navigate]);
+
+    if (!passwordChanged && location.pathname !== "/settings") {
       return <Navigate to='/settings' />;
     }
 
-    return <Component {...props} />;
+    return <MemoizedComponent {...props} />;
   };
-}
+};
 
 export function PrivateRoutes() {
   const { operations, getPath, isGranted } = useAuth();

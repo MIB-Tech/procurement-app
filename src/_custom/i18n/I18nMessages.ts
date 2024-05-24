@@ -75,6 +75,7 @@ type I18nMessageKey =
   | "AUTH.LOGIN.BUTTON"
   | "EMAIL"
   | "PASSWORD"
+  | "CHANGEPASSWORDWARNING"
   | "USERNAME"
   | "FIRST_NAME"
   | "LAST_NAME"

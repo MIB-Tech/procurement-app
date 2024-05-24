@@ -65,9 +65,8 @@ const mapping: ModelMapping<ModelEnum.User> = {
       meter: true,
       title: "PASSWORD",
     },
-    passwordChangedAt: {
-      type: ColumnTypeEnum.String,
-      format: StringFormat.Datetime,
+    hasPasswordChanged: {
+      type: ColumnTypeEnum.Boolean,
       nullable: true,
     },
     currentPassword: {
