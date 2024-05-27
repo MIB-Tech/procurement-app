@@ -63,7 +63,6 @@ const mapping: ModelMapping<ModelEnum.User> = {
       type: ColumnTypeEnum.String,
       format: StringFormat.Password,
       meter: true,
-      title: "PASSWORD",
     },
     passwordUpdatedAt: {
       type: ColumnTypeEnum.String,
@@ -74,7 +73,6 @@ const mapping: ModelMapping<ModelEnum.User> = {
       type: ColumnTypeEnum.String,
       format: StringFormat.Password,
       meter: true,
-      title: "PASSWORD",
     },
     passwordConfirm: {
       type: ColumnTypeEnum.String,

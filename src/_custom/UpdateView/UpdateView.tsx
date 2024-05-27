@@ -19,7 +19,6 @@ export const UpdateView = <M extends ModelEnum>({
   const { views } = useMapping<M>({ modelName });
   const view = (views?.find((view) => view.type === ViewEnum.Update) ||
     DEFAULT_UPDATE_VIEW) as UpdateViewType<M>;
-  const url = `/update${uri}`;
 
   return (
     <div>
@@ -27,8 +26,8 @@ export const UpdateView = <M extends ModelEnum>({
       <FormView
         view={{
           ...view,
-          fetchUri: url,
-          mutateUri: url,
+          fetchUri: `/update${uri}`,
+          mutateUri: uri,
         }}
         modelName={modelName}
       />
