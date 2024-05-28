@@ -6,10 +6,17 @@ import {
   PurchaseOrderPrint,
   PurchaseOrderProductPrint,
 } from "../PurchaseOrder/Model";
+import { InvoiceAttachmentModel } from "../InvoiceAttachment";
 
 type Model = {
   invoiceNumber: string;
+  ref?: string;
+  externalRef?: string;
+  posted: boolean;
+  accounted: boolean;
+  sageAccountingRef: string;
   purchaseOrders: Array<PurchaseOrderModel>;
+  attachments: Array<InvoiceAttachmentModel>;
   readonly vendor: VendorModel;
 } & AbstractModel &
   CreateTimestamp;

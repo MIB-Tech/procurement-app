@@ -534,7 +534,10 @@ type I18nMessageKey =
   | "PRODUCT_SECTIONS_BUDGETS"
   | "SETTINGS"
   | "NEW_PASSWORD"
-  | "OLD_PASSWORD";
+  | "OLD_PASSWORD"
+  | "ACCOUNTED"
+  | "POSTED"
+  | "SAGE_ACCOUNTING_REF";
 type I18nLanguage = Record<I18nMessageKey, string>;
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = { ar, en, fr };

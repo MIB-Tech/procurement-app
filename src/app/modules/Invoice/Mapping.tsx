@@ -27,11 +27,32 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
       type: ColumnTypeEnum.String,
       format: StringFormat.Datetime,
     },
+    ref: {
+      type: ColumnTypeEnum.String,
+      nullable: true,
+    },
+    externalRef: {
+      type: ColumnTypeEnum.String,
+      nullable: true,
+    },
+    accounted: {
+      type: ColumnTypeEnum.Boolean,
+    },
+    posted: {
+      type: ColumnTypeEnum.Boolean,
+    },
+    sageAccountingRef: {
+      type: ColumnTypeEnum.String,
+    },
     vendor: {
       type: ModelEnum.Vendor,
     },
     purchaseOrders: {
       type: ModelEnum.PurchaseOrder,
+      multiple: true,
+    },
+    attachments: {
+      type: ModelEnum.InvoiceAttachment,
       multiple: true,
     },
   },
@@ -41,12 +62,20 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
       columns: {
         createdAt: true,
         purchaseOrders: true,
+        posted: true,
+        accounted: true,
+        sageAccountingRef: true,
       },
     },
     {
       type: ViewEnum.Create,
       navigateTo: (item) => item["@id"],
       fields: {
+        ref: true,
+        externalRef: true,
+        accounted: true,
+        posted: true,
+        sageAccountingRef: true,
         vendor: true,
         purchaseOrders: {
           render: ({ item, fieldProps }) => {
@@ -80,6 +109,16 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
             );
           },
         },
+        attachments: {
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              lg: 12,
+              xl: 12,
+            },
+          },
+        },
       },
     },
     {
@@ -87,7 +126,22 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
 
       fields: {
         invoiceNumber: true,
-        vendor: true,
+        ref: true,
+        externalRef: true,
+        accounted: true,
+        posted: true,
+        sageAccountingRef: true,
+        // vendor: true,
+        attachments: {
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              lg: 12,
+              xl: 12,
+            },
+          },
+        },
       },
     },
     {
@@ -99,6 +153,12 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
         invoiceNumber: true,
         createdAt: true,
         purchaseOrders: true,
+        attachments: true,
+        ref: true,
+        externalRef: true,
+        accounted: true,
+        posted: true,
+        sageAccountingRef: true,
       },
     },
   ],
