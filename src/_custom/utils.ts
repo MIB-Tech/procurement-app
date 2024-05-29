@@ -120,7 +120,13 @@ export const getValidationSchema = <M extends ModelEnum>({
 
             fieldSchema = getStringValidation({
               schema: fieldSchema as StringSchema,
-              validation: columnMapping.validation,
+              validation: {
+                ...columnMapping.validation,
+                max:
+                  format === StringFormat.Text
+                    ? columnMapping.validation?.max
+                    : columnMapping.validation?.max || 255,
+              },
             });
 
             break;
