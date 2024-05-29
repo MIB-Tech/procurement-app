@@ -6,12 +6,10 @@ import { PasswordUpdate } from "./components/PasswordUpdate";
 export const SettingsWrapper: FC = () => {
   const { setPageTitle } = usePageData();
   const { trans } = useTrans();
-
-  // handle form error and validation errors
-
   useEffect(() => {
     setPageTitle(trans({ id: "SETTINGS" }));
   }, [setPageTitle, trans]);
+
   return (
     <>
       <PasswordUpdate />
