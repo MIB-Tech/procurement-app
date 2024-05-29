@@ -535,7 +535,8 @@ type I18nMessageKey =
   | "PRODUCT_SECTIONS_BUDGETS"
   | "SETTINGS"
   | "CURRENT_PASSWORD"
-  | "PLAIN_PASSWORD";
+  | "PLAIN_PASSWORD"
+  | "AUDITS";
 
 type I18nLanguage = Record<I18nMessageKey, string>;
 

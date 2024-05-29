@@ -6,6 +6,7 @@ import {
 import { ColumnTypeEnum } from "../../../_custom/types/types";
 import { ModelEnum } from "../types";
 import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { Audits } from "./Views/Audits";
 
 const formFields: FormFields<ModelEnum.Resource> = {
   name: {
@@ -73,6 +74,10 @@ const mapping: ModelMapping<ModelEnum.Resource> = {
         icon: true,
         operations: true,
         sortIndex: true,
+        audits: {
+          as: "TAB",
+          render: () => <Audits />,
+        },
       },
     },
   ],

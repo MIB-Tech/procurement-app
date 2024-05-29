@@ -1,6 +1,7 @@
 import { I18nLanguage } from "../I18nMessages";
 
 export const fr: I18nLanguage = {
+  AUDITS: "Audits",
   PLAIN_PASSWORD: "Mot de passe",
   CURRENT_PASSWORD: "Mot de passe actuel",
   BUDGET_TRACKING: "Suivi budgétaire (V2)",
