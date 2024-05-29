@@ -7,6 +7,7 @@ import { ColumnTypeEnum } from "../../../_custom/types/types";
 import { ModelEnum } from "../types";
 import { StringFormat } from "../../../_custom/Column/String/StringColumn";
 import { Audits } from "./Views/Audits";
+import { HydraItem } from "../../../_custom/types/hydra.types";
 
 const formFields: FormFields<ModelEnum.Resource> = {
   name: {
@@ -76,7 +77,9 @@ const mapping: ModelMapping<ModelEnum.Resource> = {
         sortIndex: true,
         audits: {
           as: "TAB",
-          render: () => <Audits />,
+          render: ({ item }) => (
+            <Audits modelName={(item as HydraItem)["@title"] as ModelEnum} />
+          ),
         },
       },
     },
