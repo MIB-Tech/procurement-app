@@ -47,7 +47,7 @@ import { BudgetMonitoring_V1_Page } from "../pages/BudgetMonitoring_V1/BudgetMon
 type CustomRoute = {
   title: I18nMessageKey;
   icon: string;
-  granted: Array<RoleKeyEnum>;
+  granted?: Array<RoleKeyEnum>;
   display: Array<DisplayEnum>;
 } & Pick<PathRouteProps, "path" | "element">;
 
@@ -71,15 +71,6 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
     title: "SETTINGS",
     icon: "/graphs/gra010.svg",
     display: [DisplayEnum.USER_MENU],
-    granted: [
-      RoleKeyEnum.SuperAdmin,
-      RoleKeyEnum.Admin,
-      RoleKeyEnum.Viewer,
-      RoleKeyEnum.Treso,
-      RoleKeyEnum.Finances,
-      RoleKeyEnum.Referent,
-      RoleKeyEnum.Buyer,
-    ],
     element: <SettingsWrapper />,
   },
   {
@@ -167,24 +158,23 @@ export function PrivateRoutes() {
   //           suffix: defaultOperation.suffix,
   //       });
 
-  const indexPath = (() => {
-    if (isAdmin) {
-      return "dashboard";
-    } else if (isReferent) {
-      return "receipt-compliance";
-    } else if (isFinance) {
-      return "budget-monitoring";
-    } else if (isTresor) {
-      return "dashboard";
-    } else if (defaultOperation) {
-      return getPath({
-        resourceName: defaultOperation.resource.name,
-        suffix: defaultOperation.suffix,
-      });
-    } else {
-      return "/dashboard";
+  const getDefaultPath = () => {
+    switch (true) {
+      case isGranted([RoleKeyEnum.Referent]):
+        return "receipt-compliance";
+      case isGranted([RoleKeyEnum.Finances]):
+        return "budget-monitoring";
+      case isGranted([RoleKeyEnum.Admin, RoleKeyEnum.Treso]):
+        return "dashboard";
+      default:
+        return defaultOperation
+          ? getPath({
+              resourceName: defaultOperation.resource.name,
+              suffix: defaultOperation.suffix,
+            })
+          : "/";
     }
-  })();
+  };
 
   return (
     <Routes>
@@ -195,20 +185,17 @@ export function PrivateRoutes() {
           </PageDataProvider>
         }
       >
-        {CUSTOM_ROUTES.filter((route) => {
-          return (
-            isGranted(route.granted) &&
+        {CUSTOM_ROUTES.filter(
+          (route) =>
+            (!route.granted || isGranted(route.granted)) &&
             (user.passwordUpdatedAt || route.path === "settings")
-          );
-        }).map((route) => {
-          return (
-            <Route
-              key={route.path}
-              path={route.path}
-              element={route.element}
-            />
-          );
-        })}
+        ).map((route) => (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={route.element}
+          />
+        ))}
 
         <Route
           path='*'
@@ -280,10 +267,10 @@ export function PrivateRoutes() {
               );
             })}
       </Route>
-      {indexPath && (
+      {getDefaultPath() && (
         <Route
           path='/'
-          element={<Navigate to={indexPath} />}
+          element={<Navigate to={getDefaultPath()} />}
         />
       )}
       {/* <Route path='/change-password' element={<ChangePassword />} /> */}
