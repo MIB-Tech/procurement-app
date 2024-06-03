@@ -190,6 +190,7 @@ type I18nMessageKey =
   | "VALIDATION.OBJECT.NO_UNKNOWN"
   | "VALIDATION.ARRAY.MIN"
   | "VALIDATION.ARRAY.MAX"
+  | "VALIDATION.NUMBER.EQUAL"
   | "REQUESTED_AT"
   | "WORK_ORDERS.DETAIL.STATUS"
   | "MUTATION.DELETE.SUCCESS"
@@ -537,7 +538,8 @@ type I18nMessageKey =
   | "OLD_PASSWORD"
   | "ACCOUNTED"
   | "POSTED"
-  | "SAGE_ACCOUNTING_REF";
+  | "SAGE_ACCOUNTING_REF"
+  | "PAYMENT_TERMS";
 type I18nLanguage = Record<I18nMessageKey, string>;
 
 const I18N_MESSAGES: Record<Lang, I18nLanguage> = { ar, en, fr };

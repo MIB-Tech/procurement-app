@@ -57,7 +57,7 @@ const mapping: ModelMapping<ModelEnum.Budget> = {
                 {
                   type: ViewEnum.Create,
                   fields: {
-                    productSection: { slotProps: { item: { sm: 6 } } },
+                    productSection: true,
                     amount: true,
                   },
                 } as CreateViewType<ModelEnum.ProductSectionBudget>

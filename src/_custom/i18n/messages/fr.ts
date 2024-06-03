@@ -1,7 +1,8 @@
 import { I18nLanguage } from "../I18nMessages";
 
 export const fr: I18nLanguage = {
-  SAGE_ACCOUNTING_REF: "N° PIECE COMPTABLE",
+  PAYMENT_TERMS: "Échéance de paiement facture",
+  SAGE_ACCOUNTING_REF: "N° Piece comptable",
   ACCOUNTED: "Comptabiliser",
   POSTED: "Facture Comptabilisable",
   BUDGET_TRACKING: "Suivi budgétaire (V2)",
@@ -444,6 +445,7 @@ export const fr: I18nLanguage = {
   "VALIDATION.NUMBER.MIN": "Min. {min}",
   "VALIDATION.NUMBER.MORE_THAN": "Doit être supérieur à {more}",
   "VALIDATION.NUMBER.NEGATIVE": "Doit être négatif",
+  "VALIDATION.NUMBER.EQUAL": "Doit être égal à {equal}",
   "VALIDATION.NUMBER.NOT_EQUAL": "Ne doit pas être égal à {notEqual}",
   "VALIDATION.NUMBER.POSITIVE": "Doit être positif.",
   "VALIDATION.OBJECT.NO_UNKNOWN":

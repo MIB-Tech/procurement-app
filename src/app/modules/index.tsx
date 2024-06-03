@@ -54,6 +54,7 @@ import { BUDGET_EXERCISE_MAPPING } from "./BudgetExercise";
 import { QUERY_MAPPING } from "./Query";
 import { QUERY_PARAM_MAPPING } from "./QueryParam";
 import { INVOICE_ATTACHMENT_MAPPING } from "./InvoiceAttachment";
+import { PAYMENT_TERM_MAPPING } from "./PaymentTerm";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
@@ -104,6 +105,7 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Query]: QUERY_MAPPING,
   [ModelEnum.QueryParam]: QUERY_PARAM_MAPPING,
   [ModelEnum.InvoiceAttachment]: INVOICE_ATTACHMENT_MAPPING,
+  [ModelEnum.PaymentTerm]: PAYMENT_TERM_MAPPING,
 };
 
 type ListingState = {

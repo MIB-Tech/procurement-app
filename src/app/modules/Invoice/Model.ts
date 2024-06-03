@@ -7,6 +7,7 @@ import {
   PurchaseOrderProductPrint,
 } from "../PurchaseOrder/Model";
 import { InvoiceAttachmentModel } from "../InvoiceAttachment";
+import { PaymentTermModel } from "../PaymentTerm";
 
 type Model = {
   invoiceNumber: string;
@@ -17,7 +18,12 @@ type Model = {
   sageAccountingRef: string;
   purchaseOrders: Array<PurchaseOrderModel>;
   attachments: Array<InvoiceAttachmentModel>;
+  paymentTerms: Array<PaymentTermModel>;
   readonly vendor: VendorModel;
+  readonly totalExclTax?: number;
+  readonly totalInclTax?: number;
+  readonly totalVatTax?: number;
+  readonly totalDiscount?: number;
 } & AbstractModel &
   CreateTimestamp;
 
