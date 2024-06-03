@@ -31,13 +31,6 @@ export const PrintInvoiceButton: FC<
     const { purchaseOrders } = item;
 
     const unit = /*item.currency?.code || */ "DH"; // TODO
-    const totalExclTax = purchaseOrders.reduce((a, b) => a + b.totalInclTax, 0);
-    const totalInclTax = purchaseOrders.reduce((a, b) => a + b.totalInclTax, 0);
-    const totalVatTax = purchaseOrders.reduce((a, b) => a + b.totalVatTax, 0);
-    const totalDiscount = purchaseOrders.reduce(
-      (a, b) => a + b.totalDiscount,
-      0
-    );
     const purchaseOrderProducts = purchaseOrders.reduce(
       (a, b) => [...a, ...b.purchaseOrderProducts],
       [] as PurchaseOrderProductModel[]
@@ -50,11 +43,19 @@ export const PrintInvoiceButton: FC<
       .map(({ orderNumber }) => orderNumber)
       .join(", ");
     const vendor = purchaseOrders.at(0)?.vendor as VendorModel;
+    const {
+      invoiceNumber,
+      totalExclTax = 0,
+      totalInclTax = 0,
+      totalVatTax = 0,
+      totalDiscount = 0,
+      createdAt,
+    } = item;
 
     const result: InvoicePrint = {
       ...item,
       currencyCode: unit,
-      bill: item.invoiceNumber,
+      bill: invoiceNumber,
       orderNumber,
       paymentModality: {
         name: paymentModalities,
@@ -64,7 +65,7 @@ export const PrintInvoiceButton: FC<
       totalInclTax: getNumberUnit({ value: totalInclTax, precision: 2 }),
       totalVatTax: getNumberUnit({ value: totalVatTax, precision: 2 }),
       totalDiscount: getNumberUnit({ value: totalDiscount, precision: 2 }),
-      createdAt: moment(item.createdAt).format("L"),
+      createdAt: moment(createdAt).format("L"),
       lines: purchaseOrderProducts.map((purchaseOrderProduct) => {
         const precision = 2;
         const {
