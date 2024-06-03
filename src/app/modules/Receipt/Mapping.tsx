@@ -206,7 +206,7 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
         receiptNumber: true,
         receivedAt: true,
         externalRef: true,
-        "receiptProducts.desiredProduct.purchaseOrderProduct.product.vendor":
+        "receiptProducts.desiredProduct.purchaseOrderProduct.purchaseOrder.vendor":
           true,
         "receiptProducts.desiredProduct.purchaseOrderProduct.purchaseOrder.paymentModality":
           true,

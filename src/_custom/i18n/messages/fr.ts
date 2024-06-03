@@ -1,10 +1,14 @@
 import { I18nLanguage } from "../I18nMessages";
 
 export const fr: I18nLanguage = {
+  NEW_PASSWORD: "Nouveau mot de passe",
+  OLD_PASSWORD: "Ancien mot de passe",
   PAYMENT_TERMS: "Échéance de paiement facture",
   SAGE_ACCOUNTING_REF: "N° Piece comptable",
   ACCOUNTED: "Comptabiliser",
   POSTED: "Facture Comptabilisable",
+  PLAIN_PASSWORD: "Mot de passe",
+  CURRENT_PASSWORD: "Mot de passe actuel",
   BUDGET_TRACKING: "Suivi budgétaire (V2)",
   SETTINGS: "Changer le mot de passe",
   PRODUCT_SECTIONS_BUDGETS: "Budgets des sections produits",
@@ -25,6 +29,8 @@ export const fr: I18nLanguage = {
   RECEPTION_DETAIL: "Detail de reception",
   RECEIPT_COMPLIANCE: "Conformité de reception",
   PRODUCT_SECTION_BUDGETS: "Budgets de la section produit",
+  "PASSWORD_UPDATE.ALERT":
+    "Vous devez changer votre mot de passe pour continuer",
   EXTRACTION: "Extraction",
   DATE: "Date",
   DATETIME: "Datetime",
@@ -539,8 +545,6 @@ export const fr: I18nLanguage = {
   PARENT_ASSET: "Équipement parent",
   PASSWORD: "Mot de passe",
   PASSWORD_CONFIRM: "Confirmer le mot de passe",
-  NEW_PASSWORD: "Nouveau mot de passe",
-  OLD_PASSWORD: "Ancien mot de passe",
   PHONE_NUMBER: "N° Téléphone",
   PHONE_NUMBERS: "Numéros de téléphone",
   PLEASE_WAIT: "Veuillez patienter",

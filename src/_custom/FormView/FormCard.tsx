@@ -33,7 +33,7 @@ export const FormCard = <M extends ModelEnum>({
   className?: string;
 }) => {
   const { columnDef } = useMapping<M>({ modelName });
-  const { isGranted, clinic } = useAuth();
+  const { isGranted } = useAuth();
   const { inlineForm, fields = getDefaultFields(columnDef) } = view;
   const columnNames = (
     Object.keys(fields) as Array<keyof Model<M> | string>
@@ -52,19 +52,19 @@ export const FormCard = <M extends ModelEnum>({
     );
   });
 
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
   // const url = '/update' + pathname.split('/').slice(0, 3).join('/');
-  const query = useCustomQuery({
-    modelName,
-    // url,
-    enabled: view.type === ViewEnum.Update,
-  });
-
-  useEffect(() => {
-    if (query.item) {
-      setItem(query.item);
-    }
-  }, [query.item]);
+  // const query = useCustomQuery({
+  //   modelName,
+  //   // url,
+  //   enabled: view.type === ViewEnum.Update,
+  // });
+  //
+  // useEffect(() => {
+  //   if (query.item) {
+  //     setItem(query.item as Model<M>);
+  //   }
+  // }, [query.item]);
 
   // return (
   //   <div className='flex-grow-1'>
@@ -92,7 +92,7 @@ export const FormCard = <M extends ModelEnum>({
           spacing={1}
           {...view.slotProps?.root}
         >
-          {columnNames.map((columnName, index, columnNames) => {
+          {columnNames.map((columnName, index) => {
             const field = fields[columnName];
             const columnMapping = columnDef[columnName] as
               | ColumnMapping<M>

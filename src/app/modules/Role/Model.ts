@@ -6,6 +6,7 @@ export enum RoleKeyEnum {
   SuperAdmin = "ROLE_SUPER_ADMIN",
   Admin = "ROLE_ADMIN",
   Buyer = "ROLE_BUYER",
+  RegistryOffice = "ROLE_BR",
   Viewer = "ROLE_VIEWER",
   Referent = "ROLE_REFERENT",
   Treso = "ROLE_TRESO",

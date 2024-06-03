@@ -33,7 +33,7 @@ export function AsideMenuMain() {
     <>
       {CUSTOM_ROUTES.filter(
         (route) =>
-          auth.isGranted(route.granted) &&
+          (!route.granted || auth.isGranted(route.granted)) &&
           route.display.includes(DisplayEnum.SIDE_MENU)
       ).map((route) => {
         return (

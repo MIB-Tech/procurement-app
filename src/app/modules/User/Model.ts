@@ -14,7 +14,7 @@ type Model = {
   currentPassword?: string;
   plainPassword: string;
   passwordConfirm: string;
-  passwordChangedAt?: string;
+  passwordUpdatedAt?: string;
   restrictedByCategories: boolean;
   role?: RoleModel;
   clinics: Array<ClinicModel>;

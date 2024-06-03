@@ -102,18 +102,10 @@ export const BudgetMonitoringPage: FC = () => {
   }, []);
 
   const collection = data?.data || [];
-  const totalAmount = collection.reduce((totalAmount, current) => {
-    const amount =
-      typeof current.amount === "number"
-        ? current.amount
-        : parseFloat(current.amount);
-    // Vérifier si amount est un nombre valide
-    if (!isNaN(amount)) {
-      return totalAmount + amount;
-    } else {
-      return totalAmount;
-    }
-  }, 0);
+  const totalAmount = collection.reduce(
+    (totalAmount, current) => totalAmount + parseFloat(current.amount),
+    0
+  );
 
   const totalCommitted = collection.reduce(
     (totalCommitted, current) => totalCommitted + parseFloat(current.committed),
@@ -356,7 +348,7 @@ export const BudgetMonitoringPage: FC = () => {
       {selectedClinic && (
         <Modal
           show
-          size='lg'
+          size='xl'
           onHide={() => setSelectedClinic(null)}
         >
           <Modal.Header closeButton>

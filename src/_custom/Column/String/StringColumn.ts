@@ -135,19 +135,27 @@ export const getStringValidation = <M extends ModelEnum>({
 }: {
   validation?: StringValidation<M>;
   schema?: StringSchema;
+  defaultMaxLength?: number;
 }) => {
-  const { max = 255 } = { ...validation };
-  schema = schema.max(
-    typeof max === "number" ? max : getReference(max.toString())
-  );
   if (!validation) {
     return schema;
   }
 
-  const { min, length, capitalize, uppercase, lowercase, matches } = validation;
+  const { min, max, length, capitalize, uppercase, lowercase, matches } =
+    validation;
 
-  if (min) schema = schema.min(getReference(min.toString()));
-  if (length) schema = schema.max(getReference(length.toString()));
+  if (min)
+    schema = schema.min(
+      typeof min === "number" ? min : getReference(min.toString())
+    );
+  if (max)
+    schema = schema.max(
+      typeof max === "number" ? max : getReference(max.toString())
+    );
+  if (length)
+    schema = schema.length(
+      typeof length === "number" ? length : getReference(length.toString())
+    );
   if (matches) schema = schema.matches(matches);
   if (uppercase)
     schema = schema.matches(/[A-Z.]+$/, {

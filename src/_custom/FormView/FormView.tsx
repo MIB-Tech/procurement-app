@@ -17,6 +17,7 @@ import { FormCard } from "./FormCard";
 import {
   getDefaultFields,
   getInitialValues,
+  getRoutePrefix,
   getValidationSchema,
 } from "../utils";
 import { useCustomMutation } from "../hooks/UseCustomMutation";
@@ -30,6 +31,7 @@ import { isClinicColumn } from "../ListingView/ListingView.utils";
 export const FormView = <M extends ModelEnum>({
   modelName,
   view,
+  onMutate,
   ...props
 }: FormViewProps<M>) => {
   const { trans } = useTrans();
@@ -38,11 +40,18 @@ export const FormView = <M extends ModelEnum>({
   const isCreateMode = type === ViewEnum.Create;
   const mutation = useCustomMutation<M>({
     modelName,
-    mode: isCreateMode ? MutationMode.Post : MutationMode.Put,
+    method: isCreateMode ? MutationMode.Post : MutationMode.Put,
+    url: isCreateMode
+      ? getRoutePrefix(modelName)
+      : view.mutateUri || getRoutePrefix(modelName),
     navigateTo,
   });
-  const query = useCustomQuery({ modelName, enabled: !isCreateMode });
-  const { isGranted, clinic, operations } = useAuth();
+  const query = useCustomQuery({
+    modelName,
+    enabled: !isCreateMode && !!view.fetchUri,
+    url: isCreateMode ? "" : view.fetchUri || "",
+  });
+  const { isGranted, clinic } = useAuth();
   const _fields = view?.fields || getDefaultFields(columnDef);
   const fields = (
     Object.keys(_fields) as Array<keyof Model<M> | string>
@@ -62,9 +71,9 @@ export const FormView = <M extends ModelEnum>({
 
     return { ...obj, [columnName]: field };
   }, {} as FormFields<M>);
-  const initialValues = useMemo(() => {
+  const initialValues = useMemo<Model<M>>(() => {
     if (!isCreateMode && query.item) {
-      return query.item;
+      return query.item as Model<M>;
     }
 
     return {
@@ -106,7 +115,11 @@ export const FormView = <M extends ModelEnum>({
         }),
         {} as Input<M>
       );
-      await mutation.mutateAsync(getMutateInput?.(input) || input);
+      const response = await mutation.mutateAsync(
+        getMutateInput?.(input) || input
+      );
+      const mutatedItem = response.data;
+      onMutate?.(mutatedItem);
       formikHelpers.resetForm({ values: item });
     },
   });

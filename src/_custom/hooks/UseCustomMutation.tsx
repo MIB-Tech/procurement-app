@@ -20,11 +20,13 @@ import { navigateOnMutate } from "../../app/routing/PrivateRoutes";
 
 export const useCustomMutation = <M extends ModelEnum>({
   modelName,
-  mode = MutationMode.Post,
+  method = MutationMode.Post,
   navigateTo = navigateOnMutate,
+  url,
 }: {
   modelName: M;
-  mode?: MutationMode;
+  method?: MutationMode;
+  url: string;
 } & Pick<FormViewType<M>, "navigateTo">) => {
   const {
     createMutationError,
@@ -36,14 +38,12 @@ export const useCustomMutation = <M extends ModelEnum>({
   const navigate = useNavigate();
   const [validationErrors, setValidationErrors] =
     useState<FormikErrors<Model<M>>>();
-  const uri = useUri({ modelName });
-  const isCreate = mode === MutationMode.Post;
 
   const mutation = useMutation<SuccessResponse<M>, ErrorResponse<M>, Input<M>>(
     (data) =>
       axios({
-        method: mode,
-        url: isCreate ? getRoutePrefix(modelName) : uri,
+        method,
+        url,
         data,
       }),
     {
@@ -52,7 +52,7 @@ export const useCustomMutation = <M extends ModelEnum>({
         await queryClient.invalidateQueries({
           queryKey: [getListingQueryKey(modelName)],
         });
-        switch (mode) {
+        switch (method) {
           case MutationMode.Post:
             createMutationSuccess();
             break;

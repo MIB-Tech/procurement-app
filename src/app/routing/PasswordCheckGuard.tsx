@@ -7,7 +7,7 @@ const AuthGuard = () => {
 
   // If has token, return outlet in other case return navigate to login page
 
-  return user.passwordChangedAt !== null ? (
+  return user.passwordUpdatedAt !== null ? (
     <Outlet />
   ) : (
     <Navigate to='/settings' />
