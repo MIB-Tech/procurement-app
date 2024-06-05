@@ -8,6 +8,7 @@ import {
 } from "../PurchaseOrder/Model";
 import { InvoiceAttachmentModel } from "../InvoiceAttachment";
 import { PaymentTermModel } from "../PaymentTerm";
+import { InvoiceModel } from "./index";
 
 type Model = {
   invoiceNumber: string;
@@ -21,7 +22,7 @@ type Model = {
   paymentTerms: Array<PaymentTermModel>;
   readonly vendor: VendorModel;
   readonly totalExclTax?: number;
-  readonly totalInclTax?: number;
+  totalInclTax?: number;
   readonly totalVatTax?: number;
   readonly totalDiscount?: number;
 } & AbstractModel &

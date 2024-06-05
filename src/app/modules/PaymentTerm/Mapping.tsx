@@ -17,6 +17,7 @@ const mapping: ModelMapping<ModelEnum.PaymentTerm> = {
     amount: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Amount,
+      title: "AMOUNT_PAYMENT_TERM",
     },
     date: {
       type: ColumnTypeEnum.String,
@@ -29,7 +30,10 @@ const mapping: ModelMapping<ModelEnum.PaymentTerm> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {},
+      columns: {
+        date: true,
+        amount: true,
+      },
     },
     {
       type: ViewEnum.Create,
@@ -47,7 +51,10 @@ const mapping: ModelMapping<ModelEnum.PaymentTerm> = {
     },
     {
       type: ViewEnum.Detail,
-      columns: {},
+      columns: {
+        date: true,
+        amount: true,
+      },
     },
   ],
 };
