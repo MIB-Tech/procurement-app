@@ -112,7 +112,7 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
                 path: "paymentTerms",
                 message: {
                   id: "VALIDATION.NUMBER.EQUAL",
-                  params: { equal: totalPurchaseOrder, currency: "DH" },
+                  params: { equal: totalPurchaseOrder },
                 },
                 params: { equal: totalPaymentTerms },
               });
