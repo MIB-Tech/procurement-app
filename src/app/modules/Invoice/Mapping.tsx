@@ -18,8 +18,7 @@ import { ArraySchema } from "yup";
 import { InvoiceModel } from "./index";
 import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
 import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
-import PaymentTermsField from "../../../_custom/components/PaymentTermsField";
-import { current } from "@reduxjs/toolkit";
+import PaymentTermsField from "../PaymentTerm/PaymentTermsField";
 
 const mapping: ModelMapping<ModelEnum.Invoice> = {
   modelName: ModelEnum.Invoice,
@@ -80,6 +79,7 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
     purchaseOrders: {
       type: ModelEnum.PurchaseOrder,
       multiple: true,
+      min: 1,
     },
     attachments: {
       type: ModelEnum.InvoiceAttachment,
@@ -100,11 +100,12 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
               (total, purchaseOrder) => total + purchaseOrder.totalInclTax,
               0
             );
-            console.log("purchaseOrder", totalPurchaseOrder);
+
             const totalPaymentTerms = paymentTerms.reduce(
               (total, paymentTerm) => total + (paymentTerm.amount || 0),
               0
             );
+            console.log(totalPurchaseOrder, totalPaymentTerms);
             if (
               Math.floor(totalPurchaseOrder) !== Math.floor(totalPaymentTerms)
             ) {
@@ -141,22 +142,17 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
     {
       type: ViewEnum.Create,
       navigateTo: (item) => item["@id"],
-      fields: {
-        vendor: {
-          slotProps: {
-            root: {
-              sm: 4,
-              lg: 4,
-              md: 4,
-            },
-          },
+      slotProps: {
+        item: {
+          sm: 4,
         },
+      },
+      fields: {
+        vendor: true,
         purchaseOrders: {
           slotProps: {
             root: {
               sm: 8,
-              lg: 8,
-              md: 8,
             },
           },
           render: ({ item, fieldProps }) => {
@@ -190,60 +186,17 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
             );
           },
         },
-        sageAccountingRef: {
-          slotProps: {
-            root: {
-              sm: 4,
-              lg: 4,
-              md: 4,
-            },
-          },
-        },
-        ref: {
-          slotProps: {
-            root: {
-              sm: 4,
-              lg: 4,
-              md: 4,
-            },
-          },
-        },
-        externalRef: {
-          slotProps: {
-            root: {
-              sm: 4,
-              lg: 4,
-              md: 4,
-            },
-          },
-        },
-        accounted: {
-          slotProps: {
-            root: {
-              sm: 3,
-              lg: 3,
-              md: 3,
-            },
-          },
-        },
-        posted: {
-          slotProps: {
-            root: {
-              sm: 3,
-              lg: 3,
-              md: 3,
-            },
-          },
-        },
+        sageAccountingRef: true,
+        ref: true,
+        externalRef: true,
+        accounted: true,
+        posted: true,
         paymentTerms: {
           slotProps: {
             root: {
               sm: 12,
-              lg: 12,
-              md: 12,
             },
           },
-
           render: PaymentTermsField,
         },
         attachments: true,
@@ -251,14 +204,24 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
     },
     {
       type: ViewEnum.Update,
+      slotProps: {
+        item: {
+          sm: 4,
+        },
+      },
       fields: {
         invoiceNumber: true,
         ref: true,
         externalRef: true,
+        sageAccountingRef: true,
         accounted: true,
         posted: true,
-        sageAccountingRef: true,
         paymentTerms: {
+          slotProps: {
+            root: {
+              sm: 12,
+            },
+          },
           render: ({ fieldProps }) => (
             <NestedArrayField
               {...fieldProps}

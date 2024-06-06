@@ -17,6 +17,7 @@ import { PaginationInput } from "../../Pagination/Pagination.types";
 import { ModelEnum } from "../../../../app/modules/types";
 import { Checkbox } from "../../../Column/Boolean/Chechbox/Checkbox";
 import { ColumnTypeEnum } from "../../../types/types";
+import { Bullet } from "../../../components/Bullet";
 
 export type TableViewColumnMapping<M extends ModelEnum> = ColumnMapping<M>;
 
@@ -225,10 +226,12 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
                 const columnMapping = columnDef[columnName] as
                   | ColumnMapping<M>
                   | undefined;
+                let show: boolean = false;
 
                 let value: any = "";
                 switch (columnMapping?.type) {
                   case ColumnTypeEnum.Number:
+                    show = true;
                     value = data.reduce((count, currentValue) => {
                       const _value = currentValue[
                         columnName as keyof Model<M>
@@ -251,18 +254,22 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
                         "text-end"
                     )}
                   >
-                    {columnMapping && (
-                      <>
-                        {columnMapping.footer?.({
-                          value,
-                          collection: data,
-                        }) || (
-                          <CellContent
-                            value={value}
-                            {...columnMapping}
-                          />
-                        )}
-                      </>
+                    {show ? (
+                      columnMapping && (
+                        <>
+                          {columnMapping.footer?.({
+                            value,
+                            collection: data,
+                          }) || (
+                            <CellContent
+                              value={value}
+                              {...columnMapping}
+                            />
+                          )}
+                        </>
+                      )
+                    ) : (
+                      <Bullet />
                     )}
                   </td>
                 );

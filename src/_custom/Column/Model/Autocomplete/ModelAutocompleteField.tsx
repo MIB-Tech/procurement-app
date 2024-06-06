@@ -60,7 +60,9 @@ export const ModelAutocompleteField = <
       itemsPerPage: 5,
     }
   );
-  const { searchableColumnNames } = useMapping<M>({ modelName });
+  const { searchableColumnNames, getSearchFilter } = useMapping<M>({
+    modelName,
+  });
   const filter = useMemo(() => {
     return getParams({
       operator: CompoundFilterOperator.Or,
@@ -77,7 +79,7 @@ export const ModelAutocompleteField = <
     path: "/base" + getRoutePrefix(modelName),
     options: { enabled },
     params: {
-      filter,
+      filter: getSearchFilter?.(inputValue, filter) ?? filter,
       ...pagination,
     },
   });

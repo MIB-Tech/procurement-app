@@ -34,6 +34,8 @@ type I18nMessageKey =
   | ColumnTypeEnum
   | StringFormat
   | ComplianceStatus
+  | "YES"
+  | "NO"
   | "REFERENT"
   | "REFERENTS"
   | "REFERENT_PURCHASE_ORDERS"
@@ -543,6 +545,7 @@ type I18nMessageKey =
   | "PAYMENT_TERMS"
   | "PLAIN_PASSWORD"
   | "CURRENT_PASSWORD"
+  | "AUDITS"
   | "AMOUNT_PAYMENT_TERM";
 
 type I18nLanguage = Record<I18nMessageKey, string>;

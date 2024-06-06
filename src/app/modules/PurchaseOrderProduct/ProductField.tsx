@@ -65,7 +65,7 @@ export const ProductField = ({ ...props }: Pick<FieldProps, "name">) => {
     priceInclTax: 0,
     desiredProducts: [],
     components: [],
-    editablePrice: false,
+    editablePrice: undefined,
   };
 
   const setValue = async (suffix: string, value: any) => {
@@ -99,7 +99,6 @@ export const ProductField = ({ ...props }: Pick<FieldProps, "name">) => {
             designation,
             quantity: 0,
             deliveryDepot: deliveryDepots.at(0),
-            //  address: clinic?.['@title'] || 'AKDITAL HOLDING'
           };
           await setValue("desiredProducts", [desiredProduct]);
           // pricing
@@ -143,7 +142,7 @@ export const ProductField = ({ ...props }: Pick<FieldProps, "name">) => {
                 : pricing.purchasePriceExclTax
             );
             await setValue("discountValue", pricing.discountValue);
-
+          } else {
             await setValue("editablePrice", true);
           }
 

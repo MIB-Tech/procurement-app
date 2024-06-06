@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useFormikContext } from "formik";
 import moment from "moment";
-import { InvoiceModel } from "../../app/modules/Invoice";
-import { NestedArrayField } from "../Column/Model/Nested/NestedArrayField";
-import { ModelEnum } from "../../app/modules/types";
-import { CreateViewType, ViewEnum } from "../types/ModelMapping";
+import { InvoiceModel } from "../Invoice";
+import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
+import { ModelEnum } from "../types";
+import { CreateViewType, ViewEnum } from "../../../_custom/types/ModelMapping";
 
 const PaymentTermsField: React.FC<any> = ({ fieldProps }) => {
   const { values, setFieldValue } = useFormikContext<InvoiceModel>();
