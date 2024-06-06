@@ -542,7 +542,8 @@ type I18nMessageKey =
   | "SAGE_ACCOUNTING_REF"
   | "PAYMENT_TERMS"
   | "PLAIN_PASSWORD"
-  | "CURRENT_PASSWORD";
+  | "CURRENT_PASSWORD"
+  | "AMOUNT_PAYMENT_TERM";
 
 type I18nLanguage = Record<I18nMessageKey, string>;
 
