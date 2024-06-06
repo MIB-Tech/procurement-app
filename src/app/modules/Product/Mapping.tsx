@@ -9,12 +9,14 @@ import React from "react";
 import { FieldProps } from "../../../_custom/Column/controls/fields";
 import { useTrans } from "../../../_custom/components/Trans";
 import { I18nMessageKey } from "../../../_custom/i18n/I18nMessages";
+import { useFormikContext } from "formik";
 import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
 import {
   CompoundFilter,
   CompoundFilterOperator,
   PropertyFilterOperator,
 } from "../../../_custom/ListingView/Filter/Filter.types";
+import { CategoryModel } from "../Category";
 
 const ProductTypeField = (props: FieldProps & { disabled?: boolean }) => {
   const { trans } = useTrans();
@@ -76,7 +78,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
     },
     designation: {
       type: ColumnTypeEnum.String,
-      format: StringFormat.Text,
+      max: 1000,
     },
     code: {
       type: ColumnTypeEnum.String,
