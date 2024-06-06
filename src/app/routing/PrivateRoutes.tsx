@@ -35,7 +35,7 @@ import { BudgetMonitoring_V1_Page } from "../pages/BudgetMonitoring_V1/BudgetMon
 type CustomRoute = {
   title: I18nMessageKey;
   icon: string;
-  granted: Array<RoleKeyEnum>;
+  granted?: Array<RoleKeyEnum>;
   display: Array<DisplayEnum>;
 } & Pick<PathRouteProps, "path" | "element">;
 
@@ -59,15 +59,6 @@ export const CUSTOM_ROUTES: Array<CustomRoute> = [
     title: "SETTINGS",
     icon: "/graphs/gra010.svg",
     display: [DisplayEnum.USER_MENU],
-    granted: [
-      RoleKeyEnum.SuperAdmin,
-      RoleKeyEnum.Admin,
-      RoleKeyEnum.Viewer,
-      RoleKeyEnum.Treso,
-      RoleKeyEnum.Finances,
-      RoleKeyEnum.Referent,
-      RoleKeyEnum.Buyer,
-    ],
     element: <SettingsWrapper />,
   },
   {
@@ -158,7 +149,7 @@ export function PrivateRoutes() {
 
   const getDefaultPath = () => {
     const customRoute = CUSTOM_ROUTES.find((customRoute) =>
-      isGranted(customRoute.granted)
+      !customRoute.granted || isGranted(customRoute.granted)
     );
     const defaultPath = defaultOperation
       ? getPath({
@@ -182,7 +173,7 @@ export function PrivateRoutes() {
       >
         {CUSTOM_ROUTES.filter((route) => {
           return (
-            isGranted(route.granted) &&
+            (!route.granted || isGranted(route.granted)) &&
             (passwordUpdatedAt || route.path === "settings")
           );
         }).map((route) => {

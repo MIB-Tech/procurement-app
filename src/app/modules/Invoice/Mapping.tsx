@@ -1,4 +1,8 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import {
+  ModelMapping,
+  UpdateViewType,
+  ViewEnum,
+} from "../../../_custom/types/ModelMapping";
 import { ColumnTypeEnum } from "../../../_custom/types/types";
 import { ModelEnum } from "../types";
 import { StringFormat } from "../../../_custom/Column/String/StringColumn";
@@ -10,9 +14,16 @@ import {
 } from "../../../_custom/ListingView/Filter/Filter.types";
 import React from "react";
 import { PrintInvoiceButton } from "./PrintInvoiceButton";
+import { ArraySchema } from "yup";
+import { InvoiceModel } from "./index";
+import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
+import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
+import PaymentTermsField from "../../../_custom/components/PaymentTermsField";
+import { current } from "@reduxjs/toolkit";
 
 const mapping: ModelMapping<ModelEnum.Invoice> = {
   modelName: ModelEnum.Invoice,
+  noSortEdges: [["paymentTerms", "paymentTerms"]],
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
@@ -27,12 +38,89 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
       type: ColumnTypeEnum.String,
       format: StringFormat.Datetime,
     },
+    ref: {
+      type: ColumnTypeEnum.String,
+      nullable: true,
+    },
+    externalRef: {
+      type: ColumnTypeEnum.String,
+      nullable: true,
+    },
+    accounted: {
+      type: ColumnTypeEnum.Boolean,
+      nullable: true,
+    },
+    posted: {
+      type: ColumnTypeEnum.Boolean,
+      nullable: true,
+    },
+    sageAccountingRef: {
+      type: ColumnTypeEnum.String,
+      nullable: true,
+    },
+    totalExclTax: {
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
+    },
+    totalInclTax: {
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
+    },
+    totalVatTax: {
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
+    },
+    totalDiscount: {
+      type: ColumnTypeEnum.Number,
+      format: NumberFormat.Amount,
+    },
     vendor: {
       type: ModelEnum.Vendor,
     },
     purchaseOrders: {
       type: ModelEnum.PurchaseOrder,
       multiple: true,
+    },
+    attachments: {
+      type: ModelEnum.InvoiceAttachment,
+      multiple: true,
+    },
+    paymentTerms: {
+      type: ModelEnum.PaymentTerm,
+      multiple: true,
+      embeddedForm: true,
+      schema: (schema: ArraySchema<any>) =>
+        schema.test(
+          "VALIDATION.INVOICE.PAYMENT_TERMS",
+          "VALIDATION.INVOICE.PAYMENT_TERMS",
+          (_, { parent, createError }) => {
+            const { purchaseOrders, paymentTerms } = parent as InvoiceModel;
+
+            const totalPurchaseOrder = purchaseOrders.reduce(
+              (total, purchaseOrder) => total + purchaseOrder.totalInclTax,
+              0
+            );
+            console.log("purchaseOrder", totalPurchaseOrder);
+            const totalPaymentTerms = paymentTerms.reduce(
+              (total, paymentTerm) => total + (paymentTerm.amount || 0),
+              0
+            );
+            if (
+              Math.floor(totalPurchaseOrder) !== Math.floor(totalPaymentTerms)
+            ) {
+              return createError({
+                path: "paymentTerms",
+                message: {
+                  id: "VALIDATION.NUMBER.EQUAL",
+                  params: { equal: totalPurchaseOrder },
+                },
+                params: { equal: totalPaymentTerms },
+              });
+            }
+
+            return true;
+          }
+        ),
     },
   },
   views: [
@@ -41,14 +129,36 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
       columns: {
         createdAt: true,
         purchaseOrders: true,
+        posted: true,
+        accounted: true,
+        sageAccountingRef: true,
+        totalExclTax: true,
+        totalInclTax: true,
+        totalVatTax: true,
+        totalDiscount: true,
       },
     },
     {
       type: ViewEnum.Create,
       navigateTo: (item) => item["@id"],
       fields: {
-        vendor: true,
+        vendor: {
+          slotProps: {
+            root: {
+              sm: 4,
+              lg: 4,
+              md: 4,
+            },
+          },
+        },
         purchaseOrders: {
+          slotProps: {
+            root: {
+              sm: 8,
+              lg: 8,
+              md: 8,
+            },
+          },
           render: ({ item, fieldProps }) => {
             const { vendor, purchaseOrders } = item;
             return (
@@ -80,14 +190,101 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
             );
           },
         },
+        sageAccountingRef: {
+          slotProps: {
+            root: {
+              sm: 4,
+              lg: 4,
+              md: 4,
+            },
+          },
+        },
+        ref: {
+          slotProps: {
+            root: {
+              sm: 4,
+              lg: 4,
+              md: 4,
+            },
+          },
+        },
+        externalRef: {
+          slotProps: {
+            root: {
+              sm: 4,
+              lg: 4,
+              md: 4,
+            },
+          },
+        },
+        accounted: {
+          slotProps: {
+            root: {
+              sm: 3,
+              lg: 3,
+              md: 3,
+            },
+          },
+        },
+        posted: {
+          slotProps: {
+            root: {
+              sm: 3,
+              lg: 3,
+              md: 3,
+            },
+          },
+        },
+        paymentTerms: {
+          slotProps: {
+            root: {
+              sm: 12,
+              lg: 12,
+              md: 12,
+            },
+          },
+
+          render: PaymentTermsField,
+        },
+        attachments: true,
       },
     },
     {
       type: ViewEnum.Update,
-
       fields: {
         invoiceNumber: true,
-        vendor: true,
+        ref: true,
+        externalRef: true,
+        accounted: true,
+        posted: true,
+        sageAccountingRef: true,
+        paymentTerms: {
+          render: ({ fieldProps }) => (
+            <NestedArrayField
+              {...fieldProps}
+              modelName={ModelEnum.PaymentTerm}
+              view={
+                {
+                  type: ViewEnum.Update,
+                  fields: {
+                    date: true,
+                    amount: true,
+                  },
+                } as UpdateViewType<ModelEnum.PaymentTerm>
+              }
+            />
+          ),
+        },
+        attachments: {
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              lg: 12,
+              xl: 12,
+            },
+          },
+        },
       },
     },
     {
@@ -99,6 +296,17 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
         invoiceNumber: true,
         createdAt: true,
         purchaseOrders: true,
+        attachments: true,
+        ref: true,
+        externalRef: true,
+        accounted: true,
+        posted: true,
+        sageAccountingRef: true,
+        paymentTerms: true,
+        totalExclTax: true,
+        totalInclTax: true,
+        totalVatTax: true,
+        totalDiscount: true,
       },
     },
   ],
