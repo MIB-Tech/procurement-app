@@ -204,14 +204,24 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
     },
     {
       type: ViewEnum.Update,
+      slotProps: {
+        item: {
+          sm: 4,
+        },
+      },
       fields: {
         invoiceNumber: true,
         ref: true,
         externalRef: true,
+        sageAccountingRef: true,
         accounted: true,
         posted: true,
-        sageAccountingRef: true,
         paymentTerms: {
+          slotProps: {
+            root: {
+              sm: 12,
+            },
+          },
           render: ({ fieldProps }) => (
             <NestedArrayField
               {...fieldProps}
