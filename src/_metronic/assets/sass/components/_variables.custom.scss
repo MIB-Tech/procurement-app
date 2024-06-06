@@ -40,6 +40,7 @@ $enable-validation-icons: false !default;
 
 $card-py: 0.75rem !default;
 $card-px: 1rem !default;
+$card-header-height: 50px !default; // Custom variable
 
 //$container-max-widths: (
 //  sm: 576px,
@@ -52,55 +53,55 @@ $card-px: 1rem !default;
 // Header
 $header-config: (
   // Default Mode
-  default:
-    (
-      height: (
-        desktop: 65px,
-        tablet-and-mobile: 55px,
-      ),
-      bg-color: if(isDarkMode(), #1e1e2d, #ffffff),
-    ),
+        default:
+        (
+                height: (
+                        desktop: 65px,
+                        tablet-and-mobile: 55px,
+                ),
+                bg-color: if(isDarkMode(), #1e1e2d, #ffffff),
+        ),
   // Fixed Mode
-  fixed:
-    (
-      height: (
-        desktop: 45px,
-        tablet-and-mobile: 45px,
-      ),
-      z-index: 100,
-      bg-color: if(isDarkMode(), #1e1e2d, #ffffff),
-      box-shadow:
-        if(isDarkMode(), none, 0px 10px 30px 0px rgba(82, 63, 105, 0.05)),
-    )
+        fixed:
+        (
+                height: (
+                        desktop: 45px,
+                        tablet-and-mobile: 45px,
+                ),
+                z-index: 100,
+                bg-color: if(isDarkMode(), #1e1e2d, #ffffff),
+                box-shadow:
+                if(isDarkMode(), none, 0px 10px 30px 0px rgba(82, 63, 105, 0.05)),
+        )
 ) !default;
 
 // Aside
 $aside-config: (
-  z-index: 101,
+        z-index: 101,
   // Aside's z-index property
-  transition-speed: 0.3s,
+        transition-speed: 0.3s,
   // transition speed
-  padding-x: 25px,
-  menu-indention: 0.75rem,
-  bg-color: #1e1e2d,
-  logo-bg-color: darken(#1e1e2d, 2%),
-  scrollbar-color: if(isDarkMode(), $gray-200, #3b3b64),
-  scrollbar-hover-color: if(isDarkMode(), $gray-300, lighten(#3b3b64, 3%)),
-  width: 235px,
+        padding-x: 25px,
+        menu-indention: 0.75rem,
+        bg-color: #1e1e2d,
+        logo-bg-color: darken(#1e1e2d, 2%),
+        scrollbar-color: if(isDarkMode(), $gray-200, #3b3b64),
+        scrollbar-hover-color: if(isDarkMode(), $gray-300, lighten(#3b3b64, 3%)),
+        width: 235px,
   // Aside width for desktop mode
-  minimized-width: 75px,
+        minimized-width: 75px,
   // Aside minimized width for desktop mode
-  box-shadow: if(isDarkMode(), none, 0 0 28px 0 rgba(82, 63, 105, 0.05)),
+        box-shadow: if(isDarkMode(), none, 0 0 28px 0 rgba(82, 63, 105, 0.05)),
   // Aside box shadow
-  minimized-hover-box-shadow:
-    if(isDarkMode(), none, 5px 0px 10px rgba(70, 78, 95, 0.075))
-    // Monimized hover box shadow,,,
+        minimized-hover-box-shadow:
+        if(isDarkMode(), none, 5px 0px 10px rgba(70, 78, 95, 0.075))
+  // Monimized hover box shadow,,,
 ) !default;
 
 $content-spacing: (
-  desktop: 10px,
+        desktop: 10px,
   // Padding for desktop mode
-  tablet-and-mobile: 7.5px // Padding for tablet and mobile modes,,,
+        tablet-and-mobile: 7.5px // Padding for tablet and mobile modes,,,
 ) !default;
 
 $code-margin: 0px !default;
@@ -137,18 +138,18 @@ $form-check-input-width-lg: 1.75rem !default;
 
 $modal-inner-padding: 1rem !default;
 $grid-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1300px,
-  xxl: 1600px,
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1300px,
+        xxl: 1600px,
 ) !default;
 $container-max-widths: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1300px,
-  xxl: 1600px,
+        xs: 0,
+        sm: 576px,
+        md: 768px,
+        lg: 992px,
+        xl: 1300px,
+        xxl: 1600px,
 ) !default;

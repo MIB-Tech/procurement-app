@@ -1,6 +1,8 @@
 import { I18nLanguage } from "../I18nMessages";
 
 export const fr: I18nLanguage = {
+  YES: "Oui",
+  NO: "Non",
   AUDITS: "Audits",
   PLAIN_PASSWORD: "Mot de passe",
   CURRENT_PASSWORD: "Mot de passe actuel",

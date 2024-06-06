@@ -23,6 +23,5 @@ export type ModelColumn<M extends ModelEnum> = {
   embeddedForm?: true;
   disableInsert?: true;
   autoSelect?: true;
-  itemSubTitle?: (props: { item: HydraItem<M> }) => ReactNode;
   getAutocompleteParams?: (filter: CompoundFilter<M>) => CompoundFilter<M>;
 } & (ToManyColumn<M> | ToOneColumn<M>);

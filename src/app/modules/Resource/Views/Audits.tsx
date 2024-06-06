@@ -1,257 +1,341 @@
-import { Model } from "../../../../_custom/types/ModelMapping";
-import React, { HTMLAttributes } from "react";
+import React, { useState } from "react";
 import { ModelEnum } from "../../types";
 import { useQuery } from "react-query";
 import axios from "axios";
 import moment from "moment/moment";
-import { Bullet } from "../../../../_custom/components/Bullet";
-import { CellContent } from "../../../../_custom/ListingView/views/Table/BodyCell";
-import { ColumnTypeEnum } from "../../../../_custom/types/types";
+import { SVG } from "../../../../_custom/components/SVG/SVG";
+import { PaginationInput } from "../../../../_custom/ListingView/Pagination/Pagination.types";
+import { Pagination } from "../../../../_custom/ListingView/Pagination";
+import { Button } from "../../../../_custom/components/Button";
+import { IpLabel } from "./IpLabel";
+import { UsernameLabel } from "./UsernameLabel";
+import { DiffValue } from "./DiffValue";
+import { AUDIT_TYPE_CONFIG } from "./Audits.utils";
+import { EntityLabel } from "./EntityLabel";
+import { Audit, AuditType, Value } from "./Audits.types";
+import { FormikProvider, useFormik } from "formik";
+import { InputField } from "../../../../_custom/Column/String/InputField";
+import { LoadingLabel } from "../../../../_custom/components/Skeleton";
+import { SelectField } from "../../../../_custom/Column/controls/fields/SelectField/SelectField";
+import { RadioField } from "../../../../_custom/Column/controls/fields/RadioField/RadioField";
+import { DateField } from "../../../../_custom/Column/String/DateField";
 
-type AssociateDiff = {
-  class: string;
-  field: string;
-  id: 79;
-  label: string;
-  table: string;
+const initialValues: Value = {
+  id: "",
+  type: "",
+  objectId: "",
+  blameId: "",
+  transactionHash: "",
+  createdAt: "",
 };
-
-enum AuditType {
-  Associate = "associate",
-  Disassociate = "disassociate",
-  Insert = "insert",
-  Update = "update",
-  Remove = "update",
-}
-
-type AssociationAudit = {
-  type: AuditType.Associate | AuditType.Disassociate;
-  diffs: {
-    is_owning_side: boolean;
-    source: AssociateDiff;
-    target: AssociateDiff;
-  };
-};
-type MutateAudit<M extends ModelEnum> = {
-  type: AuditType.Insert | AuditType.Update;
-  diffs: Record<keyof Model<M> | string, { new: any; old: any }>;
-};
-type Audit<M extends ModelEnum> = {
-  id: number;
-  objectId: string;
-  discriminator?: null;
-  transactionHash: string;
-  userId?: string;
-  username: string;
-  userFqdn: string;
-  userFirewall?: null;
-  ip?: null;
-  createdAt: string;
-} & (AssociationAudit | MutateAudit<M>);
-
-const getModelNameFromClass = (namespace: string) =>
-  namespace.split("\\").at(-1) as ModelEnum | string;
-const EntityLabel = ({
-  id,
-  class: entityClassName,
-}: Partial<Pick<AssociateDiff, "id">> & Pick<AssociateDiff, "class">) => (
-  <span className='text-primary fw-bold'>
-    <Reference
-      refId={id}
-      label={getModelNameFromClass(entityClassName)}
-    />
-  </span>
-);
-const UsernameLabel = ({
-  userId,
-  username,
-}: Pick<Audit<any>, "userId" | "username">) => (
-  <Reference
-    refId={userId ? parseInt(userId) : undefined}
-    label={username}
-    className='text-black fw-bold'
-  />
-);
-
-const Reference = ({
-  refId,
-  label,
-  ...props
-}: { refId?: number; label: string } & HTMLAttributes<HTMLAnchorElement>) => (
-  <a
-    href='#'
-    {...props}
-  >
-    {label}
-    {refId && `#${refId}`}
-  </a>
-);
-
-const DiffValue = ({
-  value,
-}: {
-  value:
-    | string
-    | boolean
-    | { class: string; id: number; label: string; table: string };
-}) => (
-  <>
-    {value === null || value === undefined ? (
-      <Bullet />
-    ) : (
-      <>
-        {typeof value === "boolean" && (
-          <CellContent
-            value={value}
-            type={ColumnTypeEnum.Boolean}
-          />
-        )}
-        {typeof value === "string" && (
-          <CellContent
-            value={value}
-            type={ColumnTypeEnum.String}
-          />
-        )}
-        {typeof value === "object" && (
-          <Reference
-            refId={value.id}
-            label={getModelNameFromClass(value.class)}
-          />
-        )}
-      </>
-    )}
-  </>
-);
-const IpLabel = ({ ip }: Pick<Audit<any>, "ip">) => (
-  <span className='fw-bold'>{ip}</span>
-);
+// TODO range filter
+// TODO date range filter
 export const Audits = <M extends ModelEnum>({
   modelName,
 }: {
   modelName: M;
 }) => {
-  const query = useQuery({
-    queryKey: ["AUDITS", modelName],
-    queryFn: () =>
-      axios.get<{ totalCount: number; audits: Audit<M>[] }>(
-        `/custom/audits/${modelName}`,
-        {
-          params: {},
-        }
-      ),
+  const [params, setParams] = useState<PaginationInput & { filter: Value }>({
+    page: 1,
+    itemsPerPage: 10,
+    filter: initialValues,
   });
-  const audits = query.data?.data.audits || [];
-  const loading = false;
-  const page = 1;
-  const perPage = 10;
+  const formik = useFormik({
+    initialValues,
+    onSubmit: (filter) => setParams({ ...params, filter }),
+  });
+  const { page, itemsPerPage } = params;
+  const { data, isLoading } = useQuery({
+    queryKey: ["AUDITS", modelName, params],
+    queryFn: () => {
+      let _params: {} = {
+        page,
+        itemsPerPage,
+        ...Object.keys(params.filter).reduce((previous, current) => {
+          // @ts-ignore
+          let value = params.filter[current];
+          if (!value) return previous;
+          if (current === "createdAt") {
+            value = moment(value).format("YYYY-MM-DD");
+          }
+
+          return {
+            ...previous,
+            [`filter[${current}]`]: value,
+          };
+        }, {}),
+      };
+      return axios.get<{ totalCount: number; audits: Audit<M>[] }>(
+        `/custom/audits/${modelName}`,
+        { params: _params }
+      );
+    },
+  });
+  const audits = data?.data.audits || [];
+  const totalCount = data?.data.totalCount || 0;
 
   return (
     <>
-      {audits.map((audit) => {
-        const { id, type, username, createdAt, userFqdn, diffs, ip } = audit;
+      <FormikProvider value={formik}>
+        <div className='d-flex align-items-end flex-xl-nowrap flex-wrap gap-3 mb-3'>
+          <div>
+            {/*<label className='fs-6 fw-bolder'>Id</label>*/}
+            <InputField
+              name='id'
+              size='sm'
+              placeholder='id'
+            />
+          </div>
+          <div>
+            {/*<label className='fs-6 fw-bolder'>Type</label>*/}
+            <RadioField
+              options={Object.values(AuditType)}
+              getOptionVariant={(option) => AUDIT_TYPE_CONFIG[option].variant}
+              name='type'
+              size='sm'
+              scrollDisabled
+              className='bg-white'
+            />
+          </div>
+          <div>
+            {/*<label className='fs-6 fw-bolder'>Object Id</label>*/}
+            <InputField
+              name='objectId'
+              size='sm'
+              placeholder='Object Id'
+            />
+          </div>
+          <div>
+            {/*<label className='fs-6 fw-bolder'>Blame Id</label>*/}
+            <InputField
+              name='blameId'
+              size='sm'
+              placeholder='Blame Id'
+            />
+          </div>
+          <div>
+            {/*<label className='fs-6 fw-bolder'>Transaction Hash</label>*/}
+            <InputField
+              name='transactionHash'
+              size='sm'
+              placeholder='Transaction Hash'
+            />
+          </div>
+          <div>
+            {/*<label className='fs-6 fw-bolder'>Created At</label>*/}
+            <DateField
+              name='createdAt'
+              size='sm'
+              placeholder='Created At'
+            />
+          </div>
+          <div>
+            <Button
+              variant='primary'
+              loading={isLoading}
+              size='sm'
+              onClick={() => {
+                formik.handleSubmit();
+              }}
+            >
+              Filter
+            </Button>
+          </div>
+        </div>
+      </FormikProvider>
 
-        return (
-          <div
-            key={id}
-            className='row mb-3'
-          >
-            <div className='col-1'>{type}</div>
-            <div className='col-11'>
-              <div className='card'>
-                <div className='card-body'>
-                  <div className='d-flex justify-content-between'>
-                    <div className='text-muted'>
-                      {type === AuditType.Associate && (
-                        <>
-                          <EntityLabel {...diffs.source} />
-                          {` was associated with `}
-                          <EntityLabel {...diffs.target} />
-                          {` by `}
-                          <UsernameLabel {...audit} />
-                          {ip && (
-                            <>
-                              {` from `}
-                              <IpLabel ip={ip} />
-                            </>
-                          )}
-                        </>
-                      )}
-                      {type === AuditType.Disassociate && (
-                        <>
-                          <EntityLabel {...diffs.source} />
-                          {` was associated with `}
-                          <EntityLabel {...diffs.target} />
-                          {` by `}
-                          <UsernameLabel {...audit} />
-                          {ip && (
-                            <>
-                              {` from `}
-                              <IpLabel ip={ip} />
-                            </>
-                          )}
-                        </>
-                      )}
-                      {type === AuditType.Insert && (
-                        <>
-                          {`New `}
-                          <EntityLabel class={modelName} />
-                          {` has been created by `}
-                          <UsernameLabel {...audit} />
-                          {ip && (
-                            <>
-                              {` from `}
-                              <IpLabel ip={ip} />
-                            </>
-                          )}
-                        </>
-                      )}
-                    </div>
-                    <div className='text-muted text-capitalize'>
-                      {moment(createdAt).format("LLLL")}
+      <div className='card card-bordered mb-3'>
+        <div className='card-body pt-5'>
+          {isLoading && <LoadingLabel />}
+          <div className='timeline'>
+            {audits.map((audit) => {
+              const {
+                id,
+                type,
+                createdAt,
+                diffs,
+                ip,
+                objectId,
+                transactionHash,
+              } = audit;
+              const { icon, variant } = AUDIT_TYPE_CONFIG[type];
+
+              return (
+                <div
+                  key={id}
+                  className='timeline-item'
+                >
+                  <div className='timeline-line w-40px' />
+                  <div className='timeline-icon symbol symbol-circle symbol-40px me-4'>
+                    <div className='symbol-label bg-light'>
+                      <SVG
+                        path={icon}
+                        variant={variant}
+                        size='1'
+                      />
                     </div>
                   </div>
-                  {(type === AuditType.Insert || type === AuditType.Update) && (
-                    <div className='card card-bordered p-0'>
-                      <div className='card-body'>
-                        <table className='table table-sm table-row-bordered table-row-dark gy-1 align-middle mb-0'>
-                          <thead className='fs-7 text-gray-400 text-uppercase'>
-                            <tr>
-                              <th className='border-end'>Field</th>
-                              {type === AuditType.Update && <th>Old value</th>}
-                              <th>New Value</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {(Object.keys(diffs) as Array<string>).map(
-                              (key) => {
-                                const diff = diffs[key];
-
-                                return (
-                                  <tr key={key.toString()}>
-                                    <td className='border-end'>{key}</td>
-                                    {type === AuditType.Update && (
-                                      <td className='text-danger '>
-                                        <DiffValue value={diff.old} />
-                                      </td>
-                                    )}
-                                    <td className='text-success'>
-                                      <DiffValue value={diff.new} />
-                                    </td>
-                                  </tr>
-                                );
-                              }
+                  <div className='timeline-content mb-3'>
+                    <div className='d-flex justify-content-between'>
+                      <div className='fs-5'>
+                        {type === AuditType.Associate && (
+                          <>
+                            <EntityLabel {...diffs.source} />
+                            {` was `}
+                            <span className={`text-${variant}`}>
+                              associated
+                            </span>
+                            {` with `}
+                            <EntityLabel {...diffs.target} />
+                            {` by `}
+                            <UsernameLabel {...audit} />
+                            {ip && (
+                              <>
+                                {` from `}
+                                <IpLabel ip={ip} />
+                              </>
                             )}
-                          </tbody>
-                        </table>
+                          </>
+                        )}
+                        {type === AuditType.Dissociate && (
+                          <>
+                            <EntityLabel {...diffs.source} />
+                            {` was `}
+                            <span className={`text-${variant}`}>
+                              dissociated
+                            </span>
+                            {` with `}
+                            <EntityLabel {...diffs.target} />
+                            {` by `}
+                            <UsernameLabel {...audit} />
+                            {ip && (
+                              <>
+                                {` from `}
+                                <IpLabel ip={ip} />
+                              </>
+                            )}
+                          </>
+                        )}
+                        {type === AuditType.Insert && (
+                          <>
+                            {`New `}
+                            <EntityLabel class={modelName} />
+                            {` has been `}
+                            <span className={`text-${variant}`}>created</span>
+                            {` by `}
+                            <UsernameLabel {...audit} />
+                            {ip && (
+                              <>
+                                {` from `}
+                                <IpLabel ip={ip} />
+                              </>
+                            )}
+                          </>
+                        )}
+                        {type === AuditType.Update && (
+                          <>
+                            <EntityLabel
+                              id={parseInt(objectId)}
+                              class={modelName}
+                            />
+                            {` was `}
+                            <span className={`text-${variant}`}>updated</span>
+                            {` by `}
+                            <UsernameLabel {...audit} />
+                            {ip && (
+                              <>
+                                {` from `}
+                                <IpLabel ip={ip} />
+                              </>
+                            )}
+                          </>
+                        )}
+                        {type === AuditType.Remove && (
+                          <>
+                            <EntityLabel
+                              id={parseInt(objectId)}
+                              class={modelName}
+                            />
+                            {` was `}
+                            <span className={`text-${variant}`}>deleted</span>
+                            {` by `}
+                            <UsernameLabel {...audit} />
+                            {ip && (
+                              <>
+                                {` from `}
+                                <IpLabel ip={ip} />
+                              </>
+                            )}
+                          </>
+                        )}
+                      </div>
+                      <div className='text-muted text-capitalize fs-7'>
+                        {moment(createdAt).format("LLLL")}
                       </div>
                     </div>
-                  )}
+                    <div className='d-flex align-items-center gap-3 mt-1 fs-7 text-muted'>
+                      <div>Id: {id}</div>
+                      <div>Hash: {transactionHash}</div>
+                    </div>
+
+                    {(type === AuditType.Insert ||
+                      type === AuditType.Update) && (
+                      <div className='card card-bordered'>
+                        <div className='card-body py-0 px-2'>
+                          <table className='table table-sm table-row-bordered table-row-dark gy-1 align-middle mb-0'>
+                            <thead className='fs-7 text-gray-400 text-uppercase'>
+                              <tr>
+                                <th className='border-end w-150px'>Field</th>
+                                {type === AuditType.Update && (
+                                  <th>Old value</th>
+                                )}
+                                <th>New Value</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {(Object.keys(diffs) as Array<string>).map(
+                                (key) => {
+                                  const diff = diffs[key];
+
+                                  return (
+                                    <tr key={key.toString()}>
+                                      <td className='border-end'>{key}</td>
+                                      {type === AuditType.Update && (
+                                        <td className='text-danger '>
+                                          <DiffValue value={diff.old} />
+                                        </td>
+                                      )}
+                                      <td className='text-success'>
+                                        <DiffValue value={diff.new} />
+                                      </td>
+                                    </tr>
+                                  );
+                                }
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
-        );
-      })}
+        </div>
+      </div>
+      <Pagination
+        size='sm'
+        page={page}
+        onPageChange={(page) => {
+          setParams({ ...params, page });
+        }}
+        onItemsPerPageChange={(itemsPerPage) => {
+          setParams({ ...params, page: 1, itemsPerPage });
+        }}
+        totalCount={totalCount}
+        itemsPerPage={itemsPerPage}
+      />
     </>
   );
 };

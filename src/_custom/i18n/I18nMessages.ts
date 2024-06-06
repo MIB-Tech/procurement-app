@@ -34,6 +34,8 @@ type I18nMessageKey =
   | ColumnTypeEnum
   | StringFormat
   | ComplianceStatus
+  | "YES"
+  | "NO"
   | "REFERENT"
   | "REFERENTS"
   | "REFERENT_PURCHASE_ORDERS"
