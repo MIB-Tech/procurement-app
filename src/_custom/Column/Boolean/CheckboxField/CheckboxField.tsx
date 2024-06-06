@@ -31,7 +31,9 @@ export const CheckboxField: FC<InputFieldProps> = ({
         {...props}
         className={clsx(className, error && "is-invalid")}
         options={[true, false]}
+        getOptionVariant={(checked) => (checked ? "success" : "danger")}
         getOptionLabel={(checked) => trans({ id: checked ? "YES" : "NO" })}
+        scrollDisabled
       />
       {/*<Checkbox*/}
       {/*  {...field}*/}

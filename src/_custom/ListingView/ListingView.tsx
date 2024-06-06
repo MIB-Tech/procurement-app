@@ -271,7 +271,6 @@ export const ListingView = <M extends ModelEnum>({
     }
   });
 
-  //
   const { locale, trans } = useTrans();
   const events = useMemo<EventSourceInput>(() => {
     let _events: EventInput[] = [];

@@ -5,7 +5,6 @@ import { ColumnTypeEnum } from "../../types/types";
 import { Model } from "../../types/ModelMapping";
 import { ModelEnum } from "../../../app/modules/types";
 import { Limit, NumberValidation } from "../Number/NumberColumn";
-import { M } from "@fullcalendar/core/internal-common";
 
 import { getReference } from "../../getReference";
 
@@ -132,39 +131,55 @@ export const STRING_FORMAT_CONFIG: Record<StringFormat, { icon: string }> = {
 export const getStringValidation = <M extends ModelEnum>({
   validation,
   schema = string(),
+  defaultMaxLength,
 }: {
   validation?: StringValidation<M>;
   schema?: StringSchema;
   defaultMaxLength?: number;
 }) => {
-  if (!validation) {
-    return schema;
-  }
+  if (!validation) return schema;
 
-  const { min, max, length, capitalize, uppercase, lowercase, matches } =
-    validation;
+  const {
+    min,
+    max = defaultMaxLength,
+    length,
+    capitalize,
+    uppercase,
+    lowercase,
+    matches,
+  } = validation;
 
-  if (min)
+  if (min) {
     schema = schema.min(
       typeof min === "number" ? min : getReference(min.toString())
     );
-  if (length)
+  }
+  if (max) {
+    schema = schema.max(
+      typeof max === "number" ? max : getReference(max.toString())
+    );
+  }
+  if (length) {
     schema = schema.max(
       typeof length === "number" ? length : getReference(length.toString())
     );
+  }
   if (matches) schema = schema.matches(matches);
-  if (uppercase)
+  if (uppercase) {
     schema = schema.matches(/[A-Z.]+$/, {
       message: { id: "VALIDATION.STRING.UPPERCASE" },
     });
-  if (lowercase)
+  }
+  if (lowercase) {
     schema = schema.matches(/[a-z.]+$/, {
       message: { id: "VALIDATION.STRING.LOWERCASE" },
     });
-  if (capitalize)
+  }
+  if (capitalize) {
     schema = schema.matches(/[a-z.]+$/, {
       message: { id: "VALIDATION.STRING.CAPITALIZE" },
     });
+  }
 
   return schema;
 };

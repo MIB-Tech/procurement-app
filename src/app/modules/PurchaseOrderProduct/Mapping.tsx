@@ -190,24 +190,13 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
     render: ({ fieldProps }) => <QuantityField {...fieldProps} />,
   },
   grossPrice: {
-    render: ({ item, fieldProps }) => {
-      {
-        console.log("editable", item.editablePrice);
-      }
-
-      if (item.editablePrice === false) {
-        return (
-          <NumberColumnField
-            {...fieldProps}
-            size='sm'
-          />
-        );
-      } else if (item.editablePrice === undefined) {
-        return <PurchaseOrderNumberUnit value={item.grossPrice} />;
-      } else {
-        return <PurchaseOrderNumberUnit value={item.grossPrice} />;
-      }
-    },
+    render: ({ item, fieldProps }) => (
+      <NumberColumnField
+        {...fieldProps}
+        size='sm'
+        disabled={!item.editablePrice}
+      />
+    ),
   },
   note: true,
   discountType: {
@@ -515,25 +504,14 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           render: ({ fieldProps }) => <QuantityField {...fieldProps} />,
         },
         grossPrice: {
-          render: ({ item, fieldProps }) => {
-            if (
-              item.editablePrice === undefined ||
-              (item.editablePrice && !item.id)
-            ) {
-              return <PurchaseOrderNumberUnit value={item.grossPrice} />;
-            } else if (item.id) {
-              return <PurchaseOrderNumberUnit value={item.grossPrice} />;
-            } else {
-              return (
-                <NumberColumnField
-                  {...fieldProps}
-                  size='sm'
-                />
-              );
-            }
-          },
+          render: ({ item, fieldProps }) => (
+            <NumberColumnField
+              {...fieldProps}
+              size='sm'
+              disabled={!item.editablePrice}
+            />
+          ),
         },
-
         note: true,
         discountType: {
           defaultValue: DiscountType.Percent,

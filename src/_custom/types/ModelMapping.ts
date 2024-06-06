@@ -16,6 +16,7 @@ import { FieldProps } from "../Column/controls/fields";
 import { Input } from "../FormView/FormView.types";
 import { FormikComputedProps, FormikState } from "formik";
 import { Permission } from "../hooks/UseAuth";
+import { Filter } from "../ListingView/Filter/Filter.types";
 
 export type Model<M extends ModelEnum> = Models[M];
 export type DisplayCallback<M extends ModelEnum> = (props: {
@@ -200,6 +201,7 @@ export type ModelMapping<M extends ModelEnum> = {
   uploadable?: boolean;
   hydraTitle?: (item: HydraItem<M>) => ReactNode;
   hydraSubtitle?: (item: HydraItem<M>) => ReactNode;
+  getSearchFilter?: (search: string, filter: Filter<M>) => Filter<M>;
   noSortEdges?: Array<[string, string]>;
   columnDef: ColumnDef<M>;
   views?: Array<View<M>>;

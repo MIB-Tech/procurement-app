@@ -22,7 +22,9 @@ export const useCollectionQuery = <M extends ModelEnum>({
   options,
   path = getRoutePrefix(modelName),
 }: ListingQueryProps<M>) => {
-  const { searchableColumnNames, columnDef } = useMapping<M>({ modelName });
+  const { searchableColumnNames, columnDef, getSearchFilter } = useMapping<M>({
+    modelName,
+  });
   let _params = {};
   if (params) {
     const { page, itemsPerPage, sort, filter, search } = params;
@@ -37,15 +39,16 @@ export const useCollectionQuery = <M extends ModelEnum>({
     };
 
     if (search) {
+      const searchFilter = {
+        operator: CompoundFilterOperator.Or,
+        filters: searchableColumnNames.map((columnName) => ({
+          property: columnName,
+          operator: PropertyFilterOperator.Contain,
+          value: search,
+        })),
+      };
       _filter.filters = [
-        {
-          operator: CompoundFilterOperator.Or,
-          filters: searchableColumnNames.map((columnName) => ({
-            property: columnName,
-            operator: PropertyFilterOperator.Contain,
-            value: search,
-          })),
-        },
+        getSearchFilter?.(search, searchFilter) ?? searchFilter,
       ];
     }
     if (filter) {

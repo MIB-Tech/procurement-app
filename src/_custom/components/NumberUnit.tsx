@@ -18,7 +18,7 @@ export const getFormattedNumber = ({
     // useGrouping: true,
   });
 
-  return numberFormat.format(value).replaceAll(".", " ");
+  return numberFormat.format(isNaN(value) ? 0 : value).replaceAll(".", " ");
 };
 export const getNumberUnit = ({
   value,
