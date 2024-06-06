@@ -54,6 +54,9 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
     },
     designation: {
       type: ColumnTypeEnum.String,
+      validation: {
+        max: 1000,
+      },
     },
     quantity: {
       type: ColumnTypeEnum.Number,
