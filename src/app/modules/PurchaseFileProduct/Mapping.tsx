@@ -16,7 +16,9 @@ const mapping: ModelMapping<ModelEnum.PurchaseFileProduct> = {
     },
     designation: {
       type: ColumnTypeEnum.String,
-      max: 1000,
+      validation: {
+        max: 1000,
+      },
     },
     orderedQuantity: {
       type: ColumnTypeEnum.Number,
