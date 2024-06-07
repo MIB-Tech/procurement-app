@@ -199,7 +199,7 @@ export const DetailView = <M extends ModelEnum>({
                 </div>
               );
             })}
-            <div className='card'>
+            <div className='card card-bordered'>
               <div className='card-body'>
                 <ItemView
                   rowClassName='row row-cols-sm-3'

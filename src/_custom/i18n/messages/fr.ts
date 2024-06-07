@@ -1,6 +1,16 @@
 import { I18nLanguage } from "../I18nMessages";
 
 export const fr: I18nLanguage = {
+  AUDITS: "Audits",
+  NO: "Non",
+  YES: "Oui",
+  AMOUNT_PAYMENT_TERM: "Montant d'echeance",
+  NEW_PASSWORD: "Nouveau mot de passe",
+  OLD_PASSWORD: "Ancien mot de passe",
+  PAYMENT_TERMS: "Échéance de paiement facture",
+  SAGE_ACCOUNTING_REF: "N° Piece comptable",
+  ACCOUNTED: "Comptabiliser",
+  POSTED: "Facture Comptabilisable",
   PLAIN_PASSWORD: "Mot de passe",
   CURRENT_PASSWORD: "Mot de passe actuel",
   BUDGET_TRACKING: "Suivi budgétaire (V2)",
@@ -445,6 +455,7 @@ export const fr: I18nLanguage = {
   "VALIDATION.NUMBER.MIN": "Min. {min}",
   "VALIDATION.NUMBER.MORE_THAN": "Doit être supérieur à {more}",
   "VALIDATION.NUMBER.NEGATIVE": "Doit être négatif",
+  "VALIDATION.NUMBER.EQUAL": "Doit être égal à {equal} ",
   "VALIDATION.NUMBER.NOT_EQUAL": "Ne doit pas être égal à {notEqual}",
   "VALIDATION.NUMBER.POSITIVE": "Doit être positif.",
   "VALIDATION.OBJECT.NO_UNKNOWN":

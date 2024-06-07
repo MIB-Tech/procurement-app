@@ -1,17 +1,5 @@
-import React, {
-  ComponentType,
-  FC,
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import React, { ReactNode } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "../../_custom/hooks/UseAuth";
 import {
   DetailViewType,
@@ -133,6 +121,7 @@ export const RELATED_MODELS = [ModelEnum.User, ModelEnum.PurchaseOrder];
 
 export function PrivateRoutes() {
   const { operations, getPath, isGranted, user } = useAuth();
+  const { passwordUpdatedAt } = user;
   const defaultOperation = operations
     .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
     .find(
@@ -144,7 +133,7 @@ export function PrivateRoutes() {
   const isAdmin = isGranted([
     RoleKeyEnum.Viewer,
     RoleKeyEnum.SuperAdmin,
-    RoleKeyEnum.SuperAdmin,
+    RoleKeyEnum.Admin,
   ]);
   const isReferent = isGranted([RoleKeyEnum.Referent]);
   const isFinance = isGranted([RoleKeyEnum.Finances]);
@@ -159,22 +148,19 @@ export function PrivateRoutes() {
   //       });
 
   const getDefaultPath = () => {
-    switch (true) {
-      case isGranted([RoleKeyEnum.Referent]):
-        return "receipt-compliance";
-      case isGranted([RoleKeyEnum.Finances]):
-        return "budget-monitoring";
-      case isGranted([RoleKeyEnum.Admin, RoleKeyEnum.Treso]):
-        return "dashboard";
-      default:
-        return defaultOperation
-          ? getPath({
-              resourceName: defaultOperation.resource.name,
-              suffix: defaultOperation.suffix,
-            })
-          : "/";
-    }
+    const customRoute = CUSTOM_ROUTES.find((customRoute) =>
+      !customRoute.granted || isGranted(customRoute.granted)
+    );
+    const defaultPath = defaultOperation
+      ? getPath({
+          resourceName: defaultOperation.resource.name,
+          suffix: defaultOperation.suffix,
+        })
+      : "dashboard";
+
+    return customRoute ? customRoute.path : defaultPath;
   };
+  const defaultPath = getDefaultPath();
 
   return (
     <Routes>
@@ -185,24 +171,27 @@ export function PrivateRoutes() {
           </PageDataProvider>
         }
       >
-        {CUSTOM_ROUTES.filter(
-          (route) =>
+        {CUSTOM_ROUTES.filter((route) => {
+          return (
             (!route.granted || isGranted(route.granted)) &&
-            (user.passwordUpdatedAt || route.path === "settings")
-        ).map((route) => (
-          <Route
-            key={route.path}
-            path={route.path}
-            element={route.element}
-          />
-        ))}
+            (passwordUpdatedAt || route.path === "settings")
+          );
+        }).map((route) => {
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={route.element}
+            />
+          );
+        })}
 
         <Route
           path='*'
-          element={<Navigate to={user.passwordUpdatedAt ? "/" : "/settings"} />}
+          element={<Navigate to={passwordUpdatedAt ? "/" : "/settings"} />}
           // element={<Navigate to='/' />}
         />
-        {user.passwordUpdatedAt &&
+        {passwordUpdatedAt &&
           operations
             .filter((operation) =>
               Object.values(ModelEnum).includes(operation.resource.name)
@@ -267,10 +256,10 @@ export function PrivateRoutes() {
               );
             })}
       </Route>
-      {getDefaultPath() && (
+      {defaultPath && (
         <Route
           path='/'
-          element={<Navigate to={getDefaultPath()} />}
+          element={<Navigate to={defaultPath} />}
         />
       )}
       {/* <Route path='/change-password' element={<ChangePassword />} /> */}
@@ -287,24 +276,4 @@ export function PrivateRoutes() {
       />
     </Routes>
   );
-
-  // return (
-  //   <Suspense fallback={<FallbackView />}>
-  //     <PageWrapper>
-  //       <Routes>
-  //         {routes.map(({ routeKey, treePath }) => {
-  //           const {component = EmptyPage} = PRIVATE_ROUTE_COMPONENTS[routeKey] || {}
-  //
-  //           return (
-  //             <Route
-  //               key={routeKey}
-  //               path={treePath}
-  //               element={component}
-  //               // exact
-  //             />
-  //           );
-  //         })}
-  //         {defaultRoute && defaultRoute.treePath && <Route path='/' element={<Navigate to={defaultRoute.treePath}
-  // />}/>} <Route path='/auth' element={<Navigate to='/' />} /> {routes.length > 0 && <Navigate
-  // to={`/error/${routes.length === 0 ? 403 : 404}`} />} </Routes> </PageWrapper> </Suspense> )
 }

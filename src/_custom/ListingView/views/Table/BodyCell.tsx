@@ -120,11 +120,14 @@ export const CellContent = (
       }
     case ColumnTypeEnum.Boolean:
       return (
-        <SVG
-          size='2'
-          path={value ? "/general/gen037.svg" : "/general/gen036.svg"}
-          variant={value ? "primary" : "dark"}
-        />
+        <div
+          className={clsx(
+            "badge",
+            `badge-${value ? "light-success" : "light-danger"}`
+          )}
+        >
+          <Trans id={value ? "YES" : "NO"} />
+        </div>
       );
     case ColumnTypeEnum.Array:
       if (!Array.isArray(value)) return <></>;
