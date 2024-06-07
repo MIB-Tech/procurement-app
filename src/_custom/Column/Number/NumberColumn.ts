@@ -51,10 +51,26 @@ export const getNumberValidation = <M extends ModelEnum>({
   schema?: NumberSchema;
 }) => {
   const { min, max, lessThan, moreThan, positive, negative } = validation;
-  if (min) schema = schema.min(getReference(min.toString()));
-  if (max) schema = schema.max(getReference(max.toString()));
-  if (lessThan) schema = schema.lessThan(getReference(lessThan.toString()));
-  if (moreThan) schema = schema.lessThan(getReference(moreThan.toString()));
+  if (min)
+    schema = schema.min(
+      typeof min === "number" ? min : getReference(min.toString())
+    );
+  if (max)
+    schema = schema.max(
+      typeof max === "number" ? max : getReference(max.toString())
+    );
+  if (lessThan)
+    schema = schema.lessThan(
+      typeof lessThan === "number"
+        ? lessThan
+        : getReference(lessThan.toString())
+    );
+  if (moreThan)
+    schema = schema.lessThan(
+      typeof moreThan === "number"
+        ? moreThan
+        : getReference(moreThan.toString())
+    );
   if (positive) schema = schema.positive();
   if (negative) schema = schema.negative();
 

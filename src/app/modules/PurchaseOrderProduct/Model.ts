@@ -26,7 +26,7 @@ type Model = {
   discountedUnitPrice: number;
   readonly status: boolean;
   readonly vatTax: boolean;
-  editablePrice: boolean;
+  editablePrice?: boolean;
 } & AbstractModel;
 
 export default Model;

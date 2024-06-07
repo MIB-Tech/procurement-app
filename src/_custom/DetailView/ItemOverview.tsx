@@ -53,7 +53,7 @@ export const ItemOverview = <M extends ModelEnum>({
   }, [item, currentOperation]);
 
   return (
-    <div className='card mb-3'>
+    <div className='card card-bordered mb-3'>
       <div className={clsx("card-body", children && "pb-0")}>
         <div
           className={clsx(

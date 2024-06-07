@@ -16,13 +16,14 @@ type ToManyColumn<M extends ModelEnum> = {
 type ToOneColumn<M extends ModelEnum> = {
   type: ModelEnum;
   searchable?: boolean;
-  schema?: ObjectSchema<any>;
+  schema?:
+    | ObjectSchema<any>
+    | ((schema: ObjectSchema<any>) => ObjectSchema<any>);
 };
 
 export type ModelColumn<M extends ModelEnum> = {
   embeddedForm?: true;
   disableInsert?: true;
   autoSelect?: true;
-  itemSubTitle?: (props: { item: HydraItem<M> }) => ReactNode;
   getAutocompleteParams?: (filter: CompoundFilter<M>) => CompoundFilter<M>;
 } & (ToManyColumn<M> | ToOneColumn<M>);

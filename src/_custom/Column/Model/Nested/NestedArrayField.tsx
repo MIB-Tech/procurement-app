@@ -41,6 +41,7 @@ import {
   PropertyFilterOperator,
 } from "../../../ListingView/Filter/Filter.types";
 import { filterToParams } from "../../../ListingView/Filter/Filter.utils";
+import { Bullet } from "../../../components/Bullet";
 
 export const NestedArrayField = <M extends ModelEnum>({
   name,
@@ -311,69 +312,66 @@ export const NestedArrayField = <M extends ModelEnum>({
                 </tr>
               </thead>
               <tbody>
-                {items.map((item, itemIndex) => {
-                  return (
-                    <tr key={item._index}>
-                      <td className='align-middle'>
-                        <div className='d-flex align-items-center'>
-                          <div className='badge badge-secondary badge-square rounded'>
-                            {itemIndex + 1}
-                          </div>
-                          {!disableDelete && (
-                            <IconButton
-                              path='/general/gen034.svg'
-                              variant='danger'
-                              size='2x'
-                              onClick={() => remove(item._index)}
-                            />
-                          )}
-                          {nestedColumnNames.length > 0 && (
-                            <NestedColumnsButton
-                              name={name}
-                              modelName={modelName}
-                              item={item}
-                              index={item._index}
-                            />
-                          )}
+                {items.map((item, itemIndex) => (
+                  <tr key={item._index}>
+                    <td className='align-middle'>
+                      <div className='d-flex align-items-center'>
+                        <div className='badge badge-secondary badge-square rounded'>
+                          {itemIndex + 1}
                         </div>
-                      </td>
+                        {!disableDelete && (
+                          <IconButton
+                            path='/general/gen034.svg'
+                            variant='danger'
+                            size='2x'
+                            onClick={() => remove(item._index)}
+                          />
+                        )}
+                        {nestedColumnNames.length > 0 && (
+                          <NestedColumnsButton
+                            name={name}
+                            modelName={modelName}
+                            item={item}
+                            index={item._index}
+                          />
+                        )}
+                      </div>
+                    </td>
 
-                      {rootColumnNames.map((columnName) => {
-                        const field = fields[columnName];
-                        const render =
-                          typeof field === "object" && field?.render;
-                        const column = columnDef[columnName] as
-                          | ColumnMapping<M>
-                          | undefined;
+                    {rootColumnNames.map((columnName) => {
+                      const field = fields[columnName];
+                      const render = typeof field === "object" && field?.render;
+                      const column = columnDef[columnName] as
+                        | ColumnMapping<M>
+                        | undefined;
 
-                        const nestedName = `${name}.${
-                          item._index
-                        }.${columnName.toString()}`;
-                        const fieldProps = {
-                          name: nestedName,
-                          className: clsx("border-1"),
-                        };
+                      const nestedName = `${name}.${
+                        item._index
+                      }.${columnName.toString()}`;
+                      const fieldProps = {
+                        name: nestedName,
+                        className: clsx("border-1"),
+                      };
 
-                        return (
-                          <td
-                            key={nestedName}
-                            className={clsx(!render && "-align-top")}
-                          >
-                            {render
-                              ? render({ item, fieldProps })
-                              : column && (
-                                  <ValueField
-                                    {...fieldProps}
-                                    column={column}
-                                    size='sm'
-                                  />
-                                )}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
+                      return (
+                        <td
+                          key={nestedName}
+                          className={clsx(!render && "-align-top")}
+                        >
+                          {render
+                            ? render({ item, fieldProps })
+                            : column && (
+                                <ValueField
+                                  {...fieldProps}
+                                  column={column}
+                                  size='sm'
+                                />
+                              )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
               </tbody>
               <tfoot>
                 {items.length > 0 && (
@@ -386,8 +384,10 @@ export const NestedArrayField = <M extends ModelEnum>({
                       if (!columnMapping)
                         return <td key={columnName.toString()} />;
                       let value: any = "";
+                      let show: boolean = false;
                       switch (columnMapping.type) {
                         case ColumnTypeEnum.Number:
+                          show = true;
                           value = items.reduce((count, currentValue) => {
                             const _value =
                               currentValue[columnName as keyof Model<M>];
@@ -403,14 +403,22 @@ export const NestedArrayField = <M extends ModelEnum>({
                           key={columnName.toString()}
                           className='text-truncate text-uppercase'
                         >
-                          {columnMapping.footer?.({
-                            value,
-                            collection: items,
-                          }) || (
-                            <CellContent
-                              value={value}
-                              {...columnMapping}
-                            />
+                          {show ? (
+                            columnMapping && (
+                              <>
+                                {columnMapping.footer?.({
+                                  value,
+                                  collection: items,
+                                }) || (
+                                  <CellContent
+                                    value={value}
+                                    {...columnMapping}
+                                  />
+                                )}
+                              </>
+                            )
+                          ) : (
+                            <Bullet />
                           )}
                         </td>
                       );

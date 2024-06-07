@@ -8,7 +8,6 @@ import {
 } from "../PurchaseOrder/Model";
 import { InvoiceAttachmentModel } from "../InvoiceAttachment";
 import { PaymentTermModel } from "../PaymentTerm";
-import { InvoiceModel } from "./index";
 
 type Model = {
   invoiceNumber: string;

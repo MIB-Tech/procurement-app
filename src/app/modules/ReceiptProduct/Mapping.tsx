@@ -139,6 +139,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
               disabled={
                 item.desiredProduct.status === QuantityStatusEnum.FullyReceived
               }
+              size='sm'
             />
           ),
         },
@@ -177,6 +178,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
                   render: ({ fieldProps, item }) => (
                     <BooleanField
                       {...fieldProps}
+                      size='sm'
                       disabled={
                         item.purchaseOrderProductComponent.status ===
                         QuantityStatusEnum.FullyReceived
@@ -262,6 +264,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
                   render: ({ fieldProps, item }) => (
                     <BooleanField
                       {...fieldProps}
+                      size='sm'
                       disabled={
                         item.purchaseOrderProductComponent.status ===
                         QuantityStatusEnum.FullyReceived
