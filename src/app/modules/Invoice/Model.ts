@@ -13,8 +13,8 @@ type Model = {
   invoiceNumber: string;
   ref?: string;
   externalRef?: string;
-  posted: boolean;
-  accounted: boolean;
+  posted?: boolean;
+  accounted?: boolean;
   sageAccountingRef: string;
   purchaseOrders: Array<PurchaseOrderModel>;
   attachments: Array<InvoiceAttachmentModel>;
