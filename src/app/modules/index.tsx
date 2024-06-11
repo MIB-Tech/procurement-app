@@ -55,6 +55,7 @@ import { QUERY_MAPPING } from "./Query";
 import { QUERY_PARAM_MAPPING } from "./QueryParam";
 import { INVOICE_ATTACHMENT_MAPPING } from "./InvoiceAttachment";
 import { PAYMENT_TERM_MAPPING } from "./PaymentTerm";
+import { RECEIPT_ATTACHMENT_MAPPING } from "./RecieptAttachment";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
@@ -89,6 +90,7 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Operation]: OPERATION_MAPPING,
   [ModelEnum.PurchaseOrderCategory]: PURCHASE_ORDER_CATEGORY_MAPPING,
   [ModelEnum.PurchaseOrderAttachment]: PURCHASE_ORDER_ATTACHMENT_MAPPING,
+  [ModelEnum.ReceiptAttachment]: RECEIPT_ATTACHMENT_MAPPING,
   [ModelEnum.Component]: COMPONENT_MAPPING,
   [ModelEnum.PaymentModality]: PAYMENT_MODALITY_MAPPING,
   [ModelEnum.Invoice]: INVOICE_MAPPING,
