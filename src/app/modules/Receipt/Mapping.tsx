@@ -172,6 +172,10 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
       type: ModelEnum.PurchaseOrder,
       multiple: true,
     },
+    attachments: {
+      type: ModelEnum.ReceiptAttachment,
+      multiple: true,
+    },
     receiptProducts: {
       type: ModelEnum.ReceiptProduct,
       multiple: true,
@@ -222,6 +226,7 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
         externalRef: true,
         receivedAt: true,
         receiptProducts: true,
+        attachments: true,
       },
     },
     {
@@ -250,12 +255,17 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
             );
           }),
       }),
+
       slotProps: {
         item: {
           sm: 6,
         },
       },
-      fields: formFields,
+
+      fields: {
+        attachments: true,
+        ...formFields,
+      },
     },
     {
       type: ViewEnum.Update,
@@ -269,17 +279,21 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
             },
           },
         },
+        attachments: {
+          slotProps: {
+            root: {
+              sm: 12,
+              md: 12,
+              lg: 12,
+              xl: 12,
+            },
+          },
+        },
       },
       slotProps: {
         item: {
           sm: 6,
         },
-      },
-    },
-    {
-      type: ViewEnum.Detail,
-      columns: {
-        receiptProducts: true,
       },
     },
   ],
