@@ -34,10 +34,9 @@ export const PrintReceiptButton: FC<
       ...item,
       receivedAt: moment(item.receivedAt).format("L"),
       lines: item.receiptProducts.reduce((lines, receiptProduct) => {
-        const { desiredProduct, components } = receiptProduct;
+        const { desiredProduct, components, note } = receiptProduct;
         const { designation, purchaseOrderProduct, quantity } = desiredProduct;
-        const { product, note } = purchaseOrderProduct;
-
+        const { product } = purchaseOrderProduct;
         return [
           ...lines,
           {
