@@ -45,6 +45,7 @@ import { QueryModel } from "./Query";
 import { QueryParamModel } from "./QueryParam";
 import { InvoiceAttachmentModel } from "./InvoiceAttachment";
 import { PaymentTermModel } from "./PaymentTerm";
+import { ReceiptAttachmentModel } from "./RecieptAttachment";
 
 export enum ModelEnum {
   ApplicantService = "ApplicantService",
@@ -94,11 +95,13 @@ export enum ModelEnum {
   QueryParam = "QueryParam",
   InvoiceAttachment = "InvoiceAttachment",
   PaymentTerm = "PaymentTerm",
+  ReceiptAttachment = "ReceiptAttachment",
 }
 
 export type Models = {
   [ModelEnum.PurchaseNeed]: PurchaseNeedModel;
   [ModelEnum.PurchaseNeedAttachment]: PurchaseNeedAttachmentModel;
+  [ModelEnum.ReceiptAttachment]: ReceiptAttachmentModel;
   [ModelEnum.User]: UserModel;
   [ModelEnum.Role]: RoleModel;
   [ModelEnum.ApplicantService]: ApplicantServiceModel;

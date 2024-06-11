@@ -5,12 +5,15 @@ import { PurchaseOrderModel } from "../PurchaseOrder";
 import { LineType, PurchaseOrderPrint } from "../PurchaseOrder/Model";
 import { PaymentModalityModel } from "../PaymentModality";
 import { ClinicModel } from "../Clinic";
+import { InvoiceAttachmentModel } from "../InvoiceAttachment";
+import { ReceiptAttachmentModel } from "../RecieptAttachment";
 
 type Model = {
   receiptNumber: string;
   receivedAt?: string;
   externalRef?: string;
   receiptProducts: Array<ReceiptProductModel>;
+  attachments: Array<ReceiptAttachmentModel>;
   readonly vendor: VendorModel;
   readonly paymentModality: PaymentModalityModel;
   readonly purchaseOrders: Array<PurchaseOrderModel>;
