@@ -1,7 +1,7 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
+import { NumberFormat } from "../../../_core/Column/Number/NumberColumn";
 
 const mapping: ModelMapping<ModelEnum.VatRate> = {
   modelName: ModelEnum.VatRate,
@@ -9,10 +9,6 @@ const mapping: ModelMapping<ModelEnum.VatRate> = {
     id: {
       type: ColumnTypeEnum.Number,
     },
-    uid: {
-      type: ColumnTypeEnum.String,
-    },
-
     value: {
       type: ColumnTypeEnum.Number,
       format: NumberFormat.Percent,

@@ -1,6 +1,6 @@
-import { SelectField } from "../../../../_custom/Column/controls/fields/SelectField/SelectField";
-import { FieldProps } from "../../../../_custom/Column/controls/fields";
-import { useCollectionQuery } from "../../../../_custom/hooks/UseCollectionQuery";
+import { SelectField } from "../../../../_core/Column/controls/fields/SelectField/SelectField";
+import { FieldProps } from "../../../../_core/Column/controls/fields";
+import { useCollectionQuery } from "../../../../_core/hooks/UseCollectionQuery";
 import { ModelEnum } from "../../types";
 
 export const VatRateSelectField = ({
