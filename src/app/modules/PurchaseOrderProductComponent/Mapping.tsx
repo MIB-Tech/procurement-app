@@ -1,17 +1,14 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
 import { QUANTITY_STATUS_OPTIONS } from "../PurchaseOrder/Model";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
 
 const mapping: ModelMapping<ModelEnum.PurchaseOrderProductComponent> = {
   modelName: ModelEnum.PurchaseOrderProductComponent,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     designation: {
       type: ColumnTypeEnum.String,

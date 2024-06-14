@@ -1,20 +1,17 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
 import {
   DateFormatEnum,
   StringFormat,
-} from "../../../_custom/Column/String/StringColumn";
-import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
+} from "../../../_core/Column/String/StringColumn";
+import { NumberFormat } from "../../../_core/Column/Number/NumberColumn";
 
 const mapping: ModelMapping<ModelEnum.ProductPricing> = {
   modelName: ModelEnum.ProductPricing,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     applicatedAt: {
       type: ColumnTypeEnum.String,

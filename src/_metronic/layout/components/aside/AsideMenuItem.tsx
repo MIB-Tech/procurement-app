@@ -3,9 +3,9 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import { useLayout } from "../../core";
-import { SVG } from "../../../../_custom/components/SVG/SVG";
+import { SVG } from "../../../../_core/components/SVG/SVG";
 import { OperationModel } from "../../../../app/modules/Operation";
-import { getRoutePrefix } from "../../../../_custom/utils";
+import { getRoutePrefix } from "../../../../_core/utils";
 
 type Props = {
   fontIcon?: string;

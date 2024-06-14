@@ -1,37 +1,37 @@
-import { FieldProps } from "../../../_custom/Column/controls/fields";
-import { useAuth } from "../../../_custom/hooks/UseAuth";
+import { FieldProps } from "../../../_core/Column/controls/fields";
+import { useAuth } from "../../../_core/hooks/UseAuth";
 import { useField, useFormikContext } from "formik";
 import { PurchaseOrderModel } from "../PurchaseOrder";
 import {
   HydraItem,
   JsonldCollectionResponse,
-} from "../../../_custom/types/hydra.types";
+} from "../../../_core/types/hydra.types";
 import { DesiredProductModel } from "../DesiredProduct";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
 import { ModelEnum } from "../types";
 import axios from "axios";
-import { getRoutePrefix } from "../../../_custom/utils";
+import { getRoutePrefix } from "../../../_core/utils";
 import {
   CompoundFilter,
   CompoundFilterOperator,
   PropertyFilter,
   PropertyFilterOperator,
-} from "../../../_custom/ListingView/Filter/Filter.types";
+} from "../../../_core/ListingView/Filter/Filter.types";
 import {
   filterToParams,
   serializeSort,
-} from "../../../_custom/ListingView/Filter/Filter.utils";
+} from "../../../_core/ListingView/Filter/Filter.utils";
 import { PurchaseOrderProductComponentModel } from "../PurchaseOrderProductComponent";
 import { PurchaseOrderProductModel } from "./index";
 import { DiscountType } from "./Model";
-import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
+import { useCollectionQuery } from "../../../_core/hooks/UseCollectionQuery";
 
 type PartialNullable<T> = {
   [P in keyof T]?: T[P] | null;
 };
 
 export const ProductField = ({ ...props }: Pick<FieldProps, "name">) => {
-  const { clinic } = useAuth();
+  const { tenant } = useAuth();
   const { name } = props;
   const { values: purchaseOrder, setFieldValue } =
     useFormikContext<Partial<PurchaseOrderModel>>();

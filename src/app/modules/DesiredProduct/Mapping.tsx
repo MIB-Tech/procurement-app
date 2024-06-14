@@ -1,16 +1,16 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
 import { number } from "yup";
 import { QUANTITY_STATUS_OPTIONS } from "../PurchaseOrder/Model";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
-import { FieldProps } from "../../../_custom/Column/controls/fields";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
+import { FieldProps } from "../../../_core/Column/controls/fields";
 import {
   CompoundFilter,
   CompoundFilterOperator,
   PropertyFilterOperator,
-} from "../../../_custom/ListingView/Filter/Filter.types";
+} from "../../../_core/ListingView/Filter/Filter.types";
 import { useFormikContext } from "formik";
 import { PurchaseOrderModel } from "../PurchaseOrder";
 
@@ -48,9 +48,6 @@ const mapping: ModelMapping<ModelEnum.DesiredProduct> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     designation: {
       type: ColumnTypeEnum.String,

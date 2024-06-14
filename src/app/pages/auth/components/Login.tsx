@@ -5,10 +5,10 @@ import * as Yup from "yup";
 import { FormikProvider, useFormik } from "formik";
 import * as auth from "../redux/AuthRedux";
 import { getToken, LoginCredentials } from "../redux/AuthCRUD";
-import { Trans } from "../../../../_custom/components/Trans";
-import { InputField } from "../../../../_custom/Column/String/InputField";
-import { Button } from "../../../../_custom/components/Button";
-import { PasswordField } from "../../../../_custom/Column/String/PasswordField";
+import { Trans } from "../../../../_core/components/Trans";
+import { InputField } from "../../../../_core/Column/String/InputField";
+import { Button } from "../../../../_core/components/Button";
+import { PasswordField } from "../../../../_core/Column/String/PasswordField";
 import { AxiosError } from "axios";
 import { JWTResponseMessage } from "../../../../setup/axios/SetupAxios";
 

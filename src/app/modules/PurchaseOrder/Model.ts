@@ -1,10 +1,10 @@
-import { AbstractModel, CreateTimestamp } from "../../../_custom/types/types";
+import { AbstractModel, CreateTimestamp } from "../../../_core/types/types";
 import { PurchaseOrderProductModel } from "../PurchaseOrderProduct";
 import { VendorModel } from "../Vendor";
 import { CurrencyModel } from "../Currency";
 import { PurchaseOrderCategoryModel } from "../PurchaseOrderCategory";
 import { PurchaseOrderAttachmentModel } from "../PurchaseOrderAttachment";
-import { StringSelectOption } from "../../../_custom/Column/String/StringColumn";
+import { StringSelectOption } from "../../../_core/Column/String/StringColumn";
 import { VendorAddressModel } from "../VendorAddress";
 import { ProductModel } from "../Product";
 import { PaymentModalityModel } from "../PaymentModality";

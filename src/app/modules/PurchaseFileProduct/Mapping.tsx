@@ -1,5 +1,5 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
 
 const mapping: ModelMapping<ModelEnum.PurchaseFileProduct> = {
@@ -7,9 +7,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseFileProduct> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     code: {
       type: ColumnTypeEnum.String,

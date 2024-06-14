@@ -3,19 +3,16 @@ import {
   ModelMapping,
   UpdateViewType,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+} from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
+import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 
 const mapping: ModelMapping<ModelEnum.Vendor> = {
   modelName: ModelEnum.Vendor,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     name: {
       type: ColumnTypeEnum.String,

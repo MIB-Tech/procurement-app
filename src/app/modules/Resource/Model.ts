@@ -1,4 +1,4 @@
-import { AbstractModel } from "../../../_custom/types/types";
+import { AbstractModel } from "../../../_core/types/types";
 import { OperationModel } from "../Operation";
 import { ModelEnum } from "../types";
 

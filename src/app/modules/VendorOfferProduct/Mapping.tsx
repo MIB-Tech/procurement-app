@@ -1,5 +1,5 @@
-import { ModelMapping } from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelMapping } from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
 
 const mapping: ModelMapping<ModelEnum.VendorOfferProduct> = {
@@ -7,9 +7,6 @@ const mapping: ModelMapping<ModelEnum.VendorOfferProduct> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     description: {
       type: ColumnTypeEnum.String,
@@ -20,7 +17,7 @@ const mapping: ModelMapping<ModelEnum.VendorOfferProduct> = {
     vendorProductCode: {
       type: ColumnTypeEnum.String,
     },
-    desination: {
+    designation: {
       type: ColumnTypeEnum.String,
     },
     quantity: {

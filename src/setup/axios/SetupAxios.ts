@@ -4,7 +4,7 @@ import { AxiosError, AxiosInstance } from "axios";
 import { API_URL } from "../../app/modules/utils";
 import * as api from "../../app/pages/auth/redux/AuthCRUD";
 
-import { PRINTER_API_URL } from "../../_custom/hooks/UseZebraPrinter";
+import { PRINTER_API_URL } from "../../_core/hooks/UseZebraPrinter";
 
 export enum JWTResponseMessage {
   Invalid = "JWT_INVALID",
@@ -24,14 +24,14 @@ export default function setupAxios(
 ) {
   axios.defaults.baseURL = API_URL;
   axios.interceptors.request.use((config) => {
-    const { token, clinic } = store.getState().auth;
+    const { token, tenant } = store.getState().auth;
     if (!config.url?.startsWith(PRINTER_API_URL)) {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
 
-      if (clinic) {
-        config.headers["Tenant-Clinic"] = clinic.id;
+      if (tenant) {
+        config.headers["Tenant-Clinic"] = tenant.id;
       }
     }
 

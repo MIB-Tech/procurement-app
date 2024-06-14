@@ -1,32 +1,32 @@
 import React, { ReactNode } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useAuth } from "../../_custom/hooks/UseAuth";
+import { useAuth } from "../../_core/hooks/UseAuth";
 import {
   DetailViewType,
   Model,
   ModelMapping,
   ViewEnum,
-} from "../../_custom/types/ModelMapping";
+} from "../../_core/types/ModelMapping";
 import { MasterLayout } from "../../_metronic/layout/MasterLayout";
 import { PageDataProvider } from "../../_metronic/layout/core";
-import { DeleteView } from "../../_custom/DeleteView/DeleteView";
-import { ListingView } from "../../_custom/ListingView/ListingView";
+import { DeleteView } from "../../_core/DeleteView/DeleteView";
+import { ListingView } from "../../_core/ListingView/ListingView";
 import { MODEL_MAPPINGS } from "../modules";
 import {
   DEFAULT_DETAIL_VIEW,
   DetailView,
-} from "../../_custom/DetailView/DetailView";
-import { camelCaseToDash, getRoutePrefix } from "../../_custom/utils";
-import { CreateView } from "../../_custom/CreateView/CreateView";
-import { UpdateView } from "../../_custom/UpdateView/UpdateView";
+} from "../../_core/DetailView/DetailView";
+import { camelCaseToDash, getRoutePrefix } from "../../_core/utils";
+import { CreateView } from "../../_core/CreateView/CreateView";
+import { UpdateView } from "../../_core/UpdateView/UpdateView";
 import { ModelEnum } from "../modules/types";
 import { DashboardWrapper } from "../pages/dashboard/DashboardWrapper";
 import { RoleKeyEnum } from "../modules/Role/Model";
 import { BudgetMonitoringPage } from "../pages/BudgetMonitoring/BudgetMoritoring";
 import { ExtractionPage } from "../pages/Extraction/Extraction";
-import { I18nMessageKey } from "../../_custom/i18n/I18nMessages";
+import { I18nMessageKey } from "../../_core/i18n/I18nMessages";
 import { PathRouteProps } from "react-router/dist/lib/components";
-import { HydraItem } from "../../_custom/types/hydra.types";
+import { HydraItem } from "../../_core/types/hydra.types";
 import { ReceiptCompliancePage } from "../pages/ReceiptCompliance/ReceiptCompliance";
 import { DisplayEnum } from "./Enums/DisplayEnum";
 import { SettingsWrapper } from "../pages/settings/SettingsWrapper";

@@ -1,11 +1,11 @@
 import React, { FC } from "react";
-import { Trans } from "../../../../_custom/components/Trans";
-import { useAuth } from "../../../../_custom/hooks/UseAuth";
+import { Trans } from "../../../../_core/components/Trans";
+import { useAuth } from "../../../../_core/hooks/UseAuth";
 import { ModelEnum } from "../../../modules/types";
-import { ViewEnum } from "../../../../_custom/types/ModelMapping";
-import { FormView } from "../../../../_custom/FormView/FormView";
+import { ViewEnum } from "../../../../_core/types/ModelMapping";
+import { FormView } from "../../../../_core/FormView/FormView";
 import { Alert } from "react-bootstrap";
-import { getRoutePrefix } from "../../../../_custom/utils";
+import { getRoutePrefix } from "../../../../_core/utils";
 import { getAuthenticatedUser } from "../../auth/redux/AuthCRUD";
 import { useDispatch } from "react-redux";
 import { actions } from "../../auth";
@@ -39,7 +39,7 @@ export const PasswordUpdate: FC = () => {
         view={{
           type: ViewEnum.Update,
           fetchUri: `${getRoutePrefix(ModelEnum.User)}/me`,
-          mutateUri: `${getRoutePrefix(ModelEnum.User)}/${user.uid}/password`,
+          mutateUri: `${getRoutePrefix(ModelEnum.User)}/${user.id}/password`,
           fields: {
             currentPassword: true,
             plainPassword: true,

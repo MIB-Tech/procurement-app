@@ -1,5 +1,5 @@
 import { PurchaseNeedAttachmentModel } from "./index";
-import { AbstractModel } from "../../../_custom/types/types";
+import { AbstractModel } from "../../../_core/types/types";
 
 export type AbstractFileModel = {
   readonly contentUrl?: string;

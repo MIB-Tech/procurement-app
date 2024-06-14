@@ -1,20 +1,20 @@
 import React, { FC, useEffect, useState } from "react";
 import { KTSVG } from "../../../helpers";
-import { useAuth } from "../../../../_custom/hooks/UseAuth";
+import { useAuth } from "../../../../_core/hooks/UseAuth";
 import { useDispatch } from "react-redux";
-import { HydraItem } from "../../../../_custom/types/hydra.types";
+import { HydraItem } from "../../../../_core/types/hydra.types";
 import * as auth from "../../../../app/pages/auth/redux/AuthRedux";
-import { Trans, useTrans } from "../../../../_custom/components/Trans";
+import { Trans, useTrans } from "../../../../_core/components/Trans";
 import clsx from "clsx";
-import { Button } from "../../../../_custom/components/Button";
-import { ModelCell } from "../../../../_custom/ListingView/views/Table/ModelCell";
-import { Input } from "../../../../_custom/Column/String/InputBase/Input";
+import { Button } from "../../../../_core/components/Button";
+import { ModelCell } from "../../../../_core/ListingView/views/Table/ModelCell";
+import { Input } from "../../../../_core/Column/String/InputBase/Input";
 
 const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
-  const { clinic: activeClinic, user } = useAuth();
+  const { tenant: activeTenant, user, tenants } = useAuth();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Array<HydraItem>>([
-    ...user.clinics,
+    ...tenants,
   ]);
 
   const { trans } = useTrans();
@@ -24,14 +24,14 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
   useEffect(() => {
     if (searchQuery) {
       setSearchResults(
-        (user.clinics as Array<HydraItem>).filter((clinic) =>
-          clinic["@title"].toLowerCase().includes(searchQuery.toLowerCase())
+        (tenants as Array<HydraItem>).filter((tenant) =>
+          tenant["@title"].toLowerCase().includes(searchQuery.toLowerCase())
         )
       );
     } else {
-      setSearchResults([...user.clinics]);
+      setSearchResults([...tenants]);
     }
-  }, [searchQuery, user.clinics]);
+  }, [searchQuery, tenants]);
 
   return (
     <div
@@ -80,7 +80,7 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
             size='sm'
             onClick={(e) => {
               e.preventDefault();
-              dispatch(auth.actions.setClinic(undefined));
+              dispatch(auth.actions.setTenant(undefined));
             }}
           >
             <KTSVG
@@ -108,23 +108,23 @@ const QuickLinks: FC<{ show?: boolean }> = ({ show }) => {
         )}
 
         <div className='scroll-y mh-200px mh-lg-325px'>
-          {(searchResults as Array<HydraItem>).map((clinic) => {
-            const active = clinic.id === activeClinic?.id;
+          {(searchResults as Array<HydraItem>).map((tenant) => {
+            const active = tenant.id === activeTenant?.id;
 
             return (
               <div
-                key={clinic["@id"]}
+                key={tenant["@id"]}
                 className={clsx(
                   "d-flex align-items-center mb-2 p-1 rounded-2 bg-hover-light",
                   active &&
                     "bg-light-primary border border-primary border-opacity-50"
                 )}
                 onClick={() => {
-                  dispatch(auth.actions.setClinic(active ? undefined : clinic));
+                  dispatch(auth.actions.setTenant(active ? undefined : tenant));
                 }}
               >
                 <ModelCell
-                  item={clinic}
+                  item={tenant}
                   readOnly
                 />
               </div>

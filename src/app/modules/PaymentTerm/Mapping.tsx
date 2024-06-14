@@ -1,8 +1,8 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
-import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
+import { NumberFormat } from "../../../_core/Column/Number/NumberColumn";
 import moment from "moment/moment";
 
 const mapping: ModelMapping<ModelEnum.PaymentTerm> = {
@@ -10,9 +10,6 @@ const mapping: ModelMapping<ModelEnum.PaymentTerm> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     amount: {
       type: ColumnTypeEnum.Number,

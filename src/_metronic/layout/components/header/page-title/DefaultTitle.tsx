@@ -2,8 +2,8 @@ import clsx from "clsx";
 import React, { FC } from "react";
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { useLayout, usePageData } from "../../../core";
-import { useAuth } from "../../../../../_custom/hooks/UseAuth";
-import { SVG } from "../../../../../_custom/components/SVG/SVG";
+import { useAuth } from "../../../../../_core/hooks/UseAuth";
+import { SVG } from "../../../../../_core/components/SVG/SVG";
 import { OperationModel } from "../../../../../app/modules/Operation";
 
 export const useCurrentOperation: () => OperationModel | undefined = () => {

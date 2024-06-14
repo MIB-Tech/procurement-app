@@ -5,7 +5,7 @@ import { Registration } from "./components/Registration";
 import { ForgotPassword } from "./components/ForgotPassword";
 import { Login } from "./components/Login";
 import { toAbsoluteUrl } from "../../../_metronic/helpers";
-import { Logo } from "../../../_custom/components/Logo";
+import { Logo } from "../../../_core/components/Logo";
 import { setLanguage, useLang } from "../../../_metronic/i18n/Metronici18n";
 import clsx from "clsx";
 import { languages } from "../../../_metronic/partials/layout/header-menus/Languages";

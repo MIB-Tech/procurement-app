@@ -1,5 +1,5 @@
 import React, { FC, createContext, useContext } from "react";
-import { Lang } from "../../_custom/i18n/I18nMessages";
+import { Lang } from "../../_core/i18n/I18nMessages";
 
 const I18N_CONFIG_KEY = process.env.REACT_APP_I18N_CONFIG_KEY || "i18nConfig";
 

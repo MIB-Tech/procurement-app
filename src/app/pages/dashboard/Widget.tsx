@@ -1,8 +1,8 @@
 import { Variant } from "react-bootstrap/types";
 import React, { FC, ReactNode } from "react";
-import { NumberUnit } from "../../../_custom/components/NumberUnit";
+import { NumberUnit } from "../../../_core/components/NumberUnit";
 import clsx from "clsx";
-import { SVG } from "../../../_custom/components/SVG/SVG";
+import { SVG } from "../../../_core/components/SVG/SVG";
 
 export type WidgetProps = {
   variant?: Variant;

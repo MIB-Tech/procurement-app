@@ -5,32 +5,32 @@ import {
   ModelMapping,
   UpdateViewType,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+} from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
-import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
+import { NumberFormat } from "../../../_core/Column/Number/NumberColumn";
 import Model, { DiscountType } from "./Model";
-import { CellContent } from "../../../_custom/ListingView/views/Table/BodyCell";
-import { SelectField } from "../../../_custom/Column/controls/fields/SelectField/SelectField";
+import { CellContent } from "../../../_core/ListingView/views/Table/BodyCell";
+import { SelectField } from "../../../_core/Column/controls/fields/SelectField/SelectField";
 import { useField, useFormikContext } from "formik";
 import { PurchaseOrderModel } from "../PurchaseOrder";
-import { Bullet } from "../../../_custom/components/Bullet";
+import { Bullet } from "../../../_core/components/Bullet";
 import {
   CurrencyProps,
   NumberUnit,
-} from "../../../_custom/components/NumberUnit";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
-import { FieldProps } from "../../../_custom/Column/controls/fields";
-import { NumberColumnField } from "../../../_custom/Column/Number/NumberColumnField";
+} from "../../../_core/components/NumberUnit";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
+import { FieldProps } from "../../../_core/Column/controls/fields";
+import { NumberColumnField } from "../../../_core/Column/Number/NumberColumnField";
 import { QUANTITY_STATUS_OPTIONS } from "../PurchaseOrder/Model";
 import { number } from "yup";
 import { DesiredProductModel } from "../DesiredProduct";
-import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
+import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 import { PurchaseOrderProductComponentModel } from "../PurchaseOrderProductComponent";
 import { ProductField } from "./ProductField";
-import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
-import { PropertyFilterOperator } from "../../../_custom/ListingView/Filter/Filter.types";
+import { useCollectionQuery } from "../../../_core/hooks/UseCollectionQuery";
+import { PropertyFilterOperator } from "../../../_core/ListingView/Filter/Filter.types";
 import { FC } from "react";
 
 const AmountUnit = ({
@@ -297,9 +297,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     designation: {
       type: ColumnTypeEnum.String,

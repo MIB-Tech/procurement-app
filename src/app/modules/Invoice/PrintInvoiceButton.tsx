@@ -1,12 +1,12 @@
 import React, { FC, useMemo, useState } from "react";
-import { CustomItemActionProps } from "../../../_custom/types/ModelMapping";
+import { CustomItemActionProps } from "../../../_core/types/ModelMapping";
 import { ModelEnum } from "../types";
-import { useUri } from "../../../_custom/hooks/UseUri";
-import { useItemQuery } from "../../../_custom/hooks/UseItemQuery";
-import { getNumberUnit } from "../../../_custom/components/NumberUnit";
+import { useUri } from "../../../_core/hooks/UseUri";
+import { useItemQuery } from "../../../_core/hooks/UseItemQuery";
+import { getNumberUnit } from "../../../_core/components/NumberUnit";
 import moment from "moment";
-import { Button } from "../../../_custom/components/Button";
-import { Trans } from "../../../_custom/components/Trans";
+import { Button } from "../../../_core/components/Button";
+import { Trans } from "../../../_core/components/Trans";
 import { Modal } from "react-bootstrap";
 import ReportViewer from "../PurchaseOrder/components/ReportViewer";
 import { DiscountType } from "../PurchaseOrderProduct/Model";

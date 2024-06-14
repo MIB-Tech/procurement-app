@@ -3,17 +3,17 @@ import {
   ModelMapping,
   UpdateViewType,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+} from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { CellContent } from "../../../_custom/ListingView/views/Table/BodyCell";
+import { CellContent } from "../../../_core/ListingView/views/Table/BodyCell";
 import { QUANTITY_STATUS_COLUMN } from "../PurchaseOrderProduct/Mapping";
-import { BooleanField } from "../../../_custom/Column/Boolean/BooleanField";
+import { BooleanField } from "../../../_core/Column/Boolean/BooleanField";
 import React from "react";
 import { QuantityStatusEnum } from "../PurchaseOrder/Model";
 import { ref } from "yup";
-import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
 import { COMPLIANCE_STATUS_OPTIONS } from "./Model";
 import { DesiredProductModel } from "../DesiredProduct";
 
@@ -22,9 +22,6 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
 
     quantity: {

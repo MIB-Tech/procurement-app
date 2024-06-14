@@ -97,6 +97,7 @@ export enum ModelEnum {
   PaymentTerm = "PaymentTerm",
   ReceiptAttachment = "ReceiptAttachment",
 }
+export const TENANT_TYPE = ModelEnum.Clinic;
 
 export type Models = {
   [ModelEnum.PurchaseNeed]: PurchaseNeedModel;

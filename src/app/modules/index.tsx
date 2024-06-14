@@ -3,15 +3,15 @@ import { ROLE_MAPPING } from "./Role";
 import { CATEGORY_MAPPING } from "./Category";
 import { PURCHASE_NEED_MAPPING } from "./PurchaseNeed";
 import { PURCHASE_NEED_ATTACHMENT_MAPPING } from "./PurchaseNeedAttachment";
-import { atomFamily } from "recoil";
+import { atom, atomFamily } from "recoil";
 import {
   ListingModeEnum,
   Params,
-} from "../../_custom/ListingView/ListingView.types";
-import { CompoundFilterOperator } from "../../_custom/ListingView/Filter/Filter.types";
-import { Mapping } from "../../_custom/types/types";
+} from "../../_core/ListingView/ListingView.types";
+import { CompoundFilterOperator } from "../../_core/ListingView/Filter/Filter.types";
+import { Mapping } from "../../_core/types/types";
 import { ModelEnum } from "./types";
-import { ViewEnum } from "../../_custom/types/ModelMapping";
+import { ListingViewType, ViewEnum } from "../../_core/types/ModelMapping";
 import { APPLICANT_SERVICE_MAPPING } from "./ApplicantService";
 import { COMPANY_MAPPING } from "./Company";
 import { PURCHASE_NEED_PRODUCT_MAPPING } from "./PurchaseNeedProduct";
@@ -20,7 +20,7 @@ import { STEP_MAPPING } from "./Step";
 import { VALIDATION_PATH_MAPPING } from "./ValidationPath";
 import { RESOURCE_MAPPING } from "./Resource";
 import { OPERATION_MAPPING } from "./Operation";
-import { HydraItem } from "../../_custom/types/hydra.types";
+import { HydraItem } from "../../_core/types/hydra.types";
 import { VENDOR_ADDRESS_MAPPING } from "./VendorAddress";
 import { VENDOR_MAPPING } from "./Vendor";
 import { CURRENCY_MAPPING } from "./Currency";
@@ -56,6 +56,7 @@ import { QUERY_PARAM_MAPPING } from "./QueryParam";
 import { INVOICE_ATTACHMENT_MAPPING } from "./InvoiceAttachment";
 import { PAYMENT_TERM_MAPPING } from "./PaymentTerm";
 import { RECEIPT_ATTACHMENT_MAPPING } from "./RecieptAttachment";
+import { DEFAULT_LISTING_VIEW } from "../../_core/ListingView/ListingView.utils";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
@@ -110,72 +111,40 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.PaymentTerm]: PAYMENT_TERM_MAPPING,
 };
 
-type ListingState = {
-  selectedItems: Array<HydraItem>;
-} & Omit<Required<Params<any>>, "itemsPerPage"> &
-  Pick<Params<any>, "itemsPerPage">;
+export type ListingState<M extends ModelEnum> = {
+  selectedItems: Array<HydraItem<M>>;
+} & Omit<Required<Params<M>>, "itemsPerPage"> &
+  Pick<Params<M>, "itemsPerPage">;
 
-export const LISTING_FAMILY = atomFamily<
-  ListingState,
-  { modelName: ModelEnum; embedded?: boolean; view?: ViewEnum }
->({
-  key: "LISTING_FAMILY",
-  default: ({ modelName, embedded }) => {
-    let defaultValues: ListingState = {
-      mode: ListingModeEnum.Listing,
-      itemsPerPage: 12,
-      page: 1,
-      filter: {
-        operator: CompoundFilterOperator.And,
-        filters: [],
-      },
-      basicFilter: {},
-      sort: {},
-      search: "",
-      selectedItems: [],
-    };
+export const getRecoilState = <M extends ModelEnum>({
+  modelName,
+  nestedColumName,
+}: {
+  modelName: M;
+  nestedColumName?: string;
+}) => {
+  const { views } = MODEL_MAPPINGS[modelName];
+  const { defaultState } = (views?.find(
+    (view) => view.type === ViewEnum.Listing
+  ) || DEFAULT_LISTING_VIEW) as ListingViewType<M>;
 
-    switch (modelName) {
-      case ModelEnum.Category:
-        if (!embedded) {
-          defaultValues = {
-            ...defaultValues,
-            filter: {
-              operator: CompoundFilterOperator.And,
-              filters: [],
-            },
-          };
-        }
+  let defaultValues: ListingState<M> = {
+    mode: ListingModeEnum.Listing,
+    itemsPerPage: 12,
+    page: 1,
+    filter: {
+      operator: CompoundFilterOperator.And,
+      filters: [],
+    },
+    basicFilter: {},
+    sort: {},
+    search: "",
+    selectedItems: [],
+    ...defaultState,
+  };
 
-        break;
-      case ModelEnum.PurchaseOrder:
-        defaultValues = {
-          ...defaultValues,
-          sort: {
-            createdAt: "desc",
-          },
-        };
-        break;
-      case ModelEnum.Resource:
-        defaultValues = {
-          ...defaultValues,
-          sort: {
-            sortIndex: "desc",
-          },
-        };
-        break;
-      case ModelEnum.PaymentModality:
-        defaultValues = {
-          ...defaultValues,
-          sort: {
-            name: "asc",
-          },
-        };
-        break;
-      default:
-        break;
-    }
-
-    return defaultValues;
-  },
-});
+  return atom<ListingState<M>>({
+    key: `${modelName}.LISTING${nestedColumName ? `.${nestedColumName}` : ""}`,
+    default: defaultValues,
+  });
+};

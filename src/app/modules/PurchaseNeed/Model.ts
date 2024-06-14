@@ -1,4 +1,4 @@
-import { AbstractModel, CreateTimestamp } from "../../../_custom/types/types";
+import { AbstractModel, CreateTimestamp } from "../../../_core/types/types";
 import { UserModel } from "../User";
 import { PurchaseNeedAttachmentModel } from "../PurchaseNeedAttachment";
 import { CategoryModel } from "../Category";

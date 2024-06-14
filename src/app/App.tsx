@@ -3,7 +3,7 @@ import { I18nProvider } from "../_metronic/i18n/i18nProvider";
 import { LayoutProvider, LayoutSplashScreen } from "../_metronic/layout/core";
 import AuthInit from "./pages/auth/redux/AuthInit";
 import { AppRoutes } from "./routing/AppRoutes";
-import { ToastProvider } from "../_custom/Toastr/Toastr.provider";
+import { ToastProvider } from "../_core/Toastr/Toastr.provider";
 import { RecoilRoot } from "recoil";
 import moment from "moment-timezone";
 
