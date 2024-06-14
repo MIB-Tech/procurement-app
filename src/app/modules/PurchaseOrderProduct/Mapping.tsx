@@ -31,7 +31,8 @@ import { PurchaseOrderProductComponentModel } from "../PurchaseOrderProductCompo
 import { ProductField } from "./ProductField";
 import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
 import { PropertyFilterOperator } from "../../../_custom/ListingView/Filter/Filter.types";
-import { FC } from "react";
+import React, { FC } from "react";
+import { VatRateSelectField } from "../VatRate/components/VatRateSelectField";
 
 const AmountUnit = ({
   getValue,
@@ -218,15 +219,8 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
     ),
   },
   vatRate: {
-    defaultValue: 0.2,
     render: ({ fieldProps }) => (
-      <SelectField
-        size='sm'
-        options={[0, 0.07, 0.1, 0.14, 0.2]}
-        getOptionLabel={(varRate) => `${(varRate * 100).toFixed(0)} %`}
-        placeholder='TVA'
-        {...fieldProps}
-      />
+      <VatRateSelectField fieldProps={{ ...fieldProps }} />
     ),
   },
   priceExclTax: {
@@ -532,15 +526,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           ),
         },
         vatRate: {
-          defaultValue: 0.2,
           render: ({ fieldProps }) => (
-            <SelectField
-              size='sm'
-              options={[0, 0.07, 0.1, 0.14, 0.2]}
-              getOptionLabel={(varRate) => `${(varRate * 100).toFixed(0)} %`}
-              placeholder='TVA'
-              {...fieldProps}
-            />
+            <VatRateSelectField fieldProps={{ ...fieldProps }} />
           ),
         },
         priceExclTax: {
