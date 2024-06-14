@@ -1,6 +1,6 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
 import { string } from "yup";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
 
 const mapping: ModelMapping<ModelEnum.Role> = {
@@ -8,9 +8,6 @@ const mapping: ModelMapping<ModelEnum.Role> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     name: {
       type: ColumnTypeEnum.String,

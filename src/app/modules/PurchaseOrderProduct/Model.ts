@@ -1,4 +1,4 @@
-import { AbstractModel } from "../../../_custom/types/types";
+import { AbstractModel } from "../../../_core/types/types";
 import { DesiredProductModel } from "../DesiredProduct";
 import { PurchaseOrderModel } from "../PurchaseOrder";
 import { ProductModel } from "../Product";

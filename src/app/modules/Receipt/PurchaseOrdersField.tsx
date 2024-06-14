@@ -1,20 +1,20 @@
-import { FieldProps } from "../../../_custom/Column/controls/fields";
+import { FieldProps } from "../../../_core/Column/controls/fields";
 import { useFormikContext } from "formik";
-import { Model } from "../../../_custom/types/ModelMapping";
+import { Model } from "../../../_core/types/ModelMapping";
 import { ModelEnum } from "../types";
-import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
+import { useCollectionQuery } from "../../../_core/hooks/UseCollectionQuery";
 import {
   CompoundFilter,
   CompoundFilterOperator,
   PropertyFilterOperator,
-} from "../../../_custom/ListingView/Filter/Filter.types";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+} from "../../../_core/ListingView/Filter/Filter.types";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
 import { ValidationStatusEnum } from "../PurchaseOrder/Model";
-import { Button } from "../../../_custom/components/Button";
-import { HydraItem } from "../../../_custom/types/hydra.types";
-import { RecursivePartial } from "../../../_custom/types/types";
+import { Button } from "../../../_core/components/Button";
+import { HydraItem } from "../../../_core/types/hydra.types";
+import { RecursivePartial } from "../../../_core/types/types";
 import { ReceiptProductModel } from "../ReceiptProduct";
-import { Trans } from "../../../_custom/components/Trans";
+import { Trans } from "../../../_core/components/Trans";
 import React from "react";
 
 export const PurchaseOrdersField = ({ name }: FieldProps) => {

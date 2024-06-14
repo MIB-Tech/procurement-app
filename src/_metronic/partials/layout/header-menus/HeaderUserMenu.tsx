@@ -3,8 +3,8 @@ import React, { FC } from "react";
 import { useDispatch } from "react-redux";
 import { Languages } from "./Languages";
 import * as auth from "../../../../app/pages/auth/redux/AuthRedux";
-import { Trans } from "../../../../_custom/components/Trans";
-import { useAuth } from "../../../../_custom/hooks/UseAuth";
+import { Trans } from "../../../../_core/components/Trans";
+import { useAuth } from "../../../../_core/hooks/UseAuth";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import { CUSTOM_ROUTES } from "../../../../app/routing/PrivateRoutes";
@@ -159,6 +159,7 @@ const HeaderUserMenu: FC<{ show?: boolean }> = ({ show }) => {
           route.display.includes(DisplayEnum.USER_MENU)
         ).map((route) => (
           <Link
+            key={route.path}
             to={`/${route.path}`}
             className='menu-link px-5'
             // onClick={() => {

@@ -15,7 +15,7 @@ import {
 } from "../partials";
 import { MenuComponent } from "../assets/ts/components";
 import { LinearProgress } from "@mui/material";
-import { useAuth } from "../../_custom/hooks/UseAuth";
+import { useAuth } from "../../_core/hooks/UseAuth";
 
 const MasterLayout: React.FC = ({ children }) => {
   const { pageLoading } = usePageData();

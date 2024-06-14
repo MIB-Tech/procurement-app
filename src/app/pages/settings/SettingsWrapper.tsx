@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import { usePageData } from "../../../_metronic/layout/core";
-import { useTrans } from "../../../_custom/components/Trans";
+import { useTrans } from "../../../_core/components/Trans";
 import { PasswordUpdate } from "./components/PasswordUpdate";
 
 export const SettingsWrapper: FC = () => {

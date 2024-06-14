@@ -1,11 +1,11 @@
-import { AbstractModel } from "../../../_custom/types/types";
+import { AbstractModel } from "../../../_core/types/types";
 import { VendorOfferModel } from "../VendorOffer";
 import { PurchaseFileProductModel } from "../PurchaseFileProduct";
 
 type Model = {
   description: string;
   vendorProductCode: number;
-  desination: string;
+  designation: string;
   quantity: number;
   unitPrice: number;
   vatRate: number;

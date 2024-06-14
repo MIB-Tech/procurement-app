@@ -1,20 +1,20 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { SelectField } from "../../../_custom/Column/controls/fields/SelectField/SelectField";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
-import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
+import { SelectField } from "../../../_core/Column/controls/fields/SelectField/SelectField";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
+import { NumberFormat } from "../../../_core/Column/Number/NumberColumn";
 import { PRODUCT_TYPES, ProductTypeEnum } from "./Model";
 import React from "react";
-import { FieldProps } from "../../../_custom/Column/controls/fields";
-import { useTrans } from "../../../_custom/components/Trans";
-import { I18nMessageKey } from "../../../_custom/i18n/I18nMessages";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import { FieldProps } from "../../../_core/Column/controls/fields";
+import { useTrans } from "../../../_core/components/Trans";
+import { I18nMessageKey } from "../../../_core/i18n/I18nMessages";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
 import {
   CompoundFilter,
   CompoundFilterOperator,
   PropertyFilterOperator,
-} from "../../../_custom/ListingView/Filter/Filter.types";
+} from "../../../_core/ListingView/Filter/Filter.types";
 import { VatRateSelectField } from "../VatRate/components/VatRateSelectField";
 
 const ProductTypeField = (props: FieldProps & { disabled?: boolean }) => {
@@ -71,9 +71,6 @@ const mapping: ModelMapping<ModelEnum.Product> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     designation: {
       type: ColumnTypeEnum.String,
@@ -179,6 +176,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
           defaultValue: "U",
         },
         vatRate: {
+          defaultValue: 0.2,
           render: ({ fieldProps }) => (
             <VatRateSelectField fieldProps={{ ...fieldProps }} />
           ),
@@ -211,9 +209,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
           slotProps: { root: { sm: 8, md: 6, lg: 4 } },
         },
         accountingAccount: true,
-        measurementUnit: {
-          defaultValue: "U",
-        },
+        measurementUnit: true,
         vatRate: {
           render: ({ fieldProps }) => (
             <VatRateSelectField fieldProps={{ ...fieldProps }} />

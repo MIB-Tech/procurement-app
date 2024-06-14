@@ -1,18 +1,18 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { FC, useEffect } from "react";
 import { usePageData } from "../../../_metronic/layout/core";
-import { useTrans } from "../../../_custom/components/Trans";
+import { useTrans } from "../../../_core/components/Trans";
 import { Widget } from "./Widget";
-import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
+import { useCollectionQuery } from "../../../_core/hooks/UseCollectionQuery";
 import { ModelEnum } from "../../modules/types";
 import { capitalize, Skeleton } from "@mui/material";
-import { TableView } from "../../../_custom/ListingView/views/Table/TableView";
-import { ListingColumns } from "../../../_custom/types/ModelMapping";
-import { NumberUnit } from "../../../_custom/components/NumberUnit";
+import { TableView } from "../../../_core/ListingView/views/Table/TableView";
+import { ListingColumns } from "../../../_core/types/ModelMapping";
+import { NumberUnit } from "../../../_core/components/NumberUnit";
 import { useQuery } from "react-query";
 import axios from "axios";
 import moment from "moment";
-import { useAuth } from "../../../_custom/hooks/UseAuth";
+import { useAuth } from "../../../_core/hooks/UseAuth";
 
 let currentDate = moment();
 let ranges: Array<{ start: string; end: string }> = [];
@@ -32,9 +32,9 @@ for (let i = 0; i < 4; i++) {
 }
 
 const useStatisticQuery = () => {
-  const { clinic } = useAuth();
+  const { tenant } = useAuth();
   return useQuery({
-    queryKey: ["BLOCK_1", clinic?.id],
+    queryKey: ["BLOCK_1", tenant?.id],
     queryFn: () =>
       axios.get<{
         count: number;
@@ -47,7 +47,7 @@ const useStatisticQuery = () => {
         }>;
       }>("/custom/statistics/purchase-orders", {
         params: {
-          clinicId: clinic?.id,
+          clinicId: tenant?.id,
           ...ranges.reduce(
             (previousValue, currentValue, index) => ({
               ...previousValue,
@@ -119,16 +119,16 @@ const Block2 = () => {
 };
 
 const Block3 = () => {
-  const { clinic } = useAuth();
+  const { tenant } = useAuth();
   const { data } = useQuery({
-    queryKey: ["BLOCK_3", clinic?.id],
+    queryKey: ["BLOCK_3", tenant?.id],
     queryFn: () =>
       axios.get<{
         sum: number;
         vendors: Array<{ name: string; sumTotalInclTax: number }>;
       }>("/custom/statistics/vendors", {
         params: {
-          clinicId: clinic?.id,
+          clinicId: tenant?.id,
         },
       }),
   });
@@ -153,7 +153,7 @@ const Block3 = () => {
 };
 
 const Block4 = () => {
-  const { clinic } = useAuth();
+  const { tenant } = useAuth();
   const itemsPerPage = 5;
   const { collection, isLoading, refetch } =
     useCollectionQuery<ModelEnum.PurchaseOrder>({
@@ -168,7 +168,7 @@ const Block4 = () => {
 
   useEffect(() => {
     refetch().then((r) => {});
-  }, [clinic?.id]);
+  }, [tenant?.id]);
 
   return (
     <div className='card card-bordered'>

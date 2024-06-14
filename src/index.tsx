@@ -26,7 +26,7 @@ import "./_metronic/assets/sass/style.scss";
 import "./_metronic/assets/sass/style.react.scss";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { DefaultLayoutConfig } from "./_metronic/layout/core";
-import { LoadingLabel } from "./_custom/components/Skeleton";
+import { LoadingLabel } from "./_core/components/Skeleton";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { toAbsoluteApi } from "./app/modules/utils";
 import { toAbsoluteUrl } from "./_metronic/helpers";

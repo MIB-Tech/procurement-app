@@ -1,26 +1,26 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { FC, useEffect } from "react";
 import { usePageData } from "../../../_metronic/layout/core";
-import { Trans, useTrans } from "../../../_custom/components/Trans";
+import { Trans, useTrans } from "../../../_core/components/Trans";
 import { useQuery } from "react-query";
 import axios from "axios";
 import { FormikProvider, useFormik } from "formik";
-import { HydraItem } from "../../../_custom/types/hydra.types";
+import { HydraItem } from "../../../_core/types/hydra.types";
 import { ModelEnum } from "../../modules/types";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
 import { Grid } from "@mui/material";
-import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
+import { useCollectionQuery } from "../../../_core/hooks/UseCollectionQuery";
 import {
   CompoundFilterOperator,
   PropertyFilterOperator,
-} from "../../../_custom/ListingView/Filter/Filter.types";
-import { ValueField } from "../../../_custom/Column/ValueField";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
-import { Button } from "../../../_custom/components/Button";
+} from "../../../_core/ListingView/Filter/Filter.types";
+import { ValueField } from "../../../_core/Column/ValueField";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
+import { ColumnTypeEnum } from "../../../_core/types/types";
+import { Button } from "../../../_core/components/Button";
 import { utils, writeFile } from "xlsx";
 import moment from "moment/moment";
-import { TypeColum } from "../../../_custom/types/ModelMapping";
+import { TypeColum } from "../../../_core/types/ModelMapping";
 
 type Value = { query: HydraItem | null };
 const initialValues: Value = {

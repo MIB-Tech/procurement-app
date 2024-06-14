@@ -1,5 +1,5 @@
 import { VendorAddressModel } from "../VendorAddress";
-import { AbstractModel } from "../../../_custom/types/types";
+import { AbstractModel } from "../../../_core/types/types";
 import { ProductPricingModel } from "../ProductPricing";
 import { PaymentModalityModel } from "../PaymentModality";
 

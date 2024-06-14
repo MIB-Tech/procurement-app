@@ -1,4 +1,10 @@
 import moment, { MomentInput } from "moment";
+import { useNavigate } from "react-router-dom";
+import { shallowEqual, useSelector } from "react-redux";
+import { RootState } from "../../setup";
+import { AuthState } from "../pages/auth";
+import { getRoutePrefix } from "../../_core/utils";
+import { OperationPermission, Permission } from "../../_core/hooks/UseAuth";
 
 export const API_URL = process.env.REACT_APP_API_URL;
 // export const API_URL = 'http://192.168.240.52:83';
@@ -21,3 +27,14 @@ export const getDurationText = ({
   formatTemplate?: string;
 }) =>
   getDurationTextFromDiff({ diff: moment(end).diff(start), formatTemplate });
+export const useTenant = () => {
+  const { user, tenant } = useSelector<RootState>(
+    (state) => state.auth,
+    shallowEqual
+  ) as Required<Pick<AuthState, "user">> & Pick<AuthState, "tenant">;
+
+  return {
+    tenant,
+    tenants: user.clinics,
+  };
+};

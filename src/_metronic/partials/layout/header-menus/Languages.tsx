@@ -3,8 +3,8 @@ import clsx from "clsx";
 import React, { FC } from "react";
 import { toAbsoluteUrl } from "../../../helpers";
 import { useLang, setLanguage } from "../../../i18n/Metronici18n";
-import { Lang } from "../../../../_custom/i18n/I18nMessages";
-import { Trans } from "../../../../_custom/components/Trans";
+import { Lang } from "../../../../_core/i18n/I18nMessages";
+import { Trans } from "../../../../_core/components/Trans";
 
 export const languages: Array<{
   lang: Lang;

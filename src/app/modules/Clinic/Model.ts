@@ -1,5 +1,5 @@
 import { UserModel } from "../User";
-import { AbstractModel } from "../../../_custom/types/types";
+import { AbstractModel } from "../../../_core/types/types";
 import { ServiceModel } from "../Service";
 import { CityModel } from "../City";
 import { PurchaseNeedModel } from "../PurchaseNeed";

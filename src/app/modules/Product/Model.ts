@@ -1,11 +1,11 @@
-import { AbstractModel } from "../../../_custom/types/types";
+import { AbstractModel } from "../../../_core/types/types";
 import { PurchaseNeedProductModel } from "../PurchaseNeedProduct";
 import { CategoryModel } from "../Category";
 import { ProductPricingModel } from "../ProductPricing";
 import { PurchaseOrderModel } from "../PurchaseOrder";
 import { ComponentModel } from "../Component";
 import { ProductSectionModel } from "../ProductSection";
-import { StringSelectOption } from "../../../_custom/Column/String/StringColumn";
+import { StringSelectOption } from "../../../_core/Column/String/StringColumn";
 
 export enum ProductTypeEnum {
   Simple = "SIMPLE",

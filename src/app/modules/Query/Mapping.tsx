@@ -1,9 +1,9 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
-import { FieldProps } from "../../../_custom/Column/controls/fields";
+import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
+import { FieldProps } from "../../../_core/Column/controls/fields";
 import { useField } from "formik";
 import { useEffect } from "react";
 import { QueryParamModel } from "../QueryParam";
@@ -69,9 +69,6 @@ const mapping: ModelMapping<ModelEnum.Query> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     name: {
       type: ColumnTypeEnum.String,

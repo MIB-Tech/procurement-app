@@ -10,7 +10,7 @@ import "moment/locale/fr";
 import "moment/locale/en-gb";
 import "moment/locale/ar";
 import { setLocale } from "yup";
-import { I18N_MESSAGES, Lang } from "../../_custom/i18n/I18nMessages";
+import { I18N_MESSAGES, Lang } from "../../_core/i18n/I18nMessages";
 import { LocaleSpecification } from "moment/moment";
 
 setLocale({

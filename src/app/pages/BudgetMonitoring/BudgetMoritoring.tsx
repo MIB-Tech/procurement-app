@@ -1,17 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { FC, ReactNode, useEffect, useState } from "react";
 import { usePageData } from "../../../_metronic/layout/core";
-import { useTrans } from "../../../_custom/components/Trans";
+import { useTrans } from "../../../_core/components/Trans";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { NumberUnit } from "../../../_custom/components/NumberUnit";
+import { NumberUnit } from "../../../_core/components/NumberUnit";
 import { KTSVG } from "../../../_metronic/helpers";
-import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
+import { useCollectionQuery } from "../../../_core/hooks/UseCollectionQuery";
 import { ModelEnum } from "../../modules/types";
-import { getRoutePrefix } from "../../../_custom/utils";
-import { HydraItem } from "../../../_custom/types/hydra.types";
+import { getRoutePrefix } from "../../../_core/utils";
+import { HydraItem } from "../../../_core/types/hydra.types";
 import { Modal } from "react-bootstrap";
-import { ModelCell } from "../../../_custom/ListingView/views/Table/ModelCell";
+import { ModelCell } from "../../../_core/ListingView/views/Table/ModelCell";
 
 type Props = {
   className: string;

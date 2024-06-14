@@ -1,5 +1,5 @@
 import { ModelEnum } from "../../types";
-import { Model } from "../../../../_custom/types/ModelMapping";
+import { Model } from "../../../../_core/types/ModelMapping";
 
 export type AssociateDiff = {
   class: string;

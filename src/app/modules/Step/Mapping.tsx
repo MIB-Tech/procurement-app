@@ -1,16 +1,13 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
 
 const mapping: ModelMapping<ModelEnum.Step> = {
   modelName: ModelEnum.Step,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     name: {
       type: ColumnTypeEnum.String,

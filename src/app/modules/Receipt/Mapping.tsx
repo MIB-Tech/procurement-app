@@ -2,13 +2,13 @@ import {
   FormFields,
   ModelMapping,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+} from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
 import React from "react";
-import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
+import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 import moment from "moment";
 import { ArraySchema } from "yup";
 import { PrintReceiptButton } from "./PrintReceiptButton";
@@ -144,9 +144,6 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     receiptNumber: {
       type: ColumnTypeEnum.String,

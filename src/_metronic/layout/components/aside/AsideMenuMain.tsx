@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { Fragment } from "react";
 import { AsideMenuItem } from "./AsideMenuItem";
-import { useAuth } from "../../../../_custom/hooks/UseAuth";
-import { ViewEnum } from "../../../../_custom/types/ModelMapping";
-import { Trans } from "../../../../_custom/components/Trans";
+import { useAuth } from "../../../../_core/hooks/UseAuth";
+import { ViewEnum } from "../../../../_core/types/ModelMapping";
+import { Trans } from "../../../../_core/components/Trans";
 import { CUSTOM_ROUTES } from "../../../../app/routing/PrivateRoutes";
-import { getRoutePrefix } from "../../../../_custom/utils";
+import { getRoutePrefix } from "../../../../_core/utils";
 import { DisplayEnum } from "../../../../app/routing/Enums/DisplayEnum";
 
 // const GROUPS = [

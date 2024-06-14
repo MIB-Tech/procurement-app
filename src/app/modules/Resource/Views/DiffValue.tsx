@@ -1,6 +1,6 @@
-import { Bullet } from "../../../../_custom/components/Bullet";
-import { CellContent } from "../../../../_custom/ListingView/views/Table/BodyCell";
-import { ColumnTypeEnum } from "../../../../_custom/types/types";
+import { Bullet } from "../../../../_core/components/Bullet";
+import { CellContent } from "../../../../_core/ListingView/views/Table/BodyCell";
+import { ColumnTypeEnum } from "../../../../_core/types/types";
 import { Reference } from "./Reference";
 import React from "react";
 

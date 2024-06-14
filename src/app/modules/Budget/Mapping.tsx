@@ -3,20 +3,17 @@ import {
   ModelMapping,
   UpdateViewType,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+} from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
 import React from "react";
-import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
+import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 
 const mapping: ModelMapping<ModelEnum.Budget> = {
   modelName: ModelEnum.Budget,
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     description: {
       type: ColumnTypeEnum.String,
