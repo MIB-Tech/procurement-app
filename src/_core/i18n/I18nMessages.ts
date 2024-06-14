@@ -38,6 +38,7 @@ type I18nMessageKey =
   | "TENANTS"
   | "YES"
   | "NO"
+  | "VAT_RATE_VALUE"
   | "REFERENT"
   | "REFERENTS"
   | "REFERENT_PURCHASE_ORDERS"

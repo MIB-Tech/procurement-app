@@ -56,10 +56,12 @@ import { QUERY_PARAM_MAPPING } from "./QueryParam";
 import { INVOICE_ATTACHMENT_MAPPING } from "./InvoiceAttachment";
 import { PAYMENT_TERM_MAPPING } from "./PaymentTerm";
 import { RECEIPT_ATTACHMENT_MAPPING } from "./RecieptAttachment";
+import { VATRATE_MAPPING } from "./VatRate";
 import { DEFAULT_LISTING_VIEW } from "../../_core/ListingView/ListingView.utils";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
+  [ModelEnum.VatRate]: VATRATE_MAPPING,
   [ModelEnum.ProductPricing]: PRODUCT_PRICING_MAPPING,
   [ModelEnum.DesiredProduct]: DESIRED_PRODUCT_MAPPING,
   [ModelEnum.PurchaseFile]: PURCHASEFILE_MAPPING,

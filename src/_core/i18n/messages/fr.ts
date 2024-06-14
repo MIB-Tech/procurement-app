@@ -27,6 +27,7 @@ export const fr: I18nLanguage = {
   NONE: "Non conforme",
   REFERENT: "Référent",
   REFERENTS: "Référents",
+  VAT_RATE_VALUE: "Valeur de TVA",
   REFERENT_PURCHASE_ORDERS: "BC référencés",
   RESTRICTED_BY_CATEGORIES: "Restriction par familles activée",
   CONFORME_AVEC_RESERVE: "Conforme avec reserve",

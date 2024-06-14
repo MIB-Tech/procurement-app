@@ -15,6 +15,7 @@ import {
   CompoundFilterOperator,
   PropertyFilterOperator,
 } from "../../../_core/ListingView/Filter/Filter.types";
+import { VatRateSelectField } from "../VatRate/components/VatRateSelectField";
 
 const ProductTypeField = (props: FieldProps & { disabled?: boolean }) => {
   const { trans } = useTrans();
@@ -177,13 +178,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         vatRate: {
           defaultValue: 0.2,
           render: ({ fieldProps }) => (
-            <SelectField
-              size='sm'
-              options={[0, 0.07, 0.1, 0.14, 0.2]}
-              getOptionLabel={(varRate) => `${(varRate * 100).toFixed(0)} %`}
-              placeholder='TVA'
-              {...fieldProps}
-            />
+            <VatRateSelectField fieldProps={{ ...fieldProps }} />
           ),
         },
         ref: true,
@@ -214,19 +209,10 @@ const mapping: ModelMapping<ModelEnum.Product> = {
           slotProps: { root: { sm: 8, md: 6, lg: 4 } },
         },
         accountingAccount: true,
-        measurementUnit: {
-          defaultValue: "U",
-        },
+        measurementUnit: true,
         vatRate: {
-          defaultValue: 0.2,
           render: ({ fieldProps }) => (
-            <SelectField
-              size='sm'
-              options={[0, 0.07, 0.1, 0.14, 0.2]}
-              getOptionLabel={(varRate) => `${(varRate * 100).toFixed(0)} %`}
-              placeholder='TVA'
-              {...fieldProps}
-            />
+            <VatRateSelectField fieldProps={{ ...fieldProps }} />
           ),
         },
         ref: true,
