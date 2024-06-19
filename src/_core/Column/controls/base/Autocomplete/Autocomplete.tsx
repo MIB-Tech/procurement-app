@@ -73,9 +73,7 @@ const Autocomplete = <
             className
           )}
         >
-          <div
-            className={clsx("d-flex flex-wrap flex-grow-1 align-items-center")}
-          >
+          <div className='d-flex flex-wrap flex-grow-1 align-items-center'>
             {multiple &&
               (value as Array<T>).map((option, index: number) => (
                 <Tag
@@ -90,12 +88,12 @@ const Autocomplete = <
             <Input
               {...inputProps}
               placeholder={placeholder}
-              bg={"flush"}
+              bg='flush'
               size={size}
               className={clsx(
                 inputProps.className,
-                "w-100 min-w-100px px-0",
-                multiple && "py-0",
+                "w-100 min-w-125px px-0",
+                //multiple && "py-0",
                 size === "sm" && "mh-0"
               )}
               style={{ flex: 1, minHeight: size === "sm" ? 0 : undefined }}

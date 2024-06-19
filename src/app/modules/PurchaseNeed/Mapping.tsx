@@ -148,9 +148,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseNeed> = {
       type: ColumnTypeEnum.String,
       nullable: true,
     },
-    recommendedVendors: {
-      type: ColumnTypeEnum.Array,
-    },
     createdAt: {
       type: ColumnTypeEnum.String,
       format: StringFormat.Datetime,

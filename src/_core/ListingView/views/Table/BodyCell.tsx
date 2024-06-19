@@ -4,9 +4,7 @@ import { PhoneNumberLink } from "../../../components/Button/PhoneNumberLink";
 import { Bullet } from "../../../components/Bullet";
 import { HydraItem } from "../../../types/hydra.types";
 import Moment from "react-moment";
-import { NumberUnit } from "../../../components/NumberUnit";
 import clsx from "clsx";
-import { NumberFormat } from "../../../Column/Number/NumberColumn";
 import {
   DateFormatEnum,
   StringFormat,
@@ -15,48 +13,45 @@ import {
 import { SVG } from "../../../components/SVG/SVG";
 import { Trans } from "../../../components/Trans";
 import { I18nMessageKey } from "../../../i18n/I18nMessages";
-import { TypeColum } from "../../../types/ModelMapping";
+import { Model, TypeColum } from "../../../types/ModelMapping";
 import { ModelCell } from "./ModelCell";
-import { bytesToSize } from "../../../components/File/File.utils";
 import { ColumnTypeEnum } from "../../../types/types";
 import { toAbsoluteApi } from "../../../../app/modules/utils";
+import { ModelEnum } from "../../../../app/modules/types";
+import { NumberCell } from "../../../Column/Number/NumberCell";
+import { ObjectFormat } from "../../../Column/Object/ObjectColumn";
+import { ObjectCell } from "../../../Column/Object/ObjectCell";
 
-export type CellContentProps = {
-  value: any;
-} & TypeColum;
-export const CellContent = (
-  props: CellContentProps & { className?: string }
+export type CellContentProps<M extends ModelEnum> = {
+  item: Model<M>;
+  columnName: keyof Model<M>;
+  columnMapping: TypeColum;
+  className?: string;
+};
+export const CellContent = <M extends ModelEnum>(
+  props: CellContentProps<M>
 ) => {
-  const { value, type } = props;
+  const { item, columnName, columnMapping } = props;
+  const value = item[columnName] as any;
 
-  switch (type) {
+  switch (columnMapping.type) {
     case ColumnTypeEnum.Number:
       if (value !== 0 && !value) {
         return <Bullet />;
       }
 
-      switch (props.format) {
-        case NumberFormat.Amount:
-          return <NumberUnit {...props} />;
-        case NumberFormat.Percent:
-          return (
-            <NumberUnit
-              {...props}
-              value={value * 100}
-              unit='%'
-            />
-          );
-        case NumberFormat.DecimalUnit:
-          return <>{bytesToSize(value as number)}</>;
-        default:
-          return <>{value as number}</>;
-      }
+      return (
+        <NumberCell
+          value={value as number}
+          columnMapping={columnMapping}
+        />
+      );
     case ColumnTypeEnum.String:
       if (!value) {
         return <Bullet />;
       }
 
-      switch (props.format) {
+      switch (columnMapping.format) {
         case StringFormat.PhoneNumber:
           return <PhoneNumberLink phoneNumber={value as string} />;
         case StringFormat.Email:
@@ -66,12 +61,12 @@ export const CellContent = (
             <div className='d-flex flex-column'>
               <Moment
                 date={value as string}
-                format={props.dateFormat || DateFormatEnum.European}
+                format={columnMapping.dateFormat || DateFormatEnum.European}
               />
               <Moment
                 className='text-gray-500'
                 date={value as string}
-                format={props.timeFormat || TimeFormatEnum.Full}
+                format={columnMapping.timeFormat || TimeFormatEnum.Full}
               />
             </div>
           );
@@ -79,21 +74,20 @@ export const CellContent = (
           return (
             <Moment
               date={value as string}
-              format={props.dateFormat || DateFormatEnum.European}
+              format={columnMapping.dateFormat || DateFormatEnum.European}
             />
           );
         case StringFormat.Time:
           return (
             <Moment
               date={value as string}
-              format={props.timeFormat || TimeFormatEnum.Half}
+              format={columnMapping.timeFormat || TimeFormatEnum.Half}
             />
           );
         case StringFormat.Select:
-          const option = props.options.find((o) => o.id === value);
-          if (!option) {
-            return <></>;
-          }
+          const option = columnMapping.options.find((o) => o.id === value);
+          if (!option) return <></>;
+
           const { label, color = "primary" } = option;
 
           return (
@@ -117,16 +111,6 @@ export const CellContent = (
           return <a href={value as string}>{value}</a>;
         case StringFormat.Qrcode:
           return <code className='text-truncate'>{value}</code>;
-        case StringFormat.ContentUrl:
-          return (
-            <span className='symbol symbol-40px me-4'>
-              <img
-                className='rounded-1'
-                src={toAbsoluteApi(value)}
-                alt=''
-              />
-            </span>
-          );
         default:
           return <>{value as string}</>;
       }
@@ -144,9 +128,15 @@ export const CellContent = (
     case ColumnTypeEnum.Array:
       if (!Array.isArray(value)) return <></>;
 
-      return <>{value.join(props.separator)}</>;
+      return <>{value.join(columnMapping.separator)}</>;
     case ColumnTypeEnum.Object:
-      return <>TODO OBJECT</>;
+      return (
+        <ObjectCell
+          item={item}
+          columnName={columnName}
+          columnMapping={columnMapping}
+        />
+      );
     default:
       if (!value) {
         return <Bullet />;

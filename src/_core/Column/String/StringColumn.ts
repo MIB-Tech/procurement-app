@@ -1,4 +1,4 @@
-import { number, NumberSchema, string, StringSchema } from "yup";
+import { string, StringSchema } from "yup";
 import { I18nMessageKey } from "../../i18n/I18nMessages";
 import { RoleKeyEnum } from "../../../app/modules/Role/Model";
 import { ColumnTypeEnum } from "../../types/types";
@@ -20,7 +20,6 @@ export enum StringFormat {
   Icon = "ICON",
   Link = "LINK",
   Qrcode = "QRCODE",
-  ContentUrl = "CONTENT_URL",
   // RichText = 'RICH_TEXT',
 }
 
@@ -34,7 +33,7 @@ type StringValidation<M extends ModelEnum> = {
 
 export type StringBaseColumn<M extends ModelEnum> = {
   type: ColumnTypeEnum.String;
-  schema?: StringSchema;
+  schema?: StringSchema | ((schema: StringSchema) => StringSchema);
   validation?: StringValidation<M>;
 };
 
@@ -127,7 +126,6 @@ export const STRING_FORMAT_CONFIG: Record<StringFormat, { icon: string }> = {
   [StringFormat.Icon]: { icon: "/general/gen017.svg" },
   [StringFormat.Link]: { icon: "/coding/cod007.svg" },
   [StringFormat.Qrcode]: { icon: "/ecommerce/ecm010.svg" },
-  [StringFormat.ContentUrl]: { icon: "/coding/cod007.svg" },
 };
 
 export const getStringValidation = <M extends ModelEnum>({

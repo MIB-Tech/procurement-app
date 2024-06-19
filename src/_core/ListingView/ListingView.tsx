@@ -331,6 +331,7 @@ export const ListingView = <M extends ModelEnum>({
       case ColumnTypeEnum.Boolean:
         return true;
       case ColumnTypeEnum.Array:
+      case ColumnTypeEnum.Object:
         return false;
       default:
         return !("multiple" in def);
@@ -593,7 +594,7 @@ export const ListingView = <M extends ModelEnum>({
                                   ? column?.render
                                   : undefined
                               }
-                              {...def}
+                              columnMapping={def}
                             />
                           );
                         }}

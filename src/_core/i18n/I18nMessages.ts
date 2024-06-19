@@ -34,6 +34,7 @@ type I18nMessageKey =
   | ColumnTypeEnum
   | StringFormat
   | ComplianceStatus
+  | "ALLOWED_FILE_TYPES"
   | "TENANT"
   | "TENANTS"
   | "YES"

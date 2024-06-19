@@ -103,10 +103,10 @@ export const GridView = <M extends ModelEnum>(props: GridViewProps<M>) => {
                 <DetailViewColumnContent
                   item={item}
                   columnName={columnName}
+                  columnMapping={def}
                   render={
                     typeof column !== "boolean" ? column?.render : undefined
                   }
-                  {...def}
                 />
               );
             }}

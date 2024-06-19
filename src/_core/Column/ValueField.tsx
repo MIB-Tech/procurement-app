@@ -59,9 +59,19 @@ export const ValueField = ({
         />
       );
     case ColumnTypeEnum.Array:
-      return <ArrayField {..._props} />;
+      return (
+        <ArrayField
+          {..._props}
+          column={column}
+        />
+      );
     case ColumnTypeEnum.Object:
-      return <ObjectField {..._props} />;
+      return (
+        <ObjectField
+          columnMapping={column}
+          {..._props}
+        />
+      );
     default:
       return (
         <ModelField

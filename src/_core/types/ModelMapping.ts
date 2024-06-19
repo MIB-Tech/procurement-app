@@ -144,11 +144,15 @@ export type DetailViewType<M extends ModelEnum> = {
 export type ImportViewType<M extends ModelEnum> = {
   columns?: Partial<Record<keyof Model<M>, boolean>>;
 };
+export type FieldRender<M extends ModelEnum> = (props: {
+  item: Model<M>;
+  fieldProps: FieldProps;
+}) => ReactNode;
 export type FormField<M extends ModelEnum> = {
   // required?: boolean,
   display?: DisplayCallback<M>;
   grantedRoles?: RoleKeyEnum[];
-  render?: (props: { item: Model<M>; fieldProps: FieldProps }) => ReactNode;
+  render?: FieldRender<M>;
   defaultValue?: any;
   helperText?: I18nMessageKey;
   slotProps?: {

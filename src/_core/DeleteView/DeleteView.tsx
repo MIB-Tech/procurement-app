@@ -4,8 +4,11 @@ import { Trans } from "../components/Trans";
 import { DeleteConfirm } from "./DeleteConfirm";
 import { useDeleteMutation } from "../hooks/UseDeleteMutation";
 import { useItemQuery } from "../hooks/UseItemQuery";
+import { ModelEnum } from "../../app/modules/types";
 
-export const DeleteView = ({ modelName }: ViewProps) => {
+export const DeleteView = <M extends ModelEnum>({
+  modelName,
+}: ViewProps<M>) => {
   const mutation = useDeleteMutation({ modelName });
   const { item, isLoading } = useItemQuery({ modelName });
 

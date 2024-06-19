@@ -7,7 +7,7 @@ export type SuccessResponse<M extends ModelEnum> = AxiosResponse<HydraItem<M>>;
 export type ErrorResponse<M extends ModelEnum> = AxiosError<
   JsonldErrorCreateResponse<Model<M>>
 >;
-export type Input<M extends ModelEnum> = Partial<Model<M>>;
+export type Input<M extends ModelEnum> = Partial<Model<M>> | FormData;
 
 export type FormViewProps<M extends ModelEnum> = {
   view: CreateViewType<M> | UpdateViewType<M>;

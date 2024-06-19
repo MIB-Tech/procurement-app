@@ -189,7 +189,7 @@ export const DetailView = <M extends ModelEnum>({
                           item={item}
                           columnName={columnName as keyof Model<M>}
                           render={render}
-                          {...def}
+                          columnMapping={def}
                         />
                       ) : (
                         render?.({ item })
@@ -237,7 +237,7 @@ export const DetailView = <M extends ModelEnum>({
                             ? column?.render
                             : undefined
                         }
-                        {...def}
+                        columnMapping={def}
                       />
                     );
                   }}
@@ -258,10 +258,10 @@ export const DetailView = <M extends ModelEnum>({
                 <DetailViewColumnContent
                   item={item}
                   columnName={property}
+                  columnMapping={columnDef[property]}
                   render={
                     typeof column !== "boolean" ? column?.render : undefined
                   }
-                  {...columnDef[property]}
                 />
               )
             ) : (

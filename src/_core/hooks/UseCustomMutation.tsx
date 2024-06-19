@@ -3,15 +3,13 @@ import { useTrans } from "../components/Trans";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FormikErrors } from "formik/dist/types";
-import { useUri } from "./UseUri";
 import { useMutation } from "react-query";
 import {
   ErrorResponse,
   Input,
   SuccessResponse,
 } from "../FormView/FormView.types";
-import axios from "axios";
-import { getRoutePrefix } from "../utils";
+import axios, { AxiosRequestConfig } from "axios";
 import { queryClient } from "../../index";
 import { getListingQueryKey } from "../ListingView/ListingView.utils";
 import { useToastr } from "../Toastr/UseToastr";
@@ -23,10 +21,12 @@ export const useCustomMutation = <M extends ModelEnum>({
   method = MutationMode.Post,
   navigateTo = navigateOnMutate,
   url,
+  requestConfig,
 }: {
   modelName: M;
   method?: MutationMode;
   url: string;
+  requestConfig?: AxiosRequestConfig;
 } & Pick<FormViewType<M>, "navigateTo">) => {
   const {
     createMutationError,
@@ -45,6 +45,7 @@ export const useCustomMutation = <M extends ModelEnum>({
         method,
         url,
         data,
+        ...requestConfig,
       }),
     {
       onSuccess: async ({ data }) => {

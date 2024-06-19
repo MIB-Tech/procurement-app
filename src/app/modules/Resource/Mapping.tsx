@@ -57,6 +57,11 @@ const mapping: ModelMapping<ModelEnum.Resource> = {
         icon: true,
         sortIndex: true,
       },
+      defaultState: {
+        sort: {
+          sortIndex: "desc",
+        },
+      },
     },
     {
       type: ViewEnum.Create,

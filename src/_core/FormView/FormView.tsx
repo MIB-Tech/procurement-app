@@ -27,6 +27,8 @@ import { getColumnMapping } from "../ListingView/Filter/Filter.utils";
 import { get } from "lodash";
 import { HydraItem } from "../types/hydra.types";
 import { isTenantColumn } from "../ListingView/ListingView.utils";
+import { ColumnTypeEnum } from "../types/types";
+import { ObjectFormat } from "../Column/Object/ObjectColumn";
 
 export const FormView = <M extends ModelEnum>({
   modelName,
@@ -38,14 +40,6 @@ export const FormView = <M extends ModelEnum>({
   const { columnDef, noSortEdges } = useMapping({ modelName });
   const { type, submittable, getMutateInput, navigateTo } = view;
   const isCreateMode = type === ViewEnum.Create;
-  const mutation = useCustomMutation<M>({
-    modelName,
-    method: isCreateMode ? MutationMode.Post : MutationMode.Put,
-    url: isCreateMode
-      ? getRoutePrefix(modelName)
-      : view.mutateUri || getRoutePrefix(modelName),
-    navigateTo,
-  });
   const query = useCustomQuery({
     modelName,
     enabled: !isCreateMode && !!view.fetchUri,
@@ -71,6 +65,48 @@ export const FormView = <M extends ModelEnum>({
 
     return { ...obj, [columnName]: field };
   }, {} as FormFields<M>);
+  const columnNames = (Object.keys(fields) as Array<keyof Model<M>>).filter(
+    (columnName) => {
+      const field = fields[columnName];
+      if (typeof field === "boolean") {
+        return field;
+      }
+
+      const grantedRoles = field?.grantedRoles;
+
+      return !grantedRoles || isGranted(grantedRoles);
+    }
+  );
+  const isMultipart = columnNames.some((columnName) => {
+    const columnMapping = columnDef[columnName];
+
+    return (
+      columnMapping.type === ColumnTypeEnum.Object &&
+      (columnMapping.format === ObjectFormat.File ||
+        columnMapping.format === ObjectFormat.Image)
+    );
+  });
+
+  const mutation = useCustomMutation<M>({
+    modelName,
+    method: isCreateMode ? MutationMode.Post : MutationMode.Put,
+    url: isCreateMode
+      ? getRoutePrefix(modelName)
+      : view.mutateUri || getRoutePrefix(modelName),
+    navigateTo,
+    requestConfig: isMultipart
+      ? {
+          params: {
+            _method: !isCreateMode ? MutationMode.Put : undefined,
+          },
+          method: MutationMode.Post,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      : undefined,
+  });
+
   const initialValues = useMemo<Model<M>>(() => {
     if (!isCreateMode && query.item) {
       return query.item as Model<M>;
@@ -95,26 +131,48 @@ export const FormView = <M extends ModelEnum>({
     validateOnBlur: false,
     onSubmit: async (item, formikHelpers) => {
       await formikHelpers.setTouched({});
-      const columnNames = (Object.keys(fields) as Array<keyof Model<M>>).filter(
-        (columnName) => {
-          const field = fields[columnName];
-          if (typeof field === "boolean") {
-            return field;
-          }
+      let input = isMultipart
+        ? columnNames.reduce((fd, columnName) => {
+            const _val = item[columnName];
+            const columnMapping = columnDef[columnName];
+            const name = columnName.toString();
+            switch (columnMapping.type) {
+              case ColumnTypeEnum.Object:
+                switch (columnMapping.format) {
+                  case ObjectFormat.File:
+                  case ObjectFormat.Image:
+                    const file = _val as File | null;
+                    if (file) {
+                      fd.append(name, file);
+                    }
+                    break;
+                }
+                break;
+              default:
+                fd.append(
+                  name,
+                  typeof _val === "string" ? _val : JSON.stringify(_val)
+                );
+            }
 
-          const grantedRoles = field?.grantedRoles;
+            return fd;
+          }, new FormData())
+        : columnNames.reduce(
+            (input, columnName) => ({
+              ...input,
+              [columnName]: item[columnName],
+            }),
+            {} as Input<M>
+          );
 
-          return !grantedRoles || isGranted(grantedRoles);
+      if (isMultipart) {
+        const form = new FormData();
+        for (let property in input) {
+          // @ts-ignore
+          form.append(property, input[property]);
         }
-      );
+      }
 
-      const input = columnNames.reduce(
-        (input, columnName) => ({
-          ...input,
-          [columnName]: item[columnName],
-        }),
-        {} as Input<M>
-      );
       const response = await mutation.mutateAsync(
         getMutateInput?.(input) || input
       );

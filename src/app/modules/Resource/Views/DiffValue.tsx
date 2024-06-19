@@ -1,10 +1,9 @@
 import { Bullet } from "../../../../_core/components/Bullet";
-import { CellContent } from "../../../../_core/ListingView/views/Table/BodyCell";
-import { ColumnTypeEnum } from "../../../../_core/types/types";
 import { Reference } from "./Reference";
 import React from "react";
 
 import { getModelNameFromClass } from "./Audits.utils";
+import { Trans } from "../../../../_core/components/Trans";
 
 export const DiffValue = ({
   value,
@@ -19,18 +18,8 @@ export const DiffValue = ({
       <Bullet />
     ) : (
       <>
-        {typeof value === "boolean" && (
-          <CellContent
-            value={value}
-            type={ColumnTypeEnum.Boolean}
-          />
-        )}
-        {typeof value === "string" && (
-          <CellContent
-            value={value}
-            type={ColumnTypeEnum.String}
-          />
-        )}
+        {typeof value === "boolean" && <Trans id={value ? "YES" : "NO"} />}
+        {typeof value === "string" && value}
         {typeof value === "object" && (
           <Reference
             refId={value.id}

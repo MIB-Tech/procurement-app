@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useMemo } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "../../_core/hooks/UseAuth";
 import {
@@ -128,28 +128,11 @@ export function PrivateRoutes() {
       (operation) =>
         operation.isMenuItem && operation.operationType === ViewEnum.Listing
     );
-  // FIXME route render wrong route issue
-
-  const isAdmin = isGranted([
-    RoleKeyEnum.Viewer,
-    RoleKeyEnum.SuperAdmin,
-    RoleKeyEnum.Admin,
-  ]);
-  const isReferent = isGranted([RoleKeyEnum.Referent]);
-  const isFinance = isGranted([RoleKeyEnum.Finances]);
-  const isTresor = isGranted([RoleKeyEnum.Treso]);
-
-  // const indexPath = isAdmin
-  //     ? "dashboard"
-  //     : defaultOperation &&
-  //       getPath({
-  //           resourceName: defaultOperation.resource.name,
-  //           suffix: defaultOperation.suffix,
-  //       });
-
-  const getDefaultPath = () => {
+  const defaultPath = useMemo(() => {
     const customRoute = CUSTOM_ROUTES.find((customRoute) =>
-      !customRoute.granted || isGranted(customRoute.granted)
+      customRoute.granted
+        ? isGranted(customRoute.granted)
+        : customRoute.path !== "settings"
     );
     const defaultPath = defaultOperation
       ? getPath({
@@ -159,8 +142,7 @@ export function PrivateRoutes() {
       : "dashboard";
 
     return customRoute ? customRoute.path : defaultPath;
-  };
-  const defaultPath = getDefaultPath();
+  }, [defaultOperation]);
 
   return (
     <Routes>

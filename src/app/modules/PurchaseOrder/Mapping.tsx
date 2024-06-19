@@ -451,19 +451,23 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         },
       },
-      getMutateInput: (purchaseOrder) => ({
-        ...purchaseOrder,
-        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(
-          (purchaseOrderProduct) => ({
-            ...purchaseOrderProduct,
-            components: purchaseOrderProduct.components.map((component) => ({
-              ...component,
-              // @ts-ignore
-              product: component.product["@id"],
-            })),
-          })
-        ),
-      }),
+      getMutateInput: (input) => {
+        if (input instanceof FormData) return input;
+
+        return {
+          ...input,
+          purchaseOrderProducts: input.purchaseOrderProducts?.map(
+            (purchaseOrderProduct) => ({
+              ...purchaseOrderProduct,
+              components: purchaseOrderProduct.components.map((component) => ({
+                ...component,
+                // @ts-ignore
+                product: component.product["@id"],
+              })),
+            })
+          ),
+        };
+      },
       fields: formFields,
     },
     {
@@ -486,19 +490,23 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         },
       },
-      getMutateInput: (purchaseOrder) => ({
-        ...purchaseOrder,
-        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(
-          (purchaseOrderProduct) => ({
-            ...purchaseOrderProduct,
-            components: purchaseOrderProduct.components.map((component) => ({
-              ...component,
-              // @ts-ignore
-              product: component.product["@id"],
-            })),
-          })
-        ),
-      }),
+      getMutateInput: (input) => {
+        if (input instanceof FormData) return input;
+
+        return {
+          ...input,
+          purchaseOrderProducts: input.purchaseOrderProducts?.map(
+            (purchaseOrderProduct) => ({
+              ...purchaseOrderProduct,
+              components: purchaseOrderProduct.components.map((component) => ({
+                ...component,
+                // @ts-ignore
+                product: component.product["@id"],
+              })),
+            })
+          ),
+        };
+      },
       fields: {
         vendor: {
           render: ({ fieldProps, item }) => (

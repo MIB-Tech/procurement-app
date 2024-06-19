@@ -1,35 +1,36 @@
-import { CellContent } from "../ListingView/views/Table/BodyCell";
+import {
+  CellContent,
+  CellContentProps,
+} from "../ListingView/views/Table/BodyCell";
 import { Bullet } from "../components/Bullet";
 import { StringFormat } from "../Column/String/StringColumn";
 import { QrCodePreview } from "../components/QrCodePreview";
 import React from "react";
 import { ColumnTypeEnum } from "../types/types";
 import { ModelEnum } from "../../app/modules/types";
-import { DisplayViewBaseColum, Model, TypeColum } from "../types/ModelMapping";
+import { DisplayViewBaseColum } from "../types/ModelMapping";
+import { ObjectFormat } from "../Column/Object/ObjectColumn";
+import { ObjectCell } from "../Column/Object/ObjectCell";
 
-type DetailViewColumnContentProps<M extends ModelEnum> = {
-  item: Model<M>;
-  columnName: keyof Model<M>;
-  className?: string;
-} & TypeColum &
+type DetailViewColumnContentProps<M extends ModelEnum> = CellContentProps<M> &
   Pick<DisplayViewBaseColum<M>, "render">;
 
 export const DetailViewColumnContent = <M extends ModelEnum>(
   props: DetailViewColumnContentProps<M>
 ) => {
-  const { item, type, columnName, render } = props;
+  const { item, columnName, columnMapping, render } = props;
   if (render) {
     return <>{render({ item })}</>;
   }
 
   const value = item[columnName];
 
-  switch (type) {
+  switch (columnMapping.type) {
     case ColumnTypeEnum.String:
       if (!value) {
         return <Bullet />;
       }
-      switch (props.format) {
+      switch (columnMapping.format) {
         case StringFormat.Qrcode:
           return (
             <div className='d-flex'>
@@ -40,19 +41,18 @@ export const DetailViewColumnContent = <M extends ModelEnum>(
             </div>
           );
         default:
-          return (
-            <CellContent
-              {...props}
-              value={value}
-            />
-          );
+          return <CellContent {...props} />;
       }
-    default:
+    case ColumnTypeEnum.Object:
       return (
-        <CellContent
-          {...props}
-          value={value}
+        <ObjectCell
+          className='symbol-150px'
+          item={item}
+          columnMapping={columnMapping}
+          columnName={columnName}
         />
       );
+    default:
+      return <CellContent {...props} />;
   }
 };

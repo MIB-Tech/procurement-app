@@ -91,12 +91,9 @@ type PasswordMetersProps = {
   password?: string;
   className?: string;
 };
-const PasswordMeters: FC<PasswordMetersProps> = ({
-  password = "",
-  className,
-}) => {
-  const strength = zxcvbn(password);
-  const { score, guesses } = strength;
+const PasswordMeters: FC<PasswordMetersProps> = ({ password }) => {
+  const strength = zxcvbn(password || "");
+  const { score } = strength;
   const { status, label } = SCORES[score];
   const description = `${label}.DESCRIPTION` as I18nMessageKey;
 

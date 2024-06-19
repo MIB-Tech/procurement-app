@@ -4,17 +4,20 @@ import { Filter } from "./Filter/Filter.types";
 import { PaginationInput } from "./Pagination/Pagination.types";
 import { ModelEnum } from "../../app/modules/types";
 import { DatesSetArg } from "@fullcalendar/core";
-import { HydraItem } from "../types/hydra.types";
+import { HydraItem, JsonldCollectionResponse } from "../types/hydra.types";
+import { AxiosResponse } from "axios";
 
 export type ListingQueryProps<M extends ModelEnum> = {
   modelName: M;
   path?: string;
   queryKey?: any;
   params?: Params<M>;
-  options?: Pick<UseQueryOptions, "enabled">;
+  options?: Partial<
+    UseQueryOptions<AxiosResponse<JsonldCollectionResponse<M>>>
+  >;
 };
-export type ViewProps = {
-  modelName: ModelEnum;
+export type ViewProps<M> = {
+  modelName: M;
 };
 
 export type ListingViewProps<M extends ModelEnum> = {

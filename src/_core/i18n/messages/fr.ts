@@ -1,6 +1,7 @@
 import { I18nLanguage } from "../I18nMessages";
 
 export const fr: I18nLanguage = {
+  ALLOWED_FILE_TYPES: "Fichiers autorisés",
   OBJECT: "Objet",
   AUDITS: "Audits",
   NO: "Non",

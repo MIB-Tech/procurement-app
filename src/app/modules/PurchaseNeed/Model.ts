@@ -28,7 +28,6 @@ type Model = {
   isRegularized?: boolean;
   createdBy: UserModel;
   orderedFor?: string;
-  recommendedVendors: string[];
   buyerFullName?: string;
   company: CompanyModel;
   receptionManager: UserModel;

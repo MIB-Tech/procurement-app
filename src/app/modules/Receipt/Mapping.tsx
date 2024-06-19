@@ -228,30 +228,35 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     },
     {
       type: ViewEnum.Create,
-      getMutateInput: ({ vendor, purchaseOrders, ...item }) => ({
-        ...item,
-        receiptProducts: item.receiptProducts
-          ?.map((receiptProduct) => ({
-            ...receiptProduct,
-            // @ts-ignore
-            desiredProduct: receiptProduct.desiredProduct["@id"],
-            quantity: receiptProduct.received ? receiptProduct.quantity : 0,
-            note: receiptProduct.received ? receiptProduct.note : "",
-            components: receiptProduct.components
-              .filter((component) => component.received)
-              .map((component) => ({
-                ...component,
-                purchaseOrderProductComponent:
-                  // @ts-ignore
-                  component.purchaseOrderProductComponent["@id"],
-              })),
-          }))
-          .filter((receiptProduct) => {
-            return (
-              receiptProduct.received || receiptProduct.components.length > 0
-            );
-          }),
-      }),
+      getMutateInput: (input) => {
+        if (input instanceof FormData) return input;
+
+        const { vendor, purchaseOrders, ...item } = input;
+        return {
+          ...item,
+          receiptProducts: item.receiptProducts
+            ?.map((receiptProduct) => ({
+              ...receiptProduct,
+              // @ts-ignore
+              desiredProduct: receiptProduct.desiredProduct["@id"],
+              quantity: receiptProduct.received ? receiptProduct.quantity : 0,
+              note: receiptProduct.received ? receiptProduct.note : "",
+              components: receiptProduct.components
+                .filter((component) => component.received)
+                .map((component) => ({
+                  ...component,
+                  purchaseOrderProductComponent:
+                    // @ts-ignore
+                    component.purchaseOrderProductComponent["@id"],
+                })),
+            }))
+            .filter((receiptProduct) => {
+              return (
+                receiptProduct.received || receiptProduct.components.length > 0
+              );
+            }),
+        };
+      },
 
       slotProps: {
         item: {

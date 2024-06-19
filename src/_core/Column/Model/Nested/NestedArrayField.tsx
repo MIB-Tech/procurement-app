@@ -25,7 +25,6 @@ import { IconButton } from "../../../components/Button/IconButton";
 import { read, utils, writeFile } from "xlsx";
 import { getData } from "../../../ImportView/ImportView";
 import { useTrans } from "../../../components/Trans";
-import { CellContent } from "../../../ListingView/views/Table/BodyCell";
 import {
   HydraItem,
   JsonldCollectionResponse,
@@ -42,6 +41,15 @@ import {
 } from "../../../ListingView/Filter/Filter.types";
 import { filterToParams } from "../../../ListingView/Filter/Filter.utils";
 import { Bullet } from "../../../components/Bullet";
+import { NumberCell } from "../../Number/NumberCell";
+
+export type NestedArrayFieldProps<M extends ModelEnum> = FieldProps & {
+  modelName: M;
+  disableInsert?: boolean;
+  disableDelete?: boolean;
+  extraAttribute?: Record<any, any>;
+  view?: CreateViewType<M> | UpdateViewType<M>;
+};
 
 export const NestedArrayField = <M extends ModelEnum>({
   name,
@@ -51,13 +59,7 @@ export const NestedArrayField = <M extends ModelEnum>({
   disableDelete,
   extraAttribute,
   ...props
-}: FieldProps & {
-  modelName: M;
-  disableInsert?: boolean;
-  disableDelete?: boolean;
-  extraAttribute?: Record<any, any>;
-  view?: CreateViewType<M> | UpdateViewType<M>;
-}) => {
+}: NestedArrayFieldProps<M>) => {
   const [importing, setImporting] = useState<boolean>();
   const { trans } = useTrans();
   const {
@@ -410,12 +412,16 @@ export const NestedArrayField = <M extends ModelEnum>({
                                 {columnMapping.footer?.({
                                   value,
                                   collection: items,
-                                }) || (
-                                  <CellContent
-                                    value={value}
-                                    {...columnMapping}
-                                  />
-                                )}
+                                }) ||
+                                  (columnMapping.type ===
+                                  ColumnTypeEnum.Number ? (
+                                    <NumberCell
+                                      value={value}
+                                      columnMapping={columnMapping}
+                                    />
+                                  ) : (
+                                    "TODO"
+                                  ))}
                               </>
                             )
                           ) : (

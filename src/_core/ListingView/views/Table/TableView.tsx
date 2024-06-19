@@ -18,6 +18,8 @@ import { ModelEnum } from "../../../../app/modules/types";
 import { Checkbox } from "../../../Column/Boolean/Chechbox/Checkbox";
 import { ColumnTypeEnum } from "../../../types/types";
 import { Bullet } from "../../../components/Bullet";
+import { NumberUnit } from "../../../components/NumberUnit";
+import { NumberCell } from "../../../Column/Number/NumberCell";
 
 export type TableViewColumnMapping<M extends ModelEnum> = ColumnMapping<M>;
 
@@ -201,15 +203,15 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
                         def?.type === ColumnTypeEnum.Number && "text-end"
                       )}
                     >
-                      {typeof column === "object" && column.render ? (
-                        column.render?.({ item })
-                      ) : (
-                        <CellContent
-                          // FIXME
-                          value={item[columnName as keyof Model<M>]}
-                          {...def}
-                        />
-                      )}
+                      {typeof column === "object" && column.render
+                        ? column.render?.({ item })
+                        : def && (
+                            <CellContent
+                              item={item}
+                              columnName={columnName as keyof Model<M>}
+                              columnMapping={def}
+                            />
+                          )}
                     </td>
                   );
                 })}
@@ -228,7 +230,7 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
                   | undefined;
                 let show: boolean = false;
 
-                let value: any = "";
+                let value: number = 0;
                 switch (columnMapping?.type) {
                   case ColumnTypeEnum.Number:
                     show = true;
@@ -260,12 +262,15 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
                           {columnMapping.footer?.({
                             value,
                             collection: data,
-                          }) || (
-                            <CellContent
-                              value={value}
-                              {...columnMapping}
-                            />
-                          )}
+                          }) ||
+                            (columnMapping.type === ColumnTypeEnum.Number ? (
+                              <NumberCell
+                                value={value}
+                                columnMapping={columnMapping}
+                              />
+                            ) : (
+                              "TODO"
+                            ))}
                         </>
                       )
                     ) : (
