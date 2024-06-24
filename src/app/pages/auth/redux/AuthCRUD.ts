@@ -1,5 +1,5 @@
 import axios from "axios";
-import { HydraItem } from "../../../../_custom/types/hydra.types";
+import { HydraItem } from "../../../../_core/types/hydra.types";
 import { UserModel } from "../../../modules/User";
 import { Token } from "./AuthRedux";
 import { ModelEnum } from "../../../modules/types";

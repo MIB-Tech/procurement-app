@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { toAbsoluteUrl } from "../../../_metronic/helpers";
 import { useDispatch } from "react-redux";
 import * as auth from "../auth/redux/AuthRedux";
-import { Trans } from "../../../_custom/components/Trans";
+import { Trans } from "../../../_core/components/Trans";
 
 const ErrorsPage: React.FC = () => {
   const navigate = useNavigate();

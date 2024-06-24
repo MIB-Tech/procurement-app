@@ -1,14 +1,14 @@
-import { ModelMapping, ViewEnum } from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
 import {
   StringFormat,
   StringSelectOption,
-} from "../../../_custom/Column/String/StringColumn";
-import { I18nMessageKey } from "../../../_custom/i18n/I18nMessages";
-import { InputField } from "../../../_custom/Column/String/InputField";
-import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
-import { StringField } from "../../../_custom/Column/String/StringField";
+} from "../../../_core/Column/String/StringColumn";
+import { I18nMessageKey } from "../../../_core/i18n/I18nMessages";
+import { InputField } from "../../../_core/Column/String/InputField";
+import { NumberFormat } from "../../../_core/Column/Number/NumberColumn";
+import { StringField } from "../../../_core/Column/String/StringField";
 import Model from "./Model";
 
 const mapping: ModelMapping<ModelEnum.QueryParam> = {
@@ -16,9 +16,6 @@ const mapping: ModelMapping<ModelEnum.QueryParam> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     name: {
       type: ColumnTypeEnum.String,

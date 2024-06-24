@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../../_custom/hooks/UseAuth";
+import { useAuth } from "../../_core/hooks/UseAuth";
 
 const AuthGuard = () => {
   const { user } = useAuth();

@@ -5,33 +5,33 @@ import {
   ModelMapping,
   UpdateViewType,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+} from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
-import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
+import { NumberFormat } from "../../../_core/Column/Number/NumberColumn";
 import Model, { DiscountType } from "./Model";
-import { CellContent } from "../../../_custom/ListingView/views/Table/BodyCell";
-import { SelectField } from "../../../_custom/Column/controls/fields/SelectField/SelectField";
 import { useField, useFormikContext } from "formik";
 import { PurchaseOrderModel } from "../PurchaseOrder";
-import { Bullet } from "../../../_custom/components/Bullet";
+import { Bullet } from "../../../_core/components/Bullet";
 import {
   CurrencyProps,
   NumberUnit,
-} from "../../../_custom/components/NumberUnit";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
-import { FieldProps } from "../../../_custom/Column/controls/fields";
-import { NumberColumnField } from "../../../_custom/Column/Number/NumberColumnField";
+} from "../../../_core/components/NumberUnit";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
+import { FieldProps } from "../../../_core/Column/controls/fields";
+import { NumberColumnField } from "../../../_core/Column/Number/NumberColumnField";
 import { QUANTITY_STATUS_OPTIONS } from "../PurchaseOrder/Model";
 import { number } from "yup";
 import { DesiredProductModel } from "../DesiredProduct";
-import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
+import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 import { PurchaseOrderProductComponentModel } from "../PurchaseOrderProductComponent";
 import { ProductField } from "./ProductField";
-import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
-import { PropertyFilterOperator } from "../../../_custom/ListingView/Filter/Filter.types";
-import { FC } from "react";
+import { useCollectionQuery } from "../../../_core/hooks/UseCollectionQuery";
+import { PropertyFilterOperator } from "../../../_core/ListingView/Filter/Filter.types";
+import React, { FC } from "react";
+import { VatRateSelectField } from "../VatRate/components/VatRateSelectField";
+import { NumberCell } from "../../../_core/Column/Number/NumberCell";
 
 const AmountUnit = ({
   getValue,
@@ -220,13 +220,7 @@ const formFields: FormFields<ModelEnum.PurchaseOrderProduct> = {
   vatRate: {
     defaultValue: 0.2,
     render: ({ fieldProps }) => (
-      <SelectField
-        size='sm'
-        options={[0, 0.07, 0.1, 0.14, 0.2]}
-        getOptionLabel={(varRate) => `${(varRate * 100).toFixed(0)} %`}
-        placeholder='TVA'
-        {...fieldProps}
-      />
+      <VatRateSelectField fieldProps={{ ...fieldProps }} />
     ),
   },
   priceExclTax: {
@@ -297,9 +291,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     designation: {
       type: ColumnTypeEnum.String,
@@ -426,25 +417,28 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       columns: {
         quantity: true,
         discountValue: {
-          render: ({
-            item: { discountType, discountValue, purchaseOrder },
-          }) => (
-            <CellContent
-              value={discountValue}
-              type={ColumnTypeEnum.Number}
-              format={
-                discountType === DiscountType.Amount
-                  ? NumberFormat.Amount
-                  : NumberFormat.Percent
-              }
-              unit={
-                discountType === DiscountType.Amount
-                  ? purchaseOrder.currency?.code
-                  : "%"
-              }
-              precision={2}
-            />
-          ),
+          render: ({ item }) => {
+            const { discountType, discountValue, purchaseOrder } = item;
+            const format =
+              discountType === DiscountType.Amount
+                ? NumberFormat.Amount
+                : NumberFormat.Percent;
+            const unit =
+              discountType === DiscountType.Amount
+                ? purchaseOrder.currency?.code
+                : "%";
+
+            return (
+              <NumberCell
+                value={discountValue}
+                columnMapping={{
+                  type: ColumnTypeEnum.Number,
+                  format,
+                  unit,
+                }}
+              />
+            );
+          },
         },
         grossPrice: true,
         vatRate: true,
@@ -461,25 +455,28 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
         designation: true,
         quantity: true,
         discountValue: {
-          render: ({
-            item: { discountType, discountValue, purchaseOrder },
-          }) => (
-            <CellContent
-              value={discountValue}
-              type={ColumnTypeEnum.Number}
-              format={
-                discountType === DiscountType.Amount
-                  ? NumberFormat.Amount
-                  : NumberFormat.Percent
-              }
-              unit={
-                discountType === DiscountType.Amount
-                  ? purchaseOrder.currency?.code
-                  : "%"
-              }
-              precision={2}
-            />
-          ),
+          render: ({ item }) => {
+            const { discountType, discountValue, purchaseOrder } = item;
+            const format =
+              discountType === DiscountType.Amount
+                ? NumberFormat.Amount
+                : NumberFormat.Percent;
+            const unit =
+              discountType === DiscountType.Amount
+                ? purchaseOrder.currency?.code
+                : "%";
+
+            return (
+              <NumberCell
+                value={discountValue}
+                columnMapping={{
+                  type: ColumnTypeEnum.Number,
+                  format,
+                  unit,
+                }}
+              />
+            );
+          },
         },
         grossPrice: true,
         vatRate: true,
@@ -532,15 +529,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           ),
         },
         vatRate: {
-          defaultValue: 0.2,
           render: ({ fieldProps }) => (
-            <SelectField
-              size='sm'
-              options={[0, 0.07, 0.1, 0.14, 0.2]}
-              getOptionLabel={(varRate) => `${(varRate * 100).toFixed(0)} %`}
-              placeholder='TVA'
-              {...fieldProps}
-            />
+            <VatRateSelectField fieldProps={{ ...fieldProps }} />
           ),
         },
         priceExclTax: {

@@ -1,8 +1,8 @@
 import React, { FC, useMemo, useState } from "react";
-import { CustomItemActionProps } from "../../../../_custom/types/ModelMapping";
+import { CustomItemActionProps } from "../../../../_core/types/ModelMapping";
 import { ModelEnum } from "../../types";
-import { useUri } from "../../../../_custom/hooks/UseUri";
-import { useItemQuery } from "../../../../_custom/hooks/UseItemQuery";
+import { useUri } from "../../../../_core/hooks/UseUri";
+import { useItemQuery } from "../../../../_core/hooks/UseItemQuery";
 import {
   LineType,
   PurchaseOrderComponentPrint,
@@ -10,14 +10,14 @@ import {
   PurchaseOrderPrint,
   PurchaseOrderProductPrint,
 } from "../Model";
-import { getNumberUnit } from "../../../../_custom/components/NumberUnit";
+import { getNumberUnit } from "../../../../_core/components/NumberUnit";
 import moment from "moment";
 import { DiscountType } from "../../PurchaseOrderProduct/Model";
-import { Button } from "../../../../_custom/components/Button";
-import { Trans } from "../../../../_custom/components/Trans";
+import { Button } from "../../../../_core/components/Button";
+import { Trans } from "../../../../_core/components/Trans";
 import { Modal } from "react-bootstrap";
 import ReportViewer from "./ReportViewer";
-import { HydraItem } from "../../../../_custom/types/hydra.types";
+import { HydraItem } from "../../../../_core/types/hydra.types";
 
 export const PrintPurchaseOrderButton: FC<
   CustomItemActionProps<ModelEnum.PurchaseOrder>

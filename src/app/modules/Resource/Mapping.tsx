@@ -2,12 +2,12 @@ import {
   FormFields,
   ModelMapping,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+} from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
 import { Audits } from "./Views/Audits";
-import { HydraItem } from "../../../_custom/types/hydra.types";
+import { HydraItem } from "../../../_core/types/hydra.types";
 
 const formFields: FormFields<ModelEnum.Resource> = {
   name: {
@@ -33,9 +33,6 @@ const mapping: ModelMapping<ModelEnum.Resource> = {
     id: {
       type: ColumnTypeEnum.Number,
     },
-    uid: {
-      type: ColumnTypeEnum.String,
-    },
     name: {
       type: ColumnTypeEnum.String,
     },
@@ -59,6 +56,11 @@ const mapping: ModelMapping<ModelEnum.Resource> = {
       columns: {
         icon: true,
         sortIndex: true,
+      },
+      defaultState: {
+        sort: {
+          sortIndex: "desc",
+        },
       },
     },
     {

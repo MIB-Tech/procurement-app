@@ -3,12 +3,12 @@ import {
   ListingViewType,
   ModelMapping,
   ViewEnum,
-} from "../../_custom/types/ModelMapping";
-import { StringFormat } from "../../_custom/Column/String/StringColumn";
+} from "../../_core/types/ModelMapping";
+import { StringFormat } from "../../_core/Column/String/StringColumn";
 import axios from "axios";
 import React from "react";
-import { NumberFormat } from "../../_custom/Column/Number/NumberColumn";
-import { ColumnTypeEnum } from "../../_custom/types/types";
+import { NumberFormat } from "../../_core/Column/Number/NumberColumn";
+import { ColumnTypeEnum } from "../../_core/types/types";
 import { toAbsoluteApi } from "./utils";
 import moment from "moment/moment";
 
@@ -97,9 +97,6 @@ export const ABSTRACT_FILE_MAPPING: Omit<
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     originalName: {
       type: ColumnTypeEnum.String,

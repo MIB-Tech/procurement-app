@@ -1,5 +1,5 @@
 import { RoleModel } from "../Role";
-import { AbstractModel, Timestamp } from "../../../_custom/types/types";
+import { AbstractModel, Timestamp } from "../../../_core/types/types";
 import { ClinicModel } from "../Clinic";
 import { UserModel } from "./index";
 import { PurchaseOrderModel } from "../PurchaseOrder";

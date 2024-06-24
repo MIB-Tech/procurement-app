@@ -2,22 +2,22 @@ import {
   ModelMapping,
   UpdateViewType,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+} from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
 import {
   CompoundFilter,
   CompoundFilterOperator,
   PropertyFilterOperator,
-} from "../../../_custom/ListingView/Filter/Filter.types";
+} from "../../../_core/ListingView/Filter/Filter.types";
 import React from "react";
 import { PrintInvoiceButton } from "./PrintInvoiceButton";
 import { ArraySchema } from "yup";
 import { InvoiceModel } from "./index";
-import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
-import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
+import { NumberFormat } from "../../../_core/Column/Number/NumberColumn";
+import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 import PaymentTermsField from "../PaymentTerm/PaymentTermsField";
 
 const mapping: ModelMapping<ModelEnum.Invoice> = {
@@ -26,9 +26,6 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     invoiceNumber: {
       type: ColumnTypeEnum.String,

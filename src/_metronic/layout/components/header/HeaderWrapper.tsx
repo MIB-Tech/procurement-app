@@ -7,7 +7,7 @@ import { useLayout } from "../../core";
 import { Header } from "./Header";
 import { DefaultTitle } from "./page-title/DefaultTitle";
 import { Topbar } from "./Topbar";
-import { Logo } from "../../../../_custom/components/Logo";
+import { Logo } from "../../../../_core/components/Logo";
 import { Search } from "../../../partials";
 
 export function HeaderWrapper() {

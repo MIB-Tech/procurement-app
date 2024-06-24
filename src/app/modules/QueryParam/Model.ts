@@ -1,7 +1,7 @@
-import { AbstractModel, ColumnTypeEnum } from "../../../_custom/types/types";
+import { AbstractModel, ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
 import { QueryModel } from "../Query";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
 
 type Model = {
   label: string;

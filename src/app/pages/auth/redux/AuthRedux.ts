@@ -4,7 +4,7 @@ import storage from "redux-persist/lib/storage";
 import { put, takeLatest } from "redux-saga/effects";
 import { getAuthenticatedUser } from "./AuthCRUD";
 import { UserModel } from "../../../modules/User";
-import { HydraItem } from "../../../../_custom/types/hydra.types";
+import { HydraItem } from "../../../../_core/types/hydra.types";
 import { ModelEnum } from "../../../modules/types";
 
 export interface ActionWithPayload<T> extends Action {
@@ -17,12 +17,12 @@ export const actionTypes = {
   Register: "[Register] Action",
   UserRequested: "[Request User] Action",
   UserLoaded: "[Load User] Auth API",
-  SetClinic: "[Set Clinic] Action",
+  SetTenant: "[Set Tenant] Action",
 };
 
 const initialAuthState: AuthState = {
   user: undefined,
-  clinic: undefined,
+  tenant: undefined,
   token: undefined,
   refreshToken: undefined,
 };
@@ -34,14 +34,14 @@ export type Token = {
 
 export type AuthState = {
   user?: HydraItem<ModelEnum.User>;
-  clinic?: HydraItem<ModelEnum.Clinic>;
+  tenant?: HydraItem<ModelEnum.Clinic>;
 } & Partial<Token>;
 
 export const reducer = persistReducer(
   {
     storage,
     key: "v100-demo1-auth",
-    whitelist: ["user", "clinic", "token", "refreshToken"],
+    whitelist: ["user", "tenant", "token", "refreshToken"],
   },
   (
     state: AuthState = initialAuthState,
@@ -60,11 +60,10 @@ export const reducer = persistReducer(
         return initialAuthState;
       case actionTypes.UserLoaded:
         const user = action.payload?.user;
-        // const clinics = user?.clinics as HydraItem<ModelEnum.Clinic> | undefined;
 
         return { ...state, user };
-      case actionTypes.SetClinic:
-        return { ...state, clinic: action.payload?.clinic };
+      case actionTypes.SetTenant:
+        return { ...state, tenant: action.payload?.tenant };
       default:
         return state;
     }
@@ -85,9 +84,9 @@ export const actions = {
     type: actionTypes.UserLoaded,
     payload: { user },
   }),
-  setClinic: (clinic: HydraItem<ModelEnum.Clinic> | undefined) => ({
-    type: actionTypes.SetClinic,
-    payload: { clinic },
+  setTenant: (tenant: HydraItem<ModelEnum.Clinic> | undefined) => ({
+    type: actionTypes.SetTenant,
+    payload: { tenant },
   }),
 };
 

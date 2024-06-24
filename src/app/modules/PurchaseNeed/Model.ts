@@ -1,4 +1,4 @@
-import { AbstractModel, CreateTimestamp } from "../../../_custom/types/types";
+import { AbstractModel, CreateTimestamp } from "../../../_core/types/types";
 import { UserModel } from "../User";
 import { PurchaseNeedAttachmentModel } from "../PurchaseNeedAttachment";
 import { CategoryModel } from "../Category";
@@ -28,7 +28,6 @@ type Model = {
   isRegularized?: boolean;
   createdBy: UserModel;
   orderedFor?: string;
-  recommendedVendors: string[];
   buyerFullName?: string;
   company: CompanyModel;
   receptionManager: UserModel;

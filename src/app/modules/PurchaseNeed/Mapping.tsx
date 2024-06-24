@@ -2,27 +2,27 @@ import {
   Model,
   ModelMapping,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+} from "../../../_core/types/ModelMapping";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
 import { PriorityEnum, PurchaseNeedStatusEnum } from "./Model";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
+import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 import React, { useMemo, useState } from "react";
-import { Input } from "../../../_custom/Column/String/InputBase/Input";
-import { Button } from "../../../_custom/components/Button";
+import { Input } from "../../../_core/Column/String/InputBase/Input";
+import { Button } from "../../../_core/components/Button";
 import { read } from "xlsx";
-import { getData } from "../../../_custom/ImportView/ImportView";
+import { getData } from "../../../_core/ImportView/ImportView";
 import moment from "moment";
 import { array } from "yup";
 import { useFormikContext } from "formik";
-import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
+import { useCollectionQuery } from "../../../_core/hooks/UseCollectionQuery";
 import {
   CompoundFilterOperator,
   PropertyFilterOperator,
-} from "../../../_custom/ListingView/Filter/Filter.types";
+} from "../../../_core/ListingView/Filter/Filter.types";
 import { PurchaseNeedProductModel } from "../PurchaseNeedProduct";
-import { getRoutePrefix } from "../../../_custom/utils";
+import { getRoutePrefix } from "../../../_core/utils";
 import { PurchaseNeedModel } from "./index";
 
 const LinesField = () => {
@@ -128,9 +128,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseNeed> = {
     id: {
       type: ColumnTypeEnum.Number,
     },
-    uid: {
-      type: ColumnTypeEnum.String,
-    },
     orderNumber: {
       type: ColumnTypeEnum.String,
     },
@@ -150,9 +147,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseNeed> = {
     buyerFullName: {
       type: ColumnTypeEnum.String,
       nullable: true,
-    },
-    recommendedVendors: {
-      type: ColumnTypeEnum.Array,
     },
     createdAt: {
       type: ColumnTypeEnum.String,

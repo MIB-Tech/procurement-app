@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Trans, useTrans } from "../../../_custom/components/Trans";
+import { Trans, useTrans } from "../../../_core/components/Trans";
 import { useParams } from "react-router-dom";
 
 type ErrorCode = "403" | "404" | "500";

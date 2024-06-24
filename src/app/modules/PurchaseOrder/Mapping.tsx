@@ -2,12 +2,12 @@ import {
   FormFields,
   ModelMapping,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+} from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
-import { NumberFormat } from "../../../_custom/Column/Number/NumberColumn";
-import { RadioField } from "../../../_custom/Column/controls/fields/RadioField/RadioField";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
+import { NumberFormat } from "../../../_core/Column/Number/NumberColumn";
+import { RadioField } from "../../../_core/Column/controls/fields/RadioField/RadioField";
 import {
   CLINIC_STATUS_OPTIONS,
   QUANTITY_STATUS_OPTIONS,
@@ -20,13 +20,13 @@ import React from "react";
 import { PrintPurchaseOrderButton } from "./components/PrintPurchaseOrderButton";
 import { GenerateReceiptButton } from "./components/GenerateReceiptButton";
 import { GenerateInvoiceButton } from "./components/GenerateInvoiceButton";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
 import { RoleKeyEnum } from "../Role/Model";
 import {
   CompoundFilterOperator,
   PropertyFilterOperator,
-} from "../../../_custom/ListingView/Filter/Filter.types";
-import { NumberUnit } from "../../../_custom/components/NumberUnit";
+} from "../../../_core/ListingView/Filter/Filter.types";
+import { NumberUnit } from "../../../_core/components/NumberUnit";
 
 const formFields: FormFields<ModelEnum.PurchaseOrder> = {
   vendor: {
@@ -136,9 +136,6 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
   columnDef: {
     id: {
       type: ColumnTypeEnum.Number,
-    },
-    uid: {
-      type: ColumnTypeEnum.String,
     },
     orderNumber: {
       type: ColumnTypeEnum.String,
@@ -454,19 +451,23 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         },
       },
-      getMutateInput: (purchaseOrder) => ({
-        ...purchaseOrder,
-        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(
-          (purchaseOrderProduct) => ({
-            ...purchaseOrderProduct,
-            components: purchaseOrderProduct.components.map((component) => ({
-              ...component,
-              // @ts-ignore
-              product: component.product["@id"],
-            })),
-          })
-        ),
-      }),
+      getMutateInput: (input) => {
+        if (input instanceof FormData) return input;
+
+        return {
+          ...input,
+          purchaseOrderProducts: input.purchaseOrderProducts?.map(
+            (purchaseOrderProduct) => ({
+              ...purchaseOrderProduct,
+              components: purchaseOrderProduct.components.map((component) => ({
+                ...component,
+                // @ts-ignore
+                product: component.product["@id"],
+              })),
+            })
+          ),
+        };
+      },
       fields: formFields,
     },
     {
@@ -489,19 +490,23 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           lg: 2,
         },
       },
-      getMutateInput: (purchaseOrder) => ({
-        ...purchaseOrder,
-        purchaseOrderProducts: purchaseOrder.purchaseOrderProducts?.map(
-          (purchaseOrderProduct) => ({
-            ...purchaseOrderProduct,
-            components: purchaseOrderProduct.components.map((component) => ({
-              ...component,
-              // @ts-ignore
-              product: component.product["@id"],
-            })),
-          })
-        ),
-      }),
+      getMutateInput: (input) => {
+        if (input instanceof FormData) return input;
+
+        return {
+          ...input,
+          purchaseOrderProducts: input.purchaseOrderProducts?.map(
+            (purchaseOrderProduct) => ({
+              ...purchaseOrderProduct,
+              components: purchaseOrderProduct.components.map((component) => ({
+                ...component,
+                // @ts-ignore
+                product: component.product["@id"],
+              })),
+            })
+          ),
+        };
+      },
       fields: {
         vendor: {
           render: ({ fieldProps, item }) => (

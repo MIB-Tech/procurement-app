@@ -3,10 +3,10 @@ import { ModelEnum } from "../../types";
 import { useQuery } from "react-query";
 import axios from "axios";
 import moment from "moment/moment";
-import { SVG } from "../../../../_custom/components/SVG/SVG";
-import { PaginationInput } from "../../../../_custom/ListingView/Pagination/Pagination.types";
-import { Pagination } from "../../../../_custom/ListingView/Pagination";
-import { Button } from "../../../../_custom/components/Button";
+import { SVG } from "../../../../_core/components/SVG/SVG";
+import { PaginationInput } from "../../../../_core/ListingView/Pagination/Pagination.types";
+import { Pagination } from "../../../../_core/ListingView/Pagination";
+import { Button } from "../../../../_core/components/Button";
 import { IpLabel } from "./IpLabel";
 import { UsernameLabel } from "./UsernameLabel";
 import { DiffValue } from "./DiffValue";
@@ -14,11 +14,11 @@ import { AUDIT_TYPE_CONFIG } from "./Audits.utils";
 import { EntityLabel } from "./EntityLabel";
 import { Audit, AuditType, Value } from "./Audits.types";
 import { FormikProvider, useFormik } from "formik";
-import { InputField } from "../../../../_custom/Column/String/InputField";
-import { LoadingLabel } from "../../../../_custom/components/Skeleton";
-import { SelectField } from "../../../../_custom/Column/controls/fields/SelectField/SelectField";
-import { RadioField } from "../../../../_custom/Column/controls/fields/RadioField/RadioField";
-import { DateField } from "../../../../_custom/Column/String/DateField";
+import { InputField } from "../../../../_core/Column/String/InputField";
+import { LoadingLabel } from "../../../../_core/components/Skeleton";
+import { SelectField } from "../../../../_core/Column/controls/fields/SelectField/SelectField";
+import { RadioField } from "../../../../_core/Column/controls/fields/RadioField/RadioField";
+import { DateField } from "../../../../_core/Column/String/DateField";
 
 const initialValues: Value = {
   id: "",

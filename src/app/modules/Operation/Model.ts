@@ -1,8 +1,8 @@
-import { AbstractModel } from "../../../_custom/types/types";
+import { AbstractModel } from "../../../_core/types/types";
 import { RoleModel } from "../Role";
 import { ResourceModel } from "../Resource";
-import { ViewEnum } from "../../../_custom/types/ModelMapping";
-import { StringSelectOption } from "../../../_custom/Column/String/StringColumn";
+import { ViewEnum } from "../../../_core/types/ModelMapping";
+import { StringSelectOption } from "../../../_core/Column/String/StringColumn";
 
 export enum OperationsTypeEnum {
   Listing = "LISTING",

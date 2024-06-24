@@ -2,12 +2,12 @@ import React, { FC } from "react";
 import {
   CustomItemActionProps,
   ViewEnum,
-} from "../../../../_custom/types/ModelMapping";
+} from "../../../../_core/types/ModelMapping";
 import { ModelEnum } from "../../types";
-import { useTrans } from "../../../../_custom/components/Trans";
-import { useAuth } from "../../../../_custom/hooks/UseAuth";
+import { useTrans } from "../../../../_core/components/Trans";
+import { useAuth } from "../../../../_core/hooks/UseAuth";
 import { ReceiptModel } from "../../Receipt";
-import { RouteLinks } from "../../../../_custom/components/RouteAction/RouteLinks";
+import { RouteLinks } from "../../../../_core/components/RouteAction/RouteLinks";
 
 export const GenerateReceiptButton: FC<
   CustomItemActionProps<ModelEnum.PurchaseOrder>

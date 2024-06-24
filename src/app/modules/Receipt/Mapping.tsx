@@ -2,13 +2,13 @@ import {
   FormFields,
   ModelMapping,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+} from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
 import React from "react";
-import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
+import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 import moment from "moment";
 import { ArraySchema } from "yup";
 import { PrintReceiptButton } from "./PrintReceiptButton";
@@ -145,9 +145,6 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     id: {
       type: ColumnTypeEnum.Number,
     },
-    uid: {
-      type: ColumnTypeEnum.String,
-    },
     receiptNumber: {
       type: ColumnTypeEnum.String,
     },
@@ -231,30 +228,35 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
     },
     {
       type: ViewEnum.Create,
-      getMutateInput: ({ vendor, purchaseOrders, ...item }) => ({
-        ...item,
-        receiptProducts: item.receiptProducts
-          ?.map((receiptProduct) => ({
-            ...receiptProduct,
-            // @ts-ignore
-            desiredProduct: receiptProduct.desiredProduct["@id"],
-            quantity: receiptProduct.received ? receiptProduct.quantity : 0,
-            note: receiptProduct.received ? receiptProduct.note : "",
-            components: receiptProduct.components
-              .filter((component) => component.received)
-              .map((component) => ({
-                ...component,
-                purchaseOrderProductComponent:
-                  // @ts-ignore
-                  component.purchaseOrderProductComponent["@id"],
-              })),
-          }))
-          .filter((receiptProduct) => {
-            return (
-              receiptProduct.received || receiptProduct.components.length > 0
-            );
-          }),
-      }),
+      getMutateInput: (input) => {
+        if (input instanceof FormData) return input;
+
+        const { vendor, purchaseOrders, ...item } = input;
+        return {
+          ...item,
+          receiptProducts: item.receiptProducts
+            ?.map((receiptProduct) => ({
+              ...receiptProduct,
+              // @ts-ignore
+              desiredProduct: receiptProduct.desiredProduct["@id"],
+              quantity: receiptProduct.received ? receiptProduct.quantity : 0,
+              note: receiptProduct.received ? receiptProduct.note : "",
+              components: receiptProduct.components
+                .filter((component) => component.received)
+                .map((component) => ({
+                  ...component,
+                  purchaseOrderProductComponent:
+                    // @ts-ignore
+                    component.purchaseOrderProductComponent["@id"],
+                })),
+            }))
+            .filter((receiptProduct) => {
+              return (
+                receiptProduct.received || receiptProduct.components.length > 0
+              );
+            }),
+        };
+      },
 
       slotProps: {
         item: {

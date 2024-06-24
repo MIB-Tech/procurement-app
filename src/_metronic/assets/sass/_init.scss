@@ -9,8 +9,9 @@
 @import "./core/vendors/plugins/mixins";
 
 // Custom variables
-@import "components/variables.custom";
+@import "../../../app/styles/variables.custom";
 @import "./core/components/variables";
+
 
 // Bootstrap initializaton
 @import "~bootstrap/scss/functions";

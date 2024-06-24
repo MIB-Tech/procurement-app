@@ -1,20 +1,20 @@
 import React, { FC, useEffect } from "react";
 import { usePageData } from "../../../_metronic/layout/core";
-import { Trans, useTrans } from "../../../_custom/components/Trans";
+import { Trans, useTrans } from "../../../_core/components/Trans";
 import { FormikProvider, useFormik } from "formik";
 import { ModelEnum } from "../../modules/types";
-import { ModelAutocompleteField } from "../../../_custom/Column/Model/Autocomplete/ModelAutocompleteField";
-import { Button } from "../../../_custom/components/Button";
-import { useCollectionQuery } from "../../../_custom/hooks/UseCollectionQuery";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
+import { Button } from "../../../_core/components/Button";
+import { useCollectionQuery } from "../../../_core/hooks/UseCollectionQuery";
 import {
   CompoundFilter,
   CompoundFilterOperator,
   PropertyFilterOperator,
-} from "../../../_custom/ListingView/Filter/Filter.types";
-import { HydraItem } from "../../../_custom/types/hydra.types";
-import { InputField } from "../../../_custom/Column/String/InputField";
+} from "../../../_core/ListingView/Filter/Filter.types";
+import { HydraItem } from "../../../_core/types/hydra.types";
+import { InputField } from "../../../_core/Column/String/InputField";
 import { ReceiptProductModel } from "../../modules/ReceiptProduct";
-import { ModelCell } from "../../../_custom/ListingView/views/Table/ModelCell";
+import { ModelCell } from "../../../_core/ListingView/views/Table/ModelCell";
 import {
   COMPLIANCE_STATUS_OPTIONS,
   ComplianceStatus,
@@ -22,12 +22,12 @@ import {
 import { useMutation } from "react-query";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import * as Yup from "yup";
-import { StringField } from "../../../_custom/Column/String/StringField";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { StringField } from "../../../_core/Column/String/StringField";
+import { ColumnTypeEnum } from "../../../_core/types/types";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
 import clsx from "clsx";
 import { ValidationStatusEnum } from "../../modules/PurchaseOrder/Model";
-import { useAuth } from "../../../_custom/hooks/UseAuth";
+import { useAuth } from "../../../_core/hooks/UseAuth";
 
 const validationSchema = Yup.object().shape({
   receiptProducts: Yup.array().of(

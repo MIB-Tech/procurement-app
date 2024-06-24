@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { useLayout } from "../../core";
 import { KTSVG, toAbsoluteUrl } from "../../../helpers";
 import { AsideMenu } from "./AsideMenu";
-import { Logo } from "../../../../_custom/components/Logo";
+import { Logo } from "../../../../_core/components/Logo";
 
 const AsideDefault: FC = () => {
   const { config, classes } = useLayout();

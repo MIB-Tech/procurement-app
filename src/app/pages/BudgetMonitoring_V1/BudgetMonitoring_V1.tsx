@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { FC, ReactNode, useEffect } from "react";
 import { usePageData } from "../../../_metronic/layout/core";
-import { useTrans } from "../../../_custom/components/Trans";
+import { useTrans } from "../../../_core/components/Trans";
 import { useQuery } from "react-query";
 import axios from "axios";
-import { useAuth } from "../../../_custom/hooks/UseAuth";
-import { NumberUnit } from "../../../_custom/components/NumberUnit";
+import { useAuth } from "../../../_core/hooks/UseAuth";
+import { NumberUnit } from "../../../_core/components/NumberUnit";
 import { KTSVG } from "../../../_metronic/helpers";
 
 type Props = {
@@ -52,9 +52,9 @@ const StatisticsWidget5: React.FC<Props> = ({
 
 export const BudgetMonitoring_V1_Page: FC = () => {
   const { setPageTitle } = usePageData();
-  const { clinic } = useAuth();
+  const { tenant } = useAuth();
   const { data, isLoading } = useQuery({
-    queryKey: ["BUDGET_MONITORING", clinic?.id],
+    queryKey: ["BUDGET_MONITORING", tenant?.id],
     queryFn: () =>
       axios.get<
         Array<{
@@ -64,7 +64,7 @@ export const BudgetMonitoring_V1_Page: FC = () => {
         }>
       >("/custom/statistics/product-section-budgets", {
         params: {
-          clinicId: clinic?.id,
+          clinicId: tenant?.id,
         },
       }),
   });

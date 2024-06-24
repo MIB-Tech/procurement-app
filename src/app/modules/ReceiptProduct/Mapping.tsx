@@ -1,21 +1,26 @@
 import {
+  ColumnMapping,
   CreateViewType,
   ModelMapping,
   UpdateViewType,
   ViewEnum,
-} from "../../../_custom/types/ModelMapping";
-import { ColumnTypeEnum } from "../../../_custom/types/types";
+} from "../../../_core/types/ModelMapping";
+import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
-import { CellContent } from "../../../_custom/ListingView/views/Table/BodyCell";
+import { CellContent } from "../../../_core/ListingView/views/Table/BodyCell";
 import { QUANTITY_STATUS_COLUMN } from "../PurchaseOrderProduct/Mapping";
-import { BooleanField } from "../../../_custom/Column/Boolean/BooleanField";
+import { BooleanField } from "../../../_core/Column/Boolean/BooleanField";
 import React from "react";
 import { QuantityStatusEnum } from "../PurchaseOrder/Model";
 import { ref } from "yup";
-import { NestedArrayField } from "../../../_custom/Column/Model/Nested/NestedArrayField";
-import { StringFormat } from "../../../_custom/Column/String/StringColumn";
+import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
+import { StringFormat } from "../../../_core/Column/String/StringColumn";
 import { COMPLIANCE_STATUS_OPTIONS } from "./Model";
-import { DesiredProductModel } from "../DesiredProduct";
+import {
+  DESIRED_PRODUCT_MAPPING,
+  DesiredProductModel,
+} from "../DesiredProduct";
+import { PURCHASE_ORDER_PRODUCT_COMPONENT_MAPPING } from "../PurchaseOrderProductComponent";
 
 const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
   modelName: ModelEnum.ReceiptProduct,
@@ -23,10 +28,6 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     id: {
       type: ColumnTypeEnum.Number,
     },
-    uid: {
-      type: ColumnTypeEnum.String,
-    },
-
     quantity: {
       type: ColumnTypeEnum.Number,
       schema: (schema) =>
@@ -123,14 +124,13 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
         quantity: true,
         note: true,
         status: {
-          render: ({ item }) => {
-            return (
-              <CellContent
-                {...QUANTITY_STATUS_COLUMN}
-                value={item.desiredProduct.status}
-              />
-            );
-          },
+          render: ({ item }) => (
+            <CellContent<ModelEnum.DesiredProduct>
+              columnMapping={DESIRED_PRODUCT_MAPPING.columnDef.status}
+              item={item.desiredProduct}
+              columnName='status'
+            />
+          ),
         },
         received: {
           render: ({ fieldProps, item }) => (
@@ -165,14 +165,16 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
                 },
                 quantity: true,
                 status: {
-                  render: ({ item }) => {
-                    return (
-                      <CellContent
-                        {...QUANTITY_STATUS_COLUMN}
-                        value={item.purchaseOrderProductComponent.status}
-                      />
-                    );
-                  },
+                  render: ({ item }) => (
+                    <CellContent<ModelEnum.PurchaseOrderProductComponent>
+                      columnMapping={
+                        PURCHASE_ORDER_PRODUCT_COMPONENT_MAPPING.columnDef
+                          .status
+                      }
+                      item={item.purchaseOrderProductComponent}
+                      columnName='status'
+                    />
+                  ),
                 },
                 received: {
                   render: ({ fieldProps, item }) => (
@@ -219,14 +221,13 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
         quantity: true,
         note: true,
         status: {
-          render: ({ item }) => {
-            return (
-              <CellContent
-                {...QUANTITY_STATUS_COLUMN}
-                value={item.desiredProduct.status}
-              />
-            );
-          },
+          render: ({ item }) => (
+            <CellContent<ModelEnum.DesiredProduct>
+              columnMapping={DESIRED_PRODUCT_MAPPING.columnDef.status}
+              item={item.desiredProduct}
+              columnName='status'
+            />
+          ),
         },
         components: {
           render: ({ fieldProps }) => {
@@ -248,17 +249,18 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
                 restQuantity: {
                   render: ({ item }) => item.restQuantity,
                 },
-
                 quantity: true,
                 status: {
-                  render: ({ item }) => {
-                    return (
-                      <CellContent
-                        {...QUANTITY_STATUS_COLUMN}
-                        value={item.purchaseOrderProductComponent.status}
-                      />
-                    );
-                  },
+                  render: ({ item }) => (
+                    <CellContent<ModelEnum.PurchaseOrderProductComponent>
+                      columnMapping={
+                        PURCHASE_ORDER_PRODUCT_COMPONENT_MAPPING.columnDef
+                          .status
+                      }
+                      item={item.purchaseOrderProductComponent}
+                      columnName='status'
+                    />
+                  ),
                 },
                 received: {
                   render: ({ fieldProps, item }) => (

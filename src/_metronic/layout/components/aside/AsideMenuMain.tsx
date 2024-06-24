@@ -1,11 +1,11 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { Fragment } from "react";
 import { AsideMenuItem } from "./AsideMenuItem";
-import { useAuth } from "../../../../_custom/hooks/UseAuth";
-import { ViewEnum } from "../../../../_custom/types/ModelMapping";
-import { Trans } from "../../../../_custom/components/Trans";
+import { useAuth } from "../../../../_core/hooks/UseAuth";
+import { ViewEnum } from "../../../../_core/types/ModelMapping";
+import { Trans } from "../../../../_core/components/Trans";
 import { CUSTOM_ROUTES } from "../../../../app/routing/PrivateRoutes";
-import { getRoutePrefix } from "../../../../_custom/utils";
+import { getRoutePrefix } from "../../../../_core/utils";
 import { DisplayEnum } from "../../../../app/routing/Enums/DisplayEnum";
 
 // const GROUPS = [
@@ -22,12 +22,11 @@ import { DisplayEnum } from "../../../../app/routing/Enums/DisplayEnum";
 
 export function AsideMenuMain() {
   const auth = useAuth();
-  const operations = auth.operations
-    .filter(
-      ({ operationType, isMenuItem }) =>
-        isMenuItem && operationType === ViewEnum.Listing
-    )
-    .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex);
+  const operations = auth.operations.filter(
+    ({ operationType, isMenuItem }) =>
+      isMenuItem && operationType === ViewEnum.Listing
+  );
+  //.sort((a, b) => a.resource.sortIndex - b.resource.sortIndex);
 
   return (
     <>
@@ -35,30 +34,22 @@ export function AsideMenuMain() {
         (route) =>
           (!route.granted || auth.isGranted(route.granted)) &&
           route.display.includes(DisplayEnum.SIDE_MENU)
-      ).map((route) => {
-        return (
-          <AsideMenuItem
-            key={route.path}
-            path={`/${route.path}`}
-            title={<Trans id={route.title} />}
-            icon={route.icon}
-          />
-        );
-      })}
+      ).map((route) => (
+        <AsideMenuItem
+          key={route.path}
+          path={`/${route.path}`}
+          title={<Trans id={route.title} />}
+          icon={route.icon}
+        />
+      ))}
 
-      {operations
-        .filter(
-          ({ operationType, isMenuItem }) =>
-            isMenuItem && operationType === ViewEnum.Listing
-        )
-        .sort((a, b) => a.resource.sortIndex - b.resource.sortIndex)
-        .map((operation) => (
-          <AsideMenuItem
-            key={operation.id}
-            {...operation}
-            path={getRoutePrefix(operation.resource.name)}
-          />
-        ))}
+      {operations.map((operation) => (
+        <AsideMenuItem
+          key={operation.id}
+          {...operation}
+          path={getRoutePrefix(operation.resource.name)}
+        />
+      ))}
       {/*{GROUPS.map(group => {*/}
       {/*  const _ope = operations.filter(({resource}) => group.operations.includes(resource.name));*/}
       {/*  if (_ope.length === 0) return <Fragment key={group.title} />*/}

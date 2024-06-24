@@ -46,6 +46,7 @@ import { QueryParamModel } from "./QueryParam";
 import { InvoiceAttachmentModel } from "./InvoiceAttachment";
 import { PaymentTermModel } from "./PaymentTerm";
 import { ReceiptAttachmentModel } from "./RecieptAttachment";
+import { VatRateModel } from "./VatRate";
 
 export enum ModelEnum {
   ApplicantService = "ApplicantService",
@@ -73,6 +74,7 @@ export enum ModelEnum {
   Resource = "Resource",
   Role = "Role",
   Step = "Step",
+  VatRate = "VatRate",
   User = "User",
   ValidationPath = "ValidationPath",
   Vendor = "Vendor",
@@ -97,6 +99,7 @@ export enum ModelEnum {
   PaymentTerm = "PaymentTerm",
   ReceiptAttachment = "ReceiptAttachment",
 }
+export const TENANT_TYPE = ModelEnum.Clinic;
 
 export type Models = {
   [ModelEnum.PurchaseNeed]: PurchaseNeedModel;
@@ -137,6 +140,7 @@ export type Models = {
   [ModelEnum.ProductSection]: ProductSectionModel;
   [ModelEnum.City]: CityModel;
   [ModelEnum.Bloc]: BlocModel;
+  [ModelEnum.VatRate]: VatRateModel;
   [ModelEnum.Service]: ServiceModel;
   [ModelEnum.Clinic]: ClinicModel;
   [ModelEnum.DeliveryDepot]: DeliveryDepotModel;

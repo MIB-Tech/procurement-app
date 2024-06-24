@@ -4,22 +4,22 @@ import { KTSVG } from "../../../helpers";
 import { HeaderUserMenu, QuickLinks } from "../../../partials";
 import { useLayout } from "../../core";
 import { ClickAwayListener } from "@mui/material";
-import { useAuth } from "../../../../_custom/hooks/UseAuth";
-import { Button } from "../../../../_custom/components/Button";
-import { Trans } from "../../../../_custom/components/Trans";
+import { useAuth } from "../../../../_core/hooks/UseAuth";
+import { Button } from "../../../../_core/components/Button";
+import { Trans } from "../../../../_core/components/Trans";
 
 const toolbarButtonMarginClass = "ms-1 ms-lg-3";
 
 const Topbar: FC = () => {
   const { config } = useLayout();
   const [userToolbarOpen, setUserToolbarOpen] = useState<boolean>();
-  const [clinicLinkOpen, setClinicLinkOpen] = useState<boolean>();
-  const { user, clinic } = useAuth();
+  const [tenantLinkOpen, setTenantLinkOpen] = useState<boolean>();
+  const { user, tenant } = useAuth();
 
   return (
     <div className='d-flex align-items-stretch flex-shrink-0'>
       <ClickAwayListener
-        onClickAway={() => clinicLinkOpen && setClinicLinkOpen(false)}
+        onClickAway={() => tenantLinkOpen && setTenantLinkOpen(false)}
       >
         <div
           className={clsx(
@@ -30,10 +30,10 @@ const Topbar: FC = () => {
           <Button
             flush
             className={clsx()}
-            onClick={() => setClinicLinkOpen(!clinicLinkOpen)}
+            onClick={() => setTenantLinkOpen(!tenantLinkOpen)}
           >
             <div>
-              {clinic ? (
+              {tenant ? (
                 <Button
                   className={clsx(
                     "btn btn-sm bg-light-primary border border-2 border-primary fw-bolder text-primary w-100 px-4"
@@ -42,17 +42,17 @@ const Topbar: FC = () => {
                     e.preventDefault();
                   }}
                 >
-                  <div className='d-sm-none'>{clinic["@title"]}</div>
-                  <div className='d-none d-sm-block'>{clinic["@subTitle"]}</div>
+                  <div className='d-sm-none'>{tenant["@title"]}</div>
+                  <div className='d-none d-sm-block'>{tenant["@subTitle"]}</div>
                 </Button>
               ) : (
                 <span className='w-100px text-truncate fw-boldest text-hover-primary'>
-                  <Trans id='CLINIC' />
+                  <Trans id='TENANT' />
                 </span>
               )}
             </div>
           </Button>
-          <QuickLinks show={clinicLinkOpen} />
+          <QuickLinks show={tenantLinkOpen} />
         </div>
       </ClickAwayListener>
       <div
