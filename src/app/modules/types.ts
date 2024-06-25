@@ -47,6 +47,7 @@ import { InvoiceAttachmentModel } from "./InvoiceAttachment";
 import { PaymentTermModel } from "./PaymentTerm";
 import { ReceiptAttachmentModel } from "./RecieptAttachment";
 import { VatRateModel } from "./VatRate";
+import { AccountingModel } from "../Accounting";
 
 export enum ModelEnum {
   ApplicantService = "ApplicantService",
@@ -98,7 +99,9 @@ export enum ModelEnum {
   InvoiceAttachment = "InvoiceAttachment",
   PaymentTerm = "PaymentTerm",
   ReceiptAttachment = "ReceiptAttachment",
+  Accounting = "Accounting",
 }
+
 export const TENANT_TYPE = ModelEnum.Clinic;
 
 export type Models = {
@@ -151,4 +154,5 @@ export type Models = {
   [ModelEnum.QueryParam]: QueryParamModel;
   [ModelEnum.InvoiceAttachment]: InvoiceAttachmentModel;
   [ModelEnum.PaymentTerm]: PaymentTermModel;
+  [ModelEnum.Accounting]: AccountingModel;
 };

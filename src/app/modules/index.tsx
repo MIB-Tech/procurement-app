@@ -58,6 +58,7 @@ import { PAYMENT_TERM_MAPPING } from "./PaymentTerm";
 import { RECEIPT_ATTACHMENT_MAPPING } from "./RecieptAttachment";
 import { VATRATE_MAPPING } from "./VatRate";
 import { DEFAULT_LISTING_VIEW } from "../../_core/ListingView/ListingView.utils";
+import { ACCOUNTING_MAPPING } from "../Accounting";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
@@ -111,6 +112,7 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.QueryParam]: QUERY_PARAM_MAPPING,
   [ModelEnum.InvoiceAttachment]: INVOICE_ATTACHMENT_MAPPING,
   [ModelEnum.PaymentTerm]: PAYMENT_TERM_MAPPING,
+  [ModelEnum.Accounting]: ACCOUNTING_MAPPING,
 };
 
 export type ListingState<M extends ModelEnum> = {

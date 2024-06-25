@@ -120,6 +120,9 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
           }
         ),
     },
+    accountings: {
+      type: ModelEnum.Accounting,
+    },
   },
   views: [
     {
