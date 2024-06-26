@@ -14,11 +14,11 @@ import { Button } from "../../../_core/components/Button";
 import { Trans } from "../../../_core/components/Trans";
 import { Modal } from "react-bootstrap";
 import ReportViewer from "../PurchaseOrder/components/ReportViewer";
-import { LineType, PurchaseOrderProductPrint } from "../PurchaseOrder/Model";
+import { LineType } from "../PurchaseOrder/Model";
 
 export const PrintReceiptButton: FC<
   CustomItemActionProps<ModelEnum.Receipt>
-> = ({ ...props }) => {
+> = () => {
   const [open, setOpen] = useState<boolean>();
   const modelName = ModelEnum.Receipt;
   const uri = useUri({ modelName });
@@ -34,8 +34,13 @@ export const PrintReceiptButton: FC<
       ...item,
       receivedAt: moment(item.receivedAt).format("L"),
       lines: item.receiptProducts.reduce((lines, receiptProduct) => {
-        const { desiredProduct, components, note } = receiptProduct;
-        const { designation, purchaseOrderProduct, quantity } = desiredProduct;
+        const {
+          designation,
+          purchaseOrderProduct,
+          quantity,
+          components,
+          note,
+        } = receiptProduct;
         const { product } = purchaseOrderProduct;
         return [
           ...lines,

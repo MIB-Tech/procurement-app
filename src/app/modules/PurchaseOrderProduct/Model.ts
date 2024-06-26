@@ -1,8 +1,9 @@
 import { AbstractModel } from "../../../_core/types/types";
-import { DesiredProductModel } from "../DesiredProduct";
 import { PurchaseOrderModel } from "../PurchaseOrder";
 import { ProductModel } from "../Product";
 import { PurchaseOrderProductComponentModel } from "../PurchaseOrderProductComponent";
+import { QuantityStatusEnum } from "../PurchaseOrder/Model";
+import { ReceiptProductModel } from "../ReceiptProduct";
 
 export enum DiscountType {
   Percent = "PERCENT",
@@ -19,14 +20,15 @@ type Model = {
   discountValue: number;
   product: ProductModel;
   purchaseOrder: PurchaseOrderModel;
-  desiredProducts: Array<DesiredProductModel>;
+  receiptProducts: Array<ReceiptProductModel>;
   components: Array<PurchaseOrderProductComponentModel>;
   priceExclTax: number;
   priceInclTax: number;
-  discountedUnitPrice: number;
-  readonly status: boolean;
-  readonly vatTax: boolean;
-  editablePrice?: boolean;
+  discountedUnitPrice?: number;
+  readonly receiptStatus?: QuantityStatusEnum;
+  readonly vatTax?: boolean;
+  readonly receiptRestQuantity?: number;
+  readonly editablePrice?: boolean;
 } & AbstractModel;
 
 export default Model;

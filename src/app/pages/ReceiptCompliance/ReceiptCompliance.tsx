@@ -63,32 +63,13 @@ export const ReceiptCompliancePage: FC = () => {
     initialValues: {
       purchaseOrder: null,
     } as SearchValue,
-    onSubmit: (values) => {},
+    onSubmit: () => {},
   });
   const vendorformik = useFormik({
     initialValues: {
       vendor: null,
     } as VendorValue,
-    onSubmit: (values) => {},
-  });
-  const vendorsId = vendorformik.values.vendor?.id;
-  const vendorOrdersQuery = useCollectionQuery({
-    modelName: ModelEnum.PurchaseOrder,
-    params: {
-      filter: {
-        operator: CompoundFilterOperator.And,
-        filters: [
-          {
-            property: "vendor",
-            operator: PropertyFilterOperator.Equal,
-            value: vendorsId,
-          },
-        ],
-      },
-    },
-    options: {
-      enabled: false,
-    },
+    onSubmit: () => {},
   });
   const purchaseOrdersId = searchformik.values.purchaseOrder?.id;
   const purchaseOrdersQuery = useCollectionQuery({
@@ -98,7 +79,7 @@ export const ReceiptCompliancePage: FC = () => {
         operator: CompoundFilterOperator.And,
         filters: [
           {
-            property: "desiredProduct.purchaseOrderProduct.purchaseOrder",
+            property: "purchaseOrderProduct.purchaseOrder",
             operator: PropertyFilterOperator.Equal,
             value: purchaseOrdersId,
           },

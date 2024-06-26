@@ -1,21 +1,10 @@
 import { ModelEnum } from "../../../../app/modules/types";
 import { FieldProps } from "../../controls/fields";
 import { HydraItem } from "../../../types/hydra.types";
-import { useField, useFormikContext } from "formik";
-import React, { useMemo, useState } from "react";
+import { useField } from "formik";
+import React, { useState } from "react";
 import { useMapping } from "../../../hooks/UseMapping";
-import { AbstractModel, ColumnTypeEnum } from "../../../types/types";
-import {
-  ColumnMapping,
-  CreateViewType,
-  Model,
-  UpdateViewType,
-  ViewEnum,
-} from "../../../types/ModelMapping";
-import { DEFAULT_UPDATE_VIEW } from "../../../UpdateView/UpdateView";
-import { DEFAULT_CREATE_VIEW } from "../../../CreateView/CreateView";
-import { getDefaultFields } from "../../../utils";
-import { StringFormat } from "../../String/StringColumn";
+import { ColumnMapping, FormField, Model } from "../../../types/ModelMapping";
 import { IconButton } from "../../../components/Button/IconButton";
 import { Modal } from "react-bootstrap";
 import clsx from "clsx";
@@ -25,40 +14,20 @@ import { ValueField } from "../../ValueField";
 export const NestedColumnsButton = <M extends ModelEnum>({
   name,
   modelName,
+  columnNames,
+  fields,
   item,
   index,
 }: FieldProps & {
   modelName: M;
   item: HydraItem;
   index: number;
+  columnNames: Array<string | keyof Model<M>>;
+  fields: FormField<M>;
 }) => {
   const [, { error }] = useField<Array<HydraItem<M>>>({ name });
   const [open, setOpen] = useState<boolean>();
-  const { views, columnDef } = useMapping<M>({ modelName });
-  const {
-    values: { id },
-  } = useFormikContext<AbstractModel>();
-  const view = useMemo<CreateViewType<M> | UpdateViewType<M>>(() => {
-    if (id) {
-      return (views?.find((view) => view.type === ViewEnum.Update) ||
-        DEFAULT_UPDATE_VIEW) as UpdateViewType<M>;
-    }
-
-    return (views?.find((view) => view.type === ViewEnum.Create) ||
-      DEFAULT_CREATE_VIEW) as CreateViewType<M>;
-  }, [id, views]);
-  const { fields = getDefaultFields(columnDef) } = view;
-  const _columnNames = Object.keys(fields) as Array<keyof Model<M>>;
-  const columnNames = _columnNames.filter((columnName) => {
-    const columnMapping = columnDef[columnName] as ColumnMapping<M> | undefined;
-    if (!columnMapping) return false;
-    switch (columnMapping.type) {
-      case ColumnTypeEnum.String:
-        return columnMapping.format === StringFormat.Text;
-      default:
-        return "embeddedForm" in columnMapping;
-    }
-  });
+  const { columnDef } = useMapping<M>({ modelName });
 
   return (
     <>
@@ -78,6 +47,7 @@ export const NestedColumnsButton = <M extends ModelEnum>({
         <Modal.Header closeButton />
         <Modal.Body className='d-flex flex-column gap-5'>
           {columnNames.map((columnName) => {
+            // @ts-ignore
             const field = fields[columnName];
             const render = typeof field === "object" && field?.render;
 

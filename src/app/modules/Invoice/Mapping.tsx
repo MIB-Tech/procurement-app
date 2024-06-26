@@ -46,10 +46,6 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
       type: ColumnTypeEnum.Boolean,
       nullable: true,
     },
-    posted: {
-      type: ColumnTypeEnum.Boolean,
-      nullable: true,
-    },
     sageAccountingRef: {
       type: ColumnTypeEnum.String,
       nullable: true,
@@ -127,7 +123,6 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
       columns: {
         createdAt: true,
         purchaseOrders: true,
-        posted: true,
         accounted: true,
         sageAccountingRef: true,
         totalExclTax: true,
@@ -187,7 +182,6 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
         ref: true,
         externalRef: true,
         accounted: true,
-        posted: true,
         paymentTerms: {
           slotProps: {
             root: {
@@ -212,7 +206,6 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
         externalRef: true,
         sageAccountingRef: true,
         accounted: true,
-        posted: true,
         paymentTerms: {
           slotProps: {
             root: {
@@ -260,7 +253,6 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
         ref: true,
         externalRef: true,
         accounted: true,
-        posted: true,
         sageAccountingRef: true,
         paymentTerms: true,
         totalExclTax: true,
