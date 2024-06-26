@@ -62,10 +62,11 @@ export const NestedArrayField = <M extends ModelEnum>({
 }: NestedArrayFieldProps<M>) => {
   const [importing, setImporting] = useState<boolean>();
   const { trans } = useTrans();
-  const {
-    values: { id },
-  } = useFormikContext<AbstractModel>();
-  const [{ value: baseItems }, , { setValue }] = useField<Array<HydraItem<M>>>({
+  const formik = useFormikContext<AbstractModel>();
+  const { id } = formik.values;
+  const [{ value: baseItems = [] }, , { setValue }] = useField<
+    Array<HydraItem<M>> | undefined
+  >({
     name,
   });
   const { views, columnDef } = useMapping<M>({ modelName });
@@ -78,7 +79,8 @@ export const NestedArrayField = <M extends ModelEnum>({
 
     return (views?.find((view) => view.type === ViewEnum.Create) ||
       DEFAULT_CREATE_VIEW) as CreateViewType<M>;
-  }, [id, views]);
+  }, [id, views, props.view]);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { fields = getDefaultFields(columnDef) } = view;
   const columnNames = Object.keys(fields) as Array<keyof Model<M> | string>;
@@ -148,7 +150,6 @@ export const NestedArrayField = <M extends ModelEnum>({
   // );
   // const products = queries[0].data?.data['hydra:member'] || [];
   // console.log(products);
-
   const initialValues = {
     ...getInitialValues({ columnDef, fields }),
     ...extraAttribute,
@@ -336,6 +337,8 @@ export const NestedArrayField = <M extends ModelEnum>({
                             modelName={modelName}
                             item={item}
                             index={item._index}
+                            columnNames={nestedColumnNames}
+                            fields={fields}
                           />
                         )}
                       </div>

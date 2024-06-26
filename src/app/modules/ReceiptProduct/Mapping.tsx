@@ -1,5 +1,4 @@
 import {
-  ColumnMapping,
   CreateViewType,
   ModelMapping,
   UpdateViewType,
@@ -8,19 +7,21 @@ import {
 import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
 import { CellContent } from "../../../_core/ListingView/views/Table/BodyCell";
-import { QUANTITY_STATUS_COLUMN } from "../PurchaseOrderProduct/Mapping";
 import { BooleanField } from "../../../_core/Column/Boolean/BooleanField";
 import React from "react";
-import { QuantityStatusEnum } from "../PurchaseOrder/Model";
+import {
+  QUANTITY_STATUS_OPTIONS,
+  QuantityStatusEnum,
+} from "../PurchaseOrder/Model";
 import { ref } from "yup";
 import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 import { StringFormat } from "../../../_core/Column/String/StringColumn";
 import { COMPLIANCE_STATUS_OPTIONS } from "./Model";
-import {
-  DESIRED_PRODUCT_MAPPING,
-  DesiredProductModel,
-} from "../DesiredProduct";
 import { PURCHASE_ORDER_PRODUCT_COMPONENT_MAPPING } from "../PurchaseOrderProductComponent";
+import {
+  PURCHASE_ORDER_PRODUCT_MAPPING,
+  PurchaseOrderProductModel,
+} from "../PurchaseOrderProduct";
 
 const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
   modelName: ModelEnum.ReceiptProduct,
@@ -28,34 +29,40 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
     id: {
       type: ColumnTypeEnum.Number,
     },
+    designation: {
+      type: ColumnTypeEnum.String,
+    },
     quantity: {
       type: ColumnTypeEnum.Number,
       schema: (schema) =>
         schema.when("id", {
           is: (id: number | undefined) => !!id,
           then: (schema) =>
-            schema.positive().max(ref("desiredProduct.quantity")),
+            schema.positive().max(ref("purchaseOrderProduct.quantity")),
           otherwise: (schema) =>
-            schema.when("desiredProduct", {
-              is: (desiredProduct?: DesiredProductModel) => {
-                if (!desiredProduct) return true;
-                const { id, status, restQuantity } = desiredProduct;
+            schema.when("purchaseOrderProduct", {
+              is: (purchaseOrderProduct?: PurchaseOrderProductModel) => {
+                if (!purchaseOrderProduct) return true;
+                const { receiptStatus, receiptRestQuantity } =
+                  purchaseOrderProduct;
+
                 return (
-                  status !== QuantityStatusEnum.FullyReceived &&
-                  restQuantity > 0
+                  receiptStatus !== QuantityStatusEnum.FullyReceived &&
+                  receiptRestQuantity &&
+                  receiptRestQuantity > 0
                 );
               },
               then: (schema) =>
-                schema.positive().max(ref("desiredProduct.restQuantity")),
+                schema.positive().max(ref("purchaseOrderProduct.restQuantity")),
             }),
         }),
-      // schema: schema => schema.when('desiredProduct', {
+      // schema: schema => schema.when('purchaseOrderProduct', {
       //   is: ({id, status, restQuantity}: DesiredProductModel) =>  {
       //     if (id) return true
       //
       //     return status !== QuantityStatusEnum.FullyReceived && restQuantity > 0
       //   },
-      //   then: schema => schema.positive().max(ref('desiredProduct.restQuantity')),
+      //   then: schema => schema.positive().max(ref('purchaseOrderProduct.restQuantity')),
       // })
     },
     note: {
@@ -84,11 +91,25 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
       type: ColumnTypeEnum.String,
       nullable: true,
     },
+    invoiceProductStatus: {
+      type: ColumnTypeEnum.String,
+      format: StringFormat.Select,
+      options: QUANTITY_STATUS_OPTIONS,
+    },
     receipt: {
       type: ModelEnum.Receipt,
+      nullable: true,
     },
-    desiredProduct: {
-      type: ModelEnum.DesiredProduct,
+    purchaseOrderProduct: {
+      type: ModelEnum.PurchaseOrderProduct,
+    },
+    deliveryDepot: {
+      type: ModelEnum.DeliveryDepot,
+      nullable: true,
+    },
+    invoiceProducts: {
+      type: ModelEnum.InvoiceProduct,
+      multiple: true,
     },
     components: {
       type: ModelEnum.ReceiptProductComponent,
@@ -102,6 +123,7 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
       columns: {
         quantity: true,
         note: true,
+        deliveryDepot: true,
         complianceStatus: true,
         complianceUpdatedBy: true,
         complianceReserve: true,
@@ -112,23 +134,27 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
       fields: {
         designation: {
           render: ({ item }) => (
-            <div className='w-400px'>{item.desiredProduct.designation}</div>
+            <div className='w-400px'>
+              {item.purchaseOrderProduct.designation}
+            </div>
           ),
         },
-        desiredProductQuantity: {
-          render: ({ item }) => item.desiredProduct.quantity,
+        purchaseOrderProductQuantity: {
+          render: ({ item }) => item.purchaseOrderProduct.quantity,
         },
         restQuantity: {
-          render: ({ item }) => item.desiredProduct.restQuantity,
+          render: ({ item }) => item.purchaseOrderProduct.receiptRestQuantity,
         },
         quantity: true,
         note: true,
         status: {
           render: ({ item }) => (
-            <CellContent<ModelEnum.DesiredProduct>
-              columnMapping={DESIRED_PRODUCT_MAPPING.columnDef.status}
-              item={item.desiredProduct}
-              columnName='status'
+            <CellContent<ModelEnum.PurchaseOrderProduct>
+              columnMapping={
+                PURCHASE_ORDER_PRODUCT_MAPPING.columnDef.receiptStatus
+              }
+              item={item.purchaseOrderProduct}
+              columnName='receiptStatus'
             />
           ),
         },
@@ -137,7 +163,8 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
             <BooleanField
               {...fieldProps}
               disabled={
-                item.desiredProduct.status === QuantityStatusEnum.FullyReceived
+                item.purchaseOrderProduct.receiptStatus ===
+                QuantityStatusEnum.FullyReceived
               }
               size='sm'
             />
@@ -209,23 +236,28 @@ const mapping: ModelMapping<ModelEnum.ReceiptProduct> = {
       fields: {
         designation: {
           render: ({ item }) => (
-            <div className='w-400px'>{item.desiredProduct.designation}</div>
+            <div className='w-400px'>
+              {item.purchaseOrderProduct.designation}
+            </div>
           ),
         },
-        desiredProductQuantity: {
-          render: ({ item }) => item.desiredProduct.quantity,
+        purchaseOrderProductQuantity: {
+          render: ({ item }) => item.purchaseOrderProduct.quantity,
         },
         restQuantity: {
-          render: ({ item }) => item.desiredProduct.quantity - item.quantity,
+          render: ({ item }) =>
+            item.purchaseOrderProduct.quantity - item.quantity,
         },
         quantity: true,
         note: true,
         status: {
           render: ({ item }) => (
-            <CellContent<ModelEnum.DesiredProduct>
-              columnMapping={DESIRED_PRODUCT_MAPPING.columnDef.status}
-              item={item.desiredProduct}
-              columnName='status'
+            <CellContent<ModelEnum.PurchaseOrderProduct>
+              columnMapping={
+                PURCHASE_ORDER_PRODUCT_MAPPING.columnDef.receiptStatus
+              }
+              item={item.purchaseOrderProduct}
+              columnName='receiptStatus'
             />
           ),
         },

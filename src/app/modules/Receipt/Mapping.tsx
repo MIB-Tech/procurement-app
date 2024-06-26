@@ -128,7 +128,7 @@ const formFields: FormFields<ModelEnum.Receipt> = {
       },
     },
     // display: ({item}) => item.purchaseOrders.length > 0,
-    render: ({ item, fieldProps }) => (
+    render: ({ fieldProps }) => (
       <NestedArrayField
         modelName={ModelEnum.ReceiptProduct}
         disableInsert
@@ -207,9 +207,8 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
         receiptNumber: true,
         receivedAt: true,
         externalRef: true,
-        "receiptProducts.desiredProduct.purchaseOrderProduct.purchaseOrder.vendor":
-          true,
-        "receiptProducts.desiredProduct.purchaseOrderProduct.purchaseOrder.paymentModality":
+        "receiptProducts.purchaseOrderProduct.purchaseOrder.vendor": true,
+        "receiptProducts.purchaseOrderProduct.purchaseOrder.paymentModality":
           true,
       },
     },
@@ -237,8 +236,6 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
           receiptProducts: item.receiptProducts
             ?.map((receiptProduct) => ({
               ...receiptProduct,
-              // @ts-ignore
-              desiredProduct: receiptProduct.desiredProduct["@id"],
               quantity: receiptProduct.received ? receiptProduct.quantity : 0,
               note: receiptProduct.received ? receiptProduct.note : "",
               components: receiptProduct.components

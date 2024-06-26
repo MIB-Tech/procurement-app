@@ -48,6 +48,7 @@ import { PaymentTermModel } from "./PaymentTerm";
 import { ReceiptAttachmentModel } from "./RecieptAttachment";
 import { VatRateModel } from "./VatRate";
 import { AccountingModel } from "../Accounting";
+import { InvoiceProductModel } from "./InvoiceProduct";
 
 export enum ModelEnum {
   ApplicantService = "ApplicantService",
@@ -86,6 +87,7 @@ export enum ModelEnum {
   Component = "Component",
   PaymentModality = "PaymentModality",
   Invoice = "Invoice",
+  InvoiceProduct = "InvoiceProduct",
   ProductSection = "ProductSection",
   City = "City",
   Service = "Service",
@@ -101,7 +103,6 @@ export enum ModelEnum {
   ReceiptAttachment = "ReceiptAttachment",
   Accounting = "Accounting",
 }
-
 export const TENANT_TYPE = ModelEnum.Clinic;
 
 export type Models = {
@@ -140,6 +141,7 @@ export type Models = {
   [ModelEnum.PaymentModality]: PaymentModalityModel;
   [ModelEnum.Component]: ComponentModel;
   [ModelEnum.Invoice]: InvoiceModel;
+  [ModelEnum.InvoiceProduct]: InvoiceProductModel;
   [ModelEnum.ProductSection]: ProductSectionModel;
   [ModelEnum.City]: CityModel;
   [ModelEnum.Bloc]: BlocModel;

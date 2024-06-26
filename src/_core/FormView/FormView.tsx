@@ -212,6 +212,7 @@ export const FormView = <M extends ModelEnum>({
       }
     );
   }, [tenant]);
+  console.log(formik.errors);
 
   return (
     <FormikProvider value={formik}>

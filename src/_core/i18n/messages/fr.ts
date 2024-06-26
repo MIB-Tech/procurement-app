@@ -1,6 +1,7 @@
 import { I18nLanguage } from "../I18nMessages";
 
 export const fr: I18nLanguage = {
+  PURCHASE_ORDER_PRODUCT_QUANTITY: "Quantité",
   ALLOWED_FILE_TYPES: "Fichiers autorisés",
   OBJECT: "Objet",
   AUDITS: "Audits",
@@ -154,8 +155,6 @@ export const fr: I18nLanguage = {
   PURCHASE_ORDER_PRODUCT: "Produit du bon de commande",
   PURCHASE_ORDER_PRODUCTS: "Produits du bon de commande",
   VENDOR_OFFER: "Offre du fournisseur",
-  DESIRED_PRODUCT: "Produit souhaité",
-  DESIRED_PRODUCTS: "Détails de réception",
   PURCHASE_FILES: "Fichiers d'achat",
   PURCHASE_FILE_PRODUCT: "Produit du fichier d'achat",
   PURCHASE_FILE_PRODUCTS: "Produits du fichier d'achat",

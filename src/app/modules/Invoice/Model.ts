@@ -14,18 +14,18 @@ type Model = {
   invoiceNumber: string;
   ref?: string;
   externalRef?: string;
-  posted?: boolean;
   accounted?: boolean;
   sageAccountingRef: string;
+  totalExclTax?: number;
+  totalInclTax?: number;
+  totalVatTax?: number;
+  totalDiscount?: number;
+  /** @deprecated */
   purchaseOrders: Array<PurchaseOrderModel>;
   attachments: Array<InvoiceAttachmentModel>;
   paymentTerms: Array<PaymentTermModel>;
   accountings: Array<AccountingModel>;
   readonly vendor: VendorModel;
-  readonly totalExclTax?: number;
-  totalInclTax?: number;
-  readonly totalVatTax?: number;
-  readonly totalDiscount?: number;
 } & AbstractModel &
   CreateTimestamp;
 

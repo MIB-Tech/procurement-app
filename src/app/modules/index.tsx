@@ -58,6 +58,7 @@ import { PAYMENT_TERM_MAPPING } from "./PaymentTerm";
 import { RECEIPT_ATTACHMENT_MAPPING } from "./RecieptAttachment";
 import { VATRATE_MAPPING } from "./VatRate";
 import { DEFAULT_LISTING_VIEW } from "../../_core/ListingView/ListingView.utils";
+import { INVOICE_PRODUCT_MAPPING } from "./InvoiceProduct";
 import { ACCOUNTING_MAPPING } from "../Accounting";
 
 export const MODEL_MAPPINGS: Mapping = {
@@ -98,6 +99,7 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Component]: COMPONENT_MAPPING,
   [ModelEnum.PaymentModality]: PAYMENT_MODALITY_MAPPING,
   [ModelEnum.Invoice]: INVOICE_MAPPING,
+  [ModelEnum.InvoiceProduct]: INVOICE_PRODUCT_MAPPING,
   [ModelEnum.ProductSection]: PRODUCT_SECTION_MAPPING,
   [ModelEnum.ReceiptProductComponent]: RECEIPT_PRODUCT_COMPONENT_MAPPING,
   [ModelEnum.City]: CITY_MAPPING,
