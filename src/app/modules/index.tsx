@@ -3,7 +3,7 @@ import { ROLE_MAPPING } from "./Role";
 import { CATEGORY_MAPPING } from "./Category";
 import { PURCHASE_NEED_MAPPING } from "./PurchaseNeed";
 import { PURCHASE_NEED_ATTACHMENT_MAPPING } from "./PurchaseNeedAttachment";
-import { atom, atomFamily } from "recoil";
+import { atom } from "recoil";
 import {
   ListingModeEnum,
   Params,
@@ -32,7 +32,6 @@ import { VENDOR_OFFER_PRODUCT_MAPPING } from "./VendorOfferProduct";
 import { PRODUCT_PRICING_MAPPING } from "./ProductPricing";
 import { PURCHASE_ORDER_PRODUCT_MAPPING } from "./PurchaseOrderProduct";
 import { PURCHASE_ORDER_MAPPING } from "./PurchaseOrder";
-import { DESIRED_PRODUCT_MAPPING } from "./DesiredProduct";
 import { RECEIPT_MAPPING } from "./Receipt";
 import { RECEIPT_PRODUCT_MAPPING } from "./ReceiptProduct";
 import { PURCHASE_ORDER_CATEGORY_MAPPING } from "./PurchaseOrderCategory";
@@ -58,12 +57,12 @@ import { PAYMENT_TERM_MAPPING } from "./PaymentTerm";
 import { RECEIPT_ATTACHMENT_MAPPING } from "./RecieptAttachment";
 import { VATRATE_MAPPING } from "./VatRate";
 import { DEFAULT_LISTING_VIEW } from "../../_core/ListingView/ListingView.utils";
+import { INVOICE_PRODUCT_MAPPING } from "./InvoiceProduct";
 
 export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
   [ModelEnum.VatRate]: VATRATE_MAPPING,
   [ModelEnum.ProductPricing]: PRODUCT_PRICING_MAPPING,
-  [ModelEnum.DesiredProduct]: DESIRED_PRODUCT_MAPPING,
   [ModelEnum.PurchaseFile]: PURCHASEFILE_MAPPING,
   [ModelEnum.PurchaseFileProduct]: PURCHASEFILEPRODUCT_MAPPING,
   [ModelEnum.PurchaseFileType]: PURCHASEFILETYPE_MAPPING,
@@ -97,6 +96,7 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Component]: COMPONENT_MAPPING,
   [ModelEnum.PaymentModality]: PAYMENT_MODALITY_MAPPING,
   [ModelEnum.Invoice]: INVOICE_MAPPING,
+  [ModelEnum.InvoiceProduct]: INVOICE_PRODUCT_MAPPING,
   [ModelEnum.ProductSection]: PRODUCT_SECTION_MAPPING,
   [ModelEnum.ReceiptProductComponent]: RECEIPT_PRODUCT_COMPONENT_MAPPING,
   [ModelEnum.City]: CITY_MAPPING,

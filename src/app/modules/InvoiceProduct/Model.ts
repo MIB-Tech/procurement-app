@@ -1,11 +1,12 @@
 import { AbstractModel } from "../../../_core/types/types";
-import { ClinicModel } from "../Clinic";
+import { InvoiceModel } from "../Invoice";
 import { ReceiptProductModel } from "../ReceiptProduct";
 
 type Model = {
-  address: string;
-  clinic: ClinicModel;
-  receiptProducts: Array<ReceiptProductModel>;
+  quantity: number;
+  note: string;
+  receiptProduct: ReceiptProductModel;
+  invoice: InvoiceModel;
 } & AbstractModel;
 
 export default Model;

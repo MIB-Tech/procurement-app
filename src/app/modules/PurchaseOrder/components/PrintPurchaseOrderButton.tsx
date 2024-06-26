@@ -21,7 +21,7 @@ import { HydraItem } from "../../../../_core/types/hydra.types";
 
 export const PrintPurchaseOrderButton: FC<
   CustomItemActionProps<ModelEnum.PurchaseOrder>
-> = ({ ...props }) => {
+> = () => {
   const [open, setOpen] = useState<boolean>();
   const modelName = ModelEnum.PurchaseOrder;
   const uri = useUri({ modelName });
@@ -81,7 +81,7 @@ export const PrintPurchaseOrderButton: FC<
           priceInclTax,
           grossPrice,
           components,
-          discountedUnitPrice,
+          discountedUnitPrice = 0,
         } = purchaseOrderProduct;
         const isPercentCentDiscount = discountType === DiscountType.Percent;
 

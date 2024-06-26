@@ -1,37 +1,35 @@
-import { FieldProps } from "../../../_core/Column/controls/fields";
-import { useAuth } from "../../../_core/hooks/UseAuth";
+import { FieldProps } from "../../../../_core/Column/controls/fields";
 import { useField, useFormikContext } from "formik";
-import { PurchaseOrderModel } from "../PurchaseOrder";
+import { PurchaseOrderModel } from "../index";
 import {
   HydraItem,
   JsonldCollectionResponse,
-} from "../../../_core/types/hydra.types";
-import { DesiredProductModel } from "../DesiredProduct";
-import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
-import { ModelEnum } from "../types";
+} from "../../../../_core/types/hydra.types";
+import { ModelAutocompleteField } from "../../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
+import { ModelEnum } from "../../types";
 import axios from "axios";
-import { getRoutePrefix } from "../../../_core/utils";
+import { getRoutePrefix } from "../../../../_core/utils";
 import {
   CompoundFilter,
   CompoundFilterOperator,
   PropertyFilter,
   PropertyFilterOperator,
-} from "../../../_core/ListingView/Filter/Filter.types";
+} from "../../../../_core/ListingView/Filter/Filter.types";
 import {
   filterToParams,
   serializeSort,
-} from "../../../_core/ListingView/Filter/Filter.utils";
-import { PurchaseOrderProductComponentModel } from "../PurchaseOrderProductComponent";
-import { PurchaseOrderProductModel } from "./index";
-import { DiscountType } from "./Model";
-import { useCollectionQuery } from "../../../_core/hooks/UseCollectionQuery";
+} from "../../../../_core/ListingView/Filter/Filter.utils";
+import { PurchaseOrderProductComponentModel } from "../../PurchaseOrderProductComponent";
+import { PurchaseOrderProductModel } from "../../PurchaseOrderProduct";
+import { DiscountType } from "../../PurchaseOrderProduct/Model";
+import { useCollectionQuery } from "../../../../_core/hooks/UseCollectionQuery";
+import { ReceiptProductModel } from "../../ReceiptProduct";
 
 type PartialNullable<T> = {
   [P in keyof T]?: T[P] | null;
 };
 
 export const ProductField = ({ ...props }: Pick<FieldProps, "name">) => {
-  const { tenant } = useAuth();
   const { name } = props;
   const { values: purchaseOrder, setFieldValue } =
     useFormikContext<Partial<PurchaseOrderModel>>();
@@ -63,7 +61,7 @@ export const ProductField = ({ ...props }: Pick<FieldProps, "name">) => {
     vatRate: 0.2,
     priceExclTax: 0,
     priceInclTax: 0,
-    desiredProducts: [],
+    receiptProducts: [],
     components: [],
     editablePrice: undefined,
   };
@@ -77,7 +75,7 @@ export const ProductField = ({ ...props }: Pick<FieldProps, "name">) => {
       <ModelAutocompleteField
         modelName={ModelEnum.Product}
         size='sm'
-        onChange={async (event, value) => {
+        onChange={async (_, value) => {
           if (Array.isArray(value)) return;
           await setPurchaseOrderProduct(initialValues);
           if (!value) return;
@@ -95,12 +93,12 @@ export const ProductField = ({ ...props }: Pick<FieldProps, "name">) => {
           await setValue("note", detailedProduct.note);
           await setValue("vatRate", detailedProduct.vatRate);
 
-          const desiredProduct: Partial<DesiredProductModel> = {
+          const receiptProduct: Partial<ReceiptProductModel> = {
             designation,
             quantity: 0,
             deliveryDepot: deliveryDepots.at(0),
           };
-          await setValue("desiredProducts", [desiredProduct]);
+          await setValue("receiptProducts", [receiptProduct]);
           // pricing
           const pricingUri = getRoutePrefix(ModelEnum.ProductPricing);
           const pricingFilter: CompoundFilter<ModelEnum.ProductPricing> = {

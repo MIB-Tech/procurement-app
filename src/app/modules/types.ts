@@ -22,7 +22,6 @@ import { PurchaseFileProductModel } from "./PurchaseFileProduct";
 import { ProductPricingModel } from "./ProductPricing";
 import { PurchaseOrderProductModel } from "./PurchaseOrderProduct";
 import { PurchaseOrderModel } from "./PurchaseOrder";
-import { DesiredProductModel } from "./DesiredProduct";
 import { ReceiptModel } from "./Receipt";
 import { ReceiptProductModel } from "./ReceiptProduct";
 import { PurchaseOrderCategoryModel } from "./PurchaseOrderCategory";
@@ -47,13 +46,13 @@ import { InvoiceAttachmentModel } from "./InvoiceAttachment";
 import { PaymentTermModel } from "./PaymentTerm";
 import { ReceiptAttachmentModel } from "./RecieptAttachment";
 import { VatRateModel } from "./VatRate";
+import { InvoiceProductModel } from "./InvoiceProduct";
 
 export enum ModelEnum {
   ApplicantService = "ApplicantService",
   Category = "Category",
   Company = "Company",
   Currency = "Currency",
-  DesiredProduct = "DesiredProduct",
   Clinic = "Clinic",
   Operation = "Operation",
   Product = "Product",
@@ -85,6 +84,7 @@ export enum ModelEnum {
   Component = "Component",
   PaymentModality = "PaymentModality",
   Invoice = "Invoice",
+  InvoiceProduct = "InvoiceProduct",
   ProductSection = "ProductSection",
   City = "City",
   Service = "Service",
@@ -117,7 +117,6 @@ export type Models = {
   [ModelEnum.Operation]: OperationModel;
   [ModelEnum.Resource]: ResourceModel;
   [ModelEnum.Currency]: CurrencyModel;
-  [ModelEnum.DesiredProduct]: DesiredProductModel;
   [ModelEnum.PurchaseFile]: PurchaseFileModel;
   [ModelEnum.PurchaseFileProduct]: PurchaseFileProductModel;
   [ModelEnum.PurchaseFileType]: PurchaseFileTypeModel;
@@ -137,6 +136,7 @@ export type Models = {
   [ModelEnum.PaymentModality]: PaymentModalityModel;
   [ModelEnum.Component]: ComponentModel;
   [ModelEnum.Invoice]: InvoiceModel;
+  [ModelEnum.InvoiceProduct]: InvoiceProductModel;
   [ModelEnum.ProductSection]: ProductSectionModel;
   [ModelEnum.City]: CityModel;
   [ModelEnum.Bloc]: BlocModel;
