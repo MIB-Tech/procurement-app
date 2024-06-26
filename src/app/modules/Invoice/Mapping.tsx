@@ -13,12 +13,12 @@ import {
   PropertyFilterOperator,
 } from "../../../_core/ListingView/Filter/Filter.types";
 import React from "react";
-import { PrintInvoiceButton } from "./PrintInvoiceButton";
 import { ArraySchema } from "yup";
 import { InvoiceModel } from "./index";
 import { NumberFormat } from "../../../_core/Column/Number/NumberColumn";
 import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 import PaymentTermsField from "../PaymentTerm/PaymentTermsField";
+import AccountingButton from "./AccountingButton";
 
 const mapping: ModelMapping<ModelEnum.Invoice> = {
   modelName: ModelEnum.Invoice,
@@ -122,6 +122,7 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
     },
     accountings: {
       type: ModelEnum.Accounting,
+      multiple: true,
     },
   },
   views: [
@@ -253,7 +254,7 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
     {
       type: ViewEnum.Detail,
       customActions: [
-        { render: ({ item }) => <PrintInvoiceButton item={item} /> },
+        { render: ({ item }) => <AccountingButton invoiceId={32} /> },
       ],
       columns: {
         invoiceNumber: true,
@@ -270,6 +271,7 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
         totalInclTax: true,
         totalVatTax: true,
         totalDiscount: true,
+        accountings: true,
       },
     },
   ],
