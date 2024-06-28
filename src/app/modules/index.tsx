@@ -32,7 +32,6 @@ import { VENDOR_OFFER_PRODUCT_MAPPING } from "./VendorOfferProduct";
 import { PRODUCT_PRICING_MAPPING } from "./ProductPricing";
 import { PURCHASE_ORDER_PRODUCT_MAPPING } from "./PurchaseOrderProduct";
 import { PURCHASE_ORDER_MAPPING } from "./PurchaseOrder";
-import { DESIRED_PRODUCT_MAPPING } from "./DesiredProduct";
 import { RECEIPT_MAPPING } from "./Receipt";
 import { RECEIPT_PRODUCT_MAPPING } from "./ReceiptProduct";
 import { PURCHASE_ORDER_CATEGORY_MAPPING } from "./PurchaseOrderCategory";
@@ -65,7 +64,6 @@ export const MODEL_MAPPINGS: Mapping = {
   [ModelEnum.Currency]: CURRENCY_MAPPING,
   [ModelEnum.VatRate]: VATRATE_MAPPING,
   [ModelEnum.ProductPricing]: PRODUCT_PRICING_MAPPING,
-  [ModelEnum.DesiredProduct]: DESIRED_PRODUCT_MAPPING,
   [ModelEnum.PurchaseFile]: PURCHASEFILE_MAPPING,
   [ModelEnum.PurchaseFileProduct]: PURCHASEFILEPRODUCT_MAPPING,
   [ModelEnum.PurchaseFileType]: PURCHASEFILETYPE_MAPPING,

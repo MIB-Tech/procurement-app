@@ -15,11 +15,18 @@ const mapping: ModelMapping<ModelEnum.Accounting> = {
   views: [
     {
       type: ViewEnum.Listing,
-      columns: {},
+      columns: {
+        invoice: {
+          render: (props) => console.log(props.item.invoice.invoiceNumber),
+        },
+      },
     },
     {
       type: ViewEnum.Create,
-      fields: {},
+      fields: {
+        id: true,
+        invoice: true,
+      },
     },
     {
       type: ViewEnum.Update,

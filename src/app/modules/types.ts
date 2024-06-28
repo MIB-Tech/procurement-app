@@ -22,7 +22,6 @@ import { PurchaseFileProductModel } from "./PurchaseFileProduct";
 import { ProductPricingModel } from "./ProductPricing";
 import { PurchaseOrderProductModel } from "./PurchaseOrderProduct";
 import { PurchaseOrderModel } from "./PurchaseOrder";
-import { DesiredProductModel } from "./DesiredProduct";
 import { ReceiptModel } from "./Receipt";
 import { ReceiptProductModel } from "./ReceiptProduct";
 import { PurchaseOrderCategoryModel } from "./PurchaseOrderCategory";
@@ -55,7 +54,6 @@ export enum ModelEnum {
   Category = "Category",
   Company = "Company",
   Currency = "Currency",
-  DesiredProduct = "DesiredProduct",
   Clinic = "Clinic",
   Operation = "Operation",
   Product = "Product",
@@ -121,7 +119,6 @@ export type Models = {
   [ModelEnum.Operation]: OperationModel;
   [ModelEnum.Resource]: ResourceModel;
   [ModelEnum.Currency]: CurrencyModel;
-  [ModelEnum.DesiredProduct]: DesiredProductModel;
   [ModelEnum.PurchaseFile]: PurchaseFileModel;
   [ModelEnum.PurchaseFileProduct]: PurchaseFileProductModel;
   [ModelEnum.PurchaseFileType]: PurchaseFileTypeModel;

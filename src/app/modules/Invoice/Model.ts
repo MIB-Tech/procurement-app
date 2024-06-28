@@ -9,6 +9,7 @@ import {
 import { InvoiceAttachmentModel } from "../InvoiceAttachment";
 import { PaymentTermModel } from "../PaymentTerm";
 import { AccountingModel } from "../../Accounting";
+import { InvoiceProductModel } from "../InvoiceProduct";
 
 type Model = {
   invoiceNumber: string;
@@ -24,7 +25,9 @@ type Model = {
   purchaseOrders: Array<PurchaseOrderModel>;
   attachments: Array<InvoiceAttachmentModel>;
   paymentTerms: Array<PaymentTermModel>;
-  accountings: Array<AccountingModel>;
+  invoiceProducts: Array<InvoiceProductModel>;
+
+  accounting: AccountingModel;
   readonly vendor: VendorModel;
 } & AbstractModel &
   CreateTimestamp;
