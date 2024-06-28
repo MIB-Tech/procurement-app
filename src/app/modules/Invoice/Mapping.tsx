@@ -13,12 +13,13 @@ import {
   PropertyFilterOperator,
 } from "../../../_core/ListingView/Filter/Filter.types";
 import React from "react";
-import { PrintInvoiceButton } from "./PrintInvoiceButton";
 import { ArraySchema } from "yup";
 import { InvoiceModel } from "./index";
 import { NumberFormat } from "../../../_core/Column/Number/NumberColumn";
 import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 import PaymentTermsField from "../PaymentTerm/PaymentTermsField";
+import AccountingButton from "./AccountingButton";
+import { PrintInvoiceButton } from "./PrintInvoiceButton";
 
 const mapping: ModelMapping<ModelEnum.Invoice> = {
   modelName: ModelEnum.Invoice,
@@ -78,6 +79,9 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
       type: ModelEnum.InvoiceAttachment,
       multiple: true,
     },
+    invoiceProducts: {
+      type: ModelEnum.InvoiceProduct,
+    },
     paymentTerms: {
       type: ModelEnum.PaymentTerm,
       multiple: true,
@@ -115,6 +119,9 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
             return true;
           }
         ),
+    },
+    accounting: {
+      type: ModelEnum.Accounting,
     },
   },
   views: [
@@ -181,7 +188,6 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
         sageAccountingRef: true,
         ref: true,
         externalRef: true,
-        accounted: true,
         paymentTerms: {
           slotProps: {
             root: {
@@ -205,7 +211,6 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
         ref: true,
         externalRef: true,
         sageAccountingRef: true,
-        accounted: true,
         paymentTerms: {
           slotProps: {
             root: {
@@ -243,7 +248,19 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
     {
       type: ViewEnum.Detail,
       customActions: [
-        { render: ({ item }) => <PrintInvoiceButton item={item} /> },
+        {
+          render: ({ item }) => (
+            <>
+              <PrintInvoiceButton item={item} />
+              {
+                <AccountingButton
+                  disabled={!!item.accounting}
+                  invoiceId={item.id}
+                />
+              }
+            </>
+          ),
+        },
       ],
       columns: {
         invoiceNumber: true,
@@ -259,6 +276,7 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
         totalInclTax: true,
         totalVatTax: true,
         totalDiscount: true,
+        accounting: true,
       },
     },
   ],
