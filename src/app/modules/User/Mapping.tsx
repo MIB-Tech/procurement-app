@@ -135,7 +135,7 @@ const mapping: ModelMapping<ModelEnum.User> = {
         clinics: true,
         restrictedByCategories: true,
         categories: {
-          render: ({ fieldProps }) => <CategoryField {...fieldProps} />,
+          render: ({ inputProps }) => <CategoryField {...inputProps} />,
         },
       },
     },
@@ -149,7 +149,7 @@ const mapping: ModelMapping<ModelEnum.User> = {
         clinics: true,
         restrictedByCategories: true,
         categories: {
-          render: ({ fieldProps }) => <CategoryField {...fieldProps} />,
+          render: ({ inputProps }) => <CategoryField {...inputProps} />,
         },
       },
     },

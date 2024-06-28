@@ -13,7 +13,7 @@ import {
 import { useAuth } from "../hooks/UseAuth";
 import { FormikProvider, useFormik } from "formik";
 import { FormViewProps, Input } from "./FormView.types";
-import { FormCard } from "./FormCard";
+import { FormCard, FormValue } from "./FormCard";
 import {
   getDefaultFields,
   getInitialValues,
@@ -107,9 +107,9 @@ export const FormView = <M extends ModelEnum>({
       : undefined,
   });
 
-  const initialValues = useMemo<Model<M>>(() => {
+  const initialValues = useMemo<FormValue<M>>(() => {
     if (!isCreateMode && query.item) {
-      return query.item as Model<M>;
+      return query.item as HydraItem<M>;
     }
 
     return {
@@ -118,7 +118,7 @@ export const FormView = <M extends ModelEnum>({
     };
   }, [query.item, isCreateMode, columnDef, fields, props.initialValues]);
 
-  const formik = useFormik<Model<M>>({
+  const formik = useFormik<FormValue<M>>({
     initialValues,
     validationSchema: getValidationSchema({
       columnDef,
@@ -131,8 +131,9 @@ export const FormView = <M extends ModelEnum>({
     validateOnBlur: false,
     onSubmit: async (item, formikHelpers) => {
       await formikHelpers.setTouched({});
+      const _columnNames = ["id", ...columnNames] as Array<keyof Model<M>>;
       let input = isMultipart
-        ? columnNames.reduce((fd, columnName) => {
+        ? _columnNames.reduce((fd, columnName) => {
             const _val = item[columnName];
             const columnMapping = columnDef[columnName];
             const name = columnName.toString();
@@ -157,7 +158,7 @@ export const FormView = <M extends ModelEnum>({
 
             return fd;
           }, new FormData())
-        : columnNames.reduce(
+        : _columnNames.reduce(
             (input, columnName) => ({
               ...input,
               [columnName]: item[columnName],
@@ -212,7 +213,6 @@ export const FormView = <M extends ModelEnum>({
       }
     );
   }, [tenant]);
-  console.log(formik.errors);
 
   return (
     <FormikProvider value={formik}>
@@ -239,9 +239,8 @@ export const FormView = <M extends ModelEnum>({
       <FormCard
         className='card-bordered'
         modelName={modelName}
-        item={formik.values}
-        view={view}
-        setItem={(item) => formik.setValues(item, false)}
+        formView={view}
+        formValue={formik.values}
       />
     </FormikProvider>
   );

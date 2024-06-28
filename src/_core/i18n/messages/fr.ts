@@ -1,7 +1,7 @@
 import { I18nLanguage } from "../I18nMessages";
 
 export const fr: I18nLanguage = {
-  PURCHASE_ORDER_PRODUCT_QUANTITY: "Quantité",
+  INITIAL_QUANTITY: "Qté Prévue",
   ALLOWED_FILE_TYPES: "Fichiers autorisés",
   OBJECT: "Objet",
   AUDITS: "Audits",

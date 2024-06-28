@@ -1,30 +1,39 @@
-import { FieldProps } from "../../../_core/Column/controls/fields";
+import { FieldProps } from "../../../../_core/Column/controls/fields";
 import { useFormikContext } from "formik";
-import { Model } from "../../../_core/types/ModelMapping";
-import { ModelEnum } from "../types";
-import { useCollectionQuery } from "../../../_core/hooks/UseCollectionQuery";
+import { Model } from "../../../../_core/types/ModelMapping";
+import { ModelEnum } from "../../types";
+import { useCollectionQuery } from "../../../../_core/hooks/UseCollectionQuery";
 import {
   CompoundFilter,
   CompoundFilterOperator,
   PropertyFilterOperator,
-} from "../../../_core/ListingView/Filter/Filter.types";
-import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
-import { ValidationStatusEnum } from "../PurchaseOrder/Model";
-import { Button } from "../../../_core/components/Button";
-import { Trans } from "../../../_core/components/Trans";
+} from "../../../../_core/ListingView/Filter/Filter.types";
+import { ModelAutocompleteField } from "../../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
+import { ValidationStatusEnum } from "../../PurchaseOrder/Model";
+import { Button } from "../../../../_core/components/Button";
+import { Trans } from "../../../../_core/components/Trans";
 import React from "react";
 
 export const PurchaseOrdersField = ({ name }: FieldProps) => {
-  const { values, setFieldValue } =
-    useFormikContext<Model<ModelEnum.Receipt>>();
+  const formik = useFormikContext<Model<ModelEnum.Receipt>>();
+  const { values, setFieldValue } = formik;
   const { vendor, purchaseOrders } = values;
   const { isLoading, refetch } = useCollectionQuery<ModelEnum.ReceiptProduct>({
     modelName: ModelEnum.ReceiptProduct,
     params: {
       filter: {
-        property: "purchaseOrderProduct.purchaseOrder",
-        operator: PropertyFilterOperator.In,
-        value: purchaseOrders,
+        operator: CompoundFilterOperator.And,
+        filters: [
+          {
+            property: "purchaseOrderProduct.purchaseOrder",
+            operator: PropertyFilterOperator.In,
+            value: purchaseOrders,
+          },
+          {
+            property: "receipt",
+            operator: PropertyFilterOperator.IsNull,
+          },
+        ],
       },
     },
     options: { enabled: false },
@@ -74,7 +83,14 @@ export const PurchaseOrdersField = ({ name }: FieldProps) => {
           onClick={async () => {
             const { data } = await refetch();
             const receiptProducts = data?.data["hydra:member"] || [];
-            await setFieldValue("receiptProducts", receiptProducts);
+            await setFieldValue(
+              "receiptProducts",
+              receiptProducts.map((receiptProduct) => ({
+                ...receiptProduct,
+                initialQuantity: receiptProduct.quantity,
+                components: [],
+              }))
+            );
           }}
         >
           <Trans id='SHOW' />

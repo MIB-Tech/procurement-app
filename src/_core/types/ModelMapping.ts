@@ -14,21 +14,30 @@ import { OperationModel } from "../../app/modules/Operation";
 import { GridProps } from "@mui/material";
 import { FieldProps } from "../Column/controls/fields";
 import { Input } from "../FormView/FormView.types";
-import { FormikComputedProps, FormikState } from "formik";
+import {
+  FieldHelperProps,
+  FieldInputProps,
+  FormikComputedProps,
+  FormikProps,
+  FormikState,
+} from "formik";
 import { Permission } from "../hooks/UseAuth";
 import { Filter } from "../ListingView/Filter/Filter.types";
 import { ListingState } from "../../app/modules";
 import { ObjectColumn } from "../Column/Object/ObjectColumn";
+import { FormValue } from "../FormView/FormCard";
+import { FieldMetaProps } from "formik/dist/types";
 
 export type Model<M extends ModelEnum> = Models[M];
 export type DisplayCallback<M extends ModelEnum> = (props: {
-  item: Model<M> | HydraItem<M>;
+  item: FormValue<M>;
 }) => boolean | undefined;
 export type DisplayViewBaseColum<M extends ModelEnum> = {
   display?: true | RoleKeyEnum[] | DisplayCallback<M>;
   render?: (props: { item: Model<M> }) => ReactNode;
 };
-
+export type FormikStateProps<M extends ModelEnum> = FormikState<FormValue<M>> &
+  FormikComputedProps<FormValue<M>>;
 export type FormViewBaseColumn<M extends ModelEnum> = {
   required?: true;
 } & DisplayViewBaseColum<M>;
@@ -37,10 +46,7 @@ export type ViewColumn<M extends ModelEnum> = {
   title?: I18nMessageKey;
   nullable?: boolean;
   readOnly?: boolean;
-  footer?: (props: {
-    value?: any;
-    collection: Array<HydraItem<M>>;
-  }) => ReactNode;
+  footer?: (props: { value?: any; items: Array<FormValue<M>> }) => ReactNode;
 };
 export type TypeColum<M extends ModelEnum = any> =
   | NumberColumn<M>
@@ -144,15 +150,14 @@ export type DetailViewType<M extends ModelEnum> = {
 export type ImportViewType<M extends ModelEnum> = {
   columns?: Partial<Record<keyof Model<M>, boolean>>;
 };
-export type FieldRender<M extends ModelEnum> = (props: {
-  item: Model<M>;
-  fieldProps: FieldProps;
-}) => ReactNode;
+export type FieldRenderProps<M extends ModelEnum> = {
+  inputProps: Pick<FieldInputProps<FormValue<M>>, "name">;
+  metaProps: Pick<FieldMetaProps<FormValue<M>>, "value">;
+};
 export type FormField<M extends ModelEnum> = {
-  // required?: boolean,
   display?: DisplayCallback<M>;
   grantedRoles?: RoleKeyEnum[];
-  render?: FieldRender<M>;
+  render?: (props: FieldRenderProps<M>) => ReactNode;
   defaultValue?: any;
   helperText?: I18nMessageKey;
   slotProps?: {
@@ -170,8 +175,7 @@ export enum MutationMode {
 }
 
 type SubmittableProps<M extends ModelEnum> = {
-  formik: FormikState<Model<M> | HydraItem<M>> &
-    FormikComputedProps<Model<M> | HydraItem<M>>;
+  formik: FormikStateProps<M>;
   isGranted: (permissions: Permission[]) => boolean;
 };
 export type FormViewType<M extends ModelEnum> = {

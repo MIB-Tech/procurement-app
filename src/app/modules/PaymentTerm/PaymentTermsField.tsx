@@ -5,8 +5,9 @@ import { InvoiceModel } from "../Invoice";
 import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 import { ModelEnum } from "../types";
 import { CreateViewType, ViewEnum } from "../../../_core/types/ModelMapping";
+import { FieldProps } from "../../../_core/Column/controls/fields";
 
-const PaymentTermsField: React.FC<any> = ({ fieldProps }) => {
+const PaymentTermsField = ({ name }: FieldProps) => {
   const { values, setFieldValue } = useFormikContext<InvoiceModel>();
 
   useEffect(() => {
@@ -20,9 +21,9 @@ const PaymentTermsField: React.FC<any> = ({ fieldProps }) => {
 
   return (
     <NestedArrayField
-      {...fieldProps}
+      name={name}
       modelName={ModelEnum.PaymentTerm}
-      disabled={values.purchaseOrders.length === 0}
+      disableInsert={values.purchaseOrders.length === 0}
       view={
         {
           type: ViewEnum.Create,

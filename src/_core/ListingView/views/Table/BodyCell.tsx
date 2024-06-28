@@ -138,26 +138,24 @@ export const CellContent = <M extends ModelEnum>(
         />
       );
     default:
-      if (!value) {
-        return <Bullet />;
-      }
+      if (!value) return <Bullet />;
 
-      const values = ("multiple" in props ? value : [value]) as Array<
+      const values = ("multiple" in columnMapping ? value : [value]) as Array<
         HydraItem | string
       >;
 
       return (
         <>
-          {values.map((item, index) => {
-            if (typeof item === "string") {
+          {values.map((_item, index) => {
+            if (typeof _item === "string") {
               // TODO
-              return item;
+              return _item;
             }
 
             return (
               <ModelCell
                 key={index}
-                item={item}
+                item={_item}
               />
             );
           })}

@@ -27,18 +27,18 @@ export const PurchaseOrderProductsFields = ({ ...props }: Props) => {
   const fields = useMemo<FormFields<ModelEnum.PurchaseOrderProduct>>(() => {
     return {
       product: {
-        render: ({ fieldProps }) => <ProductField {...fieldProps} />,
+        render: ({ inputProps }) => <ProductField {...inputProps} />,
       },
       designation: true,
       quantity: {
-        render: ({ fieldProps }) => <QuantityField {...fieldProps} />,
+        render: ({ inputProps }) => <QuantityField {...inputProps} />,
       },
       grossPrice: {
-        render: ({ item, fieldProps }) => (
+        render: ({ inputProps, metaProps }) => (
           <NumberColumnField
-            {...fieldProps}
+            {...inputProps}
             size='sm'
-            disabled={!item.editablePrice}
+            disabled={!metaProps.value.editablePrice}
           />
         ),
       },
@@ -47,14 +47,14 @@ export const PurchaseOrderProductsFields = ({ ...props }: Props) => {
         defaultValue: DiscountType.Percent,
       },
       discountValue: {
-        render: ({ item, fieldProps }) => (
+        render: ({ inputProps, metaProps }) => (
           <NumberColumnField
+            {...inputProps}
             format={
-              item.discountType === DiscountType.Percent
+              metaProps.value.discountType === DiscountType.Percent
                 ? NumberFormat.Percent
                 : NumberFormat.Amount
             }
-            {...fieldProps}
             size='sm'
             min={0}
             precision={7}
@@ -63,40 +63,74 @@ export const PurchaseOrderProductsFields = ({ ...props }: Props) => {
       },
       vatRate: {
         defaultValue: 0.2,
-        render: ({ fieldProps }) => (
-          <VatRateSelectField fieldProps={{ ...fieldProps }} />
-        ),
+        render: ({ inputProps }) => <VatRateSelectField {...inputProps} />,
       },
       priceExclTax: {
-        render: ({ item }) => (
-          <AmountUnit
-            getValue={(taxIncluded) =>
-              getPriceExclTax({ ...item, taxIncluded })
-            }
-          />
-        ),
+        render: ({ metaProps }) => {
+          const {
+            grossPrice = 0,
+            vatRate = 0,
+            quantity = 0,
+            discountType = DiscountType.Amount,
+            discountValue = 0,
+          } = metaProps.value;
+
+          return (
+            <AmountUnit
+              getValue={(taxIncluded) =>
+                getPriceExclTax({
+                  taxIncluded,
+                  grossPrice,
+                  vatRate,
+                  quantity,
+                  discountType,
+                  discountValue,
+                })
+              }
+            />
+          );
+        },
       },
       priceInclTax: {
-        render: ({ item }) => (
-          <AmountUnit
-            getValue={(taxIncluded) =>
-              getPriceInclTax({ ...item, taxIncluded })
-            }
-          />
-        ),
+        render: ({ metaProps }) => {
+          const {
+            grossPrice = 0,
+            vatRate = 0,
+            quantity = 0,
+            discountType = DiscountType.Amount,
+            discountValue = 0,
+          } = metaProps.value;
+
+          return (
+            <AmountUnit
+              getValue={(taxIncluded) =>
+                getPriceInclTax({
+                  taxIncluded,
+                  grossPrice,
+                  vatRate,
+                  quantity,
+                  discountType,
+                  discountValue,
+                })
+              }
+            />
+          );
+        },
       },
       receiptProducts: {
         display: ({ item }) => !!item.product,
-        render: ({ fieldProps }) => <ReceiptProductsField {...fieldProps} />,
+        render: ({ inputProps }) => <ReceiptProductsField {...inputProps} />,
       },
       components: {
-        render: ({ item, fieldProps }) => {
+        render: (pp) => {
+          const { inputProps, metaProps } = pp;
+
           const fields: FormFields<ModelEnum.PurchaseOrderProductComponent> = {
             product: {
-              render: ({ fieldProps }) => (
+              render: ({ inputProps }) => (
                 <div className='mw-250px'>
                   <ModelAutocompleteField
-                    {...fieldProps}
+                    {...inputProps}
                     modelName={ModelEnum.Product}
                     size='sm'
                     disabled
@@ -110,11 +144,11 @@ export const PurchaseOrderProductsFields = ({ ...props }: Props) => {
 
           return (
             <NestedArrayField
+              {...inputProps}
               modelName={ModelEnum.PurchaseOrderProductComponent}
-              {...fieldProps}
               disableInsert
               view={{
-                type: item.id ? ViewEnum.Update : ViewEnum.Create,
+                type: metaProps.value.id ? ViewEnum.Update : ViewEnum.Create,
                 fields,
               }}
             />

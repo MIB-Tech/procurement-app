@@ -10,6 +10,7 @@ import { Modal } from "react-bootstrap";
 import clsx from "clsx";
 import { TitleContent } from "../../../ListingView/views/Table/HeaderCell";
 import { ValueField } from "../../ValueField";
+import { FieldRender } from "./FieldRender";
 
 export const NestedColumnsButton = <M extends ModelEnum>({
   name,
@@ -48,14 +49,8 @@ export const NestedColumnsButton = <M extends ModelEnum>({
         <Modal.Body className='d-flex flex-column gap-5'>
           {columnNames.map((columnName) => {
             // @ts-ignore
-            const field = fields[columnName];
+            const field = fields[columnName] as FormField<M>;
             const render = typeof field === "object" && field?.render;
-
-            const nestedName = `${name}.${index}.${columnName.toString()}`;
-            const fieldProps = {
-              name: nestedName,
-              className: "border-1",
-            };
 
             const columnMapping = columnDef[columnName] as
               | ColumnMapping<M>
@@ -63,6 +58,9 @@ export const NestedColumnsButton = <M extends ModelEnum>({
             if (!field || !columnMapping) {
               return <></>;
             }
+
+            const objFieldName = `${name}.${index}`;
+            const nestedName = `${objFieldName}.${columnName.toString()}`;
 
             return (
               <div key={nestedName}>
@@ -80,10 +78,14 @@ export const NestedColumnsButton = <M extends ModelEnum>({
                   />
                 </label>
                 {render ? (
-                  render({ item, fieldProps })
+                  <FieldRender
+                    render={render}
+                    objFieldName={objFieldName}
+                    nestedName={nestedName}
+                  />
                 ) : (
                   <ValueField
-                    {...fieldProps}
+                    name={nestedName}
                     column={columnDef[columnName]}
                     size='sm'
                   />

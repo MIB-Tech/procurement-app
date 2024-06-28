@@ -161,10 +161,10 @@ const mapping: ModelMapping<ModelEnum.Product> = {
       fields: {
         productType: {
           defaultValue: ProductTypeEnum.Simple,
-          render: ({ fieldProps, item }) => (
+          render: ({ inputProps, metaProps }) => (
             <ProductTypeField
-              {...fieldProps}
-              disabled={item.components.length > 0}
+              {...inputProps}
+              disabled={!!metaProps.value.components?.length}
             />
           ),
         },
@@ -177,13 +177,11 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         },
         vatRate: {
           defaultValue: 0.2,
-          render: ({ fieldProps }) => (
-            <VatRateSelectField fieldProps={{ ...fieldProps }} />
-          ),
+          render: ({ inputProps }) => <VatRateSelectField {...inputProps} />,
         },
         ref: true,
         category: {
-          render: ({ fieldProps }) => <SubCategoryField {...fieldProps} />,
+          render: ({ inputProps }) => <SubCategoryField {...inputProps} />,
         },
         section: true,
         mobilised: {
@@ -211,9 +209,7 @@ const mapping: ModelMapping<ModelEnum.Product> = {
         accountingAccount: true,
         measurementUnit: true,
         vatRate: {
-          render: ({ fieldProps }) => (
-            <VatRateSelectField fieldProps={{ ...fieldProps }} />
-          ),
+          render: ({ inputProps }) => <VatRateSelectField {...inputProps} />,
         },
         ref: true,
         category: true,

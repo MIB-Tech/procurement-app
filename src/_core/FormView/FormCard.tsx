@@ -1,40 +1,36 @@
-import {
-  ColumnMapping,
-  CreateViewType,
-  Model,
-  UpdateViewType,
-  ViewEnum,
-} from "../types/ModelMapping";
+import { ColumnMapping, FormViewType, Model } from "../types/ModelMapping";
 import { useMapping } from "../hooks/UseMapping";
 import { useAuth } from "../hooks/UseAuth";
 import clsx from "clsx";
 import { TitleContent } from "../ListingView/views/Table/HeaderCell";
-import { ValueField } from "../Column/ValueField";
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { useCustomQuery } from "../hooks/UseCustomQuery";
+import React from "react";
 import { getDefaultFields } from "../utils";
 import { ModelEnum } from "../../app/modules/types";
 import { Grid } from "@mui/material";
+import { HydraItem } from "../types/hydra.types";
+import { ValueField } from "../Column/ValueField";
+import { FieldRender } from "../Column/Model/Nested/FieldRender";
+
+export type FormValue<M extends ModelEnum> = Partial<HydraItem<M>>;
+export type FormCardProps<M extends ModelEnum> = {
+  modelName: M;
+  formView: FormViewType<M>;
+  formValue: FormValue<M>;
+  className?: string;
+  namePrefix?: string;
+};
 
 export const FormCard = <M extends ModelEnum>({
   modelName,
-  item,
-  setItem,
-  name,
-  view,
+  formView,
+  formValue,
+  namePrefix,
   className,
-}: {
-  name?: string;
-  modelName: M;
-  item: Model<M>;
-  setItem: (item: Model<M>) => void;
-  view: CreateViewType<M> | UpdateViewType<M>;
-  className?: string;
-}) => {
+  ...props
+}: FormCardProps<M>) => {
   const { columnDef } = useMapping<M>({ modelName });
   const { isGranted } = useAuth();
-  const { inlineForm, fields = getDefaultFields(columnDef) } = view;
+  const { inlineForm, fields = getDefaultFields(columnDef) } = formView;
   const columnNames = (
     Object.keys(fields) as Array<keyof Model<M> | string>
   ).filter((columnName) => {
@@ -47,50 +43,18 @@ export const FormCard = <M extends ModelEnum>({
     const grantedRoles = field?.grantedRoles;
 
     return (
-      (!display || display({ item })) &&
+      (!display || display({ item: formValue })) &&
       (!grantedRoles || isGranted(grantedRoles))
     );
   });
 
-  // const { pathname } = useLocation();
-  // const url = '/update' + pathname.split('/').slice(0, 3).join('/');
-  // const query = useCustomQuery({
-  //   modelName,
-  //   // url,
-  //   enabled: view.type === ViewEnum.Update,
-  // });
-  //
-  // useEffect(() => {
-  //   if (query.item) {
-  //     setItem(query.item as Model<M>);
-  //   }
-  // }, [query.item]);
-
-  // return (
-  //   <div className='flex-grow-1'>
-  //     <Grid container spacing={2}>
-  //       <Grid item xs={6}>
-  //         <span>xs=8</span>
-  //       </Grid>
-  //       <Grid item xs={6}>
-  //         <span>xs=4</span>
-  //       </Grid>
-  //       <Grid item xs={6}>
-  //         <span>xs=4</span>
-  //       </Grid>
-  //       <Grid item xs={6}>
-  //         <span>xs=8</span>
-  //       </Grid>
-  //     </Grid>
-  //   </div>
-  // )
   return (
     <div className={clsx("card", className)}>
       <div className='card-body'>
         <Grid
           container
           spacing={1}
-          {...view.slotProps?.root}
+          {...formView.slotProps?.root}
         >
           {columnNames.map((columnName, index) => {
             const field = fields[columnName];
@@ -106,15 +70,18 @@ export const FormCard = <M extends ModelEnum>({
               typeof field === "object" && field?.slotProps?.root;
             const helperText =
               typeof field === "object" ? field?.helperText : undefined;
-            const fieldProps = {
-              name: `${name ? `${name}.` : ""}${columnName.toString()}`,
-            };
+
+            const objFieldName = namePrefix;
+            const nestedName = `${
+              objFieldName ? `${objFieldName}.` : ""
+            }${columnName.toString()}`;
+
             return (
               <Grid
                 key={index}
                 item
                 xs={12}
-                {...view.slotProps?.item}
+                {...formView.slotProps?.item}
                 {...gridProps}
               >
                 <div className={clsx(inlineForm && "row")}>
@@ -134,15 +101,35 @@ export const FormCard = <M extends ModelEnum>({
                   </label>
                   <div className={clsx(inlineForm && "col-sm-9")}>
                     {render ? (
-                      render({ item, fieldProps })
-                    ) : (
-                      <ValueField
-                        {...fieldProps}
-                        column={columnMapping}
-                        size='sm'
-                        feedbackLabel={helperText}
+                      <FieldRender
+                        render={render}
+                        objFieldName={objFieldName}
+                        nestedName={nestedName}
                       />
+                    ) : (
+                      columnMapping && (
+                        <ValueField
+                          name={nestedName}
+                          column={columnMapping}
+                          size='sm'
+                          feedbackLabel={helperText}
+                        />
+                      )
                     )}
+                    {/*{render ? (*/}
+                    {/*  "formik" in props ? (*/}
+                    {/*    <>TODO</>*/}
+                    {/*  ) : (*/}
+                    {/*    render(props.fieldProps)*/}
+                    {/*  )*/}
+                    {/*) : (*/}
+                    {/*  <ValueField*/}
+                    {/*    name={nestedName}*/}
+                    {/*    column={columnMapping}*/}
+                    {/*    size='sm'*/}
+                    {/*    feedbackLabel={helperText}*/}
+                    {/*  />*/}
+                    {/*)}*/}
                   </div>
                 </div>
               </Grid>

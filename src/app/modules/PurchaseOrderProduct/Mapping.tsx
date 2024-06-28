@@ -85,14 +85,31 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       format: NumberFormat.Amount,
       precision: 2,
       nullable: true,
-      footer: ({ collection, value }) => (
+      footer: ({ items, value }) => (
         <AmountUnit
           defaultValue={value as number}
           getValue={(taxIncluded) =>
-            collection.reduce(
-              (a, item) => a + getPriceExclTax({ ...item, taxIncluded }),
-              0
-            )
+            items.reduce((a, item) => {
+              const {
+                grossPrice = 0,
+                vatRate = 0,
+                quantity = 0,
+                discountType = DiscountType.Amount,
+                discountValue = 0,
+              } = item;
+
+              return (
+                a +
+                getPriceExclTax({
+                  taxIncluded,
+                  grossPrice,
+                  vatRate,
+                  quantity,
+                  discountType,
+                  discountValue,
+                })
+              );
+            }, 0)
           }
         />
       ),
@@ -124,17 +141,36 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       format: NumberFormat.Amount,
       precision: 2,
       nullable: true,
-      footer: ({ collection, value }) => (
-        <AmountUnit
-          defaultValue={value as number}
-          getValue={(taxIncluded) =>
-            collection.reduce(
-              (a, item) => a + getPriceInclTax({ ...item, taxIncluded }),
-              0
-            )
-          }
-        />
-      ),
+      footer: ({ items, value }) => {
+        return (
+          <AmountUnit
+            defaultValue={value as number}
+            getValue={(taxIncluded) =>
+              items.reduce((a, item) => {
+                const {
+                  grossPrice = 0,
+                  vatRate = 0,
+                  quantity = 0,
+                  discountType = DiscountType.Amount,
+                  discountValue = 0,
+                } = item;
+
+                return (
+                  a +
+                  getPriceInclTax({
+                    taxIncluded,
+                    grossPrice,
+                    vatRate,
+                    quantity,
+                    discountType,
+                    discountValue,
+                  })
+                );
+              }, 0)
+            }
+          />
+        );
+      },
     },
     product: {
       type: ModelEnum.Product,
@@ -235,20 +271,20 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       type: ViewEnum.Create,
       fields: {
         product: {
-          render: ({ fieldProps }) => (
-            <ProductField__DEPRECATED {...fieldProps} />
+          render: ({ inputProps }) => (
+            <ProductField__DEPRECATED name={name} />
           ),
         },
         designation: true,
         quantity: {
-          render: ({ fieldProps }) => (
-            <QuantityField__DEPRECATED {...fieldProps} />
+          render: ({ inputProps }) => (
+            <QuantityField__DEPRECATED name={name} />
           ),
         },
         grossPrice: {
           render: ({ item, fieldProps }) => (
             <NumberColumnField
-              {...fieldProps}
+              name={name}
               size='sm'
               disabled={!item.editablePrice}
             />
@@ -266,7 +302,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
                   ? NumberFormat.Percent
                   : NumberFormat.Amount
               }
-              {...fieldProps}
+              name={name}
               size='sm'
               min={0}
               precision={7}
@@ -275,7 +311,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
         },
         vatRate: {
           defaultValue: 0.2,
-          render: ({ fieldProps }) => (
+          render: ({ inputProps }) => (
             <VatRateSelectField fieldProps={{ ...fieldProps }} />
           ),
         },
@@ -299,8 +335,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
         },
         receiptProducts: {
           display: ({ item }) => !!item.product,
-          render: ({ fieldProps }) => (
-            <ReceiptProductsField__DEPRECATED {...fieldProps} />
+          render: ({ inputProps }) => (
+            <ReceiptProductsField__DEPRECATED name={name} />
           ),
         },
         components: {
@@ -312,12 +348,12 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
               type: item.id ? ViewEnum.Update : ViewEnum.Create,
               fields: {
                 product: {
-                  render: ({ fieldProps }) => (
+                  render: ({ inputProps }) => (
                     <div className='mw-250px'>
                       <ModelAutocompleteField
                         modelName={ModelEnum.Product}
                         size='sm'
-                        {...fieldProps}
+                        name={name}
                         disabled
                       />
                     </div>
@@ -331,7 +367,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
             return (
               <NestedArrayField
                 modelName={ModelEnum.PurchaseOrderProductComponent}
-                {...fieldProps}
+                name={name}
                 disableInsert
                 view={view}
               />
@@ -344,20 +380,20 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
       type: ViewEnum.Update,
       fields: {
         product: {
-          render: ({ fieldProps }) => (
-            <ProductField__DEPRECATED {...fieldProps} />
+          render: ({ inputProps }) => (
+            <ProductField__DEPRECATED name={name} />
           ),
         },
         designation: true,
         quantity: {
-          render: ({ fieldProps }) => (
-            <QuantityField__DEPRECATED {...fieldProps} />
+          render: ({ inputProps }) => (
+            <QuantityField__DEPRECATED name={name} />
           ),
         },
         grossPrice: {
           render: ({ item, fieldProps }) => (
             <NumberColumnField
-              {...fieldProps}
+              name={name}
               size='sm'
               disabled={!item.editablePrice}
             />
@@ -375,7 +411,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
                   ? NumberFormat.Percent
                   : NumberFormat.Amount
               }
-              {...fieldProps}
+              name={name}
               size='sm'
               min={0}
               precision={7}
@@ -383,7 +419,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
           ),
         },
         vatRate: {
-          render: ({ fieldProps }) => (
+          render: ({ inputProps }) => (
             <VatRateSelectField fieldProps={{ ...fieldProps }} />
           ),
         },
@@ -407,8 +443,8 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
         },
         receiptProducts: {
           display: ({ item }) => !!item.product,
-          render: ({ fieldProps }) => (
-            <ReceiptProductsField__DEPRECATED {...fieldProps} />
+          render: ({ inputProps }) => (
+            <ReceiptProductsField__DEPRECATED name={name} />
           ),
         },
         components: {
@@ -420,12 +456,12 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
               type: item.id ? ViewEnum.Update : ViewEnum.Create,
               fields: {
                 product: {
-                  render: ({ fieldProps }) => (
+                  render: ({ inputProps }) => (
                     <div className='mw-250px'>
                       <ModelAutocompleteField
                         modelName={ModelEnum.Product}
                         size='sm'
-                        {...fieldProps}
+                        name={name}
                         disabled
                       />
                     </div>
@@ -439,7 +475,7 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrderProduct> = {
             return (
               <NestedArrayField
                 modelName={ModelEnum.PurchaseOrderProductComponent}
-                {...fieldProps}
+                name={name}
                 disableInsert
                 view={view}
               />

@@ -46,9 +46,9 @@ const mapping: ModelMapping<ModelEnum.Budget> = {
         description: true,
         budgetExercise: true,
         productSectionBudgets: {
-          render: ({ fieldProps }) => (
+          render: ({ inputProps }) => (
             <NestedArrayField
-              {...fieldProps}
+              {...inputProps}
               modelName={ModelEnum.ProductSectionBudget}
               view={
                 {
@@ -71,9 +71,9 @@ const mapping: ModelMapping<ModelEnum.Budget> = {
         description: true,
         budgetExercise: true,
         productSectionBudgets: {
-          render: ({ fieldProps }) => (
+          render: ({ inputProps }) => (
             <NestedArrayField
-              {...fieldProps}
+              {...inputProps}
               modelName={ModelEnum.ProductSectionBudget}
               view={
                 {

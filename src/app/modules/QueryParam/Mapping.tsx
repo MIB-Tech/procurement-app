@@ -50,9 +50,9 @@ const mapping: ModelMapping<ModelEnum.QueryParam> = {
       fields: {
         label: true,
         name: {
-          render: ({ fieldProps }) => (
+          render: ({ inputProps }) => (
             <InputField
-              {...fieldProps}
+              {...inputProps}
               disabled
               size='sm'
             />
@@ -66,9 +66,9 @@ const mapping: ModelMapping<ModelEnum.QueryParam> = {
       fields: {
         label: true,
         name: {
-          render: ({ fieldProps }) => (
+          render: ({ inputProps }) => (
             <InputField
-              {...fieldProps}
+              {...inputProps}
               disabled
               size='sm'
             />

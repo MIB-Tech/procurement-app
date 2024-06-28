@@ -49,9 +49,9 @@ export const ModelAutocompleteField = <
   ...props
 }: ModelAutocomplete<M, Multiple>) => {
   const { trans } = useTrans();
-  const [{ value }, , { setValue, setTouched }] = useField<HydraItem>({
-    name: props.name,
-  });
+  const [{ value }, , { setValue, setTouched }] = useField<HydraItem>(
+    props.name
+  );
   const [inputValue, setInputValue] = React.useState<string>("");
   const [enabled, setEnabled] = React.useState<boolean>(false);
   const [pagination, setPagination] = React.useState<Required<PaginationInput>>(

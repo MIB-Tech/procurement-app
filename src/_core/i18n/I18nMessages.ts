@@ -548,7 +548,7 @@ type I18nMessageKey =
   | "PLAIN_PASSWORD"
   | "CURRENT_PASSWORD"
   | "AUDITS"
-  | "PURCHASE_ORDER_PRODUCT_QUANTITY"
+  | "INITIAL_QUANTITY"
   | "AMOUNT_PAYMENT_TERM";
 
 type I18nLanguage = Record<I18nMessageKey, string>;

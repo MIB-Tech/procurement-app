@@ -261,7 +261,7 @@ export const TableView = <M extends ModelEnum>(props: TableViewProps<M>) => {
                         <>
                           {columnMapping.footer?.({
                             value,
-                            collection: data,
+                            items: data,
                           }) ||
                             (columnMapping.type === ColumnTypeEnum.Number ? (
                               <NumberCell

@@ -25,16 +25,17 @@ type Model = {
   quantity: number;
   note: string;
   complianceStatus?: ComplianceStatus;
-  complianceUpdatedAt: string;
-  complianceUpdatedBy: UserModel;
-  complianceReserve: string;
+  complianceUpdatedAt?: string;
+  complianceUpdatedBy?: UserModel;
+  complianceReserve?: string;
   purchaseOrderProduct: PurchaseOrderProductModel;
   receipt?: ReceiptModel;
   deliveryDepot?: DeliveryDepotModel;
   components: Array<ReceiptProductComponentModel>;
   invoiceProducts: Array<InvoiceProductModel>;
-  readonly received: number;
-  readonly invoiceProductStatus: QuantityStatusEnum;
+  readonly received: boolean;
+  readonly invoiceProductStatus?: QuantityStatusEnum;
+  readonly initialQuantity?: number;
 } & AbstractModel;
 
 export default Model;

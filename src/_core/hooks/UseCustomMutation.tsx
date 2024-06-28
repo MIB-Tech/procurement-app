@@ -15,6 +15,7 @@ import { getListingQueryKey } from "../ListingView/ListingView.utils";
 import { useToastr } from "../Toastr/UseToastr";
 import { ModelEnum } from "../../app/modules/types";
 import { navigateOnMutate } from "../../app/routing/PrivateRoutes";
+import { FormValue } from "../FormView/FormCard";
 
 export const useCustomMutation = <M extends ModelEnum>({
   modelName,
@@ -37,7 +38,7 @@ export const useCustomMutation = <M extends ModelEnum>({
   const { trans } = useTrans();
   const navigate = useNavigate();
   const [validationErrors, setValidationErrors] =
-    useState<FormikErrors<Model<M>>>();
+    useState<FormikErrors<FormValue<M>>>();
 
   const mutation = useMutation<SuccessResponse<M>, ErrorResponse<M>, Input<M>>(
     (data) =>

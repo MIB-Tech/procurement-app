@@ -1,19 +1,15 @@
-import {
-  FormFields,
-  ModelMapping,
-  ViewEnum,
-} from "../../../_core/types/ModelMapping";
+import { ModelMapping, ViewEnum } from "../../../_core/types/ModelMapping";
 import { ColumnTypeEnum } from "../../../_core/types/types";
 import { ModelEnum } from "../types";
 import { StringFormat } from "../../../_core/Column/String/StringColumn";
 import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
 import React from "react";
-import { NestedArrayField } from "../../../_core/Column/Model/Nested/NestedArrayField";
 import moment from "moment";
 import { ArraySchema } from "yup";
-import { PrintReceiptButton } from "./PrintReceiptButton";
-import { PurchaseOrdersField } from "./PurchaseOrdersField";
+import { PrintReceiptButton } from "./components/PrintReceiptButton";
+import { PurchaseOrdersField } from "./fields/PurchaseOrdersField";
 import { ReceiptModel } from "./index";
+import { ReceiptProductsField } from "./fields/ReceiptProductsField";
 
 // const ReceiptProducts = ({item}: { item: Model<ModelEnum.Receipt> }) => {
 //   const {collection} = useCollectionQuery({
@@ -92,52 +88,6 @@ import { ReceiptModel } from "./index";
 //     </div>
 //   );
 // };
-
-const formFields: FormFields<ModelEnum.Receipt> = {
-  externalRef: true,
-  receivedAt: {
-    defaultValue: moment().format(),
-  },
-  vendor: {
-    slotProps: {
-      root: {
-        sm: 3,
-      },
-    },
-    render: ({ fieldProps, item }) => (
-      <ModelAutocompleteField
-        size='sm'
-        modelName={ModelEnum.Vendor}
-        {...fieldProps}
-        disabled={item.purchaseOrders.length > 0}
-      />
-    ),
-  },
-  purchaseOrders: {
-    slotProps: {
-      root: {
-        sm: 9,
-      },
-    },
-    render: ({ fieldProps }) => <PurchaseOrdersField {...fieldProps} />,
-  },
-  receiptProducts: {
-    slotProps: {
-      root: {
-        sm: 12,
-      },
-    },
-    // display: ({item}) => item.purchaseOrders.length > 0,
-    render: ({ fieldProps }) => (
-      <NestedArrayField
-        modelName={ModelEnum.ReceiptProduct}
-        disableInsert
-        disableDelete
-        {...fieldProps}
-      />
-    ),
-  },
-};
 
 const mapping: ModelMapping<ModelEnum.Receipt> = {
   modelName: ModelEnum.Receipt,
@@ -254,20 +204,53 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
             }),
         };
       },
-
+      slotProps: {
+        item: {
+          sm: 4,
+        },
+      },
+      fields: {
+        externalRef: true,
+        receivedAt: {
+          defaultValue: moment().format(),
+        },
+        vendor: {
+          render: ({ inputProps, metaProps }) => (
+            <ModelAutocompleteField
+              {...inputProps}
+              size='sm'
+              modelName={ModelEnum.Vendor}
+              disabled={!!metaProps.value.purchaseOrders?.length}
+            />
+          ),
+        },
+        purchaseOrders: {
+          slotProps: {
+            root: {
+              sm: 12,
+            },
+          },
+          render: ({ inputProps }) => <PurchaseOrdersField {...inputProps} />,
+        },
+        receiptProducts: {
+          slotProps: {
+            root: {
+              sm: 12,
+            },
+          },
+          // display: ({item}) => item.purchaseOrders.length > 0,
+          render: ({ inputProps }) => <ReceiptProductsField {...inputProps} />,
+        },
+        attachments: true,
+      },
+    },
+    {
+      type: ViewEnum.Update,
       slotProps: {
         item: {
           sm: 6,
         },
       },
-
-      fields: {
-        attachments: true,
-        ...formFields,
-      },
-    },
-    {
-      type: ViewEnum.Update,
       fields: {
         externalRef: true,
         receivedAt: true,
@@ -277,22 +260,9 @@ const mapping: ModelMapping<ModelEnum.Receipt> = {
               sm: 12,
             },
           },
+          render: ({ inputProps }) => <ReceiptProductsField {...inputProps} />,
         },
-        attachments: {
-          slotProps: {
-            root: {
-              sm: 12,
-              md: 12,
-              lg: 12,
-              xl: 12,
-            },
-          },
-        },
-      },
-      slotProps: {
-        item: {
-          sm: 6,
-        },
+        attachments: true,
       },
     },
   ],

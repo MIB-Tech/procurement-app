@@ -96,7 +96,7 @@ const mapping: ModelMapping<ModelEnum.Query> = {
         name: true,
         queryString: true,
         params: {
-          render: ({ fieldProps }) => <ParamsField {...fieldProps} />,
+          render: ({ inputProps }) => <ParamsField {...inputProps} />,
         },
       },
     },
@@ -106,7 +106,7 @@ const mapping: ModelMapping<ModelEnum.Query> = {
         name: true,
         queryString: true,
         params: {
-          render: ({ fieldProps }) => <ParamsField {...fieldProps} />,
+          render: ({ inputProps }) => <ParamsField {...inputProps} />,
         },
       },
     },

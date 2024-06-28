@@ -77,7 +77,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         //   render: ({fieldProps}) => (
         //     <NestedArrayField
         //       modelName={ModelEnum.VendorAddress}
-        //       {...fieldProps}
+        //       name={name}
         //       view={{
         //         type: ViewEnum.Create,
         //         fields: {
@@ -110,7 +110,7 @@ const mapping: ModelMapping<ModelEnum.Vendor> = {
         //   render: ({fieldProps}) => (
         //     <NestedArrayField
         //       modelName={ModelEnum.VendorAddress}
-        //       {...fieldProps}
+        //       name={name}
         //       view={{
         //         type: ViewEnum.Update,
         //         fields: {

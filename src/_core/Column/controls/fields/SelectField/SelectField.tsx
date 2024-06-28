@@ -72,7 +72,7 @@ export const SelectField = <T extends {}>({
                   disabled={getOptionDisabled?.(option)}
                   className={clsx(
                     // 'fw-bold',
-                    isActive && `border-start border-primary border-2 bg-light`,
+                    isActive && `border-start border-primary bg-light`,
                     !isActive &&
                       getOptionVariant &&
                       `text-${getOptionVariant(option)}`

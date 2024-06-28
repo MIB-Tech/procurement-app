@@ -57,27 +57,29 @@ const FORM_VIEW: FormViewType<ModelEnum.PurchaseOrder> = {
   },
   fields: {
     vendor: {
-      render: ({ fieldProps, item }) => (
-        <ModelAutocompleteField
-          modelName={ModelEnum.Vendor}
-          {...fieldProps}
-          size='sm'
-          disabled={item.purchaseOrderProducts.length > 0}
-        />
-      ),
+      render: ({ inputProps, metaProps }) => {
+        return (
+          <ModelAutocompleteField
+            {...inputProps}
+            modelName={ModelEnum.Vendor}
+            size='sm'
+            disabled={!!metaProps.value.purchaseOrderProducts?.length}
+          />
+        );
+      },
     },
     createdAt: {
       defaultValue: moment().format(),
     },
     taxIncluded: {
       defaultValue: true,
-      render: ({ item: { purchaseOrderProducts } }) => (
+      render: ({ metaProps }) => (
         <RadioField
           size='sm'
           name='taxIncluded'
           options={[true, false]}
           getOptionLabel={(taxIncluded) => (taxIncluded ? "TTC" : "HT")}
-          disabled={purchaseOrderProducts.length > 0}
+          disabled={!!metaProps.value.purchaseOrderProducts?.length}
           scrollDisabled
         />
       ),
@@ -90,12 +92,12 @@ const FORM_VIEW: FormViewType<ModelEnum.PurchaseOrder> = {
     currency: true,
     category: true,
     clinic: {
-      render: ({ fieldProps, item }) => (
+      render: ({ inputProps, metaProps }) => (
         <ModelAutocompleteField
+          {...inputProps}
           modelName={ModelEnum.Clinic}
-          {...fieldProps}
           size='sm'
-          disabled={item.purchaseOrderProducts.length > 0}
+          disabled={!!metaProps.value.purchaseOrderProducts?.length}
         />
       ),
     },
@@ -123,13 +125,13 @@ const FORM_VIEW: FormViewType<ModelEnum.PurchaseOrder> = {
           xl: 12,
         },
       },
-      render: ({ fieldProps, item }) => (
+      render: ({ inputProps, metaProps }) => (
         <PurchaseOrderProductsFields
-          {...fieldProps}
+          {...inputProps}
           disableInsert={
-            !item.vendor ||
-            !item.clinic ||
-            typeof item.taxIncluded === "undefined"
+            !metaProps.value.vendor ||
+            !metaProps.value.clinic ||
+            typeof metaProps.value.taxIncluded === "undefined"
           }
         />
       ),
@@ -294,6 +296,11 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
   views: [
     {
       type: ViewEnum.Listing,
+      defaultState: {
+        sort: {
+          createdAt: "desc",
+        },
+      },
       itemOperationRoutes: ({ operations, item }) =>
         operations.filter(({ operationType }) => {
           switch (operationType) {
@@ -495,10 +502,10 @@ const mapping: ModelMapping<ModelEnum.PurchaseOrder> = {
           return acc;
         }, {} as FormFields<ModelEnum.PurchaseOrder>),
         buyer: {
-          render: ({ fieldProps }) => (
+          render: ({ inputProps }) => (
             <ModelAutocompleteField
+              {...inputProps}
               modelName={ModelEnum.User}
-              {...fieldProps}
               size='sm'
               getParams={(filter) => ({
                 operator: CompoundFilterOperator.And,

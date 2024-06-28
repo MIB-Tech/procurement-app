@@ -25,10 +25,7 @@ import { IconButton } from "../../../components/Button/IconButton";
 import { read, utils, writeFile } from "xlsx";
 import { getData } from "../../../ImportView/ImportView";
 import { useTrans } from "../../../components/Trans";
-import {
-  HydraItem,
-  JsonldCollectionResponse,
-} from "../../../types/hydra.types";
+import { JsonldCollectionResponse } from "../../../types/hydra.types";
 import clsx from "clsx";
 import { StringFormat } from "../../String/StringColumn";
 import { NestedColumnsButton } from "./NestedColumnsButton";
@@ -42,6 +39,8 @@ import {
 import { filterToParams } from "../../../ListingView/Filter/Filter.utils";
 import { Bullet } from "../../../components/Bullet";
 import { NumberCell } from "../../Number/NumberCell";
+import { FormValue } from "../../../FormView/FormCard";
+import { FieldRender } from "./FieldRender";
 
 export type NestedArrayFieldProps<M extends ModelEnum> = FieldProps & {
   modelName: M;
@@ -64,8 +63,8 @@ export const NestedArrayField = <M extends ModelEnum>({
   const { trans } = useTrans();
   const formik = useFormikContext<AbstractModel>();
   const { id } = formik.values;
-  const [{ value: baseItems = [] }, , { setValue }] = useField<
-    Array<HydraItem<M>> | undefined
+  const [, fieldMetaProps, fieldHelperProps] = useField<
+    Array<FormValue<M>> | undefined
   >({
     name,
   });
@@ -99,10 +98,13 @@ export const NestedArrayField = <M extends ModelEnum>({
       (nestedColumnName) => columnName === nestedColumnName
     );
   });
-  const items = useMemo(
-    () => [...baseItems].map((item, _index) => ({ ...item, _index })).reverse(),
-    [baseItems]
-  );
+  const items = useMemo(() => {
+    if (!fieldMetaProps.value) return [];
+
+    return fieldMetaProps.value
+      .map((item, _index) => ({ ...item, _index }))
+      .reverse();
+  }, [fieldMetaProps.value]);
   const mapping = rootColumnNames
     .filter((columnName) => {
       const columnMapping = columnDef[columnName] as
@@ -162,7 +164,7 @@ export const NestedArrayField = <M extends ModelEnum>({
     >
       <FieldArray name={name}>
         {({ remove, push }) => (
-          <div className='table-responsive border border-2 rounded py-1 px-2 min-h-250px'>
+          <div className='table-responsive border rounded py-1 px-2 min-h-250px'>
             <table className='table table-hover table-row-bordered table-row-dark g-1 mb-0 align-middle'>
               <thead className='fs-7 text-gray-400 text-uppercase'>
                 <tr className='align-middle'>
@@ -245,7 +247,10 @@ export const NestedArrayField = <M extends ModelEnum>({
                             }
                             // console.log(data);
                             // @ts-ignore
-                            await setValue([...data, ...items]);
+                            await fieldHelperProps.setValue([
+                              ...data,
+                              ...items,
+                            ]);
                             setImporting(false);
                           }}
                         />
@@ -351,28 +356,30 @@ export const NestedArrayField = <M extends ModelEnum>({
                         | ColumnMapping<M>
                         | undefined;
 
-                      const nestedName = `${name}.${
-                        item._index
-                      }.${columnName.toString()}`;
-                      const fieldProps = {
-                        name: nestedName,
-                        className: clsx("border-1"),
-                      };
+                      const objFieldName = `${name}.${item._index}`;
+                      const nestedName = `${objFieldName}.${columnName.toString()}`;
 
                       return (
                         <td
                           key={nestedName}
                           className={clsx(!render && "-align-top")}
                         >
-                          {render
-                            ? render({ item, fieldProps })
-                            : column && (
-                                <ValueField
-                                  {...fieldProps}
-                                  column={column}
-                                  size='sm'
-                                />
-                              )}
+                          {render ? (
+                            <FieldRender
+                              render={render}
+                              objFieldName={objFieldName}
+                              nestedName={nestedName}
+                            />
+                          ) : (
+                            column && (
+                              <ValueField
+                                name={nestedName}
+                                column={column}
+                                size='sm'
+                                //className='border-1'
+                              />
+                            )
+                          )}
                         </td>
                       );
                     })}
@@ -414,7 +421,7 @@ export const NestedArrayField = <M extends ModelEnum>({
                               <>
                                 {columnMapping.footer?.({
                                   value,
-                                  collection: items,
+                                  items,
                                 }) ||
                                   (columnMapping.type ===
                                   ColumnTypeEnum.Number ? (

@@ -1,20 +1,20 @@
 import React, { FC, useMemo, useState } from "react";
-import { CustomItemActionProps } from "../../../_core/types/ModelMapping";
-import { ModelEnum } from "../types";
-import { useUri } from "../../../_core/hooks/UseUri";
-import { useItemQuery } from "../../../_core/hooks/UseItemQuery";
+import { CustomItemActionProps } from "../../../../_core/types/ModelMapping";
+import { ModelEnum } from "../../types";
+import { useUri } from "../../../../_core/hooks/UseUri";
+import { useItemQuery } from "../../../../_core/hooks/UseItemQuery";
 import {
   ReceiptLineComponentPrint,
   ReceiptLineProductPrint,
   ReceiptPrint,
   ReceiptPrintLine,
-} from "./Model";
+} from "../Model";
 import moment from "moment/moment";
-import { Button } from "../../../_core/components/Button";
-import { Trans } from "../../../_core/components/Trans";
+import { Button } from "../../../../_core/components/Button";
+import { Trans } from "../../../../_core/components/Trans";
 import { Modal } from "react-bootstrap";
-import ReportViewer from "../PurchaseOrder/components/ReportViewer";
-import { LineType } from "../PurchaseOrder/Model";
+import ReportViewer from "../../PurchaseOrder/components/ReportViewer";
+import { LineType } from "../../PurchaseOrder/Model";
 
 export const PrintReceiptButton: FC<
   CustomItemActionProps<ModelEnum.Receipt>

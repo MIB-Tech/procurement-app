@@ -147,15 +147,15 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
               sm: 8,
             },
           },
-          render: ({ item, fieldProps }) => {
-            const { vendor, purchaseOrders } = item;
+          render: ({ inputProps, metaProps }) => {
+            const { vendor, purchaseOrders } = metaProps.value;
             return (
               <ModelAutocompleteField
-                {...fieldProps}
+                {...inputProps}
                 size='sm'
                 modelName={ModelEnum.PurchaseOrder}
                 multiple
-                disabled={!vendor && purchaseOrders.length === 0}
+                disabled={!vendor && !purchaseOrders?.length}
                 getParams={(filter) => {
                   const newFilter: CompoundFilter<ModelEnum.PurchaseOrder> = {
                     operator: CompoundFilterOperator.And,
@@ -188,7 +188,7 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
               sm: 12,
             },
           },
-          render: PaymentTermsField,
+          render: ({ inputProps }) => <PaymentTermsField {...inputProps} />,
         },
         attachments: true,
       },
@@ -212,9 +212,9 @@ const mapping: ModelMapping<ModelEnum.Invoice> = {
               sm: 12,
             },
           },
-          render: ({ fieldProps }) => (
+          render: ({ inputProps }) => (
             <NestedArrayField
-              {...fieldProps}
+              {...inputProps}
               modelName={ModelEnum.PaymentTerm}
               view={
                 {

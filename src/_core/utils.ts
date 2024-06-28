@@ -33,6 +33,7 @@ import { ModelEnum } from "../app/modules/types";
 import { datetime, relation } from "./yup";
 import { getNumberValidation } from "./Column/Number/NumberColumn";
 import { ObjectFormat } from "./Column/Object/ObjectColumn";
+import { FormValue } from "./FormView/FormCard";
 
 export const camelCaseToDash = (str: string) =>
   str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
@@ -338,5 +339,5 @@ export const getInitialValues = <M extends ModelEnum>({
     }
   });
 
-  return defaultValues as Model<M>;
+  return defaultValues as FormValue<M>;
 };
