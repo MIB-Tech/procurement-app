@@ -8,14 +8,14 @@ import { PRODUCT_TYPES, ProductTypeEnum } from "./Model";
 import React from "react";
 import { FieldProps } from "../../../_core/Column/controls/fields";
 import { useTrans } from "../../../_core/components/Trans";
-import { I18nMessageKey } from "../../../_core/i18n/I18nMessages";
-import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
 import {
   CompoundFilter,
   CompoundFilterOperator,
   PropertyFilterOperator,
 } from "../../../_core/ListingView/Filter/Filter.types";
 import { VatRateSelectField } from "../VatRate/components/VatRateSelectField";
+import { ModelAutocompleteField } from "../../../_core/Column/Model/Autocomplete/ModelAutocompleteField";
+import { I18nMessageKey } from "../../../_core/i18n/I18nMessages";
 
 const ProductTypeField = (props: FieldProps & { disabled?: boolean }) => {
   const { trans } = useTrans();
